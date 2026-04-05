@@ -72,9 +72,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .view{display:none}.view.on{display:block;animation:fu .28s ease}
 @keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 /* ── TOPBAR ────────────────────────────────────────────────── */
-.tb{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border);background:var(--topbar);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;gap:12px;flex-wrap:wrap}
-.tb h1{font-family:var(--fh);font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
-.tb-sub{font-size:11px;color:var(--text2);margin-top:1px}
+.tb{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);background:var(--topbar);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;gap:12px;flex-wrap:wrap}
+.tb h1{font-family:var(--fh);font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;letter-spacing:-.3px}
+.tb-sub{font-size:11px;color:var(--text2);margin-top:2px;font-weight:400;line-height:1.4}
 .tb-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .wk-pill{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border2);border-radius:var(--rs);padding:4px 4px 4px 12px}
 .wk-pill span{font-size:12px;font-weight:500;min-width:155px;text-align:center}
@@ -90,8 +90,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .cx{padding:20px 24px;position:relative;z-index:1}
 /* ── KPI GRID ──────────────────────────────────────────────── */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.kc{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;transition:transform .2s,border-color .2s,background .3s}
-.kc:hover{transform:translateY(-2px);border-color:var(--border2)}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:14px;transition:transform .2s,border-color .2s,box-shadow .2s,background .3s}
+.kc:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .kc-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px}
 .kc-v{font-family:var(--fh);font-size:28px;font-weight:800;line-height:1;margin-bottom:2px}
 .kc-l{font-size:11px;color:var(--text2)}.kc-s{font-size:10px;color:var(--text3);margin-top:1px}
@@ -99,7 +99,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .kc-fill{height:100%;border-radius:2px;transition:width .9s ease}
 /* ── SEC HEAD ──────────────────────────────────────────────── */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px;flex-wrap:wrap}
-.sh h2{font-family:var(--fh);font-size:15px;font-weight:700}
+.sh h2{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.1px}
 .tabs{display:flex;gap:3px;background:var(--card);padding:3px;border-radius:var(--rs);border:1px solid var(--border);flex-wrap:wrap}
 .tab{padding:4px 11px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:transparent;font-family:var(--fb)}
 .tab.on{background:var(--card3);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.25)}
@@ -120,11 +120,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt-n{font-size:12px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
 .tt-m{display:flex;align-items:center;gap:4px}
 .tt-t{font-size:10px;color:var(--text2);white-space:nowrap}
-.tt-tag{font-size:9px;padding:1px 5px;border-radius:8px;font-weight:700;white-space:nowrap}
-.tt-acts{display:flex;gap:2px;margin-left:auto;flex-shrink:0}
-.ta{width:21px;height:21px;border-radius:5px;border:1px solid transparent;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3);transition:all .18s}
-.ta:hover.ed{background:rgba(124,106,255,.12);border-color:rgba(124,106,255,.2);color:var(--p1)}
-.ta:hover.dl{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.2);color:var(--r1)}
+.tt-tag{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;white-space:nowrap;border:1px solid transparent;letter-spacing:.2px}
+.tt-acts{display:flex;gap:3px;margin-left:auto;flex-shrink:0}
+.ta{width:23px;height:23px;border-radius:6px;border:1px solid transparent;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text3);transition:all .18s}
+.ta:hover.ed{background:rgba(124,106,255,.14);border-color:rgba(124,106,255,.28);color:var(--p1)}
+.ta:hover.dl{background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.3);color:var(--r1);box-shadow:0 1px 6px rgba(244,63,94,.18)}
 .tt-dc{text-align:center;padding:7px 4px}
 .tt-x{display:flex;align-items:center;justify-content:center}
 .tt-dash{width:14px;height:2px;background:var(--border);border-radius:1px}
@@ -222,52 +222,69 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tl-dur{color:var(--text2);font-family:var(--fh);font-size:11px}
 .tl-time{color:var(--text3);font-size:10px}
 /* ── NOTES ─────────────────────────────────────────────────── */
-.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:20px}
-.note-card{border-radius:var(--rr);padding:15px;border:1px solid transparent;transition:all .2s;cursor:pointer;position:relative}
-.note-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.note-card .nc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
-.note-card .nc-title{font-size:13px;font-weight:600;line-height:1.3}
-.note-card .nc-body{font-size:12px;line-height:1.6;opacity:.8;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.note-card .nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:10px;opacity:.6}
-.note-del{width:22px;height:22px;border-radius:5px;border:none;background:rgba(244,63,94,.15);color:var(--r1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;opacity:0;transition:opacity .2s}
-.note-card:hover .note-del{opacity:1}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+.note-card{border-radius:18px;padding:18px 18px 14px;border:1px solid transparent;transition:all .25s cubic-bezier(.34,.5,.64,1);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.12)}
+.note-card:hover{transform:translateY(-4px) scale(1.012);box-shadow:0 16px 48px rgba(0,0,0,.32),0 0 0 1px rgba(124,106,255,.18)}
+.note-card.pinned{border-color:rgba(91,110,245,.5)!important;box-shadow:0 0 0 2px rgba(91,110,245,.2),0 6px 24px rgba(91,110,245,.15)}
+.note-card .nc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
+.note-card .nc-title{font-family:var(--fh);font-size:13px;font-weight:700;line-height:1.3;flex:1}
+.note-card .nc-body{font-size:12px;line-height:1.65;opacity:.82;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
+.note-card .nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:10px;opacity:.6;padding-top:9px;border-top:1px solid rgba(255,255,255,.07)}
+.note-card-actions{display:flex;gap:4px;align-items:center;flex-shrink:0}
+.note-del{width:26px;height:26px;border-radius:7px;border:1px solid rgba(244,63,94,.25);background:rgba(244,63,94,.16);color:var(--r1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0;transition:opacity .2s,transform .2s,background .15s;transform:scale(.85)}
+.note-del:hover{background:rgba(244,63,94,.3);border-color:rgba(244,63,94,.5)}
+.note-pin-btn{width:24px;height:24px;border-radius:6px;border:none;background:rgba(91,110,245,.12);color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0;transition:opacity .2s,transform .2s;transform:scale(.85)}
+.note-pin-btn.pinned-active{opacity:1!important;transform:scale(1)!important;color:var(--p1);background:rgba(91,110,245,.2)}
+.note-card:hover .note-del,.note-card:hover .note-pin-btn{opacity:1;transform:scale(1)}
+.note-pin-icon{font-size:11px}
 /* ── PROFILE ───────────────────────────────────────────────── */
-.prof-hero{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:24px;margin-bottom:18px;position:relative;overflow:hidden}
+.prof-hero{border:1px solid var(--border);border-radius:var(--rr);padding:22px 22px 18px 28px;margin-bottom:15px;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(91,110,245,.18) 0%,rgba(124,58,237,.14) 40%,rgba(14,165,233,.1) 100%);border-color:rgba(91,110,245,.3)}
+.prof-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 100% 0%,rgba(91,110,245,.12),transparent),radial-gradient(ellipse 50% 60% at 0% 100%,rgba(14,165,233,.08),transparent);pointer-events:none}
 .prof-avatar-wrap{position:relative;width:88px;height:88px;margin-bottom:12px}
-.prof-av{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid rgba(124,106,255,.4);display:block}
-.prof-av-ph{width:88px;height:88px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:28px;font-weight:800;color:#fff;border:3px solid rgba(124,106,255,.4)}
+.prof-av{width:88px;height:88px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);display:block;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.prof-av-ph{width:88px;height:88px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:28px;font-weight:800;color:#fff;border:3px solid rgba(255,255,255,.25);box-shadow:0 4px 20px rgba(91,110,245,.4)}
 .prof-av-edit{position:absolute;bottom:2px;right:2px;width:26px;height:26px;border-radius:50%;background:var(--p1);border:2px solid var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:#fff;transition:transform .2s}
 .prof-av-edit:hover{transform:scale(1.1)}
-.prof-name{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:3px}
-.prof-role{font-size:13px;color:var(--text2);margin-bottom:12px}
+.prof-name{font-family:var(--fh);font-size:26px;font-weight:800;margin-bottom:3px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+.prof-role{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:12px}
 .prof-badges{display:flex;gap:8px;flex-wrap:wrap}
-.pbadge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.prof-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-.ps-item{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:13px;text-align:center}
+.pbadge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff}
+.prof-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:15px}
+.ps-item{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:11px;text-align:center;transition:transform .2s,box-shadow .2s}
+.ps-item:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
 .ps-v{font-family:var(--fh);font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .ps-l{font-size:10px;color:var(--text2);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.prof-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.prof-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:18px}
-.prof-sec h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.prof-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prof-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px;transition:border-color .2s}
+.prof-sec:hover{border-color:var(--border2)}
+.prof-sec h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
 .pf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .fg{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
 .fg label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
-.fg input,.fg select,.fg textarea{background:var(--inp-bg);border:1px solid var(--border2);border-radius:var(--rs);padding:8px 10px;color:var(--text);font-size:12px;font-family:var(--fb);transition:border-color .2s,background .3s;width:100%}
-.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--p1)}
+.fg input,.fg select,.fg textarea{background:var(--inp-bg);border:1px solid var(--border2);border-radius:var(--rs);padding:8px 10px;color:var(--text);font-size:12px;font-family:var(--fb);transition:border-color .2s,background .3s,box-shadow .2s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--p1);box-shadow:0 0 0 3px rgba(91,110,245,.12)}
 .fg select option{background:var(--card2)}
 .fg textarea{resize:vertical;min-height:70px}
+/* ── TYPOGRAPHY SYSTEM ─────────────────────────────────────── */
+.ty-h1{font-family:var(--fh);font-size:20px;font-weight:800;letter-spacing:-.3px;line-height:1.2}
+.ty-h2{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.1px;line-height:1.3}
+.ty-h3{font-family:var(--fh);font-size:13px;font-weight:700;letter-spacing:0px;line-height:1.4}
+.ty-body{font-family:var(--fb);font-size:12px;font-weight:400;line-height:1.6}
+.ty-label{font-family:var(--fb);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text2)}
+.ty-caption{font-family:var(--fb);font-size:10px;font-weight:400;color:var(--text3)}
 /* ── SETTINGS ──────────────────────────────────────────────── */
-.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.set-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:18px;transition:background .3s}
-.set-sec h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--border)}
-.set-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.set-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px;transition:background .3s}
+.set-sec h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:4px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.set-sec h3 .sh3-ico{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;background:rgba(91,110,245,.15)}
+.set-row{display:flex;align-items:flex-start;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);gap:10px}
 .set-row:last-child{border-bottom:none}
-.set-info .t{font-size:12px;font-weight:500;margin-bottom:1px}
-.set-info .d{font-size:10px;color:var(--text2)}
-.tog{width:38px;height:21px;background:var(--border2);border-radius:11px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.set-info .t{font-size:12px;font-weight:600;margin-bottom:2px}
+.set-info .d{font-size:10px;color:var(--text2);line-height:1.5;max-width:260px}
+.tog{width:42px;height:24px;background:var(--border2);border-radius:12px;cursor:pointer;position:relative;transition:background .3s cubic-bezier(.4,0,.2,1);flex-shrink:0}
 .tog.on{background:var(--p1)}
-.tog::after{content:'';position:absolute;left:3px;top:3px;width:15px;height:15px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
-.tog.on::after{transform:translateX(17px)}
+.tog::after{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.tog.on::after{transform:translateX(18px);box-shadow:0 2px 8px rgba(91,110,245,.4)}
 /* ── MODAL ─────────────────────────────────────────────────── */
 .mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.82);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:16px}
 .mo.open{display:flex}
@@ -301,7 +318,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .bn .bn-l{font-size:9px;font-weight:600}
 .bn.on{color:var(--p1)}
 /* ── CONFIRM MODAL ─────────────────────────────────────────── */
-.confirm-mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:400;align-items:center;justify-content:center;padding:16px}
+.confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
 .confirm-mo.open{display:flex}
 .confirm-box{background:var(--card);border:1px solid var(--border2);border-radius:var(--rl);padding:32px 28px;width:100%;max-width:360px;text-align:center;animation:mi .23s ease}
 .confirm-box .ci-ico{font-size:42px;margin-bottom:14px;display:block}
@@ -314,26 +331,59 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .notif-item{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
 .notif-item:last-child{border-bottom:none}
 .notif-dot{width:7px;height:7px;border-radius:50%;background:var(--p1);flex-shrink:0;margin-top:3px}
-/* ── SETTINGS REDESIGN ─────────────────────────────────────── */
-.set-sec h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:4px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.set-sec h3 .sh3-ico{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:rgba(91,110,245,.15)}
-.set-row{display:flex;align-items:flex-start;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);gap:10px}
-.set-row:last-child{border-bottom:none}
-.set-info .t{font-size:12px;font-weight:600;margin-bottom:2px}
-.set-info .d{font-size:10px;color:var(--text2);line-height:1.5;max-width:260px}
+/* ── NOTIFICATION BELL PANEL ─────────────────────────────── */
+.notif-bell-btn{position:relative;width:34px;height:34px;border-radius:9px;border:1px solid var(--border2);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--text2);flex-shrink:0}
+.notif-bell-btn:hover{border-color:var(--p1);color:var(--p1);background:rgba(91,110,245,.08)}
+.notif-bell-btn .bell-red-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:#f43f5e;border:1.5px solid var(--topbar);box-shadow:0 0 6px rgba(244,63,94,.7);display:none}
+.notif-bell-btn .bell-red-dot.show{display:block}
+.notif-panel{position:absolute;top:calc(100% + 10px);right:0;width:320px;background:var(--card);border:1px solid var(--border2);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.35);z-index:500;overflow:hidden;animation:mi .2s ease;display:none}
+.notif-panel.open{display:block}
+.notif-ph{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.notif-ph-title{font-family:var(--fh);font-size:13px;font-weight:700}
+.notif-tog-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text2)}
+.notif-section{padding:10px 14px}
+.notif-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:6px}
+.notif-task-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.notif-task-item:last-child{border-bottom:none}
+.notif-task-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.notif-task-name{font-size:11px;font-weight:600;margin-bottom:1px}
+.notif-task-time{font-size:10px;color:var(--text2)}
+.notif-empty{padding:14px;text-align:center;font-size:11px;color:var(--text3)}
+/* ── TASK STATUS BADGES ──────────────────────────────────── */
+.status-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.3px;white-space:nowrap;flex-shrink:0}
+.status-upcoming{background:rgba(14,165,233,.15);color:#38bdf8;border:1px solid rgba(14,165,233,.25)}
+.status-ongoing{background:rgba(124,58,237,.18);color:#a78bfa;border:1px solid rgba(124,58,237,.3)}
+.status-overdue{background:rgba(244,63,94,.15);color:#fb7185;border:1px solid rgba(244,63,94,.25)}
+.status-done{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.25)}
+/* ── TODAY HIGHLIGHT IN SCHEDULE TABLE ───────────────────── */
+.tt th.tc{color:var(--p1);background:rgba(91,110,245,.07);border-bottom-color:var(--p1)}
+.tt td.today-col{background:rgba(91,110,245,.03)}
+.chk.disabled{opacity:.38;cursor:not-allowed;pointer-events:none}
+/* ── PRIORITY COLUMNS IN SCHEDULE ───────────────────────── */
+.pri-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.pri-col-header{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px 10px 0 0;border:1px solid var(--border);border-bottom:none;font-family:var(--fh);font-size:12px;font-weight:700}
+.pri-col-body{background:var(--card);border:1px solid var(--border);border-radius:0 0 10px 10px;min-height:60px;padding:8px}
+.sch-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:8px;transition:all .2s;position:relative;overflow:hidden}
+.sch-card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.sch-card:hover .sch-del{opacity:1;transform:scale(1)}
+.sch-card-accent{position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.sch-card-name{font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:6px;padding-left:10px}
+.sch-card-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;padding-left:10px;margin-bottom:7px}
+.sch-del{width:26px;height:26px;border-radius:7px;border:1px solid rgba(244,63,94,.3);background:rgba(244,63,94,.14);color:var(--r1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:1;transform:scale(1);transition:all .18s;flex-shrink:0}
+.sch-del:hover{background:rgba(244,63,94,.28);border-color:rgba(244,63,94,.55);color:#fff;box-shadow:0 2px 8px rgba(244,63,94,.25)}
+/* category tag premium style */
+.cat-tag-pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.3px;border:1px solid transparent;white-space:nowrap}
+/* ── INSIGHT CARD DASHBOARD ──────────────────────────────── */
+.insight-smart{background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));border:1px solid rgba(91,110,245,.18);border-radius:var(--rr);padding:14px 17px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px;transition:transform .2s,box-shadow .2s}
+.insight-smart:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,110,245,.12)}
+.insight-smart .ins-ico{width:36px;height:36px;border-radius:10px;background:rgba(91,110,245,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.insight-smart .ins-body .ins-label{font-size:10px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px}
+.insight-smart .ins-body .ins-text{font-size:12px;color:var(--text2);line-height:1.6}
 /* ── PROFILE HERO (no banner) ────────────────────────────────── */
 .prof-hero-inner{position:relative;padding-top:0}
-/* Left accent bar on the hero card */
-.prof-hero{position:relative;overflow:hidden}
-.prof-hero::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--grad);border-radius:3px 0 0 3px}
 /* Avatar ring uses brand gradient */
 .prof-av{border:3px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
 .prof-av-ph{border:3px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
-/* Identity row */
-.prof-identity{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-/* System tag pill */
-.prof-sys-tag{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:rgba(91,110,245,.1);border:1px solid rgba(91,110,245,.25);color:var(--p1);margin-bottom:6px}
-.prof-sys-tag-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 5px #4ade80;flex-shrink:0}
 .social-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .social-link{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;background:var(--card2);border:1px solid var(--border2);color:var(--text2);text-decoration:none;transition:all .2s;cursor:pointer}
 .social-link:hover{border-color:var(--p1);color:var(--p1)}
@@ -350,7 +400,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* mobile bottom nav dot */
 .bn-wrap{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:2px}
 .bn-wrap .red-dot{top:0px;right:2px;width:6px;height:6px}
-@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}.cg2{grid-template-columns:1fr}.ag{grid-template-columns:1fr}.prof-stats{grid-template-columns:1fr 1fr}.prof-grid{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}}
+@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}.cg2{grid-template-columns:1fr}.ag{grid-template-columns:1fr}.prof-stats{grid-template-columns:1fr 1fr}.prof-grid{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}.ana-charts-row{grid-template-columns:1fr!important}}
 @media(max-width:700px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .ig{grid-template-columns:1fr}
@@ -365,6 +415,58 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .sg{grid-template-columns:1fr}
 }
 @media(max-width:420px){.kpi-grid{grid-template-columns:1fr 1fr}.prof-stats{grid-template-columns:1fr 1fr}}
+
+/* ── FOCUS + INSIGHTS ROW ─────────────────────────────────── */
+.focus-insights-row{display:flex;align-items:center;gap:14px;background:rgba(91,110,245,.055);border:1px solid rgba(91,110,245,.14);border-radius:var(--rr);padding:13px 16px;margin-bottom:14px;backdrop-filter:blur(4px)}
+[data-theme="light"] .focus-insights-row{background:rgba(91,110,245,.04);border-color:rgba(91,110,245,.12)}
+.focus-block{display:flex;align-items:center;gap:11px;flex:1;min-width:0}
+.focus-block-ico{width:34px;height:34px;border-radius:9px;background:rgba(91,110,245,.14);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.focus-block-body{flex:1;min-width:0}
+.focus-block-label{font-size:9px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
+.focus-block-text{font-size:12px;color:var(--text);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.focus-divider{width:1px;height:28px;background:var(--border2);flex-shrink:0}
+.insights-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-family:var(--fb);font-size:11px;font-weight:700;cursor:pointer;border:1px solid rgba(91,110,245,.28);background:rgba(91,110,245,.1);color:var(--p1);transition:all .2s;white-space:nowrap;flex-shrink:0;letter-spacing:.2px}
+.insights-btn:hover{background:rgba(91,110,245,.18);border-color:var(--p1);box-shadow:0 2px 10px rgba(91,110,245,.2)}
+.insights-btn.active{background:rgba(91,110,245,.2);border-color:var(--p1);box-shadow:0 0 0 3px rgba(91,110,245,.12)}
+.insights-panel{animation:fu .22s ease;margin-bottom:16px}
+.insights-panel .ig{margin-bottom:0}
+
+/* ── TODAY COLUMN STRONG HIGHLIGHT ──────────────────────────  */
+.tt th.tc{color:var(--p1)!important;background:rgba(91,110,245,.11)!important;border-bottom:2px solid var(--p1)!important;position:relative}
+.tt td.today-col{background:rgba(91,110,245,.05)!important}
+.tt th.tc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--p1)}
+/* past/future column subtle dimming */
+.tt td.past-col{opacity:.72}
+.tt td.future-col{opacity:.88}
+
+/* ── STATUS BADGE - TOP RIGHT PLACEMENT ──────────────────── */
+.tt-row-status-wrap{position:absolute;top:7px;right:8px}
+.status-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:8px;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+.status-upcoming{background:rgba(14,165,233,.12);color:#38bdf8;border:1px solid rgba(14,165,233,.22)}
+.status-ongoing{background:rgba(124,58,237,.16);color:#a78bfa;border:1px solid rgba(124,58,237,.28)}
+.status-overdue{background:rgba(244,63,94,.13);color:#fb7185;border:1px solid rgba(244,63,94,.23)}
+.status-done{background:rgba(16,185,129,.13);color:#34d399;border:1px solid rgba(16,185,129,.23)}
+
+/* ── TASK ROW DONE/PENDING DIFFERENTIATION ───────────────── */
+.tt tr.row-done td{background:rgba(16,185,129,.025)}
+.tt tr.row-done td:first-child .tt-n{opacity:.5;text-decoration:line-through}
+.tt tr.row-done td:first-child .tt-t{opacity:.55}
+
+/* ── NOTES FONT FIX ──────────────────────────────────────── */
+.note-card .nc-title{font-family:var(--fb)!important;font-size:13px;font-weight:700;line-height:1.35}
+.note-card .nc-body{font-family:var(--fb)!important;font-size:12px;line-height:1.65;letter-spacing:.01em}
+.note-card .nc-foot{font-family:var(--fb)!important}
+
+/* ── ANALYTICS PERFORMANCE INSIGHT ──────────────────────── */
+.ana-perf-insight{background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.07));border:1px solid rgba(91,110,245,.25);border-radius:var(--rr);padding:16px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(91,110,245,.12),0 1px 4px rgba(0,0,0,.12)}
+[data-theme="light"] .ana-perf-insight{background:linear-gradient(135deg,rgba(91,110,245,.07),rgba(124,58,237,.04));box-shadow:0 4px 20px rgba(91,110,245,.08),0 1px 4px rgba(0,0,0,.06)}
+
+/* ── PROFILE: PROGRESS BAR GREEN ────────────────────────── */
+.prof-progress-fill{background:linear-gradient(90deg,#4ade80,#22c55e)!important;box-shadow:0 0 8px rgba(74,222,128,.35)!important}
+
+/* ── SCHEDULE CARD DELETE ALWAYS VISIBLE ─────────────────── */
+.sch-del{opacity:1!important;transform:scale(1)!important}
+
 </style>
 </head>
 <body>
@@ -422,29 +524,71 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- DASHBOARD -->
 <div class="view on" id="view-dashboard">
   <div class="tb">
-    <div><h1>APEX</h1><p class="tb-sub" id="top-sub">Loading…</p></div>
+    <div>
+      <h1 style="font-family:var(--fh);font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.5px">APEX</h1>
+      <p class="tb-sub" id="dash-greeting" style="margin-top:2px;font-size:12px;color:var(--text2)">Good morning 👋</p>
+    </div>
     <div class="tb-r">
+      <!-- Notification Bell -->
+      <div style="position:relative" id="notif-bell-wrap">
+        <div class="notif-bell-btn" id="notif-bell-btn" onclick="toggleNotifPanel()" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="bell-red-dot" id="bell-red-dot"></span>
+        </div>
+        <div class="notif-panel" id="notif-panel">
+          <div class="notif-ph">
+            <span class="notif-ph-title">🔔 Task Reminders</span>
+            <div class="notif-tog-row">
+              <span>Alerts</span>
+              <div class="tog" id="notif-panel-tog" onclick="toggleNotifFromPanel()"></div>
+            </div>
+          </div>
+          <div id="notif-panel-body"></div>
+        </div>
+      </div>
       <div style="position:relative;display:inline-flex">
         <div class="wk-pill">
           <button class="wk-b" onclick="chWeek(-1)">‹</button>
           <span id="wk-label">—</span>
           <button class="wk-b" onclick="chWeek(1)">›</button>
         </div>
-        <span id="dash-notif-dot" style="display:none;position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:#f43f5e;border:1.5px solid var(--topbar);box-shadow:0 0 6px rgba(244,63,94,.7)"></span>
       </div>
       <button class="btn btn-pri" onclick="openTaskModal()">+ Add Task</button>
     </div>
   </div>
   <div class="cx">
     <div class="kpi-grid" id="kpi-grid"></div>
+    <!-- Today's Focus + Smart Insights Row -->
+    <div class="focus-insights-row" id="focus-insights-row">
+      <!-- Today's Focus -->
+      <div class="focus-block" id="focus-block">
+        <div class="focus-block-ico">🎯</div>
+        <div class="focus-block-body">
+          <div class="focus-block-label">Today's Focus</div>
+          <div class="focus-block-text" id="focus-block-text">Loading…</div>
+        </div>
+      </div>
+      <!-- Divider -->
+      <div class="focus-divider"></div>
+      <!-- Insights button -->
+      <button class="insights-btn" id="insights-btn" onclick="toggleInsightsPanel()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2a7 7 0 0 1 7 7c0 3.5-2.5 5.5-3 7H8c-.5-1.5-3-3.5-3-7a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="9.5" y1="18" x2="14.5" y2="18"/></svg>
+        Insights
+      </button>
+    </div>
+    <!-- Insights panel (collapsible) -->
+    <div class="insights-panel" id="insights-panel" style="display:none">
+      <div class="ig" id="ig"></div>
+    </div>
     <div class="sh">
       <h2>Weekly Schedule</h2>
-      <div class="tabs" id="cat-tabs-wrap">
-        <button class="tab on" onclick="setFilter('all',this)">All</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <select class="ana-sel" id="cat-filter-select" onchange="setFilterFromSelect(this.value)" style="min-width:130px">
+          <option value="all">All Categories</option>
+        </select>
       </div>
     </div>
     <div class="tt-wrap" id="tt-wrap"></div>
-    <div class="ig" id="ig"></div>
   </div>
 </div>
 
@@ -453,13 +597,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="tb"><div><h1>Schedule Manager</h1><p class="tb-sub">All your task blocks</p></div>
     <div class="tb-r"><button class="btn btn-pri" onclick="openTaskModal()">+ New Block</button></div>
   </div>
-  <div class="cx"><div class="sg" id="sg"></div></div>
+  <div class="cx"><div class="pri-cols" id="sg"></div></div>
 </div>
 
 <!-- ANALYTICS -->
 <div class="view" id="view-analytics">
   <div class="tb"><div><h1>Analytics</h1><p class="tb-sub">Performance deep-dive</p></div>
-    <div class="tb-r"><button class="btn btn-ghost" onclick="expCSV()">↓ CSV</button></div>
+    <div class="tb-r"></div>
   </div>
   <div class="cx" id="ana-cx"></div>
 </div>
@@ -472,7 +616,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- FOCUS TIMER -->
 <div class="view" id="view-timer">
-  <div class="tb"><div><h1>Focus Timer</h1><p class="tb-sub">Pomodoro · Deep Work · Custom</p></div></div>
+  <div class="tb"><div><h1>Focus Timer</h1><p class="tb-sub">Build deep work habits.</p></div></div>
   <div class="cx" id="timer-cx"></div>
 </div>
 
@@ -495,7 +639,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- SETTINGS -->
 <div class="view" id="view-settings">
   <div class="tb"><div><h1>Settings</h1><p class="tb-sub">Customize your experience</p></div>
-    <div class="tb-r"><button class="btn btn-danger btn-sm" onclick="confirmReset()">Reset Check Data</button></div>
+    <div class="tb-r"></div>
   </div>
   <div class="cx" id="set-cx"></div>
 </div>
@@ -640,6 +784,7 @@ const DEFAULT_TASKS = [
   {id:'d1',name:'GYM + Meditation',    start:'05:00',end:'06:00',cat:'personal',pri:'high',days:[0,1,2,3,4,5,6],notes:''},
   {id:'d2',name:'AI Learning',          start:'06:00',end:'08:00',cat:'learning', pri:'high',days:[0,1,2,3,4,5,6],notes:''},
   {id:'d3',name:'Business Meeting',     start:'08:00',end:'12:00',cat:'career',   pri:'high',days:[0,1,2,3,4],    notes:'Focus on outcomes'},
+  {id:'d4',name:'Email Update',         start:'12:00',end:'13:30',cat:'career',   pri:'med', days:[0,1,2,3,4],    notes:'Inbox zero'},
   {id:'d5',name:'Networking',           start:'15:30',end:'18:00',cat:'career',   pri:'med', days:[0,1,2,3,4],    notes:'LinkedIn + outreach'},
   {id:'d6',name:'Book Reading',         start:'18:00',end:'19:00',cat:'learning', pri:'med', days:[0,1,2,3,4,5,6],notes:''},
   {id:'d7',name:'Walking',              start:'19:00',end:'20:00',cat:'health',   pri:'low', days:[0,1,2,3,4,5,6],notes:'Evening decompression'},
@@ -733,6 +878,7 @@ function fmtT(t){
   return`${h12}:${String(m).padStart(2,'0')} ${ap}`;
 }
 function fmtDur(sec){const m=Math.floor(sec/60),s=sec%60;return`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;}
+function fmtMins(mins){if(mins>=60){const h=Math.floor(mins/60),m=mins%60;return m>0?`${h}h ${m}m`:`${h}h`;}return`${mins}m`;}
 function ck(tid,dk){return`${tid}__${dk}`;}
 function isDone(tid,dk){return!!S.checks[ck(tid,dk)];}
 function togDone(tid,dk){
@@ -787,8 +933,10 @@ function render(){
   // greeting
   const h=new Date().getHours();
   const greet=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
-  const greets=['Start strong 💪','Block distractions 🎯','Halfway there! ⚡','Stay consistent 🔥','Almost done! 🏁','Wind down 🌙','Rest well 😴'];
-  document.getElementById('top-sub').textContent=`${greet} — ${greets[S.weekOff===0?TODAY_DOW:6]}`;
+  const greetEmoji=h<12?'☀️':h<17?'👋':'🌙';
+  const name=S.profile.name&&S.profile.name!=='Your Name'&&S.profile.name!=='Your name'?S.profile.name.split(' ')[0]:'';
+  const dashGreet=document.getElementById('dash-greeting');
+  if(dashGreet)dashGreet.textContent=name?`${greet}, ${name} ${greetEmoji}`:`${greet} ${greetEmoji}`;
   // Update red dot indicators
   if(typeof updateRedDot==='function') updateRedDot();
 }
@@ -799,11 +947,13 @@ function render(){
 function renderKPIs(dates){
   const ws=weekStats(dates),td=dayStats(dates,TODAY_DOW),str=streakN(dates);
   const hrs=S.tasks.reduce((s,t)=>s+tdiff(t.start,t.end),0);
+  // Today's load = only tasks scheduled for today
+  const todayHrs=S.tasks.filter(t=>t.days.includes(TODAY_DOW)).reduce((s,t)=>s+tdiff(t.start,t.end),0);
   document.getElementById('kpi-grid').innerHTML=
     kc('🗓','Week Progress', ws.pct+'%',`${ws.done} of ${ws.total} tasks`,ws.pct,'linear-gradient(135deg,#5b6ef5,#7c3aed)','rgba(91,110,245,.13)')+
     kc('⚡',"Today's Score",  td.pct+'%',`${td.done} of ${td.total} done`,td.pct,'linear-gradient(135deg,#10b981,#0ea5e9)','rgba(16,185,129,.13)')+
     kc('🔥','Streak',         str+' days',str>0?'days in a row':'Start today',Math.min(str*15,100),'linear-gradient(135deg,#f97316,#f43f5e)','rgba(249,115,22,.13)')+
-    kc('⏰','Daily Load',     hrs.toFixed(1)+'h','Scheduled daily',Math.round(hrs/24*100),'linear-gradient(135deg,#eab308,#f97316)','rgba(234,179,8,.13)');
+    kc('⏰',"Today's Load",  todayHrs.toFixed(1)+'h','Scheduled today',Math.round(todayHrs/16*100),'linear-gradient(135deg,#eab308,#f97316)','rgba(234,179,8,.13)');
 }
 function kc(ico,lbl,val,sub,pct,grad,ibg){
   return`<div class="kc"><div class="kc-ico" style="background:${ibg}">${ico}</div>
@@ -813,52 +963,94 @@ function kc(ico,lbl,val,sub,pct,grad,ibg){
 }
 
 function renderDynCatTabs(){
-  const wrap=document.getElementById('cat-tabs-wrap');
-  if(!wrap)return;
+  const sel=document.getElementById('cat-filter-select');
+  if(!sel)return;
   const cats=getAllCats();
-  let html=`<button class="tab ${S.catFilt==='all'?'on':''}" onclick="setFilter('all',this)">All</button>`;
+  let html=`<option value="all" ${S.catFilt==='all'?'selected':''}>All Categories</option>`;
   cats.forEach(c=>{
-    html+=`<button class="tab ${S.catFilt===c?'on':''}" onclick="setFilter('${c}',this)">${getCatLabel(c)}</button>`;
+    html+=`<option value="${c}" ${S.catFilt===c?'selected':''}>${getCatLabel(c)}</option>`;
   });
-  wrap.innerHTML=html;
+  sel.innerHTML=html;
+}
+function setFilterFromSelect(cat){
+  S.catFilt=cat;
+  renderTT(getWeekDates(S.weekOff));
 }
 
 // ════════════════════════════════════════════════════════════
 // TIMETABLE
 // ════════════════════════════════════════════════════════════
+function getTaskStatus(task){
+  const now=new Date();
+  const curMins=now.getHours()*60+now.getMinutes();
+  const[sh,sm]=task.start.split(':').map(Number);
+  let[eh,em]=task.end.split(':').map(Number);
+  if(eh===0&&em===0){eh=24;em=0;}
+  const startMins=sh*60+sm;
+  const endMins=eh*60+em;
+  if(curMins<startMins) return 'upcoming';
+  if(curMins>=startMins&&curMins<endMins) return 'ongoing';
+  return 'overdue';
+}
+function statusBadgeHtml(status,done){
+  if(done) return `<span class="status-badge status-done">✓ Done</span>`;
+  if(status==='upcoming') return `<span class="status-badge status-upcoming">● Upcoming</span>`;
+  if(status==='ongoing')  return `<span class="status-badge status-ongoing">◉ Ongoing</span>`;
+  return `<span class="status-badge status-overdue">⚠ Overdue</span>`;
+}
 function renderTT(dates){
   const tasks=S.catFilt==='all'?S.tasks:S.tasks.filter(t=>t.cat===S.catFilt);
+  const isCurrentWeek=S.weekOff===0;
   let th='<thead><tr><th style="text-align:left;padding-left:14px;min-width:200px">Task</th>';
   dates.forEach((d,i)=>{
-    const iT=i===TODAY_DOW&&S.weekOff===0;
-    th+=`<th class="${iT?'tc':''}">${DAYS7[i]}<br><span style="font-weight:400;font-size:9px;color:var(--text3)">${fmtD(d)}</span></th>`;
+    const iT=i===TODAY_DOW&&isCurrentWeek;
+    th+=`<th class="${iT?'tc':''}">${DAYS7[i]}<br><span style="font-weight:400;font-size:9px;color:${iT?'rgba(91,110,245,.7)':'var(--text3)'}">${fmtD(d)}</span></th>`;
   });
   th+='</tr></thead>';
   let tb='<tbody>';
   tasks.forEach(t=>{
     const col=getCatColor(t.cat);
     const dur=tdiff(t.start,t.end);
-    tb+=`<tr><td><div class="tt-ic">
+    const todayDone=isDone(t.id,fmtKey(dates[TODAY_DOW]));
+    const status=isCurrentWeek&&t.days.includes(TODAY_DOW)?getTaskStatus(t):null;
+    const rowDone=todayDone&&isCurrentWeek;
+    tb+=`<tr class="${rowDone?'row-done':''}"><td style="position:relative"><div class="tt-ic">
       <div class="tt-dot" style="background:${col}"></div>
       <div class="tt-tx">
         <div class="tt-n" title="${t.name}">${t.name}</div>
-        <div class="tt-m"><span class="tt-t">${fmtT(t.start)}</span>
-        <span class="tt-tag" style="background:${col}22;color:${col}">${getCatLabel(t.cat)}</span>
-        <span style="font-size:9px;color:var(--text3)">${dur.toFixed(1)}h</span></div>
+        <div class="tt-m" style="gap:5px;flex-wrap:wrap">
+          <span class="tt-t">${fmtT(t.start)} – ${fmtT(t.end)}</span>
+          <span style="font-size:9px;color:var(--text3)">${dur.toFixed(1)}h</span>
+        </div>
       </div>
       <div class="tt-acts">
-        <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit">✎</button>
-        <button class="ta dl" onclick="delTask('${t.id}')" title="Delete">✕</button>
+        <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
       </div>
-    </div></td>`;
+    </div>
+    ${status&&isCurrentWeek&&t.days.includes(TODAY_DOW)?`<div class="tt-row-status-wrap">${statusBadgeHtml(status,todayDone)}</div>`:''}
+    </td>`;
     dates.forEach((d,i)=>{
       const dk=fmtKey(d);
-      if(!t.days.includes(i)){tb+=`<td><div class="tt-x"><div class="tt-dash"></div></div></td>`;}
-      else{
+      const isTodayCol=i===TODAY_DOW&&isCurrentWeek;
+      const isPast=isCurrentWeek&&i<TODAY_DOW;
+      const isFuture=isCurrentWeek&&i>TODAY_DOW;
+      const canInteract=isTodayCol;
+      const colClass=isTodayCol?'today-col':isPast?'past-col':isFuture?'future-col':'';
+      if(!t.days.includes(i)){
+        tb+=`<td class="${colClass}"><div class="tt-x"><div class="tt-dash"></div></div></td>`;
+      } else {
         const done=isDone(t.id,dk);
-        tb+=`<td class="tt-dc"><button class="chk" style="${done?`background:${col}33;border-color:${col}`:'border-color:var(--border3)'}" onclick="togDone('${t.id}','${dk}')">
-          <svg viewBox="0 0 12 10" fill="none" stroke="${done?col:'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done?1:0}"><polyline points="1,5 4.5,9 11,1"/></svg>
-        </button></td>`;
+        const dimmed=done&&!isTodayCol;
+        const disabled=!canInteract;
+        tb+=`<td class="tt-dc ${colClass}">
+          <button class="chk ${disabled?'disabled':''} ${done?`dn-${t.cat||'personal'}`:''}"
+            style="${done?`background:${col}33;border-color:${col}`:'border-color:var(--border3)'}${disabled?';opacity:'+(isTodayCol?1:.35)+';cursor:not-allowed':''}${dimmed?';opacity:.4':''}"
+            onclick="${canInteract?`togDone('${t.id}','${dk}')`:''}"
+            title="${disabled?(isPast?'Past day':'Future day'):''}">
+            <svg viewBox="0 0 12 10" fill="none" stroke="${done?col:'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done?1:0}"><polyline points="1,5 4.5,9 11,1"/></svg>
+          </button>
+        </td>`;
       }
     });
     tb+='</tr>';
@@ -877,22 +1069,53 @@ function renderTT(dates){
 // ════════════════════════════════════════════════════════════
 // INSIGHTS
 // ════════════════════════════════════════════════════════════
+function toggleInsightsPanel(){
+  const panel=document.getElementById('insights-panel');
+  const btn=document.getElementById('insights-btn');
+  if(!panel||!btn)return;
+  const open=panel.style.display!=='none';
+  panel.style.display=open?'none':'block';
+  btn.classList.toggle('active',!open);
+}
 function renderInsights(dates){
   const td=dayStats(dates,TODAY_DOW),ws=weekStats(dates),str=streakN(dates);
-  const totalHrs=S.tasks.reduce((s,t)=>s+tdiff(t.start,t.end),0);
-  const doneHrs=CATS.reduce((s,c)=>{
-    const ct=S.tasks.filter(t=>t.cat===c);
-    return s+ct.reduce((ss,t)=>ss+(isDone(t.id,fmtKey(dates[TODAY_DOW]))?tdiff(t.start,t.end):0),0);
-  },0);
+
+  // Today's Focus text
+  let focusText='';
+  if(td.total===0){focusText='Add tasks to start building your productive day.';}
+  else if(td.pct===100){focusText='🏆 All tasks done — outstanding work today!';}
+  else if(td.pct>0){
+    const pendingTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&!isDone(t.id,fmtKey(dates[TODAY_DOW])));
+    const next=pendingTasks[0];
+    focusText=next?`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — next up: "${next.name}" at ${fmtT(next.start)}.`:`${td.done}/${td.total} tasks done — finish strong!`;
+  } else {
+    const todayTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW));
+    const next=todayTasks[0];
+    focusText=next?`Start your day with "${next.name}" at ${fmtT(next.start)}.`:'Check off your first task to build momentum.';
+  }
+  const focusEl=document.getElementById('focus-block-text');
+  if(focusEl)focusEl.textContent=focusText;
+
+  // Insights panel cards
   const items=[
-    {ico:'🎯',bg:'rgba(124,106,255,.12)',c:'#a78bfa',t:"Today's Focus",
-     x:td.pct===100?'All done! Perfect day 🏆':td.pct>0?`${td.pct}% done — ${td.total-td.done} task${td.total-td.done!==1?'s':''} left.`:'Check off your first task to build momentum.'},
     {ico:'📈',bg:'rgba(16,185,129,.11)',c:'#34d399',t:'Week Momentum',
-     x:`${ws.done}/${ws.total} tasks (${ws.pct}%). ${ws.pct>=80?'Excellent! 💪':ws.pct>=50?'Good progress.':'Aim for 80%+ this week.'}`},
+     x:`${ws.done}/${ws.total} tasks (${ws.pct}%). ${ws.pct>=80?'Excellent! 💪':ws.pct>=50?'Good progress — push for 80%.':'Aim for 80%+ this week.'}`},
     {ico:'🔥',bg:'rgba(249,115,22,.11)',c:'#fb923c',t:'Streak',
-     x:str===0?'No streak. Complete 50%+ today to start.':str===1?'1-day streak! Keep going.':` ${str}-day streak — consistency wins.`},
+     x:str===0?'No streak yet. Complete 50%+ today to start.':str===1?'1-day streak! Keep the momentum going.':` ${str}-day streak — consistency is your superpower.`},
+    {ico:'💡',bg:'rgba(91,110,245,.12)',c:'#a78bfa',t:'Smart Insight',x:''},
   ];
-  document.getElementById('ig').innerHTML=items.map(c=>
+  // Smart insight text
+  const daypcts=dates.map((_,i)=>({day:DAYS7[i],pct:dayStats(dates,i).pct,i}));
+  const completedDays=daypcts.filter(d=>d.i<=TODAY_DOW&&S.weekOff===0);
+  if(completedDays.length>1){
+    const best=completedDays.reduce((a,b)=>a.pct>=b.pct?a:b);
+    const worst=completedDays.reduce((a,b)=>a.pct<=b.pct?a:b);
+    items[2].x=best.pct===worst.pct?`Consistent at ${best.pct}% all week. Keep building the habit.`:`Best on ${best.day} (${best.pct}%). Try scheduling deep work on your strongest days.`;
+  } else if(td.pct===100){items[2].x='Perfect day! 🏆 Replicate this energy pattern tomorrow.';}
+  else{items[2].x='Complete more tasks to unlock personalized performance insights.';}
+
+  const igEl=document.getElementById('ig');
+  if(igEl) igEl.innerHTML=items.map(c=>
     `<div class="ic"><div class="ic-ico" style="background:${c.bg}">${c.ico}</div>
     <div class="ic-t" style="color:${c.c}">${c.t}</div><div class="ic-x">${c.x}</div></div>`).join('');
 }
@@ -900,68 +1123,177 @@ function renderInsights(dates){
 // ════════════════════════════════════════════════════════════
 // ANALYTICS
 // ════════════════════════════════════════════════════════════
-let _bc=null,_dc=null,_lc=null;
+// ANALYTICS
+// ════════════════════════════════════════════════════════════
+let _bc=null,_dc=null,_lc=null,_wh=null;
 let _anaOpts={range:4,habit:'all',view:'pct'};
 function renderAna(dates){
   const el=document.getElementById('ana-cx');
   const allCats=getAllCats();
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const tc=isDark?'#8888aa':'#5a5a7a',gc=isDark?'#252540':'#dcdcf0';
+
+  // Compute key metrics
+  const ws=weekStats(dates);
+  const daypcts=dates.map((_,i)=>({day:DAYS7[i],pct:dayStats(dates,i).pct,done:dayStats(dates,i).done,total:dayStats(dates,i).total,i}));
+  const completedDays=S.weekOff===0?daypcts.filter(d=>d.i<=TODAY_DOW):daypcts;
+  const activeDays=completedDays.filter(d=>d.total>0);
+  const bestDay=activeDays.length?activeDays.reduce((a,b)=>a.pct>=b.pct?a:b):null;
+  const worstDay=activeDays.length>1?activeDays.reduce((a,b)=>a.pct<=b.pct?a:b):null;
+  const missedTasks=daypcts.reduce((s,d)=>s+(d.total-d.done),0);
+
+  // Consistency score
+  const validPcts=activeDays.map(d=>d.pct);
+  let consistencyScore=0;
+  if(validPcts.length>0){
+    const avg=validPcts.reduce((a,b)=>a+b,0)/validPcts.length;
+    const variance=validPcts.reduce((s,v)=>s+Math.pow(v-avg,2),0)/validPcts.length;
+    consistencyScore=Math.max(0,Math.round(avg-Math.sqrt(variance)*0.5));
+  }
+
+  // Insight text
+  let insightText='';
+  if(bestDay&&worstDay&&bestDay.pct!==worstDay.pct){
+    insightText=`You performed best on <strong>${bestDay.day}</strong> (${bestDay.pct}%). Your weakest day is <strong>${worstDay.day}</strong> (${worstDay.pct}%). Focus on improving your low days.`;
+  } else if(bestDay&&bestDay.pct===100){
+    insightText=`Perfect performance on <strong>${bestDay.day}</strong>! Try to replicate this pattern on other days.`;
+  } else {
+    insightText='Complete tasks this week to unlock personalized performance insights.';
+  }
+
+  // Cat breakdown sorted by %
+  const catDataSorted=allCats.map(c=>{
+    const st=catStats(dates,c);
+    return{cat:c,col:getCatColor(c),emoji:getCatEmoji(c),label:getCatLabel(c),...st};
+  }).sort((a,b)=>b.pct-a.pct);
+
+  // Weekly task hours (completed only)
+  const taskHoursData=S.tasks.map(t=>{
+    let doneHrs=0;
+    dates.forEach((d,i)=>{if(t.days.includes(i)&&isDone(t.id,fmtKey(d)))doneHrs+=tdiff(t.start,t.end);});
+    return{name:t.name,hrs:doneHrs,col:getCatColor(t.cat)};
+  }).filter(t=>t.hrs>0).sort((a,b)=>b.hrs-a.hrs).slice(0,8);
+
   el.innerHTML=`
-  <div class="cg2">
-    <div class="ac"><h3>Daily Completion</h3><div class="ac-sub">% of tasks completed each day this week</div><div class="chbox" style="height:200px"><canvas id="bc"></canvas></div></div>
-    <div class="ac"><h3>Category Breakdown <span style="font-size:9px;font-weight:600;padding:2px 7px;border-radius:8px;background:rgba(91,110,245,.15);color:var(--p1);margin-left:4px">This Week</span></h3><div class="ac-sub">Tasks completed per category this week</div><div class="cl" id="cl"></div></div>
+  <!-- 1. Key Metrics Row -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+      <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">✔ Completion Rate</div>
+      <div style="font-family:var(--fh);font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${ws.pct}%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">This Week</div>
+    </div>
+    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+      <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">🔥 Best Day</div>
+      <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#34d399">${bestDay?bestDay.day:'—'}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${bestDay?bestDay.pct+'% complete':'No data yet'}</div>
+    </div>
+    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+      <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">⚠️ Missed Tasks</div>
+      <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#f43f5e">${missedTasks}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">This Week</div>
+    </div>
+    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+      <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">🎯 Consistency</div>
+      <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#a78bfa">${consistencyScore}%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">Consistency Score</div>
+    </div>
   </div>
-  <div class="ac" style="margin-bottom:18px">
+
+  <!-- 2. Insight Card -->
+  <div class="ana-perf-insight" style="margin-bottom:18px">
+    <div class="ins-ico" style="width:38px;height:38px;border-radius:10px;background:rgba(91,110,245,.18);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💡</div>
+    <div class="ins-body">
+      <div class="ins-label" style="font-size:10px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Performance Insight</div>
+      <div class="ins-text" id="ana-insight-text" style="font-size:12px;color:var(--text);line-height:1.6">${insightText}</div>
+    </div>
+  </div>
+
+  <!-- 3. Daily Completion + Category Breakdown -->
+  <div class="cg2" style="margin-bottom:18px">
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
+      <h3>Daily Completion</h3>
+      <div class="ac-sub">% of tasks completed each day this week</div>
+      <div class="chbox" style="height:200px"><canvas id="bc"></canvas></div>
+    </div>
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+        <h3 style="margin-bottom:0">Category Breakdown</h3>
+        <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2);letter-spacing:.2px">Current Week</span>
+      </div>
+      <div class="ac-sub">Sorted by completion %</div>
+      <div class="cl" id="cl"></div>
+    </div>
+  </div>
+
+  <!-- 4. Weekly Completion Trend -->
+  <div class="ac" style="margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.1)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
       <h3 style="margin-bottom:0">Weekly Completion Trend</h3>
-      <span style="font-size:10px;color:var(--text2)">Past ${_anaOpts.range} weeks · % completion</span>
-    </div>
-    <div class="ac-sub">Track your performance week over week</div>
-    <div class="chbox" style="height:220px"><canvas id="lc"></canvas></div>
-    <div class="ana-filter-bar" style="margin-top:14px;margin-bottom:0">
-      <div style="font-size:11px;font-weight:600;color:var(--text2)">Time Range:</div>
       <select class="ana-sel" onchange="_anaOpts.range=parseInt(this.value);renderAna(getWeekDates(S.weekOff))">
         <option value="4" ${_anaOpts.range===4?'selected':''}>Last 4 Weeks</option>
         <option value="8" ${_anaOpts.range===8?'selected':''}>Last 8 Weeks</option>
         <option value="12" ${_anaOpts.range===12?'selected':''}>Last 12 Weeks</option>
       </select>
     </div>
+    <div class="ac-sub">Track your performance week over week</div>
+    <div class="chbox" style="height:220px"><canvas id="lc"></canvas></div>
   </div>
-  <div class="ac" style="margin-bottom:18px">
+
+  <!-- 5 & 6. Weekly Task Hours + Time Split - single row -->
+  <div style="display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:18px">
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
+    <h3>Weekly Task Hours</h3>
+    <div class="ac-sub">Total hours invested per task this week (completed tasks only)</div>
+    <div class="chbox" style="height:${taskHoursData.length>0?Math.max(180,taskHoursData.length*36)+'px':'160px'}">
+      ${taskHoursData.length>0?'<canvas id="wh"></canvas>':'<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);font-size:11px;flex-direction:column;gap:8px"><div style="font-size:28px">⏱</div>Complete tasks this week to see time investment</div>'}
+    </div>
+  </div>
+  <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
     <h3>Time Split</h3><div class="ac-sub">Scheduled hours by category</div>
-    <div class="chbox" style="height:200px"><canvas id="dc"></canvas>
+    <div class="chbox" style="height:200px"><canvas id="dc"></canvas></div>
   </div>
   </div>`;
 
-  // Cat list
-  document.getElementById('cl').innerHTML=allCats.map(c=>{
-    const col=getCatColor(c);
-    const st=catStats(dates,c);
-    return`<div class="cr"><div class="ce" style="background:${col}18">${getCatEmoji(c)}</div>
-      <div class="ci"><div class="cn" style="color:${col}">${getCatLabel(c)}</div>
-      <div class="cpb"><div class="cpf" style="width:${st.pct}%;background:${col}"></div></div>
-      <div class="cnu"><span>${st.done}/${st.total}</span><span>${st.pct}%</span></div></div>
-      <div class="cp" style="color:${col}">${st.pct}%</div></div>`;
-  }).join('');
+  // Cat list - sorted
+  document.getElementById('cl').innerHTML=catDataSorted.map(c=>`
+    <div class="cr"><div class="ce" style="background:${c.col}18">${c.emoji}</div>
+    <div class="ci">
+      <div class="cn" style="color:${c.col}">${c.label} <span style="color:var(--text3);font-weight:400;font-size:9px">(${c.done}/${c.total})</span></div>
+      <div class="cpb"><div class="cpf" style="width:${c.pct}%;background:${c.col}"></div></div>
+      <div class="cnu"><span>${c.done}/${c.total} tasks</span><span>${c.pct}%</span></div>
+    </div>
+    <div class="cp" style="color:${c.col}">${c.pct}%</div></div>`).join('');
 
   if(_bc){try{_bc.destroy();}catch(e){}_bc=null;}
   if(_dc){try{_dc.destroy();}catch(e){}_dc=null;}
   if(_lc){try{_lc.destroy();}catch(e){}_lc=null;}
-
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  const tc=isDark?'#8888aa':'#5a5a7a',gc=isDark?'#252540':'#dcdcf0';
+  if(_wh){try{_wh.destroy();}catch(e){}_wh=null;}
 
   requestAnimationFrame(()=>{
-    // Daily completion bar chart
+    // Daily completion - best/worst highlights
     const pcts=dates.map((_,i)=>dayStats(dates,i).pct);
+    const maxP=Math.max(...pcts.filter((_,i)=>activeDays.find(d=>d.i===i)));
+    const minP=activeDays.length>1?Math.min(...activeDays.map(d=>d.pct)):null;
     const bc=document.getElementById('bc');
     if(bc) _bc=new Chart(bc,{type:'bar',data:{labels:DAYS7,datasets:[{data:pcts,
-      backgroundColor:pcts.map((p,i)=>i===TODAY_DOW&&S.weekOff===0?'#818cf8':p===100?'#10b981':p>0?'#5b6ef5':(isDark?'#252540':'#dcdcf0')),
+      backgroundColor:pcts.map((p,i)=>{
+        const isActive=activeDays.find(d=>d.i===i);
+        if(i===TODAY_DOW&&S.weekOff===0) return '#818cf8';
+        if(isActive&&p===maxP&&p>0) return '#10b981';
+        if(isActive&&p===minP&&activeDays.length>1&&p<maxP) return isDark?'rgba(244,63,94,.55)':'rgba(244,63,94,.45)';
+        return p>0?'#5b6ef5':(isDark?'#252540':'#dcdcf0');
+      }),
       borderRadius:7,borderSkipped:false}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw}%`}}},
-      scales:{y:{min:0,max:100,ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:25},grid:{color:gc},border:{display:false}},
-              x:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:c=>{
+            const d=daypcts[c.dataIndex];
+            return `${c.raw}% — ${d.done}/${d.total} tasks`;
+          }}}},
+        scales:{y:{min:0,max:100,ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:25},grid:{color:gc},border:{display:false}},
+                x:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
 
-    // Build weekly trend data — always % completion
+    // Weekly trend line
     const n=_anaOpts.range;
     const labels=[];const trendData=[];
     for(let w=n-1;w>=0;w--){
@@ -973,12 +1305,10 @@ function renderAna(dates){
       }));
       trendData.push(total?Math.round(done/total*100):0);
     }
-
     const lc=document.getElementById('lc');
     if(lc) _lc=new Chart(lc,{type:'line',
       data:{labels,datasets:[{
-        data:trendData,
-        borderColor:'#5b6ef5',
+        data:trendData,borderColor:'#5b6ef5',
         backgroundColor:(ctx)=>{
           const g=ctx.chart.ctx.createLinearGradient(0,0,0,220);
           g.addColorStop(0,'rgba(91,110,245,.22)');g.addColorStop(1,'rgba(91,110,245,0)');return g;
@@ -988,10 +1318,24 @@ function renderAna(dates){
       }]},
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
         tooltip:{callbacks:{label:c=>`${c.raw}% completion`}}},
-        scales:{y:{min:0,max:100,
-          ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:25},
-          grid:{color:gc},border:{display:false}},
-          x:{ticks:{color:tc,font:{size:10},maxRotation:30},grid:{display:false},border:{display:false}}}}});
+        scales:{y:{min:0,max:100,ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:25},grid:{color:gc},border:{display:false}},
+                x:{ticks:{color:tc,font:{size:10},maxRotation:30},grid:{display:false},border:{display:false}}}}});
+
+    // Weekly Task Hours horizontal bar
+    const wh=document.getElementById('wh');
+    if(wh&&taskHoursData.length>0) _wh=new Chart(wh,{type:'bar',
+      data:{
+        labels:taskHoursData.map(t=>t.name.length>18?t.name.slice(0,16)+'…':t.name),
+        datasets:[{data:taskHoursData.map(t=>parseFloat(t.hrs.toFixed(1))),
+          backgroundColor:taskHoursData.map(t=>t.col+'cc'),
+          borderColor:taskHoursData.map(t=>t.col),
+          borderWidth:1,borderRadius:5,borderSkipped:false}]},
+      options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:c=>`${c.raw}h invested this week`}}},
+        scales:{
+          x:{ticks:{color:tc,font:{size:10},callback:v=>v+'h'},grid:{color:gc},border:{display:false}},
+          y:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
 
     // Doughnut by category
     const dc=document.getElementById('dc');
@@ -1010,31 +1354,52 @@ function renderAna(dates){
 // SCHEDULE VIEW
 // ════════════════════════════════════════════════════════════
 function renderSch(dates){
-  const sorted=[...S.tasks].sort((a,b)=>a.start.localeCompare(b.start));
-  document.getElementById('sg').innerHTML=sorted.map(t=>{
+  const byPri={high:[],med:[],low:[]};
+  [...S.tasks].sort((a,b)=>a.start.localeCompare(b.start)).forEach(t=>{
+    const p=t.pri==='high'?'high':t.pri==='low'?'low':'med';
+    byPri[p].push(t);
+  });
+  const priCfg={
+    high:{label:'🔴 High Priority',color:'#f43f5e',bg:'rgba(244,63,94,.08)',border:'rgba(244,63,94,.2)'},
+    med: {label:'🟡 Medium Priority',color:'#eab308',bg:'rgba(234,179,8,.08)',border:'rgba(234,179,8,.2)'},
+    low: {label:'🟢 Low Priority',color:'#10b981',bg:'rgba(16,185,129,.08)',border:'rgba(16,185,129,.2)'}
+  };
+  function cardHtml(t){
     const col=getCatColor(t.cat),dur=tdiff(t.start,t.end);
-    return`<div class="sc" style="border-left:3px solid ${col}">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px">
-        <div>
-          <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:4px">${t.name}</div>
-          <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
-            <span class="tt-tag" style="background:${col}22;color:${col}">${getCatLabel(t.cat)}</span>
-            <span style="font-size:10px;color:var(--text2)">${fmtT(t.start)} – ${fmtT(t.end)}</span>
-            <span style="font-size:10px;color:var(--text3)">${dur.toFixed(1)}h</span>
-            <span style="font-size:9px;padding:1px 5px;border-radius:4px;background:var(--bg3);color:var(--text2)">${t.pri}</span>
-          </div>
-        </div>
-        <div style="display:flex;gap:4px;flex-shrink:0;margin-left:6px">
-          <button class="btn btn-ghost btn-sm" onclick="openTaskModal('${t.id}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="delTask('${t.id}')">Del</button>
+    return`<div class="sch-card" style="border:1px solid var(--border)">
+      <div class="sch-card-accent" style="background:${col}"></div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">
+        <div class="sch-card-name">${t.name}</div>
+        <div style="display:flex;gap:3px;flex-shrink:0;margin-left:6px">
+          <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit" style="width:24px;height:24px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="sch-del ta dl" onclick="delTask('${t.id}')" title="Delete" style="width:24px;height:24px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+          </button>
         </div>
       </div>
-      <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:7px">
-        ${DAYS7S.map((d,i)=>`<span style="width:26px;height:20px;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:9px;font-weight:700;background:${t.days.includes(i)?col+'22':'var(--border)'};color:${t.days.includes(i)?col:'var(--text3)'};border:1px solid ${t.days.includes(i)?col+'44':'transparent'}">${d}</span>`).join('')}
+      <div class="sch-card-meta">
+        <span style="font-size:11px;font-weight:600;color:var(--text2)">${fmtT(t.start)} – ${fmtT(t.end)}</span>
+        <span class="tt-tag" style="background:${col}20;color:${col};border-color:${col}40">${getCatLabel(t.cat)}</span>
+        <span style="font-size:9px;color:var(--text3)">${dur.toFixed(1)}h</span>
       </div>
-      ${t.notes?`<div style="margin-top:8px;padding-top:7px;border-top:1px solid var(--border);font-size:10px;color:var(--text2);line-height:1.5">${t.notes}</div>`:''}
+      <div style="display:flex;gap:3px;flex-wrap:wrap;padding-left:10px">
+        ${DAYS7S.map((d,i)=>`<span style="width:24px;height:18px;display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:8px;font-weight:700;background:${t.days.includes(i)?col+'22':'var(--border)'};color:${t.days.includes(i)?col:'var(--text3)'};border:1px solid ${t.days.includes(i)?col+'44':'transparent'}">${d}</span>`).join('')}
+      </div>
+      ${t.notes?`<div style="margin-top:7px;padding-top:6px;border-top:1px solid var(--border);font-size:10px;color:var(--text2);line-height:1.5;padding-left:10px">${t.notes}</div>`:''}
     </div>`;
-  }).join('');
+  }
+  document.getElementById('sg').innerHTML=['high','med','low'].map(pri=>`
+    <div>
+      <div class="pri-col-header" style="background:${priCfg[pri].bg};border-color:${priCfg[pri].border}">
+        <span style="font-size:12px;font-weight:700;color:${priCfg[pri].color}">${priCfg[pri].label}</span>
+        <span style="margin-left:auto;font-size:10px;font-weight:600;color:var(--text3)">${byPri[pri].length} task${byPri[pri].length!==1?'s':''}</span>
+      </div>
+      <div class="pri-col-body">
+        ${byPri[pri].length?byPri[pri].map(t=>cardHtml(t)).join(''):`<div style="padding:14px;text-align:center;font-size:11px;color:var(--text3)">No ${pri} priority tasks</div>`}
+      </div>
+    </div>`).join('');
 }
 
 // ════════════════════════════════════════════════════════════
@@ -1063,7 +1428,10 @@ function renderHabits(dates){
   </div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
     <div style="font-family:var(--fh);font-size:14px;font-weight:700">Habit Cards</div>
-    <div style="font-size:10px;color:var(--text2);background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:4px 10px">📖 Read-only · Auto-synced from Dashboard</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2);letter-spacing:.2px">Current Week</span>
+      <div style="font-size:10px;color:var(--text2);background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:4px 10px">🔄 Synced with your weekly schedule</div>
+    </div>
   </div>
   <div class="hg">${S.tasks.map(t=>{
     const col=getCatColor(t.cat);
@@ -1205,6 +1573,25 @@ function updateTimerDisplay(){
 // NOTES
 // ════════════════════════════════════════════════════════════
 let noteEditId=null,noteColor='#1e1e2e';
+
+function timeAgo(ts){
+  if(!ts)return'';
+  const diff=Date.now()-ts;
+  const m=Math.floor(diff/60000);
+  if(m<1)return'Just now';
+  if(m<60)return`Edited ${m}m ago`;
+  const h=Math.floor(m/60);
+  if(h<24)return`Edited ${h}h ago`;
+  const d=Math.floor(h/24);
+  return`Edited ${d}d ago`;
+}
+
+function toggleNotePin(id,e){
+  e.stopPropagation();
+  const idx=S.notes.findIndex(n=>n.id===id);
+  if(idx>-1){S.notes[idx].pinned=!S.notes[idx].pinned;saveS();renderNotes();}
+}
+
 function renderNotes(){
   const el=document.getElementById('notes-cx');
   if(S.notes.length===0){
@@ -1215,18 +1602,43 @@ function renderNotes(){
     </div>`;
     return;
   }
-  el.innerHTML=`<div class="notes-grid">${S.notes.map(n=>{
+  // Sort: pinned first, then by updatedAt/createdAt desc (most recent on top)
+  const sorted=[...S.notes].sort((a,b)=>{
+    if(a.pinned&&!b.pinned)return -1;
+    if(!a.pinned&&b.pinned)return 1;
+    return (b.updatedAt||b.createdAt||0)-(a.updatedAt||a.createdAt||0);
+  });
+  el.innerHTML=`<div class="notes-grid">${sorted.map(n=>{
     const isDark=document.documentElement.getAttribute('data-theme')==='dark';
     const bg=isDark?n.color:(n.color.replace(/1[ae]/g,'e').replace(/2[ae]/g,'f').replace('0d','f'));
-    const tags=n.tags?n.tags.filter(Boolean).map(t=>`<span style="padding:1px 6px;border-radius:10px;background:rgba(124,106,255,.2);color:#a78bfa;font-size:9px">${t}</span>`).join(''):'';
-    return`<div class="note-card" style="background:${bg};border-color:${n.color}88" onclick="openNoteModal('${n.id}')">
+    const tagColors=[
+      {bg:'rgba(124,106,255,.18)',color:'#a78bfa',border:'rgba(124,106,255,.25)'},
+      {bg:'rgba(16,185,129,.14)',color:'#34d399',border:'rgba(16,185,129,.22)'},
+      {bg:'rgba(249,115,22,.14)',color:'#fb923c',border:'rgba(249,115,22,.22)'},
+      {bg:'rgba(6,182,212,.14)',color:'#22d3ee',border:'rgba(6,182,212,.22)'},
+      {bg:'rgba(244,63,94,.14)',color:'#f87171',border:'rgba(244,63,94,.22)'},
+      {bg:'rgba(234,179,8,.14)',color:'#fcd34d',border:'rgba(234,179,8,.22)'},
+    ];
+    const tags=n.tags?n.tags.filter(Boolean).map((t,idx)=>{
+      const tc=tagColors[idx%tagColors.length];
+      return`<span style="padding:3px 8px;border-radius:20px;background:${tc.bg};color:${tc.color};font-size:9px;font-weight:700;border:1px solid ${tc.border};letter-spacing:.2px">${t}</span>`;
+    }).join(''):'';
+    const ago=timeAgo(n.updatedAt||n.createdAt);
+    return`<div class="note-card ${n.pinned?'pinned':''}" style="background:${bg};border-color:${n.pinned?'rgba(91,110,245,.45)':n.color+'88'}" onclick="openNoteModal('${n.id}')">
+      ${n.pinned?`<div style="position:absolute;top:10px;left:10px;width:5px;height:5px;border-radius:50%;background:var(--p1);box-shadow:0 0 8px rgba(91,110,245,.7)"></div>`:''}
       <div class="nc-head">
-        <div class="nc-title">${n.title||'Untitled'}</div>
-        <button class="note-del" onclick="event.stopPropagation();delNote('${n.id}')">✕</button>
+        <div class="nc-title" style="padding-left:${n.pinned?'12px':'0'}">${n.title||'Untitled'}</div>
+        <div class="note-card-actions">
+          <button class="note-pin-btn ${n.pinned?'pinned-active':''}" onclick="toggleNotePin('${n.id}',event)" title="${n.pinned?'Unpin':'Pin note'}">📌</button>
+          <button class="note-del" onclick="event.stopPropagation();delNote('${n.id}')">✕</button>
+        </div>
       </div>
       <div class="nc-body" style="color:var(--text2)">${n.body||''}</div>
-      ${tags?`<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px">${tags}</div>`:''}
-      <div class="nc-foot" style="color:var(--text3)"><span>${n.date||''}</span><span>${(n.body||'').length} chars</span></div>
+      ${tags?`<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:9px">${tags}</div>`:''}
+      <div class="nc-foot" style="color:var(--text3)">
+        <span style="font-size:10px">${ago||n.date||''}</span>
+        ${n.pinned?`<span style="font-size:9px;color:var(--p1);font-weight:600;letter-spacing:.3px">PINNED</span>`:''}
+      </div>
     </div>`;
   }).join('')}</div>`;
 }
@@ -1248,12 +1660,13 @@ function saveNote(){
   if(!title&&!body){toast('Enter a title or content','#f43f5e');return;}
   const tags=document.getElementById('fn-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
   const now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const nowTs=Date.now();
   if(noteEditId){
     const idx=S.notes.findIndex(n=>n.id===noteEditId);
-    if(idx>-1)S.notes[idx]={...S.notes[idx],title,body,tags,color:noteColor};
+    if(idx>-1)S.notes[idx]={...S.notes[idx],title,body,tags,color:noteColor,updatedAt:nowTs};
     toast('Note updated ✓','#34d399');
   } else {
-    S.notes.unshift({id:'n'+Date.now(),title,body,tags,color:noteColor,date:now});
+    S.notes.unshift({id:'n'+Date.now(),title,body,tags,color:noteColor,date:now,createdAt:nowTs,updatedAt:nowTs});
     toast('Note saved ✓','#34d399');
   }
   closeMo('mo-note');saveS();renderNotes();
@@ -1291,64 +1704,61 @@ function renderProfile(){
   const statusColor=str>0?'#fb923c':(ws.pct===100?'#34d399':'#5b6ef5');
 
   document.getElementById('prof-cx').innerHTML=`
-  <!-- Hero Card: no banner, premium minimal -->
-  <div class="prof-hero" style="background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:28px 28px 22px 34px;margin-bottom:16px;position:relative;overflow:hidden">
-    <!-- Brand accent line left -->
-    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--grad);border-radius:3px 0 0 3px"></div>
-    <!-- Subtle corner glow -->
-    <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(91,110,245,.07) 0%,transparent 70%);pointer-events:none"></div>
+  <!-- Hero Card: brand-colored gradient background -->
+  <div style="background:linear-gradient(135deg,rgba(91,110,245,.22) 0%,rgba(124,58,237,.18) 45%,rgba(14,165,233,.14) 100%);border:1px solid rgba(91,110,245,.32);border-radius:var(--rr);padding:26px 28px 20px 32px;margin-bottom:14px;position:relative;overflow:hidden">
+    <!-- Glow layers -->
+    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--grad);border-radius:3px 0 0 3px;z-index:1"></div>
+    <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(91,110,245,.15) 0%,transparent 70%);pointer-events:none"></div>
+    <div style="position:absolute;bottom:-40px;left:60px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,.1) 0%,transparent 70%);pointer-events:none"></div>
 
-    <div class="prof-identity" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;position:relative;z-index:1">
       <!-- Avatar -->
       <div style="position:relative;flex-shrink:0">
-        <div style="padding:3px;border-radius:50%;background:var(--grad);display:inline-block">
+        <div style="padding:3px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.4),rgba(255,255,255,.1));display:inline-block">
           ${avHtml}
         </div>
-        <div class="prof-av-edit" onclick="document.getElementById('av-file').click()" title="Change photo"
-          style="position:absolute;bottom:2px;right:2px;width:22px;height:22px;border-radius:50%;background:var(--p1);border:2px solid var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;transition:transform .2s">📷</div>
+        <div onclick="document.getElementById('av-file').click()" title="Change photo"
+          style="position:absolute;bottom:2px;right:2px;width:24px;height:24px;border-radius:50%;background:var(--p1);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#fff;transition:transform .2s;box-shadow:0 2px 8px rgba(0,0,0,.3)"
+          onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform='scale(1)'">📷</div>
       </div>
 
       <!-- Identity info -->
       <div style="flex:1;min-width:160px">
-        <!-- System status pill -->
-        <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;background:rgba(91,110,245,.1);border:1px solid rgba(91,110,245,.22);color:var(--p1);margin-bottom:8px">
-          <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 5px #4ade80;flex-shrink:0;display:inline-block"></span>
+        <!-- Status pill -->
+        <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);margin-bottom:9px">
+          <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;flex-shrink:0;display:inline-block"></span>
           APEX System · Active
         </div>
-        <div class="prof-name" style="font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:2px">${p.name||'Your Name'}</div>
-        <div class="prof-role" style="font-size:13px;color:var(--text2);margin-bottom:10px">${p.role||'Life Optimizer'}</div>
+        <div style="font-family:var(--fh);font-size:28px;font-weight:800;margin-bottom:3px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.25);letter-spacing:-.5px;line-height:1.1">${p.name||'Your Name'}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:12px;font-weight:400">${p.role||'Life Optimizer'}</div>
         <!-- Badges -->
         <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(91,110,245,.1);border:1px solid rgba(91,110,245,.2);color:var(--p1)">${S.tasks.length} Tasks</span>
-          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:#34d399">${ws.pct}% This Week</span>
-          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.2);color:#fb923c">${statusLabel}</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9)">${S.tasks.length} Tasks</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);color:#6ee7b7">${ws.pct}% This Week</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.25);color:#fdba74">${statusLabel}</span>
         </div>
       </div>
+    </div>
 
-      <!-- Stat column (right side) -->
-      <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;border-left:1px solid var(--border);padding-left:22px;min-width:100px">
-        <div style="text-align:right">
-          <div style="font-family:var(--fh);font-size:24px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">${total}</div>
-          <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:1px">Tasks Done</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-family:var(--fh);font-size:24px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">${str}</div>
-          <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:1px">Day Streak</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-family:var(--fh);font-size:24px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">${hrs.toFixed(0)}h</div>
-          <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:1px">Scheduled</div>
-        </div>
+    <!-- Weekly progress bar inside hero - with top gap for separation -->
+    <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);position:relative;z-index:1">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+        <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.4px;text-transform:uppercase">📊 Weekly Progress</span>
+        <span style="font-family:var(--fh);font-size:13px;font-weight:800;color:#fff">${ws.pct}%</span>
       </div>
+      <div style="height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden">
+        <div class="prof-progress-fill" style="height:100%;width:${ws.pct}%;border-radius:3px;transition:width .9s ease"></div>
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:5px">${ws.pct>=60?`You're ahead of 60% of your week goal 🎯`:ws.pct>=30?`Keep going — you're building momentum`:`Start checking off tasks to build your streak`}</div>
     </div>
   </div>
 
   <!-- Stats row -->
-  <div class="prof-stats" style="margin-bottom:16px">
-    <div class="ps-item"><div class="ps-v">${ws.pct}%</div><div class="ps-l">This Week</div></div>
-    <div class="ps-item"><div class="ps-v">${str}</div><div class="ps-l">Streak Days</div></div>
-    <div class="ps-item"><div class="ps-v">${total}</div><div class="ps-l">Tasks Done</div></div>
+  <div class="prof-stats" style="margin-bottom:14px">
+    <div class="ps-item"><div class="ps-v">${str}</div><div class="ps-l">Day Streak</div></div>
     <div class="ps-item"><div class="ps-v">${S.tasks.length}</div><div class="ps-l">Active Tasks</div></div>
+    <div class="ps-item"><div class="ps-v">${total}</div><div class="ps-l">All-time Done</div></div>
+    <div class="ps-item"><div class="ps-v">${hrs.toFixed(0)}h</div><div class="ps-l">Daily Load</div></div>
   </div>
 
   <!-- Edit forms -->
@@ -1381,7 +1791,11 @@ function saveProfile(){
     mantra: document.getElementById('pp-mantra')?.value.trim()||'',
     motivation:document.getElementById('pp-motiv')?.value.trim()||'',
   };
-  saveS();updateSbProfile();renderProfile();toast('Profile saved ✓','#34d399');
+  saveS();updateSbProfile();renderProfile();
+  toast('Profile saved successfully ✓','#34d399');
+  // Briefly animate the save button
+  const btn=document.querySelector('#view-profile .btn-pri');
+  if(btn){btn.textContent='Saved! ✓';btn.style.background='linear-gradient(135deg,#10b981,#34d399)';setTimeout(()=>{btn.textContent='Save Changes';btn.style.background='';},1800);}
 }
 function handleAvatar(e){
   const file=e.target.files[0];if(!file)return;
@@ -1421,9 +1835,9 @@ function renderSettings(){
     .slice(0,3);
 
   document.getElementById('set-cx').innerHTML=`
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
 
-    <div class="set-sec" style="grid-column:span 2;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:var(--rr);background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.06));border:1px solid rgba(91,110,245,.2)">
+    <div class="set-sec" style="grid-column:span 2;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:var(--rr);background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.06));border:1px solid rgba(91,110,245,.2)">
       <div style="display:flex;align-items:center;gap:12px">
         <span style="font-size:20px">🎨</span>
         <div><div style="font-size:13px;font-weight:700">Dark Mode</div><div style="font-size:11px;color:var(--text2)">Toggle dark / light theme for comfortable viewing</div></div>
@@ -1436,10 +1850,6 @@ function renderSettings(){
       <div class="set-row">
         <div class="set-info"><div class="t">Task Reminders</div><div class="d">Get notified before your next scheduled task begins</div></div>
         <div class="tog ${notifOn?'on':''}" onclick="toggleNotif()"></div>
-      </div>
-      <div class="set-row">
-        <div class="set-info"><div class="t">Priority Alerts</div><div class="d">Extra reminders for High priority tasks</div></div>
-        <div class="tog ${S.sett.notifPriority?'on':''}" onclick="S.sett.notifPriority=!S.sett.notifPriority;saveS();renderSettings()"></div>
       </div>
       <div class="set-row">
         <div class="set-info"><div class="t">Reminder Lead Time</div><div class="d">Minutes before a task to notify you</div></div>
@@ -1460,7 +1870,7 @@ function renderSettings(){
           return`<div class="notif-item">
             <div class="notif-dot" style="background:${getCatColor(t.cat)}"></div>
             <div style="flex:1"><div style="font-size:11px;font-weight:600">${t.name}</div>
-            <div style="font-size:10px;color:var(--text2)">Starts at ${h12}:${String(m).padStart(2,'0')} ${ap} · in ${minsUntil}min</div></div>
+            <div style="font-size:10px;color:var(--text2)">Starts at ${h12}:${String(m).padStart(2,'0')} ${ap} · in ${fmtMins(minsUntil)}</div></div>
           </div>`;
         }).join('')}
       </div>`:''}
@@ -1472,23 +1882,33 @@ function renderSettings(){
         <button class="btn btn-ghost" style="justify-content:flex-start;width:100%;gap:10px" onclick="expJSON()"><span>📄</span> Export JSON Backup</button>
         <button class="btn btn-ghost" style="justify-content:flex-start;width:100%;gap:10px" onclick="expCSV()"><span>📊</span> Export CSV Report</button>
         <div style="height:1px;background:var(--border);margin:4px 0"></div>
-        <button class="btn btn-danger" style="justify-content:flex-start;width:100%;gap:10px" onclick="confirmReset()"><span>🗑</span> Reset Check Data</button>
+        <button style="display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;background:transparent;border:1px solid rgba(244,63,94,.3);color:var(--r1);transition:all .2s;width:100%" onmouseover="this.style.background='rgba(244,63,94,.08)'" onmouseout="this.style.background='transparent'" onclick="confirmReset()"><span>🗑</span> Reset All Data</button>
       </div>
     </div>
 
     <div class="set-sec" style="grid-column:span 2">
-      <h3><span class="sh3-ico">⚡</span> About APEX</h3>
+      <h3><div style="width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:var(--grad);color:#fff;font-family:var(--fh);font-weight:800;font-size:11px">A</div> About APEX</h3>
       <div style="max-width:780px">
-        <p style="font-size:12px;color:var(--text2);line-height:1.8;margin-bottom:14px;font-weight:400">A complete personal productivity system designed to help you focus better, build consistency, and take control of your day—without compromising your privacy. All data stored locally in your browser. No account, no server, fully private.</p>
-        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px">⚡ What you can do with APEX</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 28px;margin-bottom:16px">
-          ${['Dashboard — Your day, clear and in control','Schedule Manager — Plan your day with clarity and control','Analytics & Charts — Turn your data into real insights','Habit Tracker — Build discipline, one day at a time','Focus Timer — Pomodoro, deep work, distraction-free','Quick Notes — Capture ideas instantly','Profile Page — Personalize your system your way','Dark / Light Mode — Work comfortably, anytime','CSV & JSON Export — Your data, always portable','Notifications — Timely reminders that keep you on track'].map(f=>`<div style="font-size:11px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:6px"><span style="color:var(--p1);margin-top:1px">•</span>${f}</div>`).join('')}
+        <!-- Privacy message prominent -->
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border-radius:10px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);margin-bottom:14px">
+          <span style="font-size:20px;flex-shrink:0">🔒</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#34d399;margin-bottom:3px">Your Privacy is Protected</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.6">All data is stored locally in your browser. No account, no server — fully private.</div>
+          </div>
         </div>
-        <div style="background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));border:1px solid rgba(91,110,245,.18);border-radius:12px;padding:16px 20px">
-          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:6px">🚀 Why APEX?</div>
-          <div style="font-size:12px;color:var(--text2);line-height:1.8">Because productivity isn't about doing more—it's about doing what matters, consistently.<br>
-          <strong style="color:var(--p1)">APEX helps you show up, stay consistent, and become unstoppable.</strong></div>
+        <p style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:0">Apex is a complete personal productivity system — schedule, habits, focus timer, and notes — built to help you stay consistent and take control of your day.</p>
+        <div id="about-details" style="display:none;margin-top:14px">
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px">⚡ What you can do with APEX</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 28px;margin-bottom:16px">
+            ${['Dashboard — Your day, clear and in control','Schedule Manager — Plan your day with clarity','Analytics & Charts — Turn data into insights','Habit Tracker — Build discipline, one day at a time','Focus Timer — Deep work, distraction-free','Quick Notes — Capture ideas instantly','Profile Page — Personalize your system','Dark / Light Mode — Work comfortably, anytime','CSV & JSON Export — Your data, always portable','Notifications — Timely reminders'].map(f=>`<div style="font-size:11px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:6px"><span style="color:var(--p1);margin-top:1px">•</span>${f}</div>`).join('')}
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));border:1px solid rgba(91,110,245,.18);border-radius:10px;padding:14px 18px">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px">🚀 Why APEX?</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7">Productivity isn't about doing more — it's about doing what matters, consistently. <strong style="color:var(--p1)">APEX helps you show up, stay consistent, and become unstoppable.</strong></div>
+          </div>
         </div>
+        <button onclick="const d=document.getElementById('about-details');const showing=d.style.display!=='none';d.style.display=showing?'none':'block';this.textContent=showing?'Learn more ↓':'Show less ↑'" style="margin-top:12px;background:transparent;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0">Learn more ↓</button>
       </div>
     </div>
 
@@ -1698,25 +2118,125 @@ function toast(msg,col){
 }
 
 // ════════════════════════════════════════════════════════════
+// NOTIFICATION BELL PANEL
+// ════════════════════════════════════════════════════════════
+function toggleNotifPanel(){
+  const panel=document.getElementById('notif-panel');
+  if(!panel)return;
+  const isOpen=panel.classList.contains('open');
+  if(!isOpen){
+    renderNotifPanel();
+    panel.classList.add('open');
+    // close on outside click
+    setTimeout(()=>document.addEventListener('click',closeNotifPanelOutside),10);
+  } else {
+    panel.classList.remove('open');
+    document.removeEventListener('click',closeNotifPanelOutside);
+  }
+}
+function closeNotifPanelOutside(e){
+  const wrap=document.getElementById('notif-bell-wrap');
+  if(wrap&&!wrap.contains(e.target)){
+    document.getElementById('notif-panel')?.classList.remove('open');
+    document.removeEventListener('click',closeNotifPanelOutside);
+  }
+}
+function toggleNotifFromPanel(){
+  S.sett.notif=!S.sett.notif;
+  if(S.sett.notif&&'Notification' in window){
+    Notification.requestPermission().then(p=>{if(p==='granted')scheduleSmartReminders();});
+  }
+  saveS();renderNotifPanel();updateRedDot();
+}
+function renderNotifPanel(){
+  const tog=document.getElementById('notif-panel-tog');
+  if(tog)tog.classList.toggle('on',!!S.sett.notif);
+  const body=document.getElementById('notif-panel-body');
+  if(!body)return;
+  const dates=getWeekDates(S.weekOff);
+  const now=new Date();
+  const curMins=now.getHours()*60+now.getMinutes();
+  const todayTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0);
+  // Find current, next, remaining
+  let currentTask=null, nextTask=null;
+  const remaining=[];
+  todayTasks.forEach(t=>{
+    const[sh,sm]=t.start.split(':').map(Number);
+    let[eh,em]=t.end.split(':').map(Number);
+    if(eh===0&&em===0){eh=24;em=0;}
+    const sM=sh*60+sm,eM=eh*60+em;
+    if(curMins>=sM&&curMins<eM&&!currentTask) currentTask={...t,sM,eM};
+    else if(sM>curMins){
+      if(!nextTask) nextTask={...t,sM};
+      else remaining.push({...t,sM});
+    }
+  });
+  let html='';
+  if(!S.sett.notif){
+    html=`<div class="notif-empty">🔕 Notifications are off.<br><span style="color:var(--text2)">Toggle above to enable reminders.</span></div>`;
+  } else if(todayTasks.length===0){
+    html=`<div class="notif-empty">📭 No tasks scheduled for today.</div>`;
+  } else {
+    if(currentTask){
+      const[eh,em]=currentTask.end.split?currentTask.end.split(':').map(Number):[Math.floor(currentTask.eM/60),currentTask.eM%60];
+      html+=`<div class="notif-section">
+        <div class="notif-section-label" style="color:#a78bfa">▶ Currently Ongoing</div>
+        <div class="notif-task-item">
+          <div class="notif-task-dot" style="background:${getCatColor(currentTask.cat)}"></div>
+          <div><div class="notif-task-name">${currentTask.name}</div>
+          <div class="notif-task-time">Until ${fmtT(currentTask.end)} · <span class="tt-tag" style="background:${getCatColor(currentTask.cat)}20;color:${getCatColor(currentTask.cat)};border-color:${getCatColor(currentTask.cat)}40">${getCatLabel(currentTask.cat)}</span></div></div>
+        </div>
+      </div>`;
+    }
+    if(nextTask){
+      const minsUntil=nextTask.sM-curMins;
+      const urgentStyle=minsUntil<=(S.sett.leadMins||10)?'color:#f43f5e;font-weight:700':'color:var(--text2)';
+      html+=`<div class="notif-section" style="border-top:1px solid var(--border)">
+        <div class="notif-section-label" style="color:#38bdf8">⏭ Next Task</div>
+        <div class="notif-task-item">
+          <div class="notif-task-dot" style="background:${getCatColor(nextTask.cat)}"></div>
+          <div><div class="notif-task-name">${nextTask.name}</div>
+          <div class="notif-task-time"><span style="${urgentStyle}">In ${fmtMins(minsUntil)} · ${fmtT(nextTask.start)}</span></div></div>
+        </div>
+      </div>`;
+    }
+    if(remaining.length){
+      html+=`<div class="notif-section" style="border-top:1px solid var(--border)">
+        <div class="notif-section-label">📋 Remaining Today (${remaining.length})</div>
+        ${remaining.slice(0,3).map(t=>`<div class="notif-task-item">
+          <div class="notif-task-dot" style="background:${getCatColor(t.cat)}"></div>
+          <div><div class="notif-task-name">${t.name}</div>
+          <div class="notif-task-time">${fmtT(t.start)}</div></div>
+        </div>`).join('')}
+        ${remaining.length>3?`<div style="font-size:10px;color:var(--text3);padding:4px 0">+${remaining.length-3} more tasks…</div>`:''}
+      </div>`;
+    }
+    if(!currentTask&&!nextTask&&!remaining.length){
+      html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
+    }
+  }
+  body.innerHTML=html;
+}
+
+// ════════════════════════════════════════════════════════════
 // RED DOT INDICATOR
 // ════════════════════════════════════════════════════════════
 function updateRedDot(){
-  // Show red dot on Settings if: notifications enabled AND there are upcoming tasks today
   const now=new Date();
   const curMins=now.getHours()*60+now.getMinutes();
-  const hasUpcoming=S.sett.notif&&S.tasks.some(t=>{
+  const lead=S.sett.leadMins||10;
+  // Bell red dot: show when a task is within lead-time of starting
+  const hasImminent=S.sett.notif&&S.weekOff===0&&S.tasks.some(t=>{
     if(!t.days.includes(TODAY_DOW))return false;
     const[h,m]=t.start.split(':').map(Number);
     const startMins=h*60+m;
-    return startMins>curMins&&startMins-curMins<=60; // within next 60 min
+    return startMins>curMins&&startMins-curMins<=lead;
   });
+  const bellDot=document.getElementById('bell-red-dot');
+  if(bellDot)bellDot.classList.toggle('show',hasImminent);
+  // Sidebar settings dot (legacy)
   const dot=document.getElementById('notif-dot-sb');
-  if(dot)dot.style.display=hasUpcoming?'block':'none';
-  // Also show dot on the topbar Add Task button area if any tasks are incomplete today
-  const dates=getWeekDates(S.weekOff);
-  const td=dayStats(dates,TODAY_DOW);
-  const dashDot=document.getElementById('dash-notif-dot');
-  if(dashDot)dashDot.style.display=(td.total>0&&td.done<td.total&&S.weekOff===0)?'block':'none';
+  if(dot)dot.style.display=hasImminent?'block':'none';
 }
 
 // ════════════════════════════════════════════════════════════
