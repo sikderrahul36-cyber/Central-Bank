@@ -105,20 +105,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tab.on{background:var(--card3);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.25)}
 /* ── TIMETABLE ─────────────────────────────────────────────── */
 .tt-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);overflow:auto;margin-bottom:20px;transition:background .3s}
-.tt{width:100%;border-collapse:collapse;min-width:680px}
+.tt{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
 .tt th{padding:9px 7px;font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);background:var(--bg3);white-space:nowrap}
-.tt th:first-child{text-align:left;padding-left:14px;min-width:210px}
+.tt th:first-child{text-align:left;padding-left:12px}
 .tt th:last-child{border-right:none}
 .tt th.tc{color:var(--p1)}
 .tt td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:middle;transition:background .15s}
 .tt td:last-child{border-right:none}
 .tt tr:last-child td{border-bottom:none}
 .tt tr:hover td{background:rgba(124,106,255,.025)}
-.tt-ic{padding:9px 11px 9px 14px;display:flex;align-items:center;gap:9px}
-.tt-dot{width:3px;height:30px;border-radius:3px;flex-shrink:0}
+.tt-ic{padding:9px 11px 9px 14px;display:flex;align-items:center;gap:9px}.tt-dot{width:3px;height:30px;border-radius:3px;flex-shrink:0}
 .tt-tx{flex:1;min-width:0}
-.tt-n{font-size:12px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
-.tt-m{display:flex;align-items:center;gap:4px}
+.tt-n{font-size:12px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}.tt-m{display:flex;align-items:center;gap:4px}
 .tt-t{font-size:10px;color:var(--text2);white-space:nowrap}
 .tt-tag{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;white-space:nowrap;border:1px solid transparent;letter-spacing:.2px}
 .tt-acts{display:flex;gap:3px;margin-left:auto;flex-shrink:0}
@@ -164,10 +162,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .cg2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px}
 .chbox{position:relative;width:100%}
 /* heatmap */
-.hr{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px}
+.hr{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;padding-right:2px}
 .hc{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:40px}
 .hl{font-size:9px;color:var(--text2);font-weight:700;text-transform:uppercase;letter-spacing:.3px}
-.hd{width:100%;aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:10px;font-weight:700;border:1px solid var(--border);transition:all .3s;min-height:38px;max-height:54px}
+.hd{width:100%;aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:10px;font-weight:700;border:1px solid var(--border);transition:all .3s;min-height:38px;max-height:54px;box-sizing:border-box}
 .h0{background:var(--bg3);color:var(--text3)}.h1{background:rgba(91,110,245,.14);border-color:rgba(91,110,245,.3);color:#8b9eff}
 .h2{background:rgba(91,110,245,.3);border-color:rgba(91,110,245,.5);color:#c0caff}
 .h3{background:rgba(91,110,245,.52);border-color:#5b6ef5;color:#e0e4ff}
@@ -195,9 +193,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .hdot.on{color:#fff}
 /* stats band */
 .sband{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-.sbi{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:13px;text-align:center;transition:background .3s}
-.sbv{font-family:var(--fh);font-size:24px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sbl{font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.sbi{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:10px 13px 9px;text-align:center;transition:background .3s,transform .2s,box-shadow .2s;border-top:3px solid transparent}
+.sbi:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.sbv{font-family:var(--fh);font-size:24px;font-weight:800}
+.sbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
 /* ── FOCUS TIMER ───────────────────────────────────────────── */
 .timer-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:28px;text-align:center;max-width:420px;margin:0 auto 20px}
 .timer-ring{position:relative;width:180px;height:180px;margin:0 auto 20px}
@@ -272,8 +271,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .ty-body{font-family:var(--fb);font-size:12px;font-weight:400;line-height:1.6}
 .ty-label{font-family:var(--fb);font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text2)}
 .ty-caption{font-family:var(--fb);font-size:10px;font-weight:400;color:var(--text3)}
-/* ── SETTINGS ──────────────────────────────────────────────── */
-.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+/* ── SETTINGS REDESIGN ─────────────────────────────────────── */
+.settings-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.set-block{display:flex;flex-direction:column;gap:8px}
+.set-block-full{grid-column:1/-1}
+.set-block-title{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;padding:0 2px}
+.set-card{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;transition:background .3s}
+.set-toggle-card:hover{border-color:var(--border2)}
+.set-icon-wrap{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.set-row-item{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.set-row-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.set-row-desc{font-size:11px;color:var(--text2);line-height:1.45}
+.set-action-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:500;cursor:pointer;background:transparent;border:1px solid var(--border2);color:var(--text2);transition:all .2s;text-align:left}
+.set-action-btn:hover{background:var(--card2);border-color:var(--border3);color:var(--text)}
+.notif-preview-row{background:var(--card2);border-radius:8px;padding:9px 12px;margin-bottom:7px;border-left-width:2px;border-left-style:solid;padding-left:11px}
+.notif-preview-row:last-child{margin-bottom:0}
+@media(max-width:700px){.settings-layout{grid-template-columns:1fr!important}}
 .set-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px;transition:background .3s}
 .set-sec h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:4px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .set-sec h3 .sh3-ico{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;background:rgba(91,110,245,.15)}
@@ -400,34 +413,101 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* mobile bottom nav dot */
 .bn-wrap{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:2px}
 .bn-wrap .red-dot{top:0px;right:2px;width:6px;height:6px}
-@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}.cg2{grid-template-columns:1fr}.ag{grid-template-columns:1fr}.prof-stats{grid-template-columns:1fr 1fr}.prof-grid{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}.ana-charts-row{grid-template-columns:1fr!important}}
+/* ── LAPTOP / LARGE TABLET (≤1280px) ──────────────────────── */
+@media(max-width:1280px){
+  .kpi-grid{grid-template-columns:repeat(4,1fr)}
+  #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:repeat(2,1fr)!important}
+}
+/* ── TABLET (≤1100px) ─────────────────────────────────────── */
+@media(max-width:1100px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .cg2{grid-template-columns:1fr}
+  .ag{grid-template-columns:1fr}
+  .prof-stats{grid-template-columns:1fr 1fr}
+  .prof-grid{grid-template-columns:1fr}
+  .set-grid{grid-template-columns:1fr}
+  .ana-charts-row{grid-template-columns:1fr!important}
+  #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
+  #ana-cx>div[style*="grid-template-columns:3fr 2fr"]{grid-template-columns:1fr!important}
+  .pri-cols{grid-template-columns:1fr 1fr!important}
+  .notes-grid{grid-template-columns:repeat(2,1fr)}
+  .focus-block-text{white-space:normal}
+}
+/* ── TABLET PORTRAIT (≤900px) ────────────────────────────── */
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .tb h1{font-size:17px}
+  .tb-r{gap:6px}
+  .wk-pill span{min-width:120px}
+  .cx{padding:16px}
+  .ig{grid-template-columns:1fr 1fr}
+  .sband{grid-template-columns:1fr 1fr}
+  .hg{grid-template-columns:repeat(2,1fr)}
+  .prof-grid{grid-template-columns:1fr}
+  .pf-row{grid-template-columns:1fr 1fr}
+  .pri-cols{grid-template-columns:1fr!important}
+  .focus-block-text{white-space:normal}
+  .ana-kpi-card{min-height:unset}
+}
+/* ── MOBILE (≤700px) ──────────────────────────────────────── */
 @media(max-width:700px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .ig{grid-template-columns:1fr}
   .sband{grid-template-columns:1fr 1fr}
-  .main{margin-left:0!important;padding-bottom:70px}
+  .main{margin-left:0!important;padding-bottom:76px}
   .sb{display:none}
   .bnav{display:flex}
   .tb{padding:12px 16px}
-  .cx{padding:16px}
+  .cx{padding:14px}
   .notes-grid{grid-template-columns:1fr}
   .hg{grid-template-columns:1fr}
   .sg{grid-template-columns:1fr}
+  #set-cx > div > div[style*="grid-column:span 2"]{grid-column:span 1!important}
+  .prof-grid{grid-template-columns:1fr!important}
+  .pf-row{grid-template-columns:1fr!important}
+  .prof-stats{grid-template-columns:1fr 1fr!important}
+  .focus-insights-row{flex-direction:column;align-items:flex-start;gap:10px}
+  .focus-block-text{white-space:normal}
+  .focus-divider{display:none}
+  .pri-cols{grid-template-columns:1fr!important}
+  .notif-panel{width:calc(100vw - 32px);right:-8px}
+  .wk-pill span{min-width:110px;font-size:11px}
+  #set-cx > div{grid-template-columns:1fr!important}
+  .cg2{grid-template-columns:1fr!important}
+  #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
+  #ana-cx>div[style*="grid-template-columns:3fr 2fr"]{grid-template-columns:1fr!important}
+  .ana-kpi-card{padding:12px!important}
+  .tb-r .wk-pill{order:3;width:100%}
+  .tb{flex-wrap:wrap}
+  .timer-wrap{padding:20px 14px}
+  .timer-ring{width:160px;height:160px}
 }
-@media(max-width:420px){.kpi-grid{grid-template-columns:1fr 1fr}.prof-stats{grid-template-columns:1fr 1fr}}
+/* ── SMALL MOBILE (≤420px) ────────────────────────────────── */
+@media(max-width:420px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .prof-stats{grid-template-columns:1fr 1fr}
+  .sband{grid-template-columns:1fr 1fr}
+  .cx{padding:10px}
+  .tb{padding:10px 12px}
+  .kc-v{font-size:22px}
+  .focus-insights-row{padding:12px 14px}
+  .ana-perf-insight{padding:12px 14px}
+}
 
 /* ── FOCUS + INSIGHTS ROW ─────────────────────────────────── */
-.focus-insights-row{display:flex;align-items:center;gap:14px;background:rgba(91,110,245,.055);border:1px solid rgba(91,110,245,.14);border-radius:var(--rr);padding:13px 16px;margin-bottom:14px;backdrop-filter:blur(4px)}
-[data-theme="light"] .focus-insights-row{background:rgba(91,110,245,.04);border-color:rgba(91,110,245,.12)}
+.focus-insights-row{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(91,110,245,.10) 0%,rgba(124,58,237,.07) 60%,rgba(14,165,233,.06) 100%);border:1px solid rgba(91,110,245,.30);border-radius:var(--rr);padding:14px 18px;margin-bottom:14px;backdrop-filter:blur(8px);box-shadow:0 4px 24px rgba(91,110,245,.10),0 1px 4px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.04)}
+[data-theme="light"] .focus-insights-row{background:linear-gradient(135deg,rgba(91,110,245,.07) 0%,rgba(124,58,237,.04) 60%,rgba(14,165,233,.04) 100%);border-color:rgba(91,110,245,.22);box-shadow:0 4px 20px rgba(91,110,245,.08),0 1px 3px rgba(0,0,0,.06)}
 .focus-block{display:flex;align-items:center;gap:11px;flex:1;min-width:0}
 .focus-block-ico{width:34px;height:34px;border-radius:9px;background:rgba(91,110,245,.14);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .focus-block-body{flex:1;min-width:0}
 .focus-block-label{font-size:9px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
 .focus-block-text{font-size:12px;color:var(--text);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .focus-divider{width:1px;height:28px;background:var(--border2);flex-shrink:0}
-.insights-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-family:var(--fb);font-size:11px;font-weight:700;cursor:pointer;border:1px solid rgba(91,110,245,.28);background:rgba(91,110,245,.1);color:var(--p1);transition:all .2s;white-space:nowrap;flex-shrink:0;letter-spacing:.2px}
-.insights-btn:hover{background:rgba(91,110,245,.18);border-color:var(--p1);box-shadow:0 2px 10px rgba(91,110,245,.2)}
-.insights-btn.active{background:rgba(91,110,245,.2);border-color:var(--p1);box-shadow:0 0 0 3px rgba(91,110,245,.12)}
+.insights-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;font-family:var(--fb);font-size:11px;font-weight:700;cursor:pointer;border:1px solid rgba(91,110,245,.5);background:rgba(91,110,245,.14);color:var(--p1);transition:all .2s;white-space:nowrap;flex-shrink:0;letter-spacing:.2px;position:relative;box-shadow:0 0 0 1px rgba(91,110,245,.18),0 2px 12px rgba(91,110,245,.15)}
+.insights-btn::before{content:'';position:absolute;inset:0;border-radius:8px;padding:1px;background:linear-gradient(135deg,rgba(91,110,245,.9),rgba(124,58,237,.6),rgba(14,165,233,.7),rgba(91,110,245,.9));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:shimmer-border 3s linear infinite}
+@keyframes shimmer-border{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.insights-btn:hover{background:rgba(91,110,245,.22);border-color:var(--p1);box-shadow:0 0 0 1px rgba(91,110,245,.4),0 4px 18px rgba(91,110,245,.25)}
+.insights-btn.active{background:rgba(91,110,245,.24);border-color:var(--p1);box-shadow:0 0 0 3px rgba(91,110,245,.15),0 2px 14px rgba(91,110,245,.2)}
 .insights-panel{animation:fu .22s ease;margin-bottom:16px}
 .insights-panel .ig{margin-bottom:0}
 
@@ -439,9 +519,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt td.past-col{opacity:.72}
 .tt td.future-col{opacity:.88}
 
-/* ── STATUS BADGE - TOP RIGHT PLACEMENT ──────────────────── */
-.tt-row-status-wrap{position:absolute;top:7px;right:8px}
-.status-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:8px;font-weight:700;letter-spacing:.4px;white-space:nowrap}
+/* ── STATUS BADGE - INLINE IN RIGHT COLUMN ───────────────── */
+.status-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:5px;font-size:8px;font-weight:700;letter-spacing:.4px;white-space:nowrap}
 .status-upcoming{background:rgba(14,165,233,.12);color:#38bdf8;border:1px solid rgba(14,165,233,.22)}
 .status-ongoing{background:rgba(124,58,237,.16);color:#a78bfa;border:1px solid rgba(124,58,237,.28)}
 .status-overdue{background:rgba(244,63,94,.13);color:#fb7185;border:1px solid rgba(244,63,94,.23)}
@@ -450,6 +529,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── TASK ROW DONE/PENDING DIFFERENTIATION ───────────────── */
 .tt tr.row-done td{background:rgba(16,185,129,.025)}
 .tt tr.row-done td:first-child .tt-n{opacity:.5;text-decoration:line-through}
+.tt tr.row-done td:first-child .tt-n-full{opacity:.5;text-decoration:line-through}
 .tt tr.row-done td:first-child .tt-t{opacity:.55}
 
 /* ── NOTES FONT FIX ──────────────────────────────────────── */
@@ -457,15 +537,38 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .note-card .nc-body{font-family:var(--fb)!important;font-size:12px;line-height:1.65;letter-spacing:.01em}
 .note-card .nc-foot{font-family:var(--fb)!important}
 
+/* ── ANALYTICS KPI CARD ──────────────────────────────────── */
+.ana-kpi-card{border:1px solid var(--border)!important;transition:transform .2s,border-color .2s,box-shadow .2s,background .3s!important}
+.ana-kpi-card:hover{border-color:var(--border2)!important;box-shadow:0 8px 24px rgba(0,0,0,.2)!important;transform:translateY(-2px)}
+
 /* ── ANALYTICS PERFORMANCE INSIGHT ──────────────────────── */
-.ana-perf-insight{background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.07));border:1px solid rgba(91,110,245,.25);border-radius:var(--rr);padding:16px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(91,110,245,.12),0 1px 4px rgba(0,0,0,.12)}
-[data-theme="light"] .ana-perf-insight{background:linear-gradient(135deg,rgba(91,110,245,.07),rgba(124,58,237,.04));box-shadow:0 4px 20px rgba(91,110,245,.08),0 1px 4px rgba(0,0,0,.06)}
+.ana-perf-insight{background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));border:1px solid rgba(91,110,245,.18);border-radius:var(--rr);padding:14px 17px;margin-bottom:14px;display:flex;align-items:flex-start;gap:12px;transition:transform .2s,box-shadow .2s}
+.ana-perf-insight:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(91,110,245,.12)}
 
 /* ── PROFILE: PROGRESS BAR GREEN ────────────────────────── */
 .prof-progress-fill{background:linear-gradient(90deg,#4ade80,#22c55e)!important;box-shadow:0 0 8px rgba(74,222,128,.35)!important}
 
 /* ── SCHEDULE CARD DELETE ALWAYS VISIBLE ─────────────────── */
-.sch-del{opacity:1!important;transform:scale(1)!important}
+.sch-del{opacity:0.38!important;transform:scale(1)!important}
+.sch-del:hover{opacity:1!important;color:var(--r1)!important}
+
+/* ── TASK ROW REDESIGN ───────────────────────────────────── */
+.tt-task-cell{padding:0!important;vertical-align:middle}
+.tt-row-inner{display:flex;align-items:center;justify-content:space-between;gap:2px;padding:7px 6px 7px 12px;min-height:50px}
+.tt-left{display:flex;align-items:flex-start;gap:8px;flex:1;min-width:0}
+.tt-n-full{font-size:12px;font-weight:600;line-height:1.35;word-break:break-word;white-space:normal}
+.tt-right{display:flex;align-items:center;gap:2px;flex-shrink:0;margin-left:2px}
+.tt tr.row-done td:first-child .tt-n-full{opacity:.5;text-decoration:line-through}
+/* ── 50/50 LAYOUT: task col 50%, 7 day cols share 50% ────── */
+.tt{table-layout:fixed}
+.tt th:first-child,.tt td:first-child{width:50%}
+.tt th:not(:first-child),.tt td:not(:first-child){width:7.14%;min-width:46px;padding:8px 2px}
+.tt-dc{text-align:center;padding:6px 2px}
+
+/* ── MOBILE BOTTOM NAV - FULL TAB SCROLLABLE ─────────────── */
+.bnav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-left:4px;padding-right:4px}
+.bnav::-webkit-scrollbar{display:none}
+.bn{flex-shrink:0;min-width:52px}
 
 </style>
 </head>
@@ -553,7 +656,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <button class="wk-b" onclick="chWeek(1)">›</button>
         </div>
       </div>
-      <button class="btn btn-pri" onclick="openTaskModal()">+ Add Task</button>
+      <button class="btn btn-ghost btn-sm" style="display:none" onclick="openTaskModal()">+ Add Task</button>
     </div>
   </div>
   <div class="cx">
@@ -582,10 +685,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
     <div class="sh">
       <h2>Weekly Schedule</h2>
-      <div style="display:flex;align-items:center;gap:8px">
+      <div style="display:flex;align-items:center;gap:10px">
         <select class="ana-sel" id="cat-filter-select" onchange="setFilterFromSelect(this.value)" style="min-width:130px">
           <option value="all">All Categories</option>
         </select>
+        <button class="btn btn-pri btn-sm" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;padding:6px 13px">+ Add Task</button>
       </div>
     </div>
     <div class="tt-wrap" id="tt-wrap"></div>
@@ -656,6 +760,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
     <span class="bn-l">Schedule</span>
   </div>
+  <div class="bn" id="bn-analytics" onclick="showView('analytics')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
+    <span class="bn-l">Analytics</span>
+  </div>
   <div class="bn" id="bn-habits" onclick="showView('habits')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
     <span class="bn-l">Habits</span>
@@ -664,9 +772,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
     <span class="bn-l">Timer</span>
   </div>
+  <div class="bn" id="bn-notes" onclick="showView('notes')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <span class="bn-l">Notes</span>
+  </div>
   <div class="bn" id="bn-profile" onclick="showView('profile')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     <span class="bn-l">Profile</span>
+  </div>
+  <div class="bn" id="bn-settings" onclick="showView('settings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <span class="bn-l">Settings</span>
   </div>
 </div>
 
@@ -1001,7 +1117,7 @@ function statusBadgeHtml(status,done){
 function renderTT(dates){
   const tasks=S.catFilt==='all'?S.tasks:S.tasks.filter(t=>t.cat===S.catFilt);
   const isCurrentWeek=S.weekOff===0;
-  let th='<thead><tr><th style="text-align:left;padding-left:14px;min-width:200px">Task</th>';
+  let th='<thead><tr><th style="text-align:left;padding-left:12px">Task</th>';
   dates.forEach((d,i)=>{
     const iT=i===TODAY_DOW&&isCurrentWeek;
     th+=`<th class="${iT?'tc':''}">${DAYS7[i]}<br><span style="font-weight:400;font-size:9px;color:${iT?'rgba(91,110,245,.7)':'var(--text3)'}">${fmtD(d)}</span></th>`;
@@ -1014,21 +1130,28 @@ function renderTT(dates){
     const todayDone=isDone(t.id,fmtKey(dates[TODAY_DOW]));
     const status=isCurrentWeek&&t.days.includes(TODAY_DOW)?getTaskStatus(t):null;
     const rowDone=todayDone&&isCurrentWeek;
-    tb+=`<tr class="${rowDone?'row-done':''}"><td style="position:relative"><div class="tt-ic">
-      <div class="tt-dot" style="background:${col}"></div>
-      <div class="tt-tx">
-        <div class="tt-n" title="${t.name}">${t.name}</div>
-        <div class="tt-m" style="gap:5px;flex-wrap:wrap">
-          <span class="tt-t">${fmtT(t.start)} – ${fmtT(t.end)}</span>
-          <span style="font-size:9px;color:var(--text3)">${dur.toFixed(1)}h</span>
+    const catTagHtml=`<span class="tt-tag" style="background:${col}18;color:${col};border-color:${col}35;font-size:8px;padding:2px 6px;border-radius:5px">${getCatLabel(t.cat)}</span>`;
+    const showStatus=status&&isCurrentWeek&&t.days.includes(TODAY_DOW);
+    tb+=`<tr class="${rowDone?'row-done':''}"><td class="tt-task-cell">
+      <div class="tt-row-inner">
+        <!-- LEFT: name + meta -->
+        <div class="tt-left">
+          <div class="tt-dot" style="background:${col};margin-top:2px;flex-shrink:0"></div>
+          <div class="tt-tx">
+            <div class="tt-n-full" title="${t.name}">${t.name}</div>
+            <div class="tt-m" style="gap:5px;flex-wrap:wrap;align-items:center;margin-top:3px">
+              <span class="tt-t">${fmtT(t.start)} – ${fmtT(t.end)}</span>
+              ${catTagHtml}
+            </div>
+          </div>
+        </div>
+        <!-- RIGHT: status + actions -->
+        <div class="tt-right">
+          ${showStatus?statusBadgeHtml(status,todayDone):''}
+          <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
         </div>
       </div>
-      <div class="tt-acts">
-        <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-        <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
-      </div>
-    </div>
-    ${status&&isCurrentWeek&&t.days.includes(TODAY_DOW)?`<div class="tt-row-status-wrap">${statusBadgeHtml(status,todayDone)}</div>`:''}
     </td>`;
     dates.forEach((d,i)=>{
       const dk=fmtKey(d);
@@ -1086,12 +1209,44 @@ function renderInsights(dates){
   else if(td.pct===100){focusText='🏆 All tasks done — outstanding work today!';}
   else if(td.pct>0){
     const pendingTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&!isDone(t.id,fmtKey(dates[TODAY_DOW])));
-    const next=pendingTasks[0];
-    focusText=next?`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — next up: "${next.name}" at ${fmtT(next.start)}.`:`${td.done}/${td.total} tasks done — finish strong!`;
+    if(pendingTasks.length>0){
+      const next=pendingTasks[0];
+      const now=new Date();
+      const curMins=now.getHours()*60+now.getMinutes();
+      const[sh,sm]=next.start.split(':').map(Number);
+      let[eh,em]=next.end.split(':').map(Number);
+      if(eh===0&&em===0){eh=24;em=0;}
+      const startMins=sh*60+sm;
+      const endMins=eh*60+em;
+      const isOngoing=curMins>=startMins&&curMins<endMins;
+      if(isOngoing){
+        // Check if there's a task after this one
+        const afterCurrent=pendingTasks.filter(t=>{
+          const[tsh,tsm]=t.start.split(':').map(Number);
+          return tsh*60+tsm>endMins;
+        });
+        if(afterCurrent.length>0){
+          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: ${afterCurrent[0].name} at ${fmtT(afterCurrent[0].start)}.`;
+        } else {
+          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: Tomorrow.`;
+        }
+      } else {
+        focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: "${next.name}" at ${fmtT(next.start)}.`;
+      }
+    } else {
+      focusText=`${td.done}/${td.total} tasks done — finish strong!`;
+    }
   } else {
     const todayTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW));
-    const next=todayTasks[0];
-    focusText=next?`Start your day with "${next.name}" at ${fmtT(next.start)}.`:'Check off your first task to build momentum.';
+    const now2=new Date();const curMins2=now2.getHours()*60+now2.getMinutes();
+    const upcoming=todayTasks.filter(t=>{const[sh,sm]=t.start.split(':').map(Number);return sh*60+sm>curMins2;});
+    if(upcoming.length>0){
+      focusText=`Start your day with "${upcoming[0].name}" at ${fmtT(upcoming[0].start)}.`;
+    } else if(todayTasks.length>0){
+      focusText=`Next up: Tomorrow. Check back in the morning!`;
+    } else {
+      focusText='Check off your first task to build momentum.';
+    }
   }
   const focusEl=document.getElementById('focus-block-text');
   if(focusEl)focusEl.textContent=focusText;
@@ -1176,23 +1331,23 @@ function renderAna(dates){
 
   el.innerHTML=`
   <!-- 1. Key Metrics Row -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;width:100%">
+    <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">✔ Completion Rate</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${ws.pct}%</div>
       <div style="font-size:10px;color:var(--text3);margin-top:2px">This Week</div>
     </div>
-    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+    <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">🔥 Best Day</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#34d399">${bestDay?bestDay.day:'—'}</div>
       <div style="font-size:10px;color:var(--text3);margin-top:2px">${bestDay?bestDay.pct+'% complete':'No data yet'}</div>
     </div>
-    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+    <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">⚠️ Missed Tasks</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#f43f5e">${missedTasks}</div>
       <div style="font-size:10px;color:var(--text3);margin-top:2px">This Week</div>
     </div>
-    <div class="ac" style="padding:14px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)">
+    <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">🎯 Consistency</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#a78bfa">${consistencyScore}%</div>
       <div style="font-size:10px;color:var(--text3);margin-top:2px">Consistency Score</div>
@@ -1200,10 +1355,10 @@ function renderAna(dates){
   </div>
 
   <!-- 2. Insight Card -->
-  <div class="ana-perf-insight" style="margin-bottom:18px">
-    <div class="ins-ico" style="width:38px;height:38px;border-radius:10px;background:rgba(91,110,245,.18);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">💡</div>
+  <div class="ana-perf-insight" style="margin-bottom:14px">
+    <div class="ins-ico" style="width:32px;height:32px;border-radius:9px;background:rgba(91,110,245,.18);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px">💡</div>
     <div class="ins-body">
-      <div class="ins-label" style="font-size:10px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Performance Insight</div>
+      <div class="ins-label" style="font-size:9px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Performance Insight</div>
       <div class="ins-text" id="ana-insight-text" style="font-size:12px;color:var(--text);line-height:1.6">${insightText}</div>
     </div>
   </div>
@@ -1413,14 +1568,30 @@ function renderHabits(dates){
   const totalDone=totalTasksDoneAllTime();
   el.innerHTML=`
   <div class="sband">
-    <div class="sbi"><div class="sbv">${str}</div><div class="sbl">Streak (days)</div></div>
-    <div class="sbi"><div class="sbv">${best}%</div><div class="sbl">Best Day</div></div>
-    <div class="sbi"><div class="sbv">${avg}%</div><div class="sbl">Week Avg</div></div>
-    <div class="sbi"><div class="sbv">${totalDone}</div><div class="sbl">All-time Checks</div></div>
+    <div class="sbi" style="border-top:3px solid #f97316">
+      <div style="font-size:15px;margin-bottom:2px">🔥</div>
+      <div class="sbv" style="background:linear-gradient(135deg,#f97316,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${str}</div>
+      <div class="sbl">Streak (days)</div>
+    </div>
+    <div class="sbi" style="border-top:3px solid #10b981">
+      <div style="font-size:15px;margin-bottom:2px">⭐</div>
+      <div class="sbv" style="background:linear-gradient(135deg,#10b981,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${best}%</div>
+      <div class="sbl">Best Day</div>
+    </div>
+    <div class="sbi" style="border-top:3px solid #5b6ef5">
+      <div style="font-size:15px;margin-bottom:2px">📊</div>
+      <div class="sbv" style="background:linear-gradient(135deg,#5b6ef5,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${avg}%</div>
+      <div class="sbl">Week Avg</div>
+    </div>
+    <div class="sbi" style="border-top:3px solid #eab308">
+      <div style="font-size:15px;margin-bottom:2px">✅</div>
+      <div class="sbv" style="background:linear-gradient(135deg,#eab308,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${totalDone}</div>
+      <div class="sbl">All-time Checks</div>
+    </div>
   </div>
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;margin-bottom:18px">
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;margin-bottom:18px;overflow:hidden">
     <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:12px">This Week Overview</div>
-    <div class="hr">${dates.map((d,i)=>{
+    <div class="hr" style="overflow:visible;padding-right:1px">${dates.map((d,i)=>{
       const pct=dayStats(dates,i).pct,cls=pct===0?'h0':pct<25?'h1':pct<60?'h2':pct<100?'h3':'h4';
       const tod=(i===TODAY_DOW&&S.weekOff===0)?' htoday':'';
       return`<div class="hc"><div class="hl">${DAYS7[i]}</div><div class="hd ${cls}${tod}">${pct?pct+'%':'—'}</div></div>`;
@@ -1727,20 +1898,23 @@ function renderProfile(){
         <!-- Status pill -->
         <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);margin-bottom:9px">
           <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;flex-shrink:0;display:inline-block"></span>
-          APEX System · Active
+          APEX · Active
         </div>
         <div style="font-family:var(--fh);font-size:28px;font-weight:800;margin-bottom:3px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.25);letter-spacing:-.5px;line-height:1.1">${p.name||'Your Name'}</div>
         <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:12px;font-weight:400">${p.role||'Life Optimizer'}</div>
         <!-- Badges -->
         <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.9)">${S.tasks.length} Tasks</span>
-          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);color:#6ee7b7">${ws.pct}% This Week</span>
-          <span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.25);color:#fdba74">${statusLabel}</span>
+          ${(()=>{
+            const allC=getAllCats();
+            const topCat=allC.map(c=>({c,pct:catStats(dates,c).pct,label:getCatLabel(c)})).filter(x=>x.pct>0).sort((a,b)=>b.pct-a.pct)[0];
+            const topCatBadge=topCat?`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);color:#6ee7b7">🏆 Top: ${topCat.label}</span>`:'';
+            return (topCatBadge||'')+`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.25);color:#fdba74">${statusLabel}</span>`;
+          })()}
         </div>
       </div>
     </div>
 
-    <!-- Weekly progress bar inside hero - with top gap for separation -->
+    <!-- Weekly progress bar -->
     <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);position:relative;z-index:1">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
         <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.4px;text-transform:uppercase">📊 Weekly Progress</span>
@@ -1840,7 +2014,7 @@ function renderSettings(){
     <div class="set-sec" style="grid-column:span 2;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:var(--rr);background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.06));border:1px solid rgba(91,110,245,.2)">
       <div style="display:flex;align-items:center;gap:12px">
         <span style="font-size:20px">🎨</span>
-        <div><div style="font-size:13px;font-weight:700">Dark Mode</div><div style="font-size:11px;color:var(--text2)">Toggle dark / light theme for comfortable viewing</div></div>
+        <div><div style="font-size:13px;font-weight:700">${isDark?'Dark Mode':'Light Mode'}</div><div style="font-size:11px;color:var(--text2)">Toggle dark / light theme for comfortable viewing</div></div>
       </div>
       <div class="tog ${isDark?'on':''}" onclick="toggleTheme()"></div>
     </div>
@@ -2157,7 +2331,8 @@ function renderNotifPanel(){
   const now=new Date();
   const curMins=now.getHours()*60+now.getMinutes();
   const todayTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0);
-  // Find current, next, remaining
+  // Find current, next, remaining — only among NOT-yet-done tasks
+  const todayKey=fmtKey(new Date());
   let currentTask=null, nextTask=null;
   const remaining=[];
   todayTasks.forEach(t=>{
@@ -2165,6 +2340,8 @@ function renderNotifPanel(){
     let[eh,em]=t.end.split(':').map(Number);
     if(eh===0&&em===0){eh=24;em=0;}
     const sM=sh*60+sm,eM=eh*60+em;
+    const alreadyDone=isDone(t.id,todayKey);
+    if(alreadyDone) return; // skip completed tasks
     if(curMins>=sM&&curMins<eM&&!currentTask) currentTask={...t,sM,eM};
     else if(sM>curMins){
       if(!nextTask) nextTask={...t,sM};
@@ -2184,7 +2361,7 @@ function renderNotifPanel(){
         <div class="notif-task-item">
           <div class="notif-task-dot" style="background:${getCatColor(currentTask.cat)}"></div>
           <div><div class="notif-task-name">${currentTask.name}</div>
-          <div class="notif-task-time">Until ${fmtT(currentTask.end)} · <span class="tt-tag" style="background:${getCatColor(currentTask.cat)}20;color:${getCatColor(currentTask.cat)};border-color:${getCatColor(currentTask.cat)}40">${getCatLabel(currentTask.cat)}</span></div></div>
+          <div class="notif-task-time">Until ${fmtT(currentTask.end)} · <span class="tt-tag" style="background:${getCatColor(currentTask.cat)}22;color:${getCatColor(currentTask.cat)}">${getCatLabel(currentTask.cat)}</span></div></div>
         </div>
       </div>`;
     }
@@ -2212,7 +2389,33 @@ function renderNotifPanel(){
       </div>`;
     }
     if(!currentTask&&!nextTask&&!remaining.length){
-      html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
+      // Only show all-done if every today's task is actually checked off
+      const todayKey=fmtKey(new Date());
+      const todayDoneCount=todayTasks.filter(t=>isDone(t.id,todayKey)).length;
+      if(todayDoneCount===todayTasks.length&&todayTasks.length>0){
+        html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
+      } else {
+        const overdueToday=todayTasks.filter(t=>{
+          const[sh,sm]=t.start.split(':').map(Number);
+          let[eh,em]=t.end.split(':').map(Number);
+          if(eh===0&&em===0){eh=24;em=0;}
+          const eM=eh*60+em;
+          return curMins>=eM&&!isDone(t.id,todayKey);
+        });
+        if(overdueToday.length>0){
+          html+=`<div class="notif-section">
+            <div class="notif-section-label" style="color:#f43f5e">⚠ Overdue Today (${overdueToday.length})</div>
+            ${overdueToday.slice(0,3).map(t=>`<div class="notif-task-item">
+              <div class="notif-task-dot" style="background:${getCatColor(t.cat)}"></div>
+              <div><div class="notif-task-name">${t.name}</div>
+              <div class="notif-task-time" style="color:#fb7185">${fmtT(t.start)} — overdue</div></div>
+            </div>`).join('')}
+            ${overdueToday.length>3?`<div style="font-size:10px;color:var(--text3);padding:4px 0">+${overdueToday.length-3} more overdue…</div>`:''}
+          </div>`;
+        } else {
+          html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
+        }
+      }
     }
   }
   body.innerHTML=html;
