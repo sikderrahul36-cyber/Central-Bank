@@ -20,13 +20,14 @@
   --p1-rgb:91,110,245;
 }
 [data-theme="light"]{
-  --bg:#f2f2fb;--bg2:#fff;--bg3:#eaeaf6;
-  --card:#fff;--card2:#f5f5fd;--card3:#eaeaf4;
-  --border:#dcdcf0;--border2:#c8c8e8;--border3:#b0b0d8;
-  --text:#12122a;--text2:#5a5a7a;--text3:#9898b8;
-  --topbar:rgba(242,242,251,.92);
-  --inp-bg:#eeeef8;
-  --shadow:0 4px 24px rgba(0,0,0,.09);
+  --bg:#f0f0fa;--bg2:#ffffff;--bg3:#e8e8f4;
+  --card:#ffffff;--card2:#f4f4fc;--card3:#eaeaf2;
+  --border:#d8d8ee;--border2:#c0c0de;--border3:#a0a0cc;
+  --text:#0e0e24;--text2:#4a4a6a;--text3:#8484aa;
+  --topbar:rgba(240,240,250,.94);
+  --inp-bg:#ebebf7;
+  --shadow:0 4px 24px rgba(60,60,120,.10);
+  --p1-rgb:91,110,245;
 }
 :root{
   --p1:#5b6ef5;--p2:#7c3aed;--p3:#0ea5e9;
@@ -198,21 +199,184 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sbv{font-family:var(--fh);font-size:24px;font-weight:800}
 .sbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
 /* ── FOCUS TIMER ───────────────────────────────────────────── */
-.timer-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:28px;text-align:center;max-width:420px;margin:0 auto 20px}
-.timer-ring{position:relative;width:180px;height:180px;margin:0 auto 20px}
-.timer-ring svg{transform:rotate(-90deg)}
-.timer-ring circle{fill:none;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
-.timer-bg{stroke:var(--border);stroke-width:8}
-.timer-fg{stroke:url(#tgrad);stroke-width:8}
-.timer-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.timer-count{font-family:var(--fh);font-size:36px;font-weight:800}
-.timer-label{font-size:11px;color:var(--text2);margin-top:2px}
-.timer-task-name{font-size:13px;color:var(--text2);margin-bottom:16px;min-height:18px}
-.timer-btns{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
-.timer-modes{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
-.tm-pill{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text2);transition:all .2s;font-family:var(--fb)}
+/* Outer page container — vertically + horizontally centres everything */
+#timer-cx{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  box-sizing:border-box;
+}
+.timer-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--rr);
+  padding:32px 28px 28px;
+  width:100%;
+  max-width:440px;
+  margin:0 auto 20px;
+  /* Force true centre column */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  box-sizing:border-box;
+}
+/* Mode pills row */
+.timer-modes{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  flex-wrap:wrap;
+  width:100%;
+  margin-bottom:20px;
+}
+.tm-pill{
+  padding:5px 13px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  border:1px solid var(--border2);
+  background:transparent;
+  color:var(--text2);
+  transition:all .2s;
+  font-family:var(--fb);
+}
 .tm-pill.on{background:rgba(91,110,245,.18);border-color:var(--p1);color:var(--p1)}
-.timer-log{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;max-width:420px;margin:0 auto}
+/* SVG ring — perfectly centred, no horizontal drift */
+.timer-ring{
+  position:relative;
+  width:190px;
+  height:190px;
+  flex-shrink:0;
+  /* Critical: explicit block + auto margins kill the right-shift */
+  display:block;
+  margin:0 auto 0;
+}
+.timer-ring svg{
+  display:block;
+  /* rotate so arc starts at 12-o'clock */
+  transform:rotate(-90deg);
+}
+.timer-ring circle{fill:none;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
+.timer-bg{stroke:var(--border2);stroke-width:9}
+.timer-fg{stroke:url(#tgrad);stroke-width:9}
+/* Text overlay — perfectly centred inside the ring */
+.timer-text{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  /* undo the SVG rotation so text reads normally */
+  transform:none;
+  pointer-events:none;
+}
+.timer-count{font-family:var(--fh);font-size:38px;font-weight:800;line-height:1}
+.timer-label{font-size:11px;color:var(--text2);margin-top:4px;line-height:1}
+/* Current-task name — sits cleanly below the ring */
+.timer-task-name{
+  font-size:13px;
+  color:var(--text2);
+  min-height:20px;
+  text-align:center;
+  width:100%;
+  padding:0 8px;
+  margin-top:18px;   /* clear gap below ring */
+  margin-bottom:16px;
+  line-height:1.4;
+}
+/* Action buttons */
+.timer-btns{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  width:100%;
+  margin-bottom:20px;
+}
+/* ── TASK PICKER — redesigned ─────────────────────────────── */
+.timer-task-picker{
+  width:100%;
+  border-top:1px solid var(--border);
+  padding-top:18px;
+  margin-top:4px;
+}
+.timer-task-picker-label{
+  font-size:10px;
+  font-weight:700;
+  color:var(--text2);
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.timer-task-picker-label svg{
+  flex-shrink:0;
+  color:var(--p1);
+  opacity:.85;
+}
+/* Custom select wrapper */
+.timer-task-select-wrap{
+  position:relative;
+  width:100%;
+}
+.timer-task-select-wrap::after{
+  content:'';
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:0;
+  height:0;
+  border-left:4px solid transparent;
+  border-right:4px solid transparent;
+  border-top:5px solid var(--text2);
+  pointer-events:none;
+}
+.timer-task-select{
+  width:100%;
+  appearance:none;
+  -webkit-appearance:none;
+  background:var(--card2);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:10px 36px 10px 14px;
+  color:var(--text);
+  font-size:12px;
+  font-weight:500;
+  font-family:var(--fb);
+  cursor:pointer;
+  transition:border-color .2s, box-shadow .2s;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+.timer-task-select:focus{
+  outline:none;
+  border-color:var(--p1);
+  box-shadow:0 0 0 3px rgba(91,110,245,.12);
+}
+.timer-task-select:hover{border-color:var(--border3)}
+/* Dropdown options styling */
+.timer-task-select option{
+  background:var(--card2);
+  color:var(--text);
+  padding:10px 14px;
+  font-size:13px;
+  font-family:var(--fb);
+}
+/* ── FOCUS LOG ────────────────────────────────────────────── */
+.timer-log{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--rr);
+  padding:16px;
+  max-width:440px;
+  margin:0 auto;
+  width:100%;
+  box-sizing:border-box;
+}
 .timer-log h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:12px}
 .tl-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
 .tl-row:last-child{border-bottom:none}
@@ -222,13 +386,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tl-time{color:var(--text3);font-size:10px}
 /* ── NOTES ─────────────────────────────────────────────────── */
 .notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
-.note-card{border-radius:18px;padding:18px 18px 14px;border:1px solid transparent;transition:all .25s cubic-bezier(.34,.5,.64,1);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.18),0 1px 3px rgba(0,0,0,.12)}
-.note-card:hover{transform:translateY(-4px) scale(1.012);box-shadow:0 16px 48px rgba(0,0,0,.32),0 0 0 1px rgba(124,106,255,.18)}
+.note-card{border-radius:18px;padding:18px 18px 14px;border:1px solid transparent;transition:all .25s cubic-bezier(.34,.5,.64,1);cursor:pointer;position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.12),0 1px 3px rgba(0,0,0,.08)}
+.note-card:hover{transform:translateY(-4px) scale(1.012);box-shadow:0 16px 48px rgba(0,0,0,.18),0 0 0 1px rgba(124,106,255,.18)}
 .note-card.pinned{border-color:rgba(91,110,245,.5)!important;box-shadow:0 0 0 2px rgba(91,110,245,.2),0 6px 24px rgba(91,110,245,.15)}
 .note-card .nc-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px}
 .note-card .nc-title{font-family:var(--fh);font-size:13px;font-weight:700;line-height:1.3;flex:1}
 .note-card .nc-body{font-size:12px;line-height:1.65;opacity:.82;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
-.note-card .nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:10px;opacity:.6;padding-top:9px;border-top:1px solid rgba(255,255,255,.07)}
+.note-card .nc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-size:10px;opacity:.75;padding-top:9px;border-top:1px solid var(--border)}
 .note-card-actions{display:flex;gap:4px;align-items:center;flex-shrink:0}
 .note-del{width:26px;height:26px;border-radius:7px;border:1px solid rgba(244,63,94,.25);background:rgba(244,63,94,.16);color:var(--r1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:0;transition:opacity .2s,transform .2s,background .15s;transform:scale(.85)}
 .note-del:hover{background:rgba(244,63,94,.3);border-color:rgba(244,63,94,.5)}
@@ -315,21 +479,124 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* note modal */
 .note-colors{display:flex;gap:7px;margin-top:4px}
 .nc-pick{width:24px;height:24px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all .2s}
-.nc-pick.on{border-color:#fff;transform:scale(1.15)}
+.nc-pick.on{border-color:var(--p1);transform:scale(1.15);box-shadow:0 0 0 3px rgba(91,110,245,.25)}
 /* ── TOAST ─────────────────────────────────────────────────── */
 .twrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+@media(max-width:700px){.twrap{bottom:110px;right:12px;left:12px;align-items:center}}
 .toast{background:var(--card2);border:1px solid var(--border2);border-radius:var(--rs);padding:10px 14px;font-size:12px;display:flex;align-items:center;gap:8px;animation:ti .25s ease;box-shadow:var(--shadow);pointer-events:none}
 @keyframes ti{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes to2{to{opacity:0;transform:translateY(8px)}}
 .tdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 /* ── SCROLLBAR ─────────────────────────────────────────────── */
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-/* ── BOTTOM NAV (mobile) ───────────────────────────────────── */
-.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:200;padding:4px 0 max(4px,env(safe-area-inset-bottom));justify-content:space-evenly;align-items:stretch;min-height:56px}
-.bn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:5px 4px;border-radius:10px;color:var(--text2);transition:all .2s;min-width:40px;flex:1}
+/* ── BOTTOM NAV (mobile) ─── NEW SCROLLABLE DESIGN ──────── */
+.bnav{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  z-index:200;
+  padding:0 0 max(4px,env(safe-area-inset-bottom));
+  flex-direction:column;
+  min-height:56px;
+}
+/* Primary nav row - 5 fixed icons */
+.bnav-primary{
+  display:flex;
+  justify-content:space-evenly;
+  align-items:stretch;
+  padding:4px 0 0;
+}
+/* Secondary scrollable nav row */
+.bnav-secondary{
+  display:flex;
+  align-items:center;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  padding:0 8px 4px;
+  gap:4px;
+  position:relative;
+  border-top:1px solid var(--border);
+  margin-top:2px;
+}
+.bnav-secondary::-webkit-scrollbar{display:none}
+/* Fade indicator on the right edge */
+.bnav-secondary-wrap{
+  position:relative;
+  overflow:hidden;
+}
+.bnav-secondary-wrap::after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:32px;
+  background:linear-gradient(to right,transparent,var(--bg2));
+  pointer-events:none;
+  z-index:2;
+}
+/* Secondary scroll more hint arrow */
+.bnav-scroll-hint{
+  position:absolute;
+  right:6px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--text3);
+  font-size:11px;
+  pointer-events:none;
+  z-index:3;
+  animation:hint-pulse 2s ease-in-out infinite;
+}
+@keyframes hint-pulse{0%,100%{opacity:.4;transform:translateY(-50%) translateX(0)}50%{opacity:.9;transform:translateY(-50%) translateX(2px)}}
+.bn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  cursor:pointer;
+  padding:5px 4px;
+  border-radius:10px;
+  color:var(--text2);
+  transition:all .2s;
+  min-width:40px;
+  flex:1;
+}
 .bn svg{width:17px;height:17px;flex-shrink:0}
 .bn .bn-l{font-size:8px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44px}
 .bn.on{color:var(--p1)}
+/* Secondary nav items (smaller) */
+.bn-sec{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  cursor:pointer;
+  padding:4px 10px;
+  border-radius:8px;
+  color:var(--text2);
+  transition:all .2s;
+  min-width:52px;
+  flex-shrink:0;
+  background:var(--card);
+  border:1px solid var(--border);
+  margin:2px 0;
+}
+.bn-sec svg{width:15px;height:15px;flex-shrink:0}
+.bn-sec .bn-l{font-size:8px;font-weight:600;white-space:nowrap}
+.bn-sec.on{
+  color:var(--p1);
+  background:rgba(91,110,245,.1);
+  border-color:rgba(91,110,245,.25);
+}
+.bn-sec:hover{color:var(--p1);background:rgba(91,110,245,.07)}
 /* ── CONFIRM MODAL ─────────────────────────────────────────── */
 .confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
 .confirm-mo.open{display:flex}
@@ -431,42 +698,71 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .social-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .social-link{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;background:var(--card2);border:1px solid var(--border2);color:var(--text2);text-decoration:none;transition:all .2s;cursor:pointer}
 .social-link:hover{border-color:var(--p1);color:var(--p1)}
+/* ── CAT FILTER WRAPPER ─────────────────────────────────── */
+.cat-filter-wrapper{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+.cat-filter-wrapper .cat-chevron{
+  position:absolute;
+  right:9px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  color:var(--text2);
+  width:12px;
+  height:12px;
+}
 /* ── CAT FILTER: BUTTON HEIGHT ALIGNMENT ─────────────────── */
 .cat-filter-select-styled{
-  height:30px;
-  padding:0 10px;
+  height:32px;
+  padding:0 28px 0 10px;
   display:flex;
   align-items:center;
   border-radius:var(--rs);
+  background:var(--card);
+  border:1px solid var(--border2);
+  color:var(--text);
+  font-family:var(--fb);
+  font-size:12px;
+  font-weight:500;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  transition:border-color .2s, box-shadow .2s;
+  min-width:130px;
+}
+.cat-filter-select-styled:focus{
+  outline:none;
+  border-color:var(--p1);
+  box-shadow:0 0 0 3px rgba(91,110,245,.12);
+}
+.cat-filter-select-styled:hover{
+  border-color:var(--border3);
 }
 .add-task-btn-aligned{
-  height:30px;
+  height:32px !important;
   padding:0 13px !important;
   display:inline-flex;
   align-items:center;
   line-height:1;
+  flex-shrink:0;
 }
 /* ── CATEGORY CARDS — ALL CATEGORIES MOBILE REFINEMENT ─── */
 @media(max-width:700px){
   .cat-filter-select-styled{
     height:32px;
     font-size:11px;
-    min-width:120px;
-    padding:0 8px;
+    min-width:110px;
+    padding:0 28px 0 8px;
     border-radius:8px;
-    background:var(--card);
-    border:1px solid var(--border2);
-    color:var(--text);
-    font-family:var(--fb);
-    cursor:pointer;
-    appearance:auto;
   }
   .add-task-btn-aligned{
     height:32px !important;
     padding:0 12px !important;
     font-size:11px !important;
     border-radius:8px;
-    flex-shrink:0;
   }
 }
 /* ── ANALYTICS UPGRADE ─────────────────────────────────────── */
@@ -521,7 +817,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .kpi-grid{grid-template-columns:1fr 1fr}
   .ig{grid-template-columns:1fr}
   .sband{grid-template-columns:1fr 1fr}
-  .main{margin-left:0!important;padding-bottom:72px}
+  .main{margin-left:0!important;padding-bottom:100px}
   .sb{display:none}
   .bnav{display:flex}
   .tb{padding:10px 14px;gap:8px}
@@ -569,7 +865,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .tb-r .wk-pill{order:0;width:auto}
   .wk-pill span{min-width:90px;font-size:10px}
   .wk-b{width:22px;height:22px}
-  .timer-ring{width:160px;height:160px}
   .sh{flex-direction:column;align-items:flex-start;gap:8px}
   .sh > div{width:100%;display:flex;gap:8px;align-items:center}
   .sh > div .ana-sel{flex:1;min-width:0}
@@ -705,7 +1000,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     text-overflow:ellipsis;
   }
   .sch-tb .tb-sub{
-    display:none;
+    display:block;
+    font-size:10px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
   .sch-tb .tb-r{
     flex-shrink:0;
@@ -735,13 +1034,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .bn{flex-shrink:1;min-width:0;flex:1}
 
 
-/* ── TIMER TASK PICKER (modern compact) ─────────────────── */
-.timer-task-picker{width:100%;max-width:320px;margin:0 auto;text-align:left}
-.timer-task-picker-label{font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:5px;padding:0 2px}
-.timer-task-select{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:0;color:var(--text);font-size:12px;font-family:var(--fb);cursor:pointer;transition:border-color .2s;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.timer-task-select:focus{outline:none;border-color:var(--p1)}
-.timer-task-select option{padding:10px 14px;font-size:12px;background:var(--card);color:var(--text)}
-
 /* ── TODAY'S FOCUS mobile redesign ─────────────────────── */
 @media(max-width:700px){
   .focus-insights-row{flex-direction:column;align-items:stretch;gap:10px;padding:12px 14px}
@@ -751,16 +1043,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .focus-block-text{font-size:11px;white-space:normal;line-height:1.5}
   .insights-btn{width:100%;justify-content:center;padding:9px 14px;font-size:11px}
   .focus-divider{display:none}
-  /* Timer mobile – perfect centering */
-  .timer-wrap{padding:18px 16px;max-width:100%;text-align:center;display:flex;flex-direction:column;align-items:center}
-  .timer-ring{width:160px;height:160px;margin:0 auto 16px}
-  .timer-count{font-size:28px}
+  /* Timer mobile */
+  .timer-wrap{padding:20px 16px 22px;max-width:100%}
+  .timer-ring{width:170px;height:170px}
+  .timer-count{font-size:32px}
   .timer-label{font-size:10px}
-  .timer-task-name{text-align:center;padding:0 12px;margin-top:4px;font-size:12px}
-  .timer-task-picker{max-width:100%;width:100%}
-  #timer-cx{display:flex;flex-direction:column;align-items:center}
-  .timer-modes{justify-content:center;width:100%;flex-wrap:wrap}
-  .timer-btns{justify-content:center;width:100%}
+  .timer-task-name{font-size:12px;margin-top:14px;margin-bottom:14px}
+  .timer-modes{gap:5px}
+  .tm-pill{padding:4px 10px;font-size:10px}
   /* Habits heatmap mobile – centered */
   .hr{justify-content:center;width:100%}
   .hc{min-width:32px;max-width:52px}
@@ -773,23 +1063,150 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .notif-ph-title{font-size:12px}
 }
 
-/* ── NAVBAR redesign: 5 primary + "More" ───────────────── */
-.bnav-more-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:5px 4px;border-radius:10px;color:var(--text2);transition:all .2s;flex:1}
-.bnav-more-btn svg{width:17px;height:17px}
-.bnav-more-btn .bn-l{font-size:8px;font-weight:600}
-.bnav-more-btn.open{color:var(--p1)}
-/* More drawer */
-.bnav-drawer{display:none;position:fixed;bottom:calc(56px + env(safe-area-inset-bottom));left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:199;padding:10px 16px 12px;animation:fu .18s ease}
-.bnav-drawer.open{display:block}
-.bnav-drawer-grid{display:flex;gap:10px;justify-content:center;padding:2px 4px}
-.bnav-drawer-grid::after{content:'';display:none}
-.bnav-drawer-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:10px 16px;border-radius:12px;color:var(--text2);transition:all .2s;background:var(--card);border:1px solid var(--border);flex:1;max-width:90px}
-.bnav-drawer-item svg{width:20px;height:20px}
-.bnav-drawer-item span{font-size:10px;font-weight:600}
-.bnav-drawer-item.on{color:var(--p1);background:rgba(91,110,245,.1);border-color:rgba(91,110,245,.25)}
-.bnav-drawer-item:hover{color:var(--p1);background:rgba(91,110,245,.08)}
-.bnav-drawer-backdrop{display:none;position:fixed;inset:0;z-index:198}
-.bnav-drawer-backdrop.open{display:block}
+/* ════════════════════════════════════════════════
+   LIGHT MODE COMPREHENSIVE OVERRIDES — v26
+   ════════════════════════════════════════════════ */
+[data-theme="light"] body{background:linear-gradient(160deg,#f0f0fa 0%,#e8e8f6 100%)}
+[data-theme="light"] body::before{background:radial-gradient(ellipse 80% 50% at 20% -5%,rgba(91,110,245,.06),transparent),radial-gradient(ellipse 60% 40% at 80% 105%,rgba(14,165,233,.04),transparent)}
+[data-theme="light"] .sb{box-shadow:2px 0 16px rgba(60,60,120,.06)}
+[data-theme="light"] .sb-logo{box-shadow:0 4px 14px rgba(91,110,245,.25)}
+[data-theme="light"] .ni:hover{background:rgba(91,110,245,.08);border-color:rgba(91,110,245,.18)}
+[data-theme="light"] .ni.on{background:rgba(91,110,245,.12);border-color:rgba(91,110,245,.25)}
+[data-theme="light"] .tb{box-shadow:0 2px 16px rgba(60,60,120,.07)}
+[data-theme="light"] .kc{background:var(--card);box-shadow:0 2px 12px rgba(60,60,120,.07)}
+[data-theme="light"] .kc:hover{border-color:var(--border2);box-shadow:0 8px 28px rgba(60,60,120,.13)}
+[data-theme="light"] .kc-bar{background:var(--border)}
+[data-theme="light"] .focus-insights-row{background:linear-gradient(135deg,rgba(91,110,245,.08) 0%,rgba(124,58,237,.05) 60%,rgba(14,165,233,.05) 100%);border-color:rgba(91,110,245,.20);box-shadow:0 4px 20px rgba(91,110,245,.08),0 1px 3px rgba(0,0,0,.05)}
+[data-theme="light"] .tt-wrap{box-shadow:0 2px 12px rgba(60,60,120,.06)}
+[data-theme="light"] .tt th{background:var(--bg3);color:var(--text2)}
+[data-theme="light"] .tt tr:hover td{background:rgba(91,110,245,.03)}
+[data-theme="light"] .tt th.tc{color:var(--p1)!important;background:rgba(91,110,245,.09)!important}
+[data-theme="light"] .tt td.today-col{background:rgba(91,110,245,.04)!important}
+[data-theme="light"] .ac,[data-theme="light"] .ic,[data-theme="light"] .sc,[data-theme="light"] .hcard,[data-theme="light"] .set-sec{background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(60,60,120,.06)}
+[data-theme="light"] .ic:hover,[data-theme="light"] .sc:hover{border-color:var(--border2);box-shadow:0 6px 20px rgba(60,60,120,.11)}
+[data-theme="light"] .tabs{background:var(--bg3);border:1px solid var(--border)}
+[data-theme="light"] .tab.on{background:var(--card);color:var(--text);box-shadow:0 1px 6px rgba(60,60,120,.1)}
+[data-theme="light"] .wk-pill{background:var(--card);border:1px solid var(--border2)}
+[data-theme="light"] .wk-b{background:var(--bg3);border:1px solid var(--border2);color:var(--text2)}
+[data-theme="light"] .wk-b:hover{background:var(--card2);color:var(--p1);border-color:var(--p1)}
+[data-theme="light"] .btn-ghost{background:var(--card);border-color:var(--border2);color:var(--text2)}
+[data-theme="light"] .btn-ghost:hover{background:var(--bg3);color:var(--text);border-color:var(--border3)}
+[data-theme="light"] .mo{background:rgba(60,60,120,.45)}
+[data-theme="light"] .modal{background:var(--card);border-color:var(--border2);box-shadow:0 20px 60px rgba(60,60,120,.18)}
+[data-theme="light"] .mc{border-color:var(--border);color:var(--text2)}
+[data-theme="light"] .mc:hover{background:var(--bg3);color:var(--text)}
+[data-theme="light"] .sch-card{background:var(--card2);border:1px solid var(--border);box-shadow:0 1px 8px rgba(60,60,120,.06)}
+[data-theme="light"] .sch-card:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(60,60,120,.12)}
+[data-theme="light"] .pri-col-header{background:var(--bg3);border-color:var(--border)}
+[data-theme="light"] .pri-col-body{background:var(--card);border-color:var(--border)}
+[data-theme="light"] .h0{background:var(--bg3);color:var(--text3)}
+[data-theme="light"] .h1{background:rgba(91,110,245,.10);border-color:rgba(91,110,245,.22);color:#5b6ef5}
+[data-theme="light"] .h2{background:rgba(91,110,245,.22);border-color:rgba(91,110,245,.40);color:#4055e8}
+[data-theme="light"] .h3{background:rgba(91,110,245,.40);border-color:rgba(91,110,245,.60);color:#3044cc}
+[data-theme="light"] .h4{background:linear-gradient(135deg,#5b6ef5,#7c3aed);border-color:#7c3aed;color:#fff}
+[data-theme="light"] .sbi{background:var(--card);border-color:var(--border);box-shadow:0 2px 10px rgba(60,60,120,.06)}
+[data-theme="light"] .sbi:hover{box-shadow:0 6px 20px rgba(60,60,120,.11)}
+[data-theme="light"] .toast{background:var(--card);border-color:var(--border2);box-shadow:0 4px 20px rgba(60,60,120,.13);color:var(--text)}
+[data-theme="light"] .bnav{background:var(--bg2);border-top:1px solid var(--border);box-shadow:0 -2px 16px rgba(60,60,120,.08)}
+[data-theme="light"] .bn-sec{background:var(--card);border-color:var(--border)}
+[data-theme="light"] .bn-sec.on{background:rgba(91,110,245,.08);border-color:rgba(91,110,245,.22)}
+[data-theme="light"] .confirm-mo{background:rgba(60,60,120,.45)}
+[data-theme="light"] .confirm-box{background:var(--card);border-color:var(--border2);box-shadow:0 20px 60px rgba(60,60,120,.18)}
+[data-theme="light"] .insight-smart{background:linear-gradient(135deg,rgba(91,110,245,.06),rgba(124,58,237,.04));border-color:rgba(91,110,245,.15)}
+[data-theme="light"] .ana-perf-insight{background:linear-gradient(135deg,rgba(91,110,245,.06),rgba(124,58,237,.04));border-color:rgba(91,110,245,.15)}
+[data-theme="light"] .cat-filter-select-styled{background:var(--card);border-color:var(--border2);color:var(--text)}
+[data-theme="light"] .ana-sel{background:var(--inp-bg);border-color:var(--border2);color:var(--text)}
+[data-theme="light"] .timer-wrap{background:var(--card);border-color:var(--border);box-shadow:0 4px 24px rgba(60,60,120,.08)}
+[data-theme="light"] .timer-bg{stroke:var(--border2)}
+[data-theme="light"] .tm-pill{border-color:var(--border2);color:var(--text2);background:var(--bg3)}
+[data-theme="light"] .tm-pill.on{background:rgba(91,110,245,.12);border-color:var(--p1);color:var(--p1)}
+[data-theme="light"] .tog{background:var(--border3)}
+[data-theme="light"] .tog.on{background:var(--p1)}
+[data-theme="light"] .chk{border-color:var(--border3);background:var(--bg3)}
+[data-theme="light"] .chk:hover{border-color:var(--p1);background:rgba(91,110,245,.06)}
+[data-theme="light"] .dp{background:var(--inp-bg);border-color:var(--border2);color:var(--text2)}
+[data-theme="light"] .dp.on{background:rgba(91,110,245,.14);border-color:var(--p1);color:var(--p1)}
+[data-theme="light"] .notif-bell-btn{background:var(--card);border-color:var(--border2)}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background:var(--border3)}
+[data-theme="light"] .tag-personal{background:rgba(168,85,247,.12);color:#7c3aed}
+[data-theme="light"] .tag-career{background:rgba(16,185,129,.12);color:#059669}
+[data-theme="light"] .tag-hustle{background:rgba(249,115,22,.12);color:#d97706}
+[data-theme="light"] .tag-health{background:rgba(239,68,68,.12);color:#dc2626}
+[data-theme="light"] .tag-learning{background:rgba(6,182,212,.12);color:#0284c7}
+[data-theme="light"] .status-upcoming{background:rgba(14,165,233,.10);color:#0284c7;border-color:rgba(14,165,233,.2)}
+[data-theme="light"] .status-ongoing{background:rgba(124,58,237,.10);color:#7c3aed;border-color:rgba(124,58,237,.2)}
+[data-theme="light"] .status-overdue{background:rgba(244,63,94,.10);color:#e11d48;border-color:rgba(244,63,94,.2)}
+[data-theme="light"] .status-done{background:rgba(16,185,129,.10);color:#059669;border-color:rgba(16,185,129,.2)}
+[data-theme="light"] .notif-badge-ongoing{background:rgba(124,58,237,.12);color:#7c3aed;border-color:rgba(124,58,237,.22)}
+[data-theme="light"] .notif-badge-upcoming{background:rgba(14,165,233,.10);color:#0284c7;border-color:rgba(14,165,233,.18)}
+[data-theme="light"] .notif-badge-overdue{background:rgba(244,63,94,.10);color:#e11d48;border-color:rgba(244,63,94,.18)}
+[data-theme="light"] .hdot{background:var(--bg3);border-color:var(--border2);color:var(--text3)}
+[data-theme="light"] .hdot.on{color:#fff}
+[data-theme="light"] .pm{background:var(--border)}
+[data-theme="light"] .tt tr.row-done td{background:rgba(16,185,129,.02)}
+[data-theme="light"] .sb-tog{border-color:var(--border);color:var(--text2)}
+[data-theme="light"] .sb-tog:hover{background:var(--card2);color:var(--text)}
+[data-theme="light"] .sb-sep{background:var(--border)}
+[data-theme="light"] .sb-prof:hover{background:var(--card2)}
+[data-theme="light"] .sb-prof-name{color:var(--text)}
+[data-theme="light"] .sb-prof-role{color:var(--text2)}
+[data-theme="light"] .bnav-secondary{border-top-color:var(--border)}
+[data-theme="light"] .bnav-secondary-wrap::after{background:linear-gradient(to right,transparent,var(--bg2))}
+/* Profile hero card — light treatment */
+[data-theme="light"] #prof-cx>div:first-child{
+  background:linear-gradient(135deg,rgba(91,110,245,.15) 0%,rgba(124,58,237,.10) 45%,rgba(14,165,233,.08) 100%)!important;
+  border-color:rgba(91,110,245,.22)!important;
+  box-shadow:0 4px 24px rgba(91,110,245,.09)!important;
+}
+/* Profile hero text visible on light */
+[data-theme="light"] #prof-cx>div:first-child [style*="color:#fff"]{
+  color:var(--text)!important;
+}
+[data-theme="light"] #prof-cx>div:first-child [style*="color:rgba(255,255,255,.65)"]{
+  color:var(--text2)!important;
+}
+[data-theme="light"] #prof-cx>div:first-child [style*="background:rgba(255,255,255,.12)"]{
+  background:rgba(91,110,245,.12)!important;
+  border-color:rgba(91,110,245,.20)!important;
+}
+[data-theme="light"] #prof-cx>div:first-child [style*="color:rgba(255,255,255,.9)"]{
+  color:var(--text)!important;
+}
+
+/* ════════════════════════════════════════════════
+   ADDITIONAL RESPONSIVENESS — TABLET & LAPTOP
+   ════════════════════════════════════════════════ */
+@media(max-width:1024px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .ag{grid-template-columns:1fr}
+  .cg2{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .sband{grid-template-columns:1fr 1fr!important}
+  .pri-cols{grid-template-columns:1fr!important}
+  .notes-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:700px){
+  /* Table scroll */
+  .tt-wrap{-webkit-overflow-scrolling:touch}
+  .tt{min-width:560px}
+  .tt th{font-size:9px!important;padding:7px 3px!important}
+  .tt-row-inner{padding:5px 4px 5px 9px!important;min-height:42px!important}
+  .tt-n-full{font-size:11px!important}
+  /* Modal */
+  .modal{max-width:100%!important;padding:16px!important;border-radius:16px!important}
+  /* Notif panel safe */
+  .notif-panel{position:fixed!important;top:68px!important;left:10px!important;right:10px!important;width:auto!important;max-height:72vh!important;border-radius:14px!important}
+}
+@media(max-width:380px){
+  .tb h1{font-size:15px!important}
+  .kc-v{font-size:18px!important}
+  .cx{padding:8px!important}
+  .tb{padding:8px 10px!important}
+  .bn svg{width:15px;height:15px}
+  .bn .bn-l{font-size:7px}
+  .wk-pill span{min-width:66px!important;font-size:9px!important}
+}
 </style>
 </head>
 <body>
@@ -905,11 +1322,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
     <div class="sh">
       <h2>Weekly Schedule</h2>
-      <div style="display:flex;align-items:stretch;gap:8px">
-        <select class="ana-sel cat-filter-select-styled" id="cat-filter-select" onchange="setFilterFromSelect(this.value)" style="min-width:130px;height:30px;padding:0 10px;display:flex;align-items:center">
-          <option value="all">All Categories</option>
-        </select>
-        <button class="btn btn-pri btn-sm add-task-btn-aligned" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;padding:0 13px;height:30px;display:inline-flex;align-items:center;gap:5px">+ Add Task</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="cat-filter-wrapper">
+          <select class="ana-sel cat-filter-select-styled" id="cat-filter-select" onchange="setFilterFromSelect(this.value)">
+            <option value="all">All Categories</option>
+          </select>
+          <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <button class="btn btn-pri btn-sm add-task-btn-aligned" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;gap:5px">+ Add Task</button>
       </div>
     </div>
     <div class="tt-wrap" id="tt-wrap"></div>
@@ -970,51 +1390,52 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 </div><!-- /main -->
 
-<!-- ═══ BOTTOM NAV (mobile) ═══════════════════════════════════ -->
-<!-- Backdrop for "More" drawer -->
-<div class="bnav-drawer-backdrop" id="bnav-backdrop" onclick="closeMoreDrawer()"></div>
-<!-- More drawer (Timer, Notes, Settings) -->
-<div class="bnav-drawer" id="bnav-drawer">
-  <div class="bnav-drawer-grid">
-    <div class="bnav-drawer-item" id="bnd-timer" onclick="showView('timer');closeMoreDrawer()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-      <span>Timer</span>
-    </div>
-    <div class="bnav-drawer-item" id="bnd-notes" onclick="showView('notes');closeMoreDrawer()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      <span>Notes</span>
-    </div>
-    <div class="bnav-drawer-item" id="bnd-settings" onclick="showView('settings');closeMoreDrawer()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      <span>Settings</span>
-    </div>
-  </div>
-</div>
-<!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile + More -->
+<!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile -->
+<!-- Secondary scrollable: Focus Timer, Notes, Settings -->
+<!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile -->
+<!-- Secondary scrollable: Focus Timer, Notes, Settings -->
 <div class="bnav" id="bnav">
-  <div class="bn on" id="bn-dashboard" onclick="showView('dashboard')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-    <span class="bn-l">Home</span>
+  <!-- Primary 5 icons -->
+  <div class="bnav-primary">
+    <div class="bn on" id="bn-dashboard" onclick="showView('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <span class="bn-l">Home</span>
+    </div>
+    <div class="bn" id="bn-schedule" onclick="showView('schedule')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span class="bn-l">Schedule</span>
+    </div>
+    <div class="bn" id="bn-analytics" onclick="showView('analytics')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
+      <span class="bn-l">Analytics</span>
+    </div>
+    <div class="bn" id="bn-habits" onclick="showView('habits')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="bn-l">Habits</span>
+    </div>
+    <div class="bn" id="bn-profile" onclick="showView('profile')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="bn-l">Profile</span>
+    </div>
   </div>
-  <div class="bn" id="bn-schedule" onclick="showView('schedule')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    <span class="bn-l">Schedule</span>
-  </div>
-  <div class="bn" id="bn-analytics" onclick="showView('analytics')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
-    <span class="bn-l">Analytics</span>
-  </div>
-  <div class="bn" id="bn-habits" onclick="showView('habits')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <span class="bn-l">Habits</span>
-  </div>
-  <div class="bn" id="bn-profile" onclick="showView('profile')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    <span class="bn-l">Profile</span>
-  </div>
-  <div class="bnav-more-btn" id="bnav-more-btn" onclick="toggleMoreDrawer()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>
-    <span class="bn-l">More</span>
+  <!-- Secondary scrollable row: Focus Timer, Notes, Settings -->
+  <div class="bnav-secondary-wrap">
+    <div class="bnav-secondary" id="bnav-secondary">
+      <div class="bn-sec" id="bn-timer" onclick="showView('timer')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span class="bn-l">Focus Timer</span>
+      </div>
+      <div class="bn-sec" id="bn-notes" onclick="showView('notes')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span class="bn-l">Notes</span>
+      </div>
+      <div class="bn-sec" id="bn-settings" onclick="showView('settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="bn-l">Settings</span>
+      </div>
+    </div>
+    <!-- Scroll hint arrow -->
+    <div class="bnav-scroll-hint" id="bnav-scroll-hint">›</div>
   </div>
 </div>
 
@@ -1062,12 +1483,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="fg"><label>Content</label><textarea id="fn-body" style="min-height:120px" placeholder="Write anything…"></textarea></div>
     <div class="fg"><label>Color</label>
       <div class="note-colors" id="note-colors">
-        <div class="nc-pick on" data-c="#1e1e2e" style="background:#1e1e2e" title="Dark"></div>
-        <div class="nc-pick" data-c="#1a2e1a" style="background:#1a2e1a" title="Green"></div>
-        <div class="nc-pick" data-c="#2a1a2e" style="background:#2a1a2e" title="Purple"></div>
-        <div class="nc-pick" data-c="#2e1e10" style="background:#2e1e10" title="Orange"></div>
-        <div class="nc-pick" data-c="#2a1a1a" style="background:#2a1a1a" title="Red"></div>
-        <div class="nc-pick" data-c="#1a222e" style="background:#1a222e" title="Blue"></div>
+        <div class="nc-pick on" data-c="#1e1e2e" style="background:linear-gradient(135deg,#1e1e2e,#252545)" title="Dark"></div>
+        <div class="nc-pick" data-c="#1a2e1a" style="background:linear-gradient(135deg,#1a2e1a,#1e3820)" title="Green"></div>
+        <div class="nc-pick" data-c="#2a1a2e" style="background:linear-gradient(135deg,#2a1a2e,#341a40)" title="Purple"></div>
+        <div class="nc-pick" data-c="#2e1e10" style="background:linear-gradient(135deg,#2e1e10,#3d2610)" title="Orange"></div>
+        <div class="nc-pick" data-c="#2a1a1a" style="background:linear-gradient(135deg,#2a1a1a,#3d2020)" title="Red"></div>
+        <div class="nc-pick" data-c="#1a222e" style="background:linear-gradient(135deg,#1a222e,#1a2d40)" title="Blue"></div>
       </div>
     </div>
     <div class="fg"><label>Tags (comma separated)</label><input id="fn-tags" type="text" placeholder="e.g. work, idea, urgent"></div>
@@ -1896,61 +2317,121 @@ function renderTimer(){
   const el=document.getElementById('timer-cx');
   const ts=timerState;
   const pct=ts.total>0?(ts.total-ts.secs)/ts.total:0;
-  const R=80,C=2*Math.PI*R,offset=C*(1-pct);
+  // Ring is now 190×190, cx/cy=95, r=82
+  const R=82,CX=95,CY=95,SZ=190;
+  const C=2*Math.PI*R,offset=C*(1-pct);
+
+  // Build today's focus log
+  const todayLog=S.timerLog.filter(l=>l.date===fmtKey(new Date()));
+  const totalFocusMins=todayLog.reduce((s,l)=>s+Math.round(l.secs/60),0);
 
   el.innerHTML=`
+  <!-- Hidden SVG defs for gradient (must be in DOM before SVG use) -->
+  <svg width="0" height="0" style="position:absolute;pointer-events:none"><defs>
+    <linearGradient id="tgrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5b6ef5"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs></svg>
+
   <div class="timer-wrap">
-    <svg width="0" height="0" style="position:absolute"><defs>
-      <linearGradient id="tgrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#5b6ef5"/><stop offset="100%" stop-color="#7c3aed"/>
-      </linearGradient>
-    </defs></svg>
-    <div class="timer-modes" style="margin-bottom:16px">
+
+    <!-- ① Mode pills -->
+    <div class="timer-modes">
       ${Object.entries(TIMER_MODES).map(([k,v])=>`<button class="tm-pill ${ts.mode===k?'on':''}" onclick="setTimerMode('${k}')">${v.label}</button>`).join('')}
     </div>
-    ${ts.mode==='custom'?`<div style="display:flex;gap:8px;justify-content:center;margin-bottom:12px;align-items:center">
-      <input type="number" id="custom-mins" value="${Math.round(ts.total/60)}" min="1" max="180" style="width:70px;background:var(--inp-bg);border:1px solid var(--border2);border-radius:var(--rs);padding:6px 8px;color:var(--text);font-size:13px;font-family:var(--fb);text-align:center" onchange="setCustomTime(this.value)">
+
+    <!-- ② Custom minutes input (only when mode=custom) -->
+    ${ts.mode==='custom'?`
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:12px">
+      <input type="number" id="custom-mins" value="${Math.round(ts.total/60)}" min="1" max="180"
+        style="width:70px;background:var(--inp-bg);border:1px solid var(--border2);border-radius:var(--rs);padding:6px 8px;color:var(--text);font-size:13px;font-family:var(--fb);text-align:center"
+        onchange="setCustomTime(this.value)">
       <span style="font-size:12px;color:var(--text2)">minutes</span>
     </div>`:''}
+
+    <!-- ③ Timer ring — centred block, no float, no inline offsets -->
     <div class="timer-ring">
-      <svg width="180" height="180" viewBox="0 0 180 180">
-        <circle class="timer-bg" cx="90" cy="90" r="${R}"/>
-        <circle class="timer-fg" cx="90" cy="90" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${offset}" id="timer-ring-fg"/>
+      <svg width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}" xmlns="http://www.w3.org/2000/svg">
+        <circle class="timer-bg" cx="${CX}" cy="${CY}" r="${R}"/>
+        <circle class="timer-fg" cx="${CX}" cy="${CY}" r="${R}"
+          stroke-dasharray="${C.toFixed(2)}"
+          stroke-dashoffset="${offset.toFixed(2)}"
+          id="timer-ring-fg"/>
       </svg>
       <div class="timer-text">
         <div class="timer-count" id="timer-count">${fmtDur(ts.secs)}</div>
         <div class="timer-label">${TIMER_MODES[ts.mode].label}</div>
       </div>
     </div>
-    <div class="timer-task-name" id="timer-task-label">${ts.task||'Select a task below'}</div>
+
+    <!-- ④ Current task label — clear gap below ring, never overlaps -->
+    <div class="timer-task-name" id="timer-task-label">
+      ${ts.task
+        ? `<span style="color:var(--p1);font-weight:600">▶</span> ${ts.task}`
+        : `<span style="color:var(--text3);font-style:italic">No task selected</span>`}
+    </div>
+
+    <!-- ⑤ Control buttons -->
     <div class="timer-btns">
-      ${!ts.running?`<button class="btn btn-pri" onclick="startTimer()">▶ Start</button>`:
-        `<button class="btn btn-ghost" onclick="pauseTimer()">${ts.paused?'▶ Resume':'⏸ Pause'}</button>
-         <button class="btn btn-danger btn-sm" onclick="stopTimer()">■ Stop</button>`}
+      ${!ts.running
+        ? `<button class="btn btn-pri" onclick="startTimer()" style="min-width:100px">▶ Start</button>`
+        : `<button class="btn btn-ghost" onclick="pauseTimer()" style="min-width:90px">${ts.paused?'▶ Resume':'⏸ Pause'}</button>
+           <button class="btn btn-danger btn-sm" onclick="stopTimer()">■ Stop</button>`}
       <button class="btn btn-ghost btn-sm" onclick="resetTimer()">↺ Reset</button>
     </div>
+
+    <!-- ⑥ Task picker — redesigned, full-width, clean -->
     <div class="timer-task-picker">
       <div class="timer-task-picker-label">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 3"/>
+        </svg>
         Focus on task
       </div>
-      <select id="timer-task-sel" onchange="setTimerTask(this.value)" class="timer-task-select">
-        <option value="">— Select task —</option>
-        ${S.tasks.map(t=>`<option value="${t.name}" ${ts.task===t.name?'selected':''}>${t.name}</option>`).join('')}
-      </select>
+      <div class="timer-task-select-wrap">
+        <select id="timer-task-sel" class="timer-task-select" onchange="setTimerTask(this.value)">
+          <option value="">— Select task —</option>
+          ${S.tasks.map(t=>{
+            const cat=getCatLabel(t.cat);
+            const time=`${fmtT(t.start)}–${fmtT(t.end)}`;
+            return`<option value="${t.name}" ${ts.task===t.name?'selected':''}>${t.name} · ${cat} · ${time}</option>`;
+          }).join('')}
+        </select>
+      </div>
+      ${S.tasks.length===0?`<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px 0">Add tasks in Schedule to pick one here.</div>`:''}
     </div>
+
+    <!-- ⑦ Today's session summary -->
+    ${totalFocusMins>0?`
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);width:100%;display:flex;align-items:center;justify-content:center;gap:8px">
+      <span style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Today's Focus</span>
+      <span style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--p1)">${totalFocusMins}m</span>
+      <span style="font-size:10px;color:var(--text3)">across ${todayLog.length} session${todayLog.length!==1?'s':''}</span>
+    </div>`:''}
+
   </div>
-  <div class="timer-log" style="display:none" id="timer-log-hidden">
-    <h3>Focus Log</h3>
-    ${S.timerLog.filter(l=>l.date===fmtKey(new Date())).length===0?`<div style="font-size:12px;color:var(--text2);text-align:center;padding:14px 0">No sessions yet today. Start focusing!</div>`:''}
-    ${S.timerLog.filter(l=>l.date===fmtKey(new Date())).slice(-8).reverse().map(l=>`
+
+  <!-- Focus Log card -->
+  ${todayLog.length>0?`
+  <div class="timer-log">
+    <h3>Today's Focus Log</h3>
+    ${todayLog.slice(-8).reverse().map(l=>`
       <div class="tl-row">
         <span class="tl-dot" style="background:${getCatColor(S.tasks.find(t=>t.name===l.task)?.cat||'')||'#5b6ef5'}"></span>
         <span class="tl-name">${l.task||'Free focus'}</span>
         <span class="tl-dur">${Math.round(l.secs/60)}m</span>
         <span class="tl-time">${l.time}</span>
       </div>`).join('')}
-  </div>`;
+  </div>`:`
+  <div class="timer-log">
+    <h3>Today's Focus Log</h3>
+    <div style="font-size:12px;color:var(--text2);text-align:center;padding:20px 0 8px;display:flex;flex-direction:column;align-items:center;gap:8px">
+      <span style="font-size:28px">⏱</span>
+      <span>No sessions yet. Start your first focus block!</span>
+    </div>
+  </div>`}`;
 }
 
 function setTimerMode(m){
@@ -1962,7 +2443,15 @@ function setCustomTime(v){
   const mins=Math.max(1,Math.min(180,parseInt(v)||25));
   timerState.secs=mins*60;timerState.total=mins*60;renderTimer();
 }
-function setTimerTask(v){timerState.task=v;document.getElementById('timer-task-label').textContent=v||'Select a task below';}
+function setTimerTask(v){
+  timerState.task=v;
+  const lbl=document.getElementById('timer-task-label');
+  if(lbl){
+    lbl.innerHTML=v
+      ? `<span style="color:var(--p1);font-weight:600">▶</span> ${v}`
+      : `<span style="color:var(--text3);font-style:italic">No task selected</span>`;
+  }
+}
 function startTimer(){
   if(timerState.paused){timerState.paused=false;}
   timerState.running=true;timerState.sessionStart=Date.now();
@@ -1998,8 +2487,8 @@ function updateTimerDisplay(){
   if(el)el.textContent=fmtDur(timerState.secs);
   const fg=document.getElementById('timer-ring-fg');
   if(fg){
-    const R=80,C=2*Math.PI*R,pct=(timerState.total-timerState.secs)/timerState.total;
-    fg.setAttribute('stroke-dashoffset',C*(1-pct));
+    const R=82,C=2*Math.PI*R,pct=(timerState.total-timerState.secs)/timerState.total;
+    fg.setAttribute('stroke-dashoffset',(C*(1-pct)).toFixed(2));
   }
 }
 
@@ -2044,21 +2533,35 @@ function renderNotes(){
   });
   el.innerHTML=`<div class="notes-grid">${sorted.map(n=>{
     const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-    const bg=isDark?n.color:(n.color.replace(/1[ae]/g,'e').replace(/2[ae]/g,'f').replace('0d','f'));
-    const tagColors=[
+    // Light mode: map dark note colours to soft tinted backgrounds
+    const NOTE_LIGHT_MAP={
+      '#1e1e2e':'#f4f4fd','#172030':'#eef4fd','#1a1a2e':'#f4f4fd',
+      '#0d1a2e':'#eaf2fd','#1e1a30':'#f5f0fd','#0d2318':'#edfaf3',
+      '#2e1818':'#fef0f0','#2e1a0e':'#fff4ea','#1a2e0d':'#f0faea',
+    };
+    const bg=isDark?n.color:(NOTE_LIGHT_MAP[n.color]||'#f5f5fd');
+    const borderColor=isDark?(n.pinned?'rgba(91,110,245,.45)':n.color+'88'):(n.pinned?'rgba(91,110,245,.35)':'rgba(91,110,245,.15)');
+    const tagColors=isDark?[
       {bg:'rgba(124,106,255,.18)',color:'#a78bfa',border:'rgba(124,106,255,.25)'},
       {bg:'rgba(16,185,129,.14)',color:'#34d399',border:'rgba(16,185,129,.22)'},
       {bg:'rgba(249,115,22,.14)',color:'#fb923c',border:'rgba(249,115,22,.22)'},
       {bg:'rgba(6,182,212,.14)',color:'#22d3ee',border:'rgba(6,182,212,.22)'},
       {bg:'rgba(244,63,94,.14)',color:'#f87171',border:'rgba(244,63,94,.22)'},
       {bg:'rgba(234,179,8,.14)',color:'#fcd34d',border:'rgba(234,179,8,.22)'},
+    ]:[
+      {bg:'rgba(124,106,255,.10)',color:'#7c3aed',border:'rgba(124,106,255,.18)'},
+      {bg:'rgba(16,185,129,.10)',color:'#059669',border:'rgba(16,185,129,.18)'},
+      {bg:'rgba(249,115,22,.10)',color:'#d97706',border:'rgba(249,115,22,.18)'},
+      {bg:'rgba(6,182,212,.10)',color:'#0284c7',border:'rgba(6,182,212,.18)'},
+      {bg:'rgba(244,63,94,.10)',color:'#e11d48',border:'rgba(244,63,94,.18)'},
+      {bg:'rgba(234,179,8,.10)',color:'#a16207',border:'rgba(234,179,8,.18)'},
     ];
     const tags=n.tags?n.tags.filter(Boolean).map((t,idx)=>{
       const tc=tagColors[idx%tagColors.length];
       return`<span style="padding:3px 8px;border-radius:20px;background:${tc.bg};color:${tc.color};font-size:9px;font-weight:700;border:1px solid ${tc.border};letter-spacing:.2px">${t}</span>`;
     }).join(''):'';
     const ago=timeAgo(n.updatedAt||n.createdAt);
-    return`<div class="note-card ${n.pinned?'pinned':''}" style="background:${bg};border-color:${n.pinned?'rgba(91,110,245,.45)':n.color+'88'}" onclick="openNoteModal('${n.id}')">
+    return`<div class="note-card ${n.pinned?'pinned':''}" style="background:${bg};border-color:${borderColor}" onclick="openNoteModal('${n.id}')">
       ${n.pinned?`<div style="position:absolute;top:10px;left:10px;width:5px;height:5px;border-radius:50%;background:var(--p1);box-shadow:0 0 8px rgba(91,110,245,.7)"></div>`:''}
       <div class="nc-head">
         <div class="nc-title" style="padding-left:${n.pinned?'12px':'0'}">${n.title||'Untitled'}</div>
@@ -2083,7 +2586,8 @@ function openNoteModal(id){
   document.getElementById('fn-title').value=n?n.title:'';
   document.getElementById('fn-body').value=n?n.body:'';
   document.getElementById('fn-tags').value=n?(n.tags||[]).join(', '):'';
-  noteColor=n?n.color:'#1e1e2e';
+  const defaultNoteColor=document.documentElement.getAttribute('data-theme')==='dark'?'#1e1e2e':'#f4f4fd';
+  noteColor=n?n.color:defaultNoteColor;
   document.querySelectorAll('.nc-pick').forEach(el=>{el.classList.toggle('on',el.dataset.c===noteColor);});
   document.getElementById('mo-note').classList.add('open');
   setTimeout(()=>document.getElementById('fn-title').focus(),80);
@@ -2137,6 +2641,18 @@ function renderProfile(){
   const statusLabel=str>0?`🔥 ${str}-day streak active`:(ws.pct===100?'✓ Perfect week':'Focus Mode On');
   const statusColor=str>0?'#fb923c':(ws.pct===100?'#34d399':'#5b6ef5');
 
+  const isDarkTheme=document.documentElement.getAttribute('data-theme')==='dark';
+  const heroNameColor=isDarkTheme?'#fff':'var(--text)';
+  const heroSubColor=isDarkTheme?'rgba(255,255,255,.65)':'var(--text2)';
+  const heroBorderColor=isDarkTheme?'rgba(255,255,255,.1)':'rgba(91,110,245,.15)';
+  const heroLabelColor=isDarkTheme?'rgba(255,255,255,.6)':'var(--text2)';
+  const heroPctColor=isDarkTheme?'#fff':'var(--text)';
+  const heroSubtleColor=isDarkTheme?'rgba(255,255,255,.5)':'var(--text3)';
+  const heroProgressBg=isDarkTheme?'rgba(255,255,255,.12)':'rgba(91,110,245,.12)';
+  const heroStatusBg=isDarkTheme?'rgba(255,255,255,.12)':'rgba(91,110,245,.10)';
+  const heroStatusBorder=isDarkTheme?'rgba(255,255,255,.2)':'rgba(91,110,245,.20)';
+  const heroStatusColor=isDarkTheme?'rgba(255,255,255,.9)':'var(--text)';
+
   document.getElementById('prof-cx').innerHTML=`
   <!-- Hero Card: brand-colored gradient background -->
   <div style="background:linear-gradient(135deg,rgba(91,110,245,.22) 0%,rgba(124,58,237,.18) 45%,rgba(14,165,233,.14) 100%);border:1px solid rgba(91,110,245,.32);border-radius:var(--rr);padding:26px 28px 20px 32px;margin-bottom:14px;position:relative;overflow:hidden">
@@ -2159,34 +2675,34 @@ function renderProfile(){
       <!-- Identity info -->
       <div style="flex:1;min-width:160px">
         <!-- Status pill -->
-        <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);margin-bottom:9px">
+        <div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;background:${heroStatusBg};border:1px solid ${heroStatusBorder};color:${heroStatusColor};margin-bottom:9px">
           <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;flex-shrink:0;display:inline-block"></span>
           APEX · Active
         </div>
-        <div style="font-family:var(--fh);font-size:28px;font-weight:800;margin-bottom:3px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.25);letter-spacing:-.5px;line-height:1.1">${p.name||'Your Name'}</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:12px;font-weight:400">${p.role||'Life Optimizer'}</div>
+        <div style="font-family:var(--fh);font-size:28px;font-weight:800;margin-bottom:3px;color:${heroNameColor};text-shadow:0 2px 14px rgba(0,0,0,.15);letter-spacing:-.5px;line-height:1.1">${p.name||'Your Name'}</div>
+        <div style="font-size:13px;color:${heroSubColor};margin-bottom:12px;font-weight:400">${p.role||'Life Optimizer'}</div>
         <!-- Badges -->
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           ${(()=>{
             const allC=getAllCats();
             const topCat=allC.map(c=>({c,pct:catStats(dates,c).pct,label:getCatLabel(c)})).filter(x=>x.pct>0).sort((a,b)=>b.pct-a.pct)[0];
-            const topCatBadge=topCat?`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);color:#6ee7b7">🏆 Top: ${topCat.label}</span>`:'';
-            return (topCatBadge||'')+`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.25);color:#fdba74">${statusLabel}</span>`;
+            const topCatBadge=topCat?`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.3);color:${isDarkTheme?'#6ee7b7':'#059669'}">🏆 Top: ${topCat.label}</span>`:'';
+            return (topCatBadge||'')+`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.15);border:1px solid rgba(249,115,22,.25);color:${isDarkTheme?'#fdba74':'#c2410c'}">${statusLabel}</span>`;
           })()}
         </div>
       </div>
     </div>
 
     <!-- Weekly progress bar -->
-    <div style="margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);position:relative;z-index:1">
+    <div style="margin-top:22px;padding-top:18px;border-top:1px solid ${heroBorderColor};position:relative;z-index:1">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
-        <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);letter-spacing:.4px;text-transform:uppercase">📊 Weekly Progress</span>
-        <span style="font-family:var(--fh);font-size:13px;font-weight:800;color:#fff">${ws.pct}%</span>
+        <span style="font-size:10px;font-weight:700;color:${heroLabelColor};letter-spacing:.4px;text-transform:uppercase">📊 Weekly Progress</span>
+        <span style="font-family:var(--fh);font-size:13px;font-weight:800;color:${heroPctColor}">${ws.pct}%</span>
       </div>
-      <div style="height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden">
+      <div style="height:6px;background:${heroProgressBg};border-radius:3px;overflow:hidden">
         <div class="prof-progress-fill" style="height:100%;width:${ws.pct}%;border-radius:3px;transition:width .9s ease"></div>
       </div>
-      <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:5px">${ws.pct>=60?`You're ahead of 60% of your week goal 🎯`:ws.pct>=30?`Keep going — you're building momentum`:`Start checking off tasks to build your streak`}</div>
+      <div style="font-size:10px;color:${heroSubtleColor};margin-top:5px">${ws.pct>=60?`You're ahead of 60% of your week goal 🎯`:ws.pct>=30?`Keep going — you're building momentum`:`Start checking off tasks to build your streak`}</div>
     </div>
   </div>
 
@@ -2383,7 +2899,10 @@ function toggleTheme(){
   S.sett.theme=S.sett.theme==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',S.sett.theme);
   saveS();renderSettings();
-  if(document.getElementById('view-analytics').classList.contains('on')) renderAna(getWeekDates(S.weekOff));
+  const dates=getWeekDates(S.weekOff);
+  if(document.getElementById('view-analytics').classList.contains('on')) renderAna(dates);
+  if(document.getElementById('view-profile').classList.contains('on')) renderProfile();
+  if(document.getElementById('view-notes').classList.contains('on')) renderNotes();
 }
 
 // ════════════════════════════════════════════════════════════
@@ -2396,19 +2915,18 @@ function showView(id){
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
   // Sync bottom nav primary items
   document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
-  const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('on');
+  // Sync bottom nav secondary items
+  document.querySelectorAll('.bn-sec').forEach(b=>b.classList.remove('on'));
+  // Highlight primary or secondary nav item
+  const primaryIds=['dashboard','schedule','analytics','habits','profile'];
+  const secondaryIds=['timer','notes','settings'];
+  if(primaryIds.includes(id)){
+    const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('on');
+  } else if(secondaryIds.includes(id)){
+    const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('on');
+  }
   document.getElementById('view-'+id).classList.add('on');
   const ni=document.getElementById('n-'+id);if(ni)ni.classList.add('on');
-  // Sync drawer items
-  const drawerIds=['timer','notes','settings'];
-  document.querySelectorAll('.bnav-drawer-item').forEach(el=>el.classList.remove('on'));
-  const moreBtn=document.getElementById('bnav-more-btn');
-  if(drawerIds.includes(id)){
-    const bnd=document.getElementById('bnd-'+id);if(bnd)bnd.classList.add('on');
-    if(moreBtn)moreBtn.classList.add('open');
-  } else {
-    if(moreBtn)moreBtn.classList.remove('open');
-  }
   const dates=getWeekDates(S.weekOff);
   if(id==='analytics') renderAna(dates);
   else if(id==='schedule') renderSch(dates);
@@ -2749,28 +3267,22 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
 }
 
 // ════════════════════════════════════════════════════════════
-// MORE DRAWER (mobile nav)
+// SECONDARY NAV SCROLL HINT
 // ════════════════════════════════════════════════════════════
-function toggleMoreDrawer(){
-  const drawer=document.getElementById('bnav-drawer');
-  const backdrop=document.getElementById('bnav-backdrop');
-  const btn=document.getElementById('bnav-more-btn');
-  const isOpen=drawer.classList.contains('open');
-  drawer.classList.toggle('open',!isOpen);
-  backdrop.classList.toggle('open',!isOpen);
-  btn.classList.toggle('open',!isOpen);
-}
-function closeMoreDrawer(){
-  document.getElementById('bnav-drawer')?.classList.remove('open');
-  document.getElementById('bnav-backdrop')?.classList.remove('open');
-  // Keep more-btn highlighted if a drawer view is active
-  const active=document.querySelector('.view.on');
-  const drawerIds=['timer','notes','settings'];
-  const activeId=active?active.id.replace('view-',''):'';
-  if(!drawerIds.includes(activeId)){
-    document.getElementById('bnav-more-btn')?.classList.remove('open');
+(function initSecondaryNavHint(){
+  const sec=document.getElementById('bnav-secondary');
+  const hint=document.getElementById('bnav-scroll-hint');
+  if(!sec||!hint)return;
+  function updateHint(){
+    // Hide hint once user has scrolled to the end
+    const atEnd=sec.scrollLeft+sec.clientWidth>=sec.scrollWidth-4;
+    hint.style.opacity=atEnd?'0':'1';
+    hint.style.pointerEvents=atEnd?'none':'none';
   }
-}
+  sec.addEventListener('scroll',updateHint,{passive:true});
+  // Initial check after layout
+  setTimeout(updateHint,300);
+})();
 </script>
 </body>
 </html>
