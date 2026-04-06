@@ -325,10 +325,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── SCROLLBAR ─────────────────────────────────────────────── */
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 /* ── BOTTOM NAV (mobile) ───────────────────────────────────── */
-.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:200;padding:6px 0 max(6px,env(safe-area-inset-bottom));justify-content:space-around;align-items:center}
-.bn{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:6px 8px;border-radius:10px;color:var(--text2);transition:all .2s;min-width:44px}
-.bn svg{width:20px;height:20px}
-.bn .bn-l{font-size:9px;font-weight:600}
+.bnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:200;padding:4px 0 max(4px,env(safe-area-inset-bottom));justify-content:space-around;align-items:stretch}
+.bn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:5px 4px;border-radius:10px;color:var(--text2);transition:all .2s;min-width:40px;flex:1}
+.bn svg{width:18px;height:18px;flex-shrink:0}
+.bn .bn-l{font-size:8.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52px}
 .bn.on{color:var(--p1)}
 /* ── CONFIRM MODAL ─────────────────────────────────────────── */
 .confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
@@ -349,19 +349,38 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .notif-bell-btn:hover{border-color:var(--p1);color:var(--p1);background:rgba(91,110,245,.08)}
 .notif-bell-btn .bell-red-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:#f43f5e;border:1.5px solid var(--topbar);box-shadow:0 0 6px rgba(244,63,94,.7);display:none}
 .notif-bell-btn .bell-red-dot.show{display:block}
-.notif-panel{position:absolute;top:calc(100% + 10px);right:0;width:320px;background:var(--card);border:1px solid var(--border2);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.35);z-index:500;overflow:hidden;animation:mi .2s ease;display:none}
+.notif-panel{position:absolute;top:calc(100% + 10px);right:0;width:340px;background:#12121f;border:1px solid #252545;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.55);z-index:500;overflow:hidden;animation:mi .2s ease;display:none;max-height:80vh;overflow-y:auto}
+[data-theme="light"] .notif-panel{background:var(--card);border-color:var(--border2)}
 .notif-panel.open{display:block}
-.notif-ph{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--bg3)}
-.notif-ph-title{font-family:var(--fh);font-size:13px;font-weight:700}
-.notif-tog-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text2)}
-.notif-section{padding:10px 14px}
-.notif-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:6px}
-.notif-task-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.notif-ph{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 12px;border-bottom:1px solid #252545;background:transparent}
+[data-theme="light"] .notif-ph{border-bottom-color:var(--border)}
+.notif-ph-title{font-family:var(--fh);font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px;color:#f0f0ff}
+[data-theme="light"] .notif-ph-title{color:var(--text)}
+.notif-tog-row{display:flex;align-items:center;gap:8px;font-size:11px;color:#8888aa}
+.notif-section{padding:10px 16px 6px}
+.notif-section+.notif-section{border-top:1px solid #1e1e32}
+[data-theme="light"] .notif-section+.notif-section{border-top-color:var(--border)}
+/* Section label: own full row, dot + uppercase text side by side */
+.notif-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;display:flex;align-items:center;gap:6px;line-height:1}
+.notif-section-label .nl-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;display:inline-block}
+/* Task row: indented under its section label */
+.notif-task-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 0 5px 4px;border-bottom:1px solid #1a1a2e}
+[data-theme="light"] .notif-task-item{border-bottom-color:var(--border)}
 .notif-task-item:last-child{border-bottom:none}
-.notif-task-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.notif-task-name{font-size:11px;font-weight:600;margin-bottom:1px}
-.notif-task-time{font-size:10px;color:var(--text2)}
-.notif-empty{padding:14px;text-align:center;font-size:11px;color:var(--text3)}
+.notif-task-left{display:flex;align-items:flex-start;gap:9px;flex:1;min-width:0}
+/* Smaller dot for task rows */
+.notif-task-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.notif-task-name{font-size:12px;font-weight:700;margin-bottom:2px;color:#f0f0ff;line-height:1.3}
+[data-theme="light"] .notif-task-name{color:var(--text)}
+.notif-task-time{font-size:10px;color:#6666aa}
+[data-theme="light"] .notif-task-time{color:var(--text2)}
+.notif-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.notif-badge-ongoing{background:rgba(124,58,237,.22);color:#a78bfa;border:1px solid rgba(124,58,237,.35)}
+.notif-badge-upcoming{background:rgba(14,165,233,.15);color:#38bdf8;border:1px solid rgba(14,165,233,.28)}
+.notif-badge-overdue{background:rgba(244,63,94,.18);color:#fb7185;border:1px solid rgba(244,63,94,.32)}
+.notif-footer{padding:10px 16px;text-align:center;font-size:10px;color:#555580;border-top:1px solid #1e1e32;background:#0e0e1a}
+[data-theme="light"] .notif-footer{color:var(--text3);border-top-color:var(--border);background:var(--bg3)}
+.notif-empty{padding:20px 16px;text-align:center;font-size:11px;color:#555580}
 /* ── TASK STATUS BADGES ──────────────────────────────────── */
 .status-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:6px;font-size:9px;font-weight:700;letter-spacing:.3px;white-space:nowrap;flex-shrink:0}
 .status-upcoming{background:rgba(14,165,233,.15);color:#38bdf8;border:1px solid rgba(14,165,233,.25)}
@@ -454,11 +473,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .kpi-grid{grid-template-columns:1fr 1fr}
   .ig{grid-template-columns:1fr}
   .sband{grid-template-columns:1fr 1fr}
-  .main{margin-left:0!important;padding-bottom:76px}
+  .main{margin-left:0!important;padding-bottom:72px}
   .sb{display:none}
   .bnav{display:flex}
-  .tb{padding:12px 16px}
-  .cx{padding:14px}
+  .tb{padding:10px 14px;gap:8px}
+  .cx{padding:12px}
   .notes-grid{grid-template-columns:1fr}
   .hg{grid-template-columns:1fr}
   .sg{grid-template-columns:1fr}
@@ -470,28 +489,38 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .focus-block-text{white-space:normal}
   .focus-divider{display:none}
   .pri-cols{grid-template-columns:1fr!important}
-  .notif-panel{width:calc(100vw - 32px);right:-8px}
-  .wk-pill span{min-width:110px;font-size:11px}
+  .notif-panel{width:calc(100vw - 24px);right:-4px;left:auto;max-height:70vh;overflow-y:auto}
+  .wk-pill span{min-width:100px;font-size:11px}
   #set-cx > div{grid-template-columns:1fr!important}
   .cg2{grid-template-columns:1fr!important}
   #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
   #ana-cx>div[style*="grid-template-columns:3fr 2fr"]{grid-template-columns:1fr!important}
   .ana-kpi-card{padding:12px!important}
+  .tb-r{flex-wrap:wrap;gap:6px}
   .tb-r .wk-pill{order:3;width:100%}
   .tb{flex-wrap:wrap}
   .timer-wrap{padding:20px 14px}
-  .timer-ring{width:160px;height:160px}
+  .timer-ring{width:150px;height:150px}
+  .sh{flex-direction:column;align-items:flex-start;gap:8px}
+  .sh > div{width:100%;display:flex;gap:8px;align-items:center}
+  .sh > div .ana-sel{flex:1;min-width:0}
+  .kc-v{font-size:22px}
+  .kc{padding:11px}
 }
 /* ── SMALL MOBILE (≤420px) ────────────────────────────────── */
 @media(max-width:420px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .prof-stats{grid-template-columns:1fr 1fr}
   .sband{grid-template-columns:1fr 1fr}
-  .cx{padding:10px}
-  .tb{padding:10px 12px}
-  .kc-v{font-size:22px}
-  .focus-insights-row{padding:12px 14px}
-  .ana-perf-insight{padding:12px 14px}
+  .cx{padding:9px}
+  .tb{padding:9px 11px}
+  .kc-v{font-size:20px}
+  .kc{padding:10px}
+  .focus-insights-row{padding:11px 12px}
+  .ana-perf-insight{padding:11px 12px}
+  .bn .bn-l{font-size:7.5px}
+  .bn{padding:4px 2px}
+  .bn svg{width:16px;height:16px}
 }
 
 /* ── FOCUS + INSIGHTS ROW ─────────────────────────────────── */
@@ -561,14 +590,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt tr.row-done td:first-child .tt-n-full{opacity:.5;text-decoration:line-through}
 /* ── 50/50 LAYOUT: task col 50%, 7 day cols share 50% ────── */
 .tt{table-layout:fixed}
-.tt th:first-child,.tt td:first-child{width:50%}
-.tt th:not(:first-child),.tt td:not(:first-child){width:7.14%;min-width:46px;padding:8px 2px}
+.tt th:first-child,.tt td:first-child{width:46%}
+.tt th:not(:first-child),.tt td:not(:first-child){width:7.71%;min-width:52px;padding:8px 2px}
 .tt-dc{text-align:center;padding:6px 2px}
 
-/* ── MOBILE BOTTOM NAV - FULL TAB SCROLLABLE ─────────────── */
-.bnav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-left:4px;padding-right:4px}
+/* ── MOBILE BOTTOM NAV - PROPER LAYOUT ─────────────────── */
+.bnav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x mandatory}
 .bnav::-webkit-scrollbar{display:none}
-.bn{flex-shrink:0;min-width:52px}
+.bn{flex-shrink:0;min-width:58px;scroll-snap-align:start}
 
 </style>
 </head>
@@ -640,9 +669,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         </div>
         <div class="notif-panel" id="notif-panel">
           <div class="notif-ph">
-            <span class="notif-ph-title">🔔 Task Reminders</span>
+            <span class="notif-ph-title">🔔 Notifications</span>
             <div class="notif-tog-row">
-              <span>Alerts</span>
+              <span style="font-size:12px;color:#8888aa">Reminders</span>
               <div class="tog" id="notif-panel-tog" onclick="toggleNotifFromPanel()"></div>
             </div>
           </div>
@@ -964,11 +993,13 @@ function getCatEmoji(cat){
   return e[h];
 }
 function getCatLabel(cat){
-  const l={personal:'Personal',career:'Career',hustle:'Side Hustle',health:'Health',learning:'Learning'};
-  return l[cat]||(cat.charAt(0).toUpperCase()+cat.slice(1));
+  if(!cat)return'';
+  // Return exactly what user typed, just capitalize first letter
+  const stored=cat.trim();
+  return stored.charAt(0).toUpperCase()+stored.slice(1);
 }
-// Legacy compat
-const CAT_L={personal:'Personal',career:'Career',hustle:'Side Hustle',health:'Health',learning:'Learning'};
+// Legacy compat - labels now return verbatim user input
+const CAT_L={personal:'Personal',career:'Career',hustle:'Hustle',health:'Health',learning:'Learning'};
 const CAT_C={personal:'#a855f7',career:'#10b981',hustle:'#f97316',health:'#ef4444',learning:'#0ea5e9'};
 const CAT_E={personal:'🧘',career:'💼',hustle:'🚀',health:'🏃',learning:'🧠'};
 const CATS=['personal','career','hustle','health','learning'];
@@ -1208,44 +1239,70 @@ function renderInsights(dates){
   if(td.total===0){focusText='Add tasks to start building your productive day.';}
   else if(td.pct===100){focusText='🏆 All tasks done — outstanding work today!';}
   else if(td.pct>0){
-    const pendingTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&!isDone(t.id,fmtKey(dates[TODAY_DOW])));
+    const now=new Date();
+    const curMins=now.getHours()*60+now.getMinutes();
+    // Get all pending tasks for today, sorted by start time
+    const pendingTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&!isDone(t.id,fmtKey(dates[TODAY_DOW])))].sort((a,b)=>a.start.localeCompare(b.start));
     if(pendingTasks.length>0){
-      const next=pendingTasks[0];
-      const now=new Date();
-      const curMins=now.getHours()*60+now.getMinutes();
-      const[sh,sm]=next.start.split(':').map(Number);
-      let[eh,em]=next.end.split(':').map(Number);
-      if(eh===0&&em===0){eh=24;em=0;}
-      const startMins=sh*60+sm;
-      const endMins=eh*60+em;
-      const isOngoing=curMins>=startMins&&curMins<endMins;
-      if(isOngoing){
-        // Check if there's a task after this one
-        const afterCurrent=pendingTasks.filter(t=>{
-          const[tsh,tsm]=t.start.split(':').map(Number);
-          return tsh*60+tsm>endMins;
+      // Find ongoing task first
+      const ongoingTask=pendingTasks.find(t=>{
+        const[sh,sm]=t.start.split(':').map(Number);
+        let[eh,em]=t.end.split(':').map(Number);
+        if(eh===0&&em===0){eh=24;em=0;}
+        return curMins>=sh*60+sm&&curMins<eh*60+em;
+      });
+      if(ongoingTask){
+        // Task is ongoing - show what's coming AFTER this task
+        let[eh,em]=ongoingTask.end.split(':').map(Number);
+        if(eh===0&&em===0){eh=24;em=0;}
+        const ongoingEndMins=eh*60+em;
+        const afterOngoing=pendingTasks.filter(t=>{
+          const[sh,sm]=t.start.split(':').map(Number);
+          return sh*60+sm>=ongoingEndMins&&t.id!==ongoingTask.id;
         });
-        if(afterCurrent.length>0){
-          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: ${afterCurrent[0].name} at ${fmtT(afterCurrent[0].start)}.`;
+        if(afterOngoing.length>0){
+          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: ${afterOngoing[0].name} at ${fmtT(afterOngoing[0].start)}.`;
         } else {
-          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: Tomorrow.`;
+          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — finish strong!`;
         }
       } else {
-        focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: "${next.name}" at ${fmtT(next.start)}.`;
+        // Find next upcoming (not yet started, not overdue)
+        const nextUpcoming=pendingTasks.find(t=>{
+          const[sh,sm]=t.start.split(':').map(Number);
+          return sh*60+sm>curMins;
+        });
+        if(nextUpcoming){
+          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — Next up: "${nextUpcoming.name}" at ${fmtT(nextUpcoming.start)}.`;
+        } else {
+          // All remaining are overdue
+          focusText=`${td.total-td.done} task${td.total-td.done!==1?'s':''} remaining — mark overdue tasks or keep going!`;
+        }
       }
     } else {
       focusText=`${td.done}/${td.total} tasks done — finish strong!`;
     }
   } else {
-    const todayTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW));
+    // No tasks done yet
     const now2=new Date();const curMins2=now2.getHours()*60+now2.getMinutes();
-    const upcoming=todayTasks.filter(t=>{const[sh,sm]=t.start.split(':').map(Number);return sh*60+sm>curMins2;});
-    if(upcoming.length>0){
-      focusText=`Start your day with "${upcoming[0].name}" at ${fmtT(upcoming[0].start)}.`;
-    } else if(todayTasks.length>0){
-      focusText=`Next up: Tomorrow. Check back in the morning!`;
+    const todayTasks2=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW))].sort((a,b)=>a.start.localeCompare(b.start));
+    // Check if a task is currently ongoing
+    const ongoingNow=todayTasks2.find(t=>{
+      const[sh,sm]=t.start.split(':').map(Number);
+      let[eh,em]=t.end.split(':').map(Number);
+      if(eh===0&&em===0){eh=24;em=0;}
+      return curMins2>=sh*60+sm&&curMins2<eh*60+em&&!isDone(t.id,fmtKey(dates[TODAY_DOW]));
+    });
+    if(ongoingNow){
+      focusText=`Now: "${ongoingNow.name}" — focus up and get it done!`;
     } else {
-      focusText='Check off your first task to build momentum.';
+      const upcoming=todayTasks2.filter(t=>{const[sh,sm]=t.start.split(':').map(Number);return sh*60+sm>curMins2&&!isDone(t.id,fmtKey(dates[TODAY_DOW]));});
+      if(upcoming.length>0){
+        focusText=`Start your day with "${upcoming[0].name}" at ${fmtT(upcoming[0].start)}.`;
+      } else if(todayTasks2.length>0){
+        focusText=`Next up: Tomorrow. Check back in the morning!`;
+      } else {
+        focusText='Check off your first task to build momentum.';
+      }
     }
   }
   const focusEl=document.getElementById('focus-block-text');
@@ -2170,7 +2227,7 @@ function openTaskModal(editId){
   document.getElementById('f-name').value=t?t.name:'';
   document.getElementById('f-start').value=t?t.start:'09:00';
   document.getElementById('f-end').value=t?t.end:'10:00';
-  document.getElementById('f-cat').value=t?getCatLabel(t.cat):'';
+  document.getElementById('f-cat').value=t?(t.cat||''):'';
   document.getElementById('f-pri').value=t?(t.pri||'med'):'high';
   document.getElementById('f-notes').value=t?(t.notes||''):'';
   document.querySelectorAll('.dp').forEach((el,i)=>el.classList.toggle('on',t?t.days.includes(i):i<5));
@@ -2191,7 +2248,8 @@ function saveTask(){
   document.querySelectorAll('.dp.on').forEach(el=>days.push(parseInt(el.dataset.d)));
   if(!days.length){toast('Select at least one day','#f43f5e');return;}
   const rawCat=document.getElementById('f-cat').value.trim();
-  const cat=rawCat?rawCat.toLowerCase().replace(/\s+/g,'_'):'personal';
+  // Store category as-is (lowercased for consistency), display will capitalize first letter
+  const cat=rawCat?rawCat.toLowerCase():'personal';
   const data={name,start:document.getElementById('f-start').value,end:document.getElementById('f-end').value,
     cat,pri:document.getElementById('f-pri').value,
     notes:document.getElementById('f-notes').value.trim(),days};
@@ -2327,97 +2385,90 @@ function renderNotifPanel(){
   if(tog)tog.classList.toggle('on',!!S.sett.notif);
   const body=document.getElementById('notif-panel-body');
   if(!body)return;
-  const dates=getWeekDates(S.weekOff);
   const now=new Date();
   const curMins=now.getHours()*60+now.getMinutes();
-  const todayTasks=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0);
-  // Find current, next, remaining — only among NOT-yet-done tasks
   const todayKey=fmtKey(new Date());
+  const todayTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0)].sort((a,b)=>a.start.localeCompare(b.start));
+
+  if(!S.sett.notif){
+    body.innerHTML=`<div class="notif-empty">🔕 Notifications are off.<br><span style="color:#6666aa">Toggle above to enable reminders.</span></div><div class="notif-footer">Reminders fire 10 min before task starts</div>`;
+    return;
+  }
+  if(todayTasks.length===0){
+    body.innerHTML=`<div class="notif-empty">📭 No tasks scheduled for today.</div><div class="notif-footer">Reminders fire 10 min before task starts</div>`;
+    return;
+  }
+
   let currentTask=null, nextTask=null;
-  const remaining=[];
+  const overdueTasks=[], remainingTasks=[];
+
   todayTasks.forEach(t=>{
     const[sh,sm]=t.start.split(':').map(Number);
     let[eh,em]=t.end.split(':').map(Number);
     if(eh===0&&em===0){eh=24;em=0;}
-    const sM=sh*60+sm,eM=eh*60+em;
-    const alreadyDone=isDone(t.id,todayKey);
-    if(alreadyDone) return; // skip completed tasks
-    if(curMins>=sM&&curMins<eM&&!currentTask) currentTask={...t,sM,eM};
-    else if(sM>curMins){
+    const sM=sh*60+sm, eM=eh*60+em;
+    if(isDone(t.id,todayKey)) return;
+    if(curMins>=sM&&curMins<eM){
+      if(!currentTask) currentTask={...t,sM,eM};
+    } else if(curMins>=eM){
+      overdueTasks.push({...t,sM,eM});
+    } else {
       if(!nextTask) nextTask={...t,sM};
-      else remaining.push({...t,sM});
+      else remainingTasks.push({...t,sM});
     }
   });
-  let html='';
-  if(!S.sett.notif){
-    html=`<div class="notif-empty">🔕 Notifications are off.<br><span style="color:var(--text2)">Toggle above to enable reminders.</span></div>`;
-  } else if(todayTasks.length===0){
-    html=`<div class="notif-empty">📭 No tasks scheduled for today.</div>`;
-  } else {
-    if(currentTask){
-      const[eh,em]=currentTask.end.split?currentTask.end.split(':').map(Number):[Math.floor(currentTask.eM/60),currentTask.eM%60];
-      html+=`<div class="notif-section">
-        <div class="notif-section-label" style="color:#a78bfa">▶ Currently Ongoing</div>
-        <div class="notif-task-item">
-          <div class="notif-task-dot" style="background:${getCatColor(currentTask.cat)}"></div>
-          <div><div class="notif-task-name">${currentTask.name}</div>
-          <div class="notif-task-time">Until ${fmtT(currentTask.end)} · <span class="tt-tag" style="background:${getCatColor(currentTask.cat)}22;color:${getCatColor(currentTask.cat)}">${getCatLabel(currentTask.cat)}</span></div></div>
+
+  // Helper: build a single task row
+  function ntRow(t,badgeCls,badgeTxt,showEnd){
+    const col=getCatColor(t.cat);
+    const timeStr=showEnd?`${fmtT(t.start)} – ${fmtT(t.end)}`:`${fmtT(t.start)}`;
+    return`<div class="notif-task-item">
+      <div class="notif-task-left">
+        <div class="notif-task-dot" style="background:${col}"></div>
+        <div>
+          <div class="notif-task-name">${t.name}</div>
+          <div class="notif-task-time">${timeStr}</div>
         </div>
-      </div>`;
-    }
-    if(nextTask){
-      const minsUntil=nextTask.sM-curMins;
-      const urgentStyle=minsUntil<=(S.sett.leadMins||10)?'color:#f43f5e;font-weight:700':'color:var(--text2)';
-      html+=`<div class="notif-section" style="border-top:1px solid var(--border)">
-        <div class="notif-section-label" style="color:#38bdf8">⏭ Next Task</div>
-        <div class="notif-task-item">
-          <div class="notif-task-dot" style="background:${getCatColor(nextTask.cat)}"></div>
-          <div><div class="notif-task-name">${nextTask.name}</div>
-          <div class="notif-task-time"><span style="${urgentStyle}">In ${fmtMins(minsUntil)} · ${fmtT(nextTask.start)}</span></div></div>
-        </div>
-      </div>`;
-    }
-    if(remaining.length){
-      html+=`<div class="notif-section" style="border-top:1px solid var(--border)">
-        <div class="notif-section-label">📋 Remaining Today (${remaining.length})</div>
-        ${remaining.slice(0,3).map(t=>`<div class="notif-task-item">
-          <div class="notif-task-dot" style="background:${getCatColor(t.cat)}"></div>
-          <div><div class="notif-task-name">${t.name}</div>
-          <div class="notif-task-time">${fmtT(t.start)}</div></div>
-        </div>`).join('')}
-        ${remaining.length>3?`<div style="font-size:10px;color:var(--text3);padding:4px 0">+${remaining.length-3} more tasks…</div>`:''}
-      </div>`;
-    }
-    if(!currentTask&&!nextTask&&!remaining.length){
-      // Only show all-done if every today's task is actually checked off
-      const todayKey=fmtKey(new Date());
-      const todayDoneCount=todayTasks.filter(t=>isDone(t.id,todayKey)).length;
-      if(todayDoneCount===todayTasks.length&&todayTasks.length>0){
-        html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
-      } else {
-        const overdueToday=todayTasks.filter(t=>{
-          const[sh,sm]=t.start.split(':').map(Number);
-          let[eh,em]=t.end.split(':').map(Number);
-          if(eh===0&&em===0){eh=24;em=0;}
-          const eM=eh*60+em;
-          return curMins>=eM&&!isDone(t.id,todayKey);
-        });
-        if(overdueToday.length>0){
-          html+=`<div class="notif-section">
-            <div class="notif-section-label" style="color:#f43f5e">⚠ Overdue Today (${overdueToday.length})</div>
-            ${overdueToday.slice(0,3).map(t=>`<div class="notif-task-item">
-              <div class="notif-task-dot" style="background:${getCatColor(t.cat)}"></div>
-              <div><div class="notif-task-name">${t.name}</div>
-              <div class="notif-task-time" style="color:#fb7185">${fmtT(t.start)} — overdue</div></div>
-            </div>`).join('')}
-            ${overdueToday.length>3?`<div style="font-size:10px;color:var(--text3);padding:4px 0">+${overdueToday.length-3} more overdue…</div>`:''}
-          </div>`;
-        } else {
-          html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
-        }
-      }
-    }
+      </div>
+      <span class="notif-badge ${badgeCls}">${badgeTxt}</span>
+    </div>`;
   }
+
+  let html='';
+
+  if(currentTask){
+    html+=`<div class="notif-section">
+      <div class="notif-section-label" style="color:#6666aa"><span class="nl-dot" style="background:#a78bfa"></span>CURRENT TASK</div>
+      ${ntRow(currentTask,'notif-badge-ongoing','Ongoing',true)}
+    </div>`;
+  }
+
+  if(nextTask){
+    html+=`<div class="notif-section">
+      <div class="notif-section-label" style="color:#6666aa"><span class="nl-dot" style="background:#38bdf8"></span>NEXT TASK</div>
+      ${ntRow(nextTask,'notif-badge-upcoming','Upcoming',false)}
+    </div>`;
+  }
+
+  if(overdueTasks.length){
+    html+=`<div class="notif-section">
+      <div class="notif-section-label" style="color:#6666aa"><span class="nl-dot" style="background:#f43f5e"></span>OVERDUE (${overdueTasks.length})</div>
+      ${overdueTasks.map(t=>ntRow(t,'notif-badge-overdue','Overdue',true)).join('')}
+    </div>`;
+  }
+
+  if(remainingTasks.length){
+    html+=`<div class="notif-section">
+      <div class="notif-section-label" style="color:#6666aa"><span class="nl-dot" style="background:#8888aa"></span>REMAINING TODAY (${remainingTasks.length})</div>
+      ${remainingTasks.map(t=>ntRow(t,'notif-badge-upcoming','Upcoming',false)).join('')}
+    </div>`;
+  }
+
+  if(!currentTask&&!nextTask&&!overdueTasks.length&&!remainingTasks.length){
+    html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
+  }
+
+  html+=`<div class="notif-footer">Reminders fire 10 min before task starts</div>`;
   body.innerHTML=html;
 }
 
