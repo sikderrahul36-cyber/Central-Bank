@@ -489,7 +489,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .focus-block-text{white-space:normal}
   .focus-divider{display:none}
   .pri-cols{grid-template-columns:1fr!important}
-  .notif-panel{width:calc(100vw - 24px);right:-4px;left:auto;max-height:70vh;overflow-y:auto}
+  /* Notification panel: fixed to viewport on mobile, never clips */
+  .notif-panel{position:fixed;top:70px;left:12px;right:12px;width:auto;max-height:75vh;overflow-y:auto;border-radius:14px}
   .wk-pill span{min-width:100px;font-size:11px}
   #set-cx > div{grid-template-columns:1fr!important}
   .cg2{grid-template-columns:1fr!important}
@@ -804,13 +805,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
     <span class="bn-l">Notes</span>
   </div>
-  <div class="bn" id="bn-profile" onclick="showView('profile')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    <span class="bn-l">Profile</span>
-  </div>
   <div class="bn" id="bn-settings" onclick="showView('settings')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     <span class="bn-l">Settings</span>
+  </div>
+  <div class="bn" id="bn-profile" onclick="showView('profile')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="bn-l">Profile</span>
   </div>
 </div>
 
