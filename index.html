@@ -192,22 +192,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .hdot{flex:1;height:26px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;transition:all .2s;color:var(--text3)}
 .hdot.on{color:#fff}
 /* stats band */
-.sband{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sband{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;width:100%}
 .sbi{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:10px 13px 9px;text-align:center;transition:background .3s,transform .2s,box-shadow .2s;border-top:3px solid transparent}
 .sbi:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
 .sbv{font-family:var(--fh);font-size:24px;font-weight:800}
 .sbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
 /* ── FOCUS TIMER ───────────────────────────────────────────── */
-.timer-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:28px 20px;text-align:center;max-width:420px;margin:0 auto 20px;display:flex;flex-direction:column;align-items:center}
-.timer-ring{position:relative;width:180px;height:180px;margin:0 auto 16px;flex-shrink:0}
+.timer-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:28px;text-align:center;max-width:420px;margin:0 auto 20px}
+.timer-ring{position:relative;width:180px;height:180px;margin:0 auto 20px}
 .timer-ring svg{transform:rotate(-90deg)}
 .timer-ring circle{fill:none;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
 .timer-bg{stroke:var(--border);stroke-width:8}
 .timer-fg{stroke:url(#tgrad);stroke-width:8}
 .timer-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.timer-count{font-family:var(--fh);font-size:28px;font-weight:800;line-height:1;letter-spacing:-.5px}
-.timer-label{font-size:10px;color:var(--text2);margin-top:3px;text-align:center}
-.timer-task-name{font-size:13px;color:var(--text2);margin-bottom:14px;min-height:18px;text-align:center;width:100%}
+.timer-count{font-family:var(--fh);font-size:36px;font-weight:800}
+.timer-label{font-size:11px;color:var(--text2);margin-top:2px}
+.timer-task-name{font-size:13px;color:var(--text2);margin-bottom:16px;min-height:18px}
 .timer-btns{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
 .timer-modes{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
 .tm-pill{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text2);transition:all .2s;font-family:var(--fb)}
@@ -416,6 +416,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* Avatar ring uses brand gradient */
 .prof-av{border:3px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
 .prof-av-ph{border:3px solid transparent;background:linear-gradient(var(--card),var(--card)) padding-box,var(--grad) border-box}
+/* Mobile profile hero cleanup */
+@media(max-width:700px){
+  #prof-cx>div:first-child{padding:18px 16px 16px 16px!important}
+  #prof-cx>div:first-child>div:last-child{margin-top:14px!important;padding-top:12px!important}
+  #prof-cx>div:first-child [style*="font-size:28px"]{font-size:20px!important;letter-spacing:-.3px!important}
+  #prof-cx>div:first-child [style*="align-items:center;gap:22px"]{gap:14px!important;flex-wrap:nowrap!important}
+  #prof-cx>div:first-child [style*="min-width:160px"]{min-width:0!important}
+  .prof-stats{gap:8px!important}
+  .ps-item{padding:10px 8px!important}
+  .ps-v{font-size:18px!important}
+  .ps-l{font-size:9px!important}
+}
 .social-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .social-link{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;background:var(--card2);border:1px solid var(--border2);color:var(--text2);text-decoration:none;transition:all .2s;cursor:pointer}
 .social-link:hover{border-color:var(--p1);color:var(--p1)}
@@ -446,7 +458,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .prof-grid{grid-template-columns:1fr}
   .set-grid{grid-template-columns:1fr}
   .ana-charts-row{grid-template-columns:1fr!important}
-  #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
+  #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important;margin-left:0!important;margin-right:0!important;width:100%!important}
   #ana-cx>div[style*="grid-template-columns:3fr 2fr"]{grid-template-columns:1fr!important}
   .pri-cols{grid-template-columns:1fr 1fr!important}
   .notes-grid{grid-template-columns:repeat(2,1fr)}
@@ -496,13 +508,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   #ana-cx>div[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
   #ana-cx>div[style*="grid-template-columns:3fr 2fr"]{grid-template-columns:1fr!important}
   .ana-kpi-card{padding:12px!important}
-  .tb-r{flex-wrap:wrap;gap:6px}
-  .tb-r .wk-pill{order:3;width:100%}
-  .tb{flex-wrap:wrap}
-  .timer-wrap{padding:20px 14px;width:100%;max-width:100%}
-  .timer-ring{width:150px;height:150px;margin-left:auto;margin-right:auto}
-  .timer-count{font-size:24px}
-  .timer-task-name{text-align:center;padding:0 8px}
+  /* Ensure full-width grids aren't offset */
+  .sband{width:100%;margin:0 0 18px}
+  #ana-cx>div:first-child{width:100%!important;margin:0 0 18px!important}
+  .kpi-grid{width:100%}
+  /* Dashboard topbar mobile: clean 2-row layout */
+  .tb{flex-wrap:nowrap;align-items:flex-start;gap:0;padding:10px 14px 10px}
+  .tb>div:first-child{flex:1;min-width:0}
+  .tb-r{flex-wrap:nowrap;gap:8px;align-items:center;flex-shrink:0}
+  .tb-r .wk-pill{order:0;width:auto}
+  .wk-pill span{min-width:90px;font-size:10px}
+  .wk-b{width:22px;height:22px}
+  .timer-ring{width:160px;height:160px}
   .sh{flex-direction:column;align-items:flex-start;gap:8px}
   .sh > div{width:100%;display:flex;gap:8px;align-items:center}
   .sh > div .ana-sel{flex:1;min-width:0}
@@ -602,10 +619,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 
 /* ── TIMER TASK PICKER (modern compact) ─────────────────── */
-.timer-task-picker{width:100%;max-width:300px;margin:0 auto;background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:10px 14px;text-align:left}
-.timer-task-picker-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;display:flex;align-items:center;gap:5px}
-.timer-task-select{width:100%;background:var(--inp-bg);border:1px solid var(--border2);border-radius:var(--rs);padding:8px 10px;color:var(--text);font-size:12px;font-family:var(--fb);cursor:pointer;transition:border-color .2s}
+.timer-task-picker{width:100%;max-width:320px;margin:0 auto;text-align:left}
+.timer-task-picker-label{font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px;display:flex;align-items:center;gap:5px;padding:0 2px}
+.timer-task-select{width:100%;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:0;color:var(--text);font-size:12px;font-family:var(--fb);cursor:pointer;transition:border-color .2s;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.15)}
 .timer-task-select:focus{outline:none;border-color:var(--p1)}
+.timer-task-select option{padding:10px 14px;font-size:12px;background:var(--card);color:var(--text)}
 
 /* ── TODAY'S FOCUS mobile redesign ─────────────────────── */
 @media(max-width:700px){
@@ -616,12 +634,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .focus-block-text{font-size:11px;white-space:normal;line-height:1.5}
   .insights-btn{width:100%;justify-content:center;padding:9px 14px;font-size:11px}
   .focus-divider{display:none}
-  /* Timer mobile fixes */
-  .timer-wrap{padding:18px 14px;width:calc(100% - 0px)}
-  .timer-ring{width:150px;height:150px;margin-left:auto;margin-right:auto}
-  .timer-count{font-size:24px}
-  .timer-task-name{text-align:center;padding:0 8px}
-  .timer-task-picker{max-width:100%}
+  /* Timer mobile – perfect centering */
+  .timer-wrap{padding:18px 16px;max-width:100%;text-align:center;display:flex;flex-direction:column;align-items:center}
+  .timer-ring{width:160px;height:160px;margin:0 auto 16px}
+  .timer-count{font-size:28px}
+  .timer-label{font-size:10px}
+  .timer-task-name{text-align:center;padding:0 12px;margin-top:4px;font-size:12px}
+  .timer-task-picker{max-width:100%;width:100%}
+  #timer-cx{display:flex;flex-direction:column;align-items:center}
+  .timer-modes{justify-content:center;width:100%;flex-wrap:wrap}
+  .timer-btns{justify-content:center;width:100%}
+  /* Habits heatmap mobile – centered */
+  .hr{justify-content:center;width:100%}
+  .hc{min-width:32px;max-width:52px}
   /* Notification panel compact on mobile */
   .notif-section{padding:8px 14px 6px}
   .notif-task-name{font-size:11px}
@@ -639,7 +664,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* More drawer */
 .bnav-drawer{display:none;position:fixed;bottom:calc(56px + env(safe-area-inset-bottom));left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:199;padding:10px 16px 12px;animation:fu .18s ease}
 .bnav-drawer.open{display:block}
-.bnav-drawer-grid{display:flex;gap:8px;justify-content:center}
+.bnav-drawer-grid{display:flex;gap:10px;justify-content:center;padding:2px 4px}
+.bnav-drawer-grid::after{content:'';display:none}
 .bnav-drawer-item{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:10px 16px;border-radius:12px;color:var(--text2);transition:all .2s;background:var(--card);border:1px solid var(--border);flex:1;max-width:90px}
 .bnav-drawer-item svg{width:20px;height:20px}
 .bnav-drawer-item span{font-size:10px;font-weight:600}
@@ -847,19 +873,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
   </div>
 </div>
-<!-- Primary nav: Dashboard, Analytics, Schedule, Habits, Profile + More -->
+<!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile + More -->
 <div class="bnav" id="bnav">
   <div class="bn on" id="bn-dashboard" onclick="showView('dashboard')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
     <span class="bn-l">Home</span>
   </div>
-  <div class="bn" id="bn-analytics" onclick="showView('analytics')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
-    <span class="bn-l">Analytics</span>
-  </div>
   <div class="bn" id="bn-schedule" onclick="showView('schedule')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
     <span class="bn-l">Schedule</span>
+  </div>
+  <div class="bn" id="bn-analytics" onclick="showView('analytics')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
+    <span class="bn-l">Analytics</span>
   </div>
   <div class="bn" id="bn-habits" onclick="showView('habits')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -2432,6 +2458,10 @@ function toggleNotifPanel(){
   if(!isOpen){
     renderNotifPanel();
     panel.classList.add('open');
+    // Mark notifications as seen — dismiss the red dot
+    S.sett.notifSeenAt=Date.now();
+    saveS();
+    updateRedDot();
     // close on outside click
     setTimeout(()=>document.addEventListener('click',closeNotifPanelOutside),10);
   } else {
@@ -2559,11 +2589,33 @@ function updateRedDot(){
     const startMins=h*60+m;
     return startMins>curMins&&startMins-curMins<=lead;
   });
+  // Suppress dot if user has already viewed notifications since the dot appeared.
+  // The dot re-appears if a NEW imminent task comes into range after viewing.
+  // We track this by comparing when the user last opened the panel vs
+  // when the earliest imminent task enters lead-time.
+  let showDot = hasImminent;
+  if(hasImminent && S.sett.notifSeenAt){
+    // Find the earliest imminent task start time in ms today
+    const todayBase=new Date(); todayBase.setSeconds(0,0);
+    const imminentTask=S.tasks.find(t=>{
+      if(!t.days.includes(TODAY_DOW))return false;
+      const[h,m]=t.start.split(':').map(Number);
+      const startMins=h*60+m;
+      return startMins>curMins&&startMins-curMins<=lead;
+    });
+    if(imminentTask){
+      const[h,m]=imminentTask.start.split(':').map(Number);
+      const taskEnteredLeadAt=new Date();
+      taskEnteredLeadAt.setHours(h,m-lead,0,0);
+      // If user viewed AFTER this task entered lead-time, dot is dismissed
+      if(S.sett.notifSeenAt >= taskEnteredLeadAt.getTime()) showDot=false;
+    }
+  }
   const bellDot=document.getElementById('bell-red-dot');
-  if(bellDot)bellDot.classList.toggle('show',hasImminent);
+  if(bellDot)bellDot.classList.toggle('show',showDot);
   // Sidebar settings dot (legacy)
   const dot=document.getElementById('notif-dot-sb');
-  if(dot)dot.style.display=hasImminent?'block':'none';
+  if(dot)dot.style.display=showDot?'block':'none';
 }
 
 // ════════════════════════════════════════════════════════════
