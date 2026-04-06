@@ -431,8 +431,44 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .social-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .social-link{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;background:var(--card2);border:1px solid var(--border2);color:var(--text2);text-decoration:none;transition:all .2s;cursor:pointer}
 .social-link:hover{border-color:var(--p1);color:var(--p1)}
-/* ── CAT INPUT ─────────────────────────────────────────────── */
-.cat-tabs-dynamic{display:flex;gap:3px;flex-wrap:wrap}
+/* ── CAT FILTER: BUTTON HEIGHT ALIGNMENT ─────────────────── */
+.cat-filter-select-styled{
+  height:30px;
+  padding:0 10px;
+  display:flex;
+  align-items:center;
+  border-radius:var(--rs);
+}
+.add-task-btn-aligned{
+  height:30px;
+  padding:0 13px !important;
+  display:inline-flex;
+  align-items:center;
+  line-height:1;
+}
+/* ── CATEGORY CARDS — ALL CATEGORIES MOBILE REFINEMENT ─── */
+@media(max-width:700px){
+  .cat-filter-select-styled{
+    height:32px;
+    font-size:11px;
+    min-width:120px;
+    padding:0 8px;
+    border-radius:8px;
+    background:var(--card);
+    border:1px solid var(--border2);
+    color:var(--text);
+    font-family:var(--fb);
+    cursor:pointer;
+    appearance:auto;
+  }
+  .add-task-btn-aligned{
+    height:32px !important;
+    padding:0 12px !important;
+    font-size:11px !important;
+    border-radius:8px;
+    flex-shrink:0;
+  }
+}
 /* ── ANALYTICS UPGRADE ─────────────────────────────────────── */
 .ana-filter-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .ana-sel{background:var(--inp-bg);border:1px solid var(--border2);border-radius:var(--rs);padding:6px 10px;color:var(--text);font-size:11px;font-family:var(--fb);cursor:pointer}
@@ -512,6 +548,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .sband{width:100%;margin:0 0 18px}
   #ana-cx>div:first-child{width:100%!important;margin:0 0 18px!important}
   .kpi-grid{width:100%}
+  /* Analytics KPI top row: force centered, full width, no offset */
+  #ana-cx>div[style*="grid-template-columns:repeat(4"]{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
+  /* Habits sband: full width, centered */
+  .sband{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
   /* Dashboard topbar mobile: clean 2-row layout */
   .tb{flex-wrap:nowrap;align-items:flex-start;gap:0;padding:10px 14px 10px}
   .tb>div:first-child{flex:1;min-width:0}
@@ -540,6 +590,42 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .bn .bn-l{font-size:7.5px}
   .bn{padding:4px 2px}
   .bn svg{width:16px;height:16px}
+}
+
+/* ── ANALYTICS + HABITS STATS CARDS: MOBILE CENTERING ──────── */
+@media(max-width:700px){
+  /* Analytics: the inline-style grid for top 4 KPI cards */
+  #ana-cx > div:first-child,
+  .ana-kpi-row{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    width:100% !important;
+    margin:0 0 18px 0 !important;
+    padding:0 !important;
+    box-sizing:border-box !important;
+  }
+  /* Habits: the sband stats row */
+  .sband{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    width:100% !important;
+    margin:0 0 18px 0 !important;
+    padding:0 !important;
+    box-sizing:border-box !important;
+  }
+  /* Ensure content areas don't add extra offset */
+  #ana-cx,
+  #hab-cx{
+    width:100%;
+    box-sizing:border-box;
+  }
+  /* Stat items: fully fill their grid cell */
+  .sbi,
+  .ac.ana-kpi-card{
+    min-width:0;
+    width:100%;
+    box-sizing:border-box;
+  }
 }
 
 /* ── FOCUS + INSIGHTS ROW ─────────────────────────────────── */
@@ -599,6 +685,37 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── SCHEDULE CARD DELETE ALWAYS VISIBLE ─────────────────── */
 .sch-del{opacity:0.38!important;transform:scale(1)!important}
 .sch-del:hover{opacity:1!important;color:var(--r1)!important}
+/* ── SCHEDULE TOPBAR: PREVENT OVERLAP ON MOBILE ────────────── */
+@media(max-width:700px){
+  .sch-tb{
+    flex-wrap:nowrap !important;
+    align-items:center !important;
+    gap:8px !important;
+    padding:10px 14px !important;
+  }
+  .sch-tb > div:first-child{
+    flex:1;
+    min-width:0;
+    overflow:hidden;
+  }
+  .sch-tb h1{
+    font-size:16px !important;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .sch-tb .tb-sub{
+    display:none;
+  }
+  .sch-tb .tb-r{
+    flex-shrink:0;
+  }
+  .sch-tb .tb-r .btn{
+    padding:7px 11px !important;
+    font-size:11px !important;
+    white-space:nowrap;
+  }
+}
 
 /* ── TASK ROW REDESIGN ───────────────────────────────────── */
 .tt-task-cell{padding:0!important;vertical-align:middle}
@@ -788,11 +905,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
     <div class="sh">
       <h2>Weekly Schedule</h2>
-      <div style="display:flex;align-items:center;gap:10px">
-        <select class="ana-sel" id="cat-filter-select" onchange="setFilterFromSelect(this.value)" style="min-width:130px">
+      <div style="display:flex;align-items:stretch;gap:8px">
+        <select class="ana-sel cat-filter-select-styled" id="cat-filter-select" onchange="setFilterFromSelect(this.value)" style="min-width:130px;height:30px;padding:0 10px;display:flex;align-items:center">
           <option value="all">All Categories</option>
         </select>
-        <button class="btn btn-pri btn-sm" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;padding:6px 13px">+ Add Task</button>
+        <button class="btn btn-pri btn-sm add-task-btn-aligned" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;padding:0 13px;height:30px;display:inline-flex;align-items:center;gap:5px">+ Add Task</button>
       </div>
     </div>
     <div class="tt-wrap" id="tt-wrap"></div>
@@ -801,7 +918,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- SCHEDULE -->
 <div class="view" id="view-schedule">
-  <div class="tb"><div><h1>Schedule Manager</h1><p class="tb-sub">All your task blocks</p></div>
+  <div class="tb sch-tb"><div><h1>Schedule Manager</h1><p class="tb-sub">All your task blocks</p></div>
     <div class="tb-r"><button class="btn btn-pri" onclick="openTaskModal()">+ New Block</button></div>
   </div>
   <div class="cx"><div class="pri-cols" id="sg"></div></div>
@@ -1474,7 +1591,7 @@ function renderAna(dates){
 
   el.innerHTML=`
   <!-- 1. Key Metrics Row -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;width:100%">
+  <div class="ana-kpi-row" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;width:100%;margin-left:0;margin-right:0;box-sizing:border-box">
     <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">✔ Completion Rate</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${ws.pct}%</div>
@@ -2494,11 +2611,13 @@ function renderNotifPanel(){
   const todayTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0)].sort((a,b)=>a.start.localeCompare(b.start));
 
   if(!S.sett.notif){
-    body.innerHTML=`<div class="notif-empty">🔕 Notifications are off.<br><span style="color:#6666aa">Toggle above to enable reminders.</span></div><div class="notif-footer">Reminders fire 10 min before task starts</div>`;
+    const leadMins0=S.sett.leadMins||10;
+    body.innerHTML=`<div class="notif-empty">🔕 Notifications are off.<br><span style="color:#6666aa">Toggle above to enable reminders.</span></div><div class="notif-footer">Reminders fire ${leadMins0} min before task starts</div>`;
     return;
   }
   if(todayTasks.length===0){
-    body.innerHTML=`<div class="notif-empty">📭 No tasks scheduled for today.</div><div class="notif-footer">Reminders fire 10 min before task starts</div>`;
+    const leadMins0=S.sett.leadMins||10;
+    body.innerHTML=`<div class="notif-empty">📭 No tasks scheduled for today.</div><div class="notif-footer">Reminders fire ${leadMins0} min before task starts</div>`;
     return;
   }
 
@@ -2571,7 +2690,8 @@ function renderNotifPanel(){
     html=`<div class="notif-empty">✅ All tasks done for today!</div>`;
   }
 
-  html+=`<div class="notif-footer">Reminders fire 10 min before task starts</div>`;
+  const leadMins=S.sett.leadMins||10;
+  html+=`<div class="notif-footer">Reminders fire ${leadMins} min before task starts</div>`;
   body.innerHTML=html;
 }
 
