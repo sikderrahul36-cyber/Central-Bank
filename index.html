@@ -218,7 +218,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   width:100%;
   max-width:440px;
   margin:0 auto 20px;
-  /* Force true centre column */
+  /* Force true centre column — all children centred on same axis */
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -246,25 +246,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   font-family:var(--fb);
 }
 .tm-pill.on{background:rgba(91,110,245,.18);border-color:var(--p1);color:var(--p1)}
-/* SVG ring — perfectly centred, no horizontal drift */
+/* SVG ring wrapper — flex centring kills any inline-block drift */
 .timer-ring{
   position:relative;
   width:190px;
   height:190px;
   flex-shrink:0;
-  /* Critical: explicit block + auto margins kill the right-shift */
-  display:block;
-  margin:0 auto 0;
+  /* Use flex so the SVG sits dead-centre with no layout side-effects */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  /* Pull into horizontal centre of the flex-column parent */
+  align-self:center;
+  margin-bottom:0;
 }
 .timer-ring svg{
+  /* display:block removes inline descender gap */
   display:block;
-  /* rotate so arc starts at 12-o'clock */
+  /* transform-origin:center ensures rotation doesn't shift the layout box */
   transform:rotate(-90deg);
+  transform-origin:center center;
+  /* Explicit size so no browser rounds the intrinsic box */
+  width:190px;
+  height:190px;
+  flex-shrink:0;
 }
 .timer-ring circle{fill:none;stroke-linecap:round;transition:stroke-dashoffset .5s linear}
 .timer-bg{stroke:var(--border2);stroke-width:9}
 .timer-fg{stroke:url(#tgrad);stroke-width:9}
-/* Text overlay — perfectly centred inside the ring */
+/* Text overlay — absolutely fills the ring wrapper and flex-centres content */
 .timer-text{
   position:absolute;
   inset:0;
@@ -272,12 +282,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  /* undo the SVG rotation so text reads normally */
-  transform:none;
+  /* Never affected by SVG rotation — lives on a separate stacking layer */
   pointer-events:none;
+  /* Tiny nudge guard: ensure no inherited transforms bleed in */
+  transform:none;
 }
-.timer-count{font-family:var(--fh);font-size:38px;font-weight:800;line-height:1}
-.timer-label{font-size:11px;color:var(--text2);margin-top:4px;line-height:1}
+/* Reduced font-size so "00:00" stays well within the inner radius (≈155px) */
+.timer-count{font-family:var(--fh);font-size:30px;font-weight:800;line-height:1;letter-spacing:1px;text-align:center}
+.timer-label{font-size:11px;color:var(--text2);margin-top:5px;line-height:1;text-align:center}
 /* Current-task name — sits cleanly below the ring */
 .timer-task-name{
   font-size:13px;
@@ -1077,7 +1089,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   /* Timer mobile */
   .timer-wrap{padding:20px 16px 22px;max-width:100%}
   .timer-ring{width:170px;height:170px}
-  .timer-count{font-size:32px}
+  .timer-ring svg{width:170px;height:170px}
+  .timer-count{font-size:26px;letter-spacing:1px}
   .timer-label{font-size:10px}
   .timer-task-name{font-size:12px;margin-top:14px;margin-bottom:14px}
   .timer-modes{gap:5px}
@@ -2391,9 +2404,9 @@ function renderTimer(){
       <span style="font-size:12px;color:var(--text2)">minutes</span>
     </div>`:''}
 
-    <!-- ③ Timer ring — centred block, no float, no inline offsets -->
+    <!-- ③ Timer ring — centred via flex, no float, no inline offsets -->
     <div class="timer-ring">
-      <svg width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}" xmlns="http://www.w3.org/2000/svg">
+      <svg width="${SZ}" height="${SZ}" viewBox="0 0 ${SZ} ${SZ}" xmlns="http://www.w3.org/2000/svg" style="display:block;transform:rotate(-90deg);transform-origin:center center;flex-shrink:0">
         <circle class="timer-bg" cx="${CX}" cy="${CY}" r="${R}"/>
         <circle class="timer-fg" cx="${CX}" cy="${CY}" r="${R}"
           stroke-dasharray="${C.toFixed(2)}"
