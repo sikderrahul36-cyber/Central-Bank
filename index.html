@@ -1174,8 +1174,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .cat-filter-select-styled{min-width:0;max-width:138px;font-size:11px;padding:0 34px 0 9px}
   .add-task-btn-aligned{flex-shrink:0;white-space:nowrap}
   /* Task heading: shift right on mobile for visual balance with row content */
-  .tt-task-th{padding-left:20px!important}
-  .tt th:first-child{padding-left:20px}
+  .tt-task-th{padding-left:28px!important}
+  .tt th:first-child{padding-left:28px}
   /* KPI Cards: improved mobile layout */
   .kc{padding:12px}
   .kc-v{font-size:20px}
@@ -1526,6 +1526,325 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .wk-pill span{min-width:66px!important;font-size:9px!important}
   .cat-filter-select-styled{max-width:108px!important;font-size:9px!important}
 }
+
+/* ── HABITS CARD SECTION HEADER ──────────────────────────── */
+.hab-section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  gap:10px;
+}
+.hab-section-title{
+  font-family:var(--fh);
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:-.1px;
+  color:var(--text);
+}
+.hab-section-meta{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-shrink:0;
+}
+.hab-week-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-size:10px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:20px;
+  background:rgba(52,211,153,.12);
+  color:#34d399;
+  border:1px solid rgba(52,211,153,.22);
+  letter-spacing:.2px;
+  white-space:nowrap;
+}
+.hab-sync-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:10px;
+  font-weight:500;
+  color:var(--text2);
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:3px 9px;
+  white-space:nowrap;
+}
+/* Mobile: stack the header into a clean 2-line layout */
+@media(max-width:700px){
+  .hab-section-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:6px;
+    margin-bottom:12px;
+  }
+  .hab-section-title{
+    font-size:15px;
+    line-height:1.2;
+  }
+  .hab-section-meta{
+    width:100%;
+    justify-content:flex-start;
+    gap:6px;
+  }
+  .hab-week-badge{
+    font-size:10px;
+    padding:3px 10px;
+  }
+  .hab-sync-badge{
+    font-size:10px;
+    padding:3px 9px;
+  }
+}
+@media(max-width:380px){
+  .hab-section-title{font-size:14px}
+  .hab-week-badge,.hab-sync-badge{font-size:9px;padding:2px 8px}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CUSTOM MOBILE CATEGORY DROPDOWN — Premium Card UI
+   ═══════════════════════════════════════════════════════════ */
+.mob-cat-btn{
+  display:none;
+  height:34px;
+  align-items:center;
+  gap:7px;
+  padding:0 10px 0 10px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:9px;
+  font-family:var(--fb);
+  font-size:11px;
+  font-weight:600;
+  color:var(--text);
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+  max-width:145px;
+  min-width:0;
+  overflow:hidden;
+  position:relative;
+}
+.mob-cat-btn:hover{
+  border-color:var(--p1);
+  background:rgba(91,110,245,.06);
+}
+.mob-cat-btn .mcb-label{
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  min-width:0;
+}
+.mob-cat-btn .mcb-color-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.mob-cat-btn .mcb-chevron{
+  width:12px;
+  height:12px;
+  flex-shrink:0;
+  color:var(--text2);
+  transition:transform .22s cubic-bezier(.4,0,.2,1);
+}
+.mob-cat-btn.open .mcb-chevron{
+  transform:rotate(180deg);
+}
+
+/* Backdrop overlay */
+.mob-cat-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:290;
+  background:rgba(7,7,13,.45);
+  backdrop-filter:blur(2px);
+  animation:mcb-fadein .18s ease;
+}
+.mob-cat-backdrop.open{display:block}
+@keyframes mcb-fadein{from{opacity:0}to{opacity:1}}
+
+/* Dropdown panel */
+.mob-cat-panel{
+  display:none;
+  position:fixed;
+  left:12px;
+  right:12px;
+  z-index:295;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45),0 4px 16px rgba(0,0,0,.22);
+  overflow:hidden;
+  animation:mcp-slide .22s cubic-bezier(.34,1.4,.64,1);
+}
+.mob-cat-panel.open{display:block}
+@keyframes mcp-slide{
+  from{opacity:0;transform:translateY(10px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+
+/* Panel header */
+.mob-cat-panel-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px 12px;
+  border-bottom:1px solid var(--border);
+}
+.mob-cat-panel-title{
+  font-family:var(--fh);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:-.1px;
+  color:var(--text);
+}
+.mob-cat-panel-close{
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  border:1px solid var(--border2);
+  background:var(--bg3);
+  color:var(--text2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:all .18s;
+}
+.mob-cat-panel-close:hover{
+  background:var(--card2);
+  border-color:var(--border3);
+  color:var(--text);
+}
+
+/* Scrollable list */
+.mob-cat-list{
+  padding:10px 10px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  max-height:52vh;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+
+/* Individual category card */
+.mob-cat-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 14px;
+  border-radius:12px;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:all .18s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  overflow:hidden;
+}
+.mob-cat-item::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  opacity:0;
+  transition:opacity .18s;
+}
+.mob-cat-item:hover{
+  border-color:var(--border2);
+  background:var(--card2);
+  transform:translateX(2px);
+}
+.mob-cat-item:active{
+  transform:scale(.98);
+}
+.mob-cat-item.active{
+  border-color:transparent;
+}
+
+/* Color icon badge */
+.mob-cat-icon{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  flex-shrink:0;
+  position:relative;
+  z-index:1;
+}
+
+/* Text stack */
+.mob-cat-info{
+  flex:1;
+  min-width:0;
+  position:relative;
+  z-index:1;
+}
+.mob-cat-name{
+  font-family:var(--fh);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:-.1px;
+  margin-bottom:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.mob-cat-meta{
+  font-size:10px;
+  font-weight:500;
+  color:var(--text2);
+  white-space:nowrap;
+}
+
+/* Checkmark */
+.mob-cat-check{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  opacity:0;
+  transform:scale(.6);
+  transition:all .2s cubic-bezier(.34,1.4,.64,1);
+  position:relative;
+  z-index:1;
+}
+.mob-cat-item.active .mob-cat-check{
+  opacity:1;
+  transform:scale(1);
+}
+
+/* Show custom button, hide native select on mobile */
+@media(max-width:700px){
+  .mob-cat-btn{display:inline-flex}
+  .cat-filter-wrapper{display:none}
+}
+@media(min-width:701px){
+  .mob-cat-btn{display:none}
+  .mob-cat-backdrop,.mob-cat-panel{display:none!important}
+}
+
+[data-theme="light"] .mob-cat-panel{
+  background:var(--card);
+  border-color:var(--border2);
+  box-shadow:0 16px 50px rgba(60,60,120,.18),0 4px 14px rgba(60,60,120,.10);
+}
+[data-theme="light"] .mob-cat-panel-hdr{border-bottom-color:var(--border)}
+[data-theme="light"] .mob-cat-panel-close{background:var(--bg3);border-color:var(--border2)}
+[data-theme="light"] .mob-cat-item:hover{background:var(--card2);border-color:var(--border2)}
 </style>
 </head>
 <body>
@@ -1648,6 +1967,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           </select>
           <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
+        <!-- Mobile-only custom category button -->
+        <div class="mob-cat-btn" id="mob-cat-btn" onclick="toggleMobCatPanel()">
+          <span class="mcb-color-dot" id="mob-cat-dot" style="background:#8888aa"></span>
+          <span class="mcb-label" id="mob-cat-label">All Categories</span>
+          <svg class="mcb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
         <button class="btn btn-pri btn-sm add-task-btn-aligned" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;gap:5px">+ Add Task</button>
       </div>
     </div>
@@ -1708,6 +2033,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 </div><!-- /main -->
+
+<!-- ═══ MOBILE CATEGORY DROPDOWN PANEL ═══════════════════════ -->
+<div class="mob-cat-backdrop" id="mob-cat-backdrop" onclick="closeMobCatPanel()"></div>
+<div class="mob-cat-panel" id="mob-cat-panel">
+  <div class="mob-cat-panel-hdr">
+    <span class="mob-cat-panel-title">Filter by Category</span>
+    <div class="mob-cat-panel-close" onclick="closeMobCatPanel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+  <div class="mob-cat-list" id="mob-cat-list"></div>
+</div>
 
 <!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile -->
 <!-- Secondary scrollable: Focus Timer, Notes, Settings -->
@@ -2069,9 +2406,109 @@ function renderDynCatTabs(){
     html+=`<option value="${c}" ${S.catFilt===c?'selected':''}>${getCatLabel(c)}</option>`;
   });
   sel.innerHTML=html;
+  // Keep mobile custom button in sync
+  updateMobCatBtn();
 }
 function setFilterFromSelect(cat){
   S.catFilt=cat;
+  renderTT(getWeekDates(S.weekOff));
+}
+
+// ════════════════════════════════════════════════════════════
+// MOBILE CUSTOM CATEGORY DROPDOWN
+// ════════════════════════════════════════════════════════════
+function getMobCatPanelBottom(){
+  // Position panel above Add Task button area, or just use fixed bottom offset
+  return 90; // px from bottom (above bottom nav)
+}
+
+function buildMobCatList(){
+  const list=document.getElementById('mob-cat-list');
+  if(!list)return;
+  const cats=getAllCats();
+  const allCats=[{id:'all',label:'All Categories',emoji:'🗂',color:'var(--p1)'},...cats.map(c=>({id:c,label:getCatLabel(c),emoji:getCatEmoji(c),color:getCatColor(c)}))];
+  const taskCountMap={all:S.tasks.length};
+  cats.forEach(c=>{taskCountMap[c]=S.tasks.filter(t=>t.cat===c).length;});
+
+  list.innerHTML=allCats.map(({id,label,emoji,color})=>{
+    const isActive=S.catFilt===id;
+    const count=taskCountMap[id]||0;
+    const colorRaw=id==='all'?'rgba(91,110,245,1)':color;
+    const bgAlpha=id==='all'?'rgba(91,110,245,.13)':`${colorRaw}22`;
+    const activeBg=id==='all'?'rgba(91,110,245,.12)':`${colorRaw}18`;
+    const activeBorder=id==='all'?'rgba(91,110,245,.35)':`${colorRaw}55`;
+    return`<div class="mob-cat-item${isActive?' active':''}" onclick="mobCatSelect('${id}')" style="${isActive?`background:${activeBg};border-color:${activeBorder};`:''}">
+      <div class="mob-cat-icon" style="background:${bgAlpha}">${emoji}</div>
+      <div class="mob-cat-info">
+        <div class="mob-cat-name" style="color:${isActive?colorRaw:'var(--text)'}">${label}</div>
+        <div class="mob-cat-meta">${count} task${count!==1?'s':''}</div>
+      </div>
+      <div class="mob-cat-check" style="background:${colorRaw}22;border:1.5px solid ${colorRaw}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="${colorRaw}" stroke-width="2.8" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Update panel position dynamically
+  const panel=document.getElementById('mob-cat-panel');
+  if(panel){
+    const totalItems=allCats.length;
+    const estimatedH=Math.min(totalItems*62+90,window.innerHeight*0.6);
+    const bottomPx=getMobCatPanelBottom();
+    panel.style.bottom=(bottomPx)+'px';
+    panel.style.top='auto';
+  }
+}
+
+function updateMobCatBtn(){
+  const btn=document.getElementById('mob-cat-btn');
+  const dot=document.getElementById('mob-cat-dot');
+  const lbl=document.getElementById('mob-cat-label');
+  if(!btn)return;
+  if(S.catFilt==='all'){
+    if(dot)dot.style.background='var(--p1)';
+    if(lbl)lbl.textContent='All Categories';
+  } else {
+    const color=getCatColor(S.catFilt);
+    if(dot)dot.style.background=color;
+    if(lbl)lbl.textContent=getCatLabel(S.catFilt);
+  }
+}
+
+function toggleMobCatPanel(){
+  const panel=document.getElementById('mob-cat-panel');
+  const backdrop=document.getElementById('mob-cat-backdrop');
+  const btn=document.getElementById('mob-cat-btn');
+  if(!panel)return;
+  const isOpen=panel.classList.contains('open');
+  if(isOpen){
+    closeMobCatPanel();
+  } else {
+    buildMobCatList();
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    btn.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+}
+
+function closeMobCatPanel(){
+  const panel=document.getElementById('mob-cat-panel');
+  const backdrop=document.getElementById('mob-cat-backdrop');
+  const btn=document.getElementById('mob-cat-btn');
+  if(panel)panel.classList.remove('open');
+  if(backdrop)backdrop.classList.remove('open');
+  if(btn)btn.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function mobCatSelect(cat){
+  S.catFilt=cat;
+  // Also update the native select to stay in sync
+  const sel=document.getElementById('cat-filter-select');
+  if(sel)sel.value=cat;
+  updateMobCatBtn();
+  closeMobCatPanel();
   renderTT(getWeekDates(S.weekOff));
 }
 
@@ -2605,11 +3042,17 @@ function renderHabits(dates){
       return`<div class="hc"><div class="hl">${DAYS7[i]}</div><div class="hd ${cls}${tod}">${pct?pct+'%':'—'}</div></div>`;
     }).join('')}</div>
   </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-    <div style="font-family:var(--fh);font-size:14px;font-weight:700">Habit Cards</div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2);letter-spacing:.2px">Current Week</span>
-      <div style="font-size:10px;color:var(--text2);background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:4px 10px">🔄 Synced with your weekly schedule</div>
+  <div class="hab-section-header">
+    <div class="hab-section-title">Habit Cards</div>
+    <div class="hab-section-meta">
+      <span class="hab-week-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>
+        Current Week
+      </span>
+      <span class="hab-sync-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Synced with schedule
+      </span>
     </div>
   </div>
   <div class="hg">${S.tasks.map(t=>{
