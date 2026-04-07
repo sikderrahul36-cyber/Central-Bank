@@ -64,9 +64,50 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sb-prof-name{font-size:12px;font-weight:600;white-space:nowrap;display:none}
 .sb-prof-role{font-size:10px;color:var(--text2);white-space:nowrap;display:none}
 .sb.open .sb-prof-name,.sb.open .sb-prof-role{display:block}
-.sb-tog{width:40px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);border:1px solid var(--border);transition:all .2s;flex-shrink:0}
-.sb-tog:hover{color:var(--text);background:var(--card2)}
-.sb.open .sb-tog{width:180px;justify-content:flex-start;padding:0 12px;gap:8px;font-size:11px;font-weight:500}
+/* Collapsed state: icon-only, perfectly square */
+.sb-tog{
+  width:36px;
+  height:36px;
+  border-radius:9px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  color:var(--text2);
+  border:1px solid var(--border);
+  background:transparent;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.sb-tog:hover{
+  color:var(--p1);
+  background:rgba(91,110,245,.08);
+  border-color:rgba(91,110,245,.25);
+}
+/* Expanded state: full-width row with icon + "Collapse" text */
+.sb.open .sb-tog{
+  width:180px;
+  justify-content:flex-start;
+  padding:0 12px;
+  gap:8px;
+}
+/* Hide the text label in collapsed state */
+.sb-tog .sb-tog-label{
+  display:none;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.1px;
+  color:var(--text2);
+  transition:color .2s;
+}
+.sb.open .sb-tog .sb-tog-label{
+  display:block;
+}
+.sb-tog:hover .sb-tog-label{
+  color:var(--p1);
+}
 /* ── MAIN ──────────────────────────────────────────────────── */
 .main{margin-left:64px;min-height:100vh;position:relative;z-index:1;transition:margin-left .3s}
 .sb.open~.main{margin-left:218px}
@@ -111,7 +152,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);overflow:auto;margin-bottom:20px;transition:background .3s}
 .tt{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
 .tt th{padding:9px 7px;font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);background:var(--bg3);white-space:nowrap}
-.tt th:first-child{text-align:left;padding-left:12px}
+.tt th:first-child{text-align:left;padding-left:16px}
 .tt th:last-child{border-right:none}
 .tt th.tc{color:var(--p1)}
 .tt td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:middle;transition:background .15s}
@@ -209,6 +250,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   align-items:center;
   width:100%;
   box-sizing:border-box;
+  padding-bottom:20px;
+}
+/* Ensure timer-log inside timer-cx is always fully visible on PC */
+#timer-cx .timer-log{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
 }
 .timer-wrap{
   background:var(--card);
@@ -218,6 +266,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   width:100%;
   max-width:440px;
   margin:0 auto 20px;
+  align-self:center;
+  flex-shrink:0;
   /* Force true centre column — all children centred on same axis */
   display:flex;
   flex-direction:column;
@@ -310,12 +360,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   width:100%;
   margin-bottom:20px;
 }
-/* ── TASK PICKER — redesigned ─────────────────────────────── */
+/* ── TASK PICKER — custom dropdown ───────────────────────── */
 .timer-task-picker{
   width:100%;
   border-top:1px solid var(--border);
-  padding-top:18px;
+  padding-top:16px;
   margin-top:4px;
+  position:relative;
 }
 .timer-task-picker-label{
   font-size:10px;
@@ -333,54 +384,182 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   color:var(--p1);
   opacity:.85;
 }
-/* Custom select wrapper */
-.timer-task-select-wrap{
-  position:relative;
+/* Trigger button */
+.ttp-trigger{
   width:100%;
-}
-.timer-task-select-wrap::after{
-  content:'';
-  position:absolute;
-  right:12px;
-  top:50%;
-  transform:translateY(-50%);
-  width:0;
-  height:0;
-  border-left:4px solid transparent;
-  border-right:4px solid transparent;
-  border-top:5px solid var(--text2);
-  pointer-events:none;
-}
-.timer-task-select{
-  width:100%;
-  appearance:none;
-  -webkit-appearance:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
   background:var(--card2);
   border:1px solid var(--border2);
-  border-radius:10px;
-  padding:10px 36px 10px 14px;
+  border-radius:12px;
+  padding:11px 14px;
+  cursor:pointer;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+  font-family:var(--fb);
+}
+.ttp-trigger:hover{
+  border-color:var(--p1);
+  background:rgba(91,110,245,.05);
+  box-shadow:0 0 0 3px rgba(91,110,245,.08);
+}
+.ttp-trigger.open{
+  border-color:var(--p1);
+  background:rgba(91,110,245,.06);
+  box-shadow:0 0 0 3px rgba(91,110,245,.10);
+  border-radius:12px 12px 0 0;
+}
+.ttp-trigger-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.ttp-trigger-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+  background:var(--p1);
+  transition:background .2s;
+}
+.ttp-trigger-text{
+  font-size:12px;
+  font-weight:600;
   color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:260px;
+}
+.ttp-trigger-placeholder{
   font-size:12px;
   font-weight:500;
-  font-family:var(--fb);
+  color:var(--text3);
+  font-style:italic;
+}
+.ttp-chevron{
+  flex-shrink:0;
+  color:var(--text2);
+  transition:transform .22s cubic-bezier(.4,0,.2,1);
+}
+.ttp-trigger.open .ttp-chevron{transform:rotate(180deg);}
+/* Dropdown panel */
+.ttp-panel{
+  display:none;
+  position:absolute;
+  left:0;right:0;
+  top:calc(100%);
+  background:var(--card);
+  border:1px solid var(--p1);
+  border-top:none;
+  border-radius:0 0 14px 14px;
+  box-shadow:0 12px 36px rgba(0,0,0,.28),0 0 0 1px rgba(91,110,245,.08);
+  z-index:50;
+  overflow:hidden;
+  animation:ttp-drop .18s cubic-bezier(.4,0,.2,1);
+}
+.ttp-panel.open{display:block;}
+@keyframes ttp-drop{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:none}
+}
+/* Scrollable list inside panel */
+.ttp-list{
+  max-height:224px;
+  overflow-y:auto;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border2) transparent;
+}
+.ttp-list::-webkit-scrollbar{width:4px}
+.ttp-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+/* Each task item card */
+.ttp-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:9px;
   cursor:pointer;
-  transition:border-color .2s, box-shadow .2s;
-  box-shadow:0 2px 8px rgba(0,0,0,.1);
-}
-.timer-task-select:focus{
-  outline:none;
-  border-color:var(--p1);
-  box-shadow:0 0 0 3px rgba(91,110,245,.12);
-}
-.timer-task-select:hover{border-color:var(--border3)}
-/* Dropdown options styling */
-.timer-task-select option{
-  background:var(--card2);
-  color:var(--text);
-  padding:10px 14px;
-  font-size:13px;
+  transition:background .15s, border-color .15s;
+  border:1px solid transparent;
+  background:transparent;
+  width:100%;
+  text-align:left;
   font-family:var(--fb);
 }
+.ttp-item:hover{
+  background:rgba(91,110,245,.07);
+  border-color:rgba(91,110,245,.15);
+}
+.ttp-item.selected{
+  background:rgba(91,110,245,.12);
+  border-color:rgba(91,110,245,.28);
+}
+.ttp-item-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.ttp-item-name{
+  font-size:12px;
+  font-weight:600;
+  color:var(--text);
+  flex:1;
+  min-width:0;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ttp-item.selected .ttp-item-name{color:var(--p1);}
+/* Tick for selected item */
+.ttp-item-tick{
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  background:rgba(91,110,245,.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  opacity:0;
+  transition:opacity .15s;
+}
+.ttp-item.selected .ttp-item-tick{opacity:1;}
+/* Empty state */
+.ttp-empty{
+  padding:18px 12px;
+  text-align:center;
+  font-size:11px;
+  color:var(--text3);
+  font-style:italic;
+}
+/* Clear selection row */
+.ttp-clear{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px 10px;
+  border-top:1px solid var(--border);
+  cursor:pointer;
+  font-size:11px;
+  font-weight:600;
+  color:var(--text3);
+  font-family:var(--fb);
+  transition:color .15s;
+}
+.ttp-clear:hover{color:var(--r1);}
+[data-theme="light"] .ttp-trigger{background:var(--card);border-color:var(--border2)}
+[data-theme="light"] .ttp-trigger:hover{background:rgba(91,110,245,.04)}
+[data-theme="light"] .ttp-panel{background:var(--card);box-shadow:0 12px 36px rgba(60,60,120,.15)}
+[data-theme="light"] .ttp-item:hover{background:rgba(91,110,245,.05);border-color:rgba(91,110,245,.12)}
+[data-theme="light"] .ttp-item.selected{background:rgba(91,110,245,.08);border-color:rgba(91,110,245,.22)}
 /* ── FOCUS LOG ────────────────────────────────────────────── */
 .timer-log{
   background:var(--card);
@@ -388,9 +567,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   border-radius:var(--rr);
   padding:16px;
   max-width:440px;
-  margin:0 auto;
   width:100%;
   box-sizing:border-box;
+  display:block;
+  /* Works in both normal flow and flex-column context */
+  margin:0 auto 20px;
+  align-self:center;
+  flex-shrink:0;
 }
 .timer-log h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:12px}
 .tl-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
@@ -497,14 +680,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .nc-pick.on{border-color:var(--p1);transform:scale(1.15);box-shadow:0 0 0 3px rgba(91,110,245,.25)}
 /* ── TOAST ─────────────────────────────────────────────────── */
 .twrap{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
-@media(max-width:700px){.twrap{bottom:125px;right:12px;left:12px;align-items:center}}
+@media(max-width:700px){.twrap{bottom:80px;right:12px;left:12px;align-items:center}}
 .toast{background:var(--card2);border:1px solid var(--border2);border-radius:var(--rs);padding:10px 14px;font-size:12px;display:flex;align-items:center;gap:8px;animation:ti .25s ease;box-shadow:var(--shadow);pointer-events:none}
 @keyframes ti{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes to2{to{opacity:0;transform:translateY(8px)}}
 .tdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 /* ── SCROLLBAR ─────────────────────────────────────────────── */
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-/* ── BOTTOM NAV (mobile) ─── NEW SCROLLABLE DESIGN ──────── */
+/* ── BOTTOM NAV (mobile) ─── SINGLE ROW SCROLLABLE ──────── */
 .bnav{
   display:none;
   position:fixed;
@@ -514,61 +697,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   background:var(--bg2);
   border-top:1px solid var(--border);
   z-index:200;
-  padding:0 0 max(4px,env(safe-area-inset-bottom));
+  padding:0;
   flex-direction:column;
-  min-height:56px;
+  min-height:60px;
 }
-/* Primary nav row - 5 fixed icons */
+/* Single scrollable primary row */
 .bnav-primary{
   display:flex;
-  justify-content:space-around;
   align-items:stretch;
-  padding:6px 4px 2px;
-}
-/* Secondary scrollable nav row */
-.bnav-secondary{
-  display:flex;
-  align-items:center;
   overflow-x:auto;
   scroll-behavior:smooth;
   scrollbar-width:none;
   -ms-overflow-style:none;
-  padding:3px 12px 5px;
-  gap:6px;
+  padding:5px 8px max(6px,env(safe-area-inset-bottom));
+  gap:2px;
   position:relative;
-  border-top:1px solid var(--border);
-  margin-top:2px;
 }
-.bnav-secondary::-webkit-scrollbar{display:none}
-/* Fade indicator on the right edge */
-.bnav-secondary-wrap{
-  position:relative;
-  overflow:hidden;
-}
-.bnav-secondary-wrap::after{
-  content:'';
-  position:absolute;
-  right:0;
-  top:0;
-  bottom:0;
-  width:36px;
-  background:linear-gradient(to right,transparent,var(--bg2));
-  pointer-events:none;
-  z-index:2;
-}
-/* Secondary scroll more hint arrow */
-.bnav-scroll-hint{
-  position:absolute;
-  right:6px;
-  top:50%;
-  transform:translateY(-50%);
-  color:var(--text3);
-  font-size:11px;
-  pointer-events:none;
-  z-index:3;
-  animation:hint-pulse 2s ease-in-out infinite;
-}
-@keyframes hint-pulse{0%,100%{opacity:.4;transform:translateY(-50%) translateX(0)}50%{opacity:.9;transform:translateY(-50%) translateX(2px)}}
+.bnav-primary::-webkit-scrollbar{display:none}
+/* Hide the secondary row entirely — merged into primary */
+.bnav-secondary-wrap{display:none}
+.bnav-secondary{display:none}
 .bn{
   display:flex;
   flex-direction:column;
@@ -576,19 +724,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   justify-content:center;
   gap:3px;
   cursor:pointer;
-  padding:4px 6px;
+  padding:5px 4px;
   border-radius:10px;
   color:var(--text2);
   transition:all .2s;
-  min-width:0;
-  flex:1;
-  max-width:72px;
+  min-width:54px;
+  flex-shrink:0;
 }
 .bn svg{width:20px;height:20px;flex-shrink:0}
 .bn .bn-l{font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
 .bn.on{color:var(--p1);background:rgba(91,110,245,.07);border-radius:12px}
 .bn.on .bn-l{color:var(--p1);font-weight:700}
-/* Secondary nav items (smaller) */
+/* Secondary nav items (smaller) — keep for compat but unused in single-row */
 .bn-sec{
   display:flex;
   flex-direction:column;
@@ -596,25 +743,56 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   justify-content:center;
   gap:2px;
   cursor:pointer;
-  padding:4px 14px;
+  padding:5px 4px;
   border-radius:10px;
   color:var(--text2);
   transition:all .2s;
-  min-width:60px;
+  min-width:54px;
   flex-shrink:0;
-  background:var(--card);
-  border:1px solid var(--border);
-  margin:2px 0;
 }
-.bn-sec svg{width:16px;height:16px;flex-shrink:0}
+.bn-sec svg{width:20px;height:20px;flex-shrink:0}
 .bn-sec .bn-l{font-size:9px;font-weight:600;white-space:nowrap}
 .bn-sec.on{
   color:var(--p1);
-  background:rgba(91,110,245,.1);
-  border-color:rgba(91,110,245,.25);
+  background:rgba(91,110,245,.07);
+  border-radius:12px;
 }
 .bn-sec:hover{color:var(--p1);background:rgba(91,110,245,.07)}
-/* ── CONFIRM MODAL ─────────────────────────────────────────── */
+/* ── BNAV FADE WRAPPER ── */
+.bnav-scroll-wrap{
+  position:relative;
+  overflow:hidden;
+  flex:1;
+}
+.bnav-scroll-wrap::after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:40px;
+  background:linear-gradient(to right,transparent,var(--bg2));
+  pointer-events:none;
+  z-index:2;
+  transition:opacity .3s;
+}
+.bnav-scroll-wrap.at-end::after{
+  opacity:0;
+}
+/* Scroll hint chevron */
+.bnav-scroll-hint{
+  position:absolute;
+  right:4px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--text3);
+  font-size:12px;
+  pointer-events:none;
+  z-index:3;
+  animation:hint-pulse 2s ease-in-out infinite;
+  line-height:1;
+}
+@keyframes hint-pulse{0%,100%{opacity:.4;transform:translateY(-50%) translateX(0)}50%{opacity:.85;transform:translateY(-50%) translateX(2px)}}
 .confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
 .confirm-mo.open{display:flex}
 .confirm-box{background:var(--card);border:1px solid var(--border2);border-radius:var(--rl);padding:32px 28px;width:100%;max-width:360px;text-align:center;animation:mi .23s ease}
@@ -723,18 +901,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 }
 .cat-filter-wrapper .cat-chevron{
   position:absolute;
-  right:9px;
+  right:8px;
   top:50%;
   transform:translateY(-50%);
   pointer-events:none;
   color:var(--text2);
   width:12px;
   height:12px;
+  flex-shrink:0;
 }
 /* ── CAT FILTER: BUTTON HEIGHT ALIGNMENT ─────────────────── */
 .cat-filter-select-styled{
   height:34px;
-  padding:0 28px 0 10px;
+  padding:0 32px 0 10px;
   display:flex;
   align-items:center;
   border-radius:var(--rs);
@@ -749,6 +928,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   -webkit-appearance:none;
   transition:border-color .2s, box-shadow .2s;
   min-width:130px;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
 }
 .cat-filter-select-styled:focus{
   outline:none;
@@ -773,8 +955,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     font-size:11px;
     min-width:0;
     max-width:145px;
-    padding:0 28px 0 9px;
+    padding:0 30px 0 9px;
     border-radius:9px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
   }
   .add-task-btn-aligned{
     height:34px !important;
@@ -813,6 +998,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .pri-cols{grid-template-columns:1fr 1fr!important}
   .notes-grid{grid-template-columns:repeat(2,1fr)}
   .focus-block-text{white-space:normal}
+  /* Timer tablet — allow full width on smaller viewports */
+  .timer-wrap{max-width:500px}
+  .timer-log{max-width:500px}
 }
 /* ── TABLET PORTRAIT (≤900px) ────────────────────────────── */
 @media(max-width:900px){
@@ -829,13 +1017,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .pri-cols{grid-template-columns:1fr!important}
   .focus-block-text{white-space:normal}
   .ana-kpi-card{min-height:unset}
+  /* Timer tablet */
+  .timer-wrap{max-width:100%}
+  .timer-log{max-width:100%}
 }
 /* ── MOBILE (≤700px) ──────────────────────────────────────── */
 @media(max-width:700px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .ig{grid-template-columns:1fr}
   .sband{grid-template-columns:1fr 1fr}
-  .main{margin-left:0!important;padding-bottom:120px}
+  .main{margin-left:0!important;padding-bottom:80px}
   .sb{display:none}
   .bnav{display:flex}
   .tb{padding:10px 14px;gap:8px}
@@ -910,7 +1101,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .focus-insights-row{padding:11px 12px}
   .ana-perf-insight{padding:11px 12px}
   .bn .bn-l{font-size:8px}
-  .bn{padding:4px 3px}
+  .bn{padding:5px 3px;min-width:48px}
   .bn svg{width:18px;height:18px}
   .sh h2{font-size:13px}
   .cat-filter-select-styled{font-size:10px;max-width:120px}
@@ -1059,9 +1250,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt th:not(:first-child),.tt td:not(:first-child){width:7.71%;min-width:52px;padding:8px 2px}
 .tt-dc{text-align:center;padding:6px 2px}
 
-/* ── MOBILE BOTTOM NAV - PROPER LAYOUT ─────────────────── */
+/* ── MOBILE BOTTOM NAV - SINGLE ROW ─────────────────────── */
 .bnav{flex-wrap:nowrap;overflow:visible}
-.bn{flex-shrink:1;min-width:0;flex:1;position:relative}
+.bn{flex-shrink:0;min-width:54px;position:relative}
 /* Active dot indicator under the icon */
 .bn.on::after{
   content:'';
@@ -1154,7 +1345,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .bnav{background:var(--bg2);border-top:1px solid var(--border);box-shadow:0 -2px 16px rgba(60,60,120,.08)}
 [data-theme="light"] .bn.on{color:var(--p1);background:rgba(91,110,245,.09)}
 [data-theme="light"] .bn.on::after{background:var(--p1)}
-[data-theme="light"] .bn-sec{background:var(--card);border-color:var(--border)}
 [data-theme="light"] .bn-sec.on{background:rgba(91,110,245,.08);border-color:rgba(91,110,245,.22)}
 [data-theme="light"] .confirm-mo{background:rgba(60,60,120,.45)}
 [data-theme="light"] .confirm-box{background:var(--card);border-color:var(--border2);box-shadow:0 20px 60px rgba(60,60,120,.18)}
@@ -1191,13 +1381,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .pm{background:var(--border)}
 [data-theme="light"] .tt tr.row-done td{background:rgba(16,185,129,.02)}
 [data-theme="light"] .sb-tog{border-color:var(--border);color:var(--text2)}
-[data-theme="light"] .sb-tog:hover{background:var(--card2);color:var(--text)}
+[data-theme="light"] .sb-tog:hover{background:rgba(91,110,245,.07);border-color:rgba(91,110,245,.22);color:var(--p1)}
+[data-theme="light"] .sb-tog .sb-tog-label{color:var(--text2)}
+[data-theme="light"] .sb-tog:hover .sb-tog-label{color:var(--p1)}
 [data-theme="light"] .sb-sep{background:var(--border)}
 [data-theme="light"] .sb-prof:hover{background:var(--card2)}
 [data-theme="light"] .sb-prof-name{color:var(--text)}
 [data-theme="light"] .sb-prof-role{color:var(--text2)}
 [data-theme="light"] .bnav-secondary{border-top-color:var(--border)}
 [data-theme="light"] .bnav-secondary-wrap::after{background:linear-gradient(to right,transparent,var(--bg2))}
+[data-theme="light"] .bnav-scroll-wrap::after{background:linear-gradient(to right,transparent,var(--bg2))}
 /* Profile hero card — light treatment */
 [data-theme="light"] #prof-cx>div:first-child{
   background:linear-gradient(135deg,rgba(91,110,245,.15) 0%,rgba(124,58,237,.10) 45%,rgba(14,165,233,.08) 100%)!important;
@@ -1298,9 +1491,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div id="sb-av-wrap"></div>
       <div><div class="sb-prof-name" id="sb-pname">User</div><div class="sb-prof-role" id="sb-prole">Life Optimizer</div></div>
     </div>
-    <div class="sb-tog" id="sb-tog" onclick="toggleSb()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" id="sb-arrow"><path d="M9 18l6-6-6-6"/></svg>
-      <span class="nl" style="font-size:10px;font-weight:500">Collapse</span>
+    <div class="sb-tog" id="sb-tog" onclick="toggleSb()" title="Expand sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15" id="sb-arrow" style="flex-shrink:0"><path id="sb-arrow-path" d="M9 18l6-6-6-6"/></svg>
+      <span class="sb-tog-label" id="sb-tog-label">Collapse</span>
     </div>
   </div>
 </div>
@@ -1442,46 +1635,43 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile -->
 <!-- Secondary scrollable: Focus Timer, Notes, Settings -->
 <div class="bnav" id="bnav">
-  <!-- Primary 5 icons -->
-  <div class="bnav-primary">
-    <div class="bn on" id="bn-dashboard" onclick="showView('dashboard')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-      <span class="bn-l">Home</span>
-    </div>
-    <div class="bn" id="bn-schedule" onclick="showView('schedule')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      <span class="bn-l">Schedule</span>
-    </div>
-    <div class="bn" id="bn-analytics" onclick="showView('analytics')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
-      <span class="bn-l">Analytics</span>
-    </div>
-    <div class="bn" id="bn-habits" onclick="showView('habits')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span class="bn-l">Habits</span>
-    </div>
-    <div class="bn" id="bn-profile" onclick="showView('profile')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span class="bn-l">Profile</span>
-    </div>
-  </div>
-  <!-- Secondary scrollable row: Focus Timer, Notes, Settings -->
-  <div class="bnav-secondary-wrap">
-    <div class="bnav-secondary" id="bnav-secondary">
-      <div class="bn-sec" id="bn-timer" onclick="showView('timer')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        <span class="bn-l">Focus Timer</span>
+  <div class="bnav-scroll-wrap" id="bnav-scroll-wrap">
+    <!-- Single scrollable row: all 8 nav items -->
+    <div class="bnav-primary" id="bnav-primary">
+      <div class="bn on" id="bn-dashboard" onclick="showView('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span class="bn-l">Home</span>
       </div>
-      <div class="bn-sec" id="bn-notes" onclick="showView('notes')">
+      <div class="bn" id="bn-schedule" onclick="showView('schedule')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <span class="bn-l">Schedule</span>
+      </div>
+      <div class="bn" id="bn-analytics" onclick="showView('analytics')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
+        <span class="bn-l">Analytics</span>
+      </div>
+      <div class="bn" id="bn-habits" onclick="showView('habits')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="bn-l">Habits</span>
+      </div>
+      <div class="bn" id="bn-profile" onclick="showView('profile')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="bn-l">Profile</span>
+      </div>
+      <div class="bn" id="bn-timer" onclick="showView('timer')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span class="bn-l">Focus</span>
+      </div>
+      <div class="bn" id="bn-notes" onclick="showView('notes')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span class="bn-l">Notes</span>
       </div>
-      <div class="bn-sec" id="bn-settings" onclick="showView('settings')">
+      <div class="bn" id="bn-settings" onclick="showView('settings')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         <span class="bn-l">Settings</span>
       </div>
     </div>
-    <!-- Scroll hint arrow -->
+    <!-- Scroll hint -->
     <div class="bnav-scroll-hint" id="bnav-scroll-hint">›</div>
   </div>
 </div>
@@ -2435,7 +2625,7 @@ function renderTimer(){
       <button class="btn btn-ghost btn-sm" onclick="resetTimer()">↺ Reset</button>
     </div>
 
-    <!-- ⑥ Task picker — redesigned, full-width, clean -->
+    <!-- ⑥ Task picker — custom dropdown, task name only -->
     <div class="timer-task-picker">
       <div class="timer-task-picker-label">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13">
@@ -2444,22 +2634,45 @@ function renderTimer(){
         </svg>
         Focus on task
       </div>
-      <div class="timer-task-select-wrap">
-        <select id="timer-task-sel" class="timer-task-select" onchange="setTimerTask(this.value)">
-          <option value="">— Select task —</option>
-          ${S.tasks.map(t=>{
-            const cat=getCatLabel(t.cat);
-            const time=`${fmtT(t.start)}–${fmtT(t.end)}`;
-            return`<option value="${t.name}" ${ts.task===t.name?'selected':''}>${t.name} · ${cat} · ${time}</option>`;
-          }).join('')}
-        </select>
+
+      <!-- Trigger button -->
+      <div class="ttp-trigger" id="ttp-trigger" onclick="toggleTTP()" role="button" aria-haspopup="listbox" aria-expanded="false">
+        <div class="ttp-trigger-left">
+          <span class="ttp-trigger-dot" id="ttp-trigger-dot" style="background:${ts.task?getCatColor(S.tasks.find(t=>t.name===ts.task)?.cat||''):'var(--border2)'}"></span>
+          ${ts.task
+            ? `<span class="ttp-trigger-text" id="ttp-trigger-text">${ts.task}</span>`
+            : `<span class="ttp-trigger-placeholder" id="ttp-trigger-text">Select a task to focus on…</span>`}
+        </div>
+        <svg class="ttp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-      ${S.tasks.length===0?`<div style="font-size:11px;color:var(--text3);text-align:center;padding:8px 0">Add tasks in Schedule to pick one here.</div>`:''}
+
+      <!-- Custom dropdown panel -->
+      <div class="ttp-panel" id="ttp-panel" role="listbox">
+        <div class="ttp-list" id="ttp-list">
+          ${S.tasks.length===0
+            ? `<div class="ttp-empty">Add tasks in Schedule to pick one here.</div>`
+            : S.tasks.map(t=>{
+                const col=getCatColor(t.cat||'');
+                const isSel=ts.task===t.name;
+                return`<div class="ttp-item${isSel?' selected':''}" onclick="selectTTPTask('${t.name.replace(/'/g,"\\'")}','${col}')" role="option" aria-selected="${isSel}">
+                  <span class="ttp-item-dot" style="background:${col}"></span>
+                  <span class="ttp-item-name">${t.name}</span>
+                  <span class="ttp-item-tick">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" width="9" height="9"><polyline points="2 6 5 9 10 3"/></svg>
+                  </span>
+                </div>`;
+              }).join('')}
+        </div>
+        ${ts.task?`<div class="ttp-clear" onclick="selectTTPTask('','')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+          Clear selection
+        </div>`:''}
+      </div>
     </div>
 
     <!-- ⑦ Today's session summary -->
     ${totalFocusMins>0?`
-    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);width:100%;display:flex;align-items:center;justify-content:center;gap:8px">
+    <div id="timer-summary-row" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);width:100%;display:flex;align-items:center;justify-content:center;gap:8px">
       <span style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Today's Focus</span>
       <span style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--p1)">${totalFocusMins}m</span>
       <span style="font-size:10px;color:var(--text3)">across ${todayLog.length} session${todayLog.length!==1?'s':''}</span>
@@ -2506,6 +2719,70 @@ function setTimerTask(v){
       : `<span style="color:var(--text3);font-style:italic">No task selected</span>`;
   }
 }
+
+// ── Custom Task Picker (TTP) ────────────────────────────────
+function toggleTTP(){
+  const trigger=document.getElementById('ttp-trigger');
+  const panel=document.getElementById('ttp-panel');
+  if(!trigger||!panel)return;
+  const isOpen=panel.classList.contains('open');
+  if(isOpen){closeTTP();}
+  else{
+    panel.classList.add('open');
+    trigger.classList.add('open');
+    trigger.setAttribute('aria-expanded','true');
+  }
+}
+function closeTTP(){
+  const trigger=document.getElementById('ttp-trigger');
+  const panel=document.getElementById('ttp-panel');
+  if(trigger){trigger.classList.remove('open');trigger.setAttribute('aria-expanded','false');}
+  if(panel){panel.classList.remove('open');}
+}
+function selectTTPTask(name,color){
+  // Update state
+  timerState.task=name;
+  // Update the task-name label above the ring
+  const lbl=document.getElementById('timer-task-label');
+  if(lbl){
+    lbl.innerHTML=name
+      ? `<span style="color:var(--p1);font-weight:600">▶</span> ${name}`
+      : `<span style="color:var(--text3);font-style:italic">No task selected</span>`;
+  }
+  // Update trigger display (dot + text) without full re-render
+  const dot=document.getElementById('ttp-trigger-dot');
+  const txt=document.getElementById('ttp-trigger-text');
+  if(dot){dot.style.background=name?(color||'var(--p1)'):'var(--border2)';}
+  if(txt){
+    txt.className=name?'ttp-trigger-text':'ttp-trigger-placeholder';
+    txt.textContent=name?name:'Select a task to focus on…';
+  }
+  // Update selected state on items in the list
+  document.querySelectorAll('.ttp-item').forEach(el=>{
+    const isMatch=el.querySelector('.ttp-item-name')?.textContent===name;
+    el.classList.toggle('selected',isMatch);
+    el.setAttribute('aria-selected',String(isMatch));
+  });
+  // Show/hide the clear row
+  const panel=document.getElementById('ttp-panel');
+  if(panel){
+    let clearRow=panel.querySelector('.ttp-clear');
+    if(name&&!clearRow){
+      panel.insertAdjacentHTML('beforeend',`<div class="ttp-clear" onclick="selectTTPTask('','')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+        Clear selection
+      </div>`);
+    } else if(!name&&clearRow){
+      clearRow.remove();
+    }
+  }
+  closeTTP();
+}
+// Close TTP when clicking outside
+document.addEventListener('click',function(e){
+  const wrap=document.querySelector('.timer-task-picker');
+  if(wrap&&!wrap.contains(e.target))closeTTP();
+},{passive:true});
 function startTimer(){
   if(timerState.paused){timerState.paused=false;}
   timerState.running=true;timerState.sessionStart=Date.now();
@@ -2514,17 +2791,24 @@ function startTimer(){
     timerState.secs--;timerState.sessionSecs++;
     if(timerState.secs<=0){
       clearInterval(timerState.interval);timerState.running=false;
-      logTimerSession();toast('Session complete! 🏆','#34d399');
+      logTimerSession();
+      toast('Session complete! 🏆','#34d399');
+      renderTimer();      // full re-render to restore idle button state + show log
+      updateFocusLogUI(); // surgically refresh log in case renderTimer missed it
+      return;
     }
     updateTimerDisplay();
   },1000);
   renderTimer();
 }
-function pauseTimer(){timerState.paused=!timerState.paused;document.querySelector('.btn-ghost')&&renderTimer();}
+function pauseTimer(){timerState.paused=!timerState.paused;renderTimer();}
 function stopTimer(){
   clearInterval(timerState.interval);
   if(timerState.sessionSecs>10)logTimerSession();
-  timerState.running=false;timerState.paused=false;resetTimer();
+  timerState.running=false;timerState.paused=false;timerState.sessionSecs=0;
+  timerState.secs=TIMER_MODES[timerState.mode].secs;
+  renderTimer();
+  updateFocusLogUI();
 }
 function resetTimer(){
   clearInterval(timerState.interval);timerState.running=false;timerState.paused=false;
@@ -2535,6 +2819,62 @@ function logTimerSession(){
   const now=new Date();
   S.timerLog.push({task:timerState.task,secs:timerState.sessionSecs,date:fmtKey(now),time:now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})});
   timerState.sessionSecs=0;saveS();
+}
+
+// ── Surgically refresh just the log card + summary inside timer-cx ──
+// Called after every session commit so the log appears without a full re-render.
+function updateFocusLogUI(){
+  const cx=document.getElementById('timer-cx');
+  if(!cx)return;
+
+  const todayLog=S.timerLog.filter(l=>l.date===fmtKey(new Date()));
+  const totalFocusMins=todayLog.reduce((s,l)=>s+Math.round(l.secs/60),0);
+
+  // ── Update / inject the summary row inside .timer-wrap ──────────────
+  const wrap=cx.querySelector('.timer-wrap');
+  if(wrap){
+    let summaryEl=wrap.querySelector('#timer-summary-row');
+    if(totalFocusMins>0){
+      const summaryHTML=`<div id="timer-summary-row" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);width:100%;display:flex;align-items:center;justify-content:center;gap:8px">
+        <span style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Today's Focus</span>
+        <span style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--p1)">${totalFocusMins}m</span>
+        <span style="font-size:10px;color:var(--text3)">across ${todayLog.length} session${todayLog.length!==1?'s':''}</span>
+      </div>`;
+      if(summaryEl){summaryEl.outerHTML=summaryHTML;}
+      else{wrap.insertAdjacentHTML('beforeend',summaryHTML);}
+    }
+  }
+
+  // ── Update / inject the log card below .timer-wrap ──────────────────
+  const logHTML=todayLog.length>0
+    ?`<div class="timer-log">
+        <h3>Today's Focus Log</h3>
+        ${todayLog.slice(-8).reverse().map(l=>`
+          <div class="tl-row">
+            <span class="tl-dot" style="background:${getCatColor(S.tasks.find(t=>t.name===l.task)?.cat||'')||'#5b6ef5'}"></span>
+            <span class="tl-name">${l.task||'Free focus'}</span>
+            <span class="tl-dur">${Math.round(l.secs/60)}m</span>
+            <span class="tl-time">${l.time}</span>
+          </div>`).join('')}
+      </div>`
+    :`<div class="timer-log">
+        <h3>Today's Focus Log</h3>
+        <div style="font-size:12px;color:var(--text2);text-align:center;padding:20px 0 8px;display:flex;flex-direction:column;align-items:center;gap:8px">
+          <span style="font-size:28px">⏱</span>
+          <span>No sessions yet. Start your first focus block!</span>
+        </div>
+      </div>`;
+
+  // Find existing log card — it may be a direct child of cx or after timer-wrap
+  let logCard=cx.querySelector('.timer-log');
+  if(logCard){
+    logCard.outerHTML=logHTML;
+  } else {
+    // Append after timer-wrap if it exists, otherwise append to cx
+    const wrap2=cx.querySelector('.timer-wrap');
+    if(wrap2){wrap2.insertAdjacentHTML('afterend',logHTML);}
+    else{cx.insertAdjacentHTML('beforeend',logHTML);}
+  }
 }
 function updateTimerDisplay(){
   const el=document.getElementById('timer-count');
@@ -2967,18 +3307,11 @@ function showView(id){
   if(id!=='timer'&&timerState.running){clearInterval(timerState.interval);timerState.running=false;timerState.paused=false;}
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-  // Sync bottom nav primary items
+  // Sync all bottom nav items (single-row design)
   document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
-  // Sync bottom nav secondary items
   document.querySelectorAll('.bn-sec').forEach(b=>b.classList.remove('on'));
-  // Highlight primary or secondary nav item
-  const primaryIds=['dashboard','schedule','analytics','habits','profile'];
-  const secondaryIds=['timer','notes','settings'];
-  if(primaryIds.includes(id)){
-    const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('on');
-  } else if(secondaryIds.includes(id)){
-    const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('on');
-  }
+  // Activate the matching nav item
+  const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('on');
   document.getElementById('view-'+id).classList.add('on');
   const ni=document.getElementById('n-'+id);if(ni)ni.classList.add('on');
   const dates=getWeekDates(S.weekOff);
@@ -2994,8 +3327,17 @@ function showView(id){
 let _sbOpen=false;
 function toggleSb(){
   _sbOpen=!_sbOpen;
-  document.getElementById('sb').classList.toggle('open',_sbOpen);
-  document.getElementById('sb-arrow').setAttribute('d',_sbOpen?'M15 18l-6-6 6-6':'M9 18l6-6-6-6');
+  const sb=document.getElementById('sb');
+  const arrowPath=document.getElementById('sb-arrow-path');
+  const tog=document.getElementById('sb-tog');
+  sb.classList.toggle('open',_sbOpen);
+  // Collapsed → chevron points right (expand hint)
+  // Expanded  → chevron points left (collapse hint)
+  if(arrowPath){
+    arrowPath.setAttribute('d',_sbOpen?'M15 18l-6-6 6-6':'M9 18l6-6-6-6');
+  }
+  // Update tooltip
+  if(tog) tog.setAttribute('title',_sbOpen?'Collapse sidebar':'Expand sidebar');
 }
 function chWeek(d){S.weekOff+=d;saveS();render();}
 function setFilter(cat,btn){
@@ -3321,19 +3663,20 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
 }
 
 // ════════════════════════════════════════════════════════════
-// SECONDARY NAV SCROLL HINT
+// NAV SCROLL HINT
 // ════════════════════════════════════════════════════════════
-(function initSecondaryNavHint(){
-  const sec=document.getElementById('bnav-secondary');
+(function initNavScrollHint(){
+  const nav=document.getElementById('bnav-primary');
+  const wrap=document.getElementById('bnav-scroll-wrap');
   const hint=document.getElementById('bnav-scroll-hint');
-  if(!sec||!hint)return;
+  if(!nav||!hint)return;
   function updateHint(){
-    // Hide hint once user has scrolled to the end
-    const atEnd=sec.scrollLeft+sec.clientWidth>=sec.scrollWidth-4;
+    const atEnd=nav.scrollLeft+nav.clientWidth>=nav.scrollWidth-4;
     hint.style.opacity=atEnd?'0':'1';
-    hint.style.pointerEvents=atEnd?'none':'none';
+    if(wrap){wrap.classList.toggle('at-end',atEnd);}
   }
-  sec.addEventListener('scroll',updateHint,{passive:true});
+  nav.addEventListener('scroll',updateHint,{passive:true});
+  window.addEventListener('resize',updateHint);
   // Initial check after layout
   setTimeout(updateHint,300);
 })();
