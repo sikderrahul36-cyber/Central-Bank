@@ -661,6 +661,72 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tog.on{background:var(--p1)}
 .tog::after{content:'';position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .tog.on::after{transform:translateX(18px);box-shadow:0 2px 8px rgba(91,110,245,.4)}
+/* ── LEGAL FOOTER ──────────────────────────────────────────── */
+.legal-footer{
+  margin-top:20px;
+  padding:14px 18px;
+  border-top:1px solid var(--border);
+  background:var(--bg3);
+  border-radius:0 0 var(--rr) var(--rr);
+  text-align:center;
+}
+.legal-footer-text{
+  font-size:11px;
+  color:var(--text3);
+  line-height:1.7;
+  margin-bottom:6px;
+}
+.legal-footer-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  flex-wrap:wrap;
+  font-size:11px;
+}
+.legal-footer-copy{
+  color:var(--text3);
+  font-size:11px;
+}
+.legal-link{
+  color:var(--p1);
+  font-size:11px;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  background:none;
+  border:none;
+  font-family:var(--fb);
+  padding:0;
+  transition:color .2s,text-decoration .2s;
+}
+.legal-link:hover{
+  color:#8b9eff;
+  text-decoration:underline;
+}
+.legal-sep{
+  color:var(--text3);
+  margin:0 8px;
+  font-size:11px;
+}
+/* Legal Modal */
+.legal-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.88);backdrop-filter:blur(10px);z-index:500;align-items:center;justify-content:center;padding:16px}
+.legal-mo.open{display:flex}
+.legal-modal{background:var(--card);border:1px solid var(--border2);border-radius:var(--rl);width:100%;max-width:600px;max-height:88vh;display:flex;flex-direction:column;animation:mi .23s ease;transition:background .3s;overflow:hidden}
+.legal-modal-head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.legal-modal-head h2{font-family:var(--fh);font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+.legal-modal-body{overflow-y:auto;padding:20px 24px 24px;flex:1;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.legal-modal-body::-webkit-scrollbar{width:5px}
+.legal-modal-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.legal-section{margin-bottom:20px}
+.legal-section:last-child{margin-bottom:0}
+.legal-section-title{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.legal-section-body{font-size:12px;color:var(--text2);line-height:1.75}
+.legal-section-body p{margin-bottom:10px}
+.legal-section-body p:last-child{margin-bottom:0}
+.legal-section-body ul{margin:6px 0 10px 16px;display:flex;flex-direction:column;gap:4px}
+.legal-section-body li{font-size:12px;color:var(--text2);line-height:1.6}
+.legal-effective{font-size:10px;color:var(--text3);font-style:italic;margin-bottom:16px}
 /* ── MODAL ─────────────────────────────────────────────────── */
 .mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.82);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:16px}
 .mo.open{display:flex}
@@ -1528,12 +1594,37 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 }
 
 /* ── HABITS CARD SECTION HEADER ──────────────────────────── */
+/* ── HABIT SECTION HEADER — Premium Redesign ─────────────────── */
 .hab-section-header{
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-bottom:14px;
   gap:10px;
+  padding:12px 14px;
+  background:linear-gradient(135deg,rgba(91,110,245,.07) 0%,rgba(124,58,237,.04) 60%,rgba(14,165,233,.04) 100%);
+  border:1px solid rgba(91,110,245,.14);
+  border-radius:12px;
+  position:relative;
+  overflow:hidden;
+}
+.hab-section-header::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg,#5b6ef5,#7c3aed,#0ea5e9);
+  border-radius:12px 12px 0 0;
+}
+[data-theme="light"] .hab-section-header{
+  background:linear-gradient(135deg,rgba(91,110,245,.05) 0%,rgba(124,58,237,.03) 60%,rgba(14,165,233,.03) 100%);
+  border-color:rgba(91,110,245,.12);
+}
+.hab-section-left{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  min-width:0;
 }
 .hab-section-title{
   font-family:var(--fh);
@@ -1541,26 +1632,34 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   font-weight:700;
   letter-spacing:-.1px;
   color:var(--text);
+  line-height:1.2;
+}
+.hab-section-subtitle{
+  font-size:10px;
+  color:var(--text3);
+  font-weight:400;
+  line-height:1.3;
 }
 .hab-section-meta{
   display:flex;
   align-items:center;
-  gap:7px;
+  gap:6px;
   flex-shrink:0;
 }
 .hab-week-badge{
   display:inline-flex;
   align-items:center;
-  gap:5px;
+  gap:4px;
   font-size:10px;
   font-weight:700;
-  padding:3px 9px;
+  padding:4px 10px;
   border-radius:20px;
   background:rgba(52,211,153,.12);
   color:#34d399;
   border:1px solid rgba(52,211,153,.22);
   letter-spacing:.2px;
   white-space:nowrap;
+  line-height:1;
 }
 .hab-sync-badge{
   display:inline-flex;
@@ -1569,45 +1668,64 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   font-size:10px;
   font-weight:500;
   color:var(--text2);
-  background:var(--card2);
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:3px 9px;
+  background:rgba(91,110,245,.07);
+  border:1px solid rgba(91,110,245,.15);
+  border-radius:20px;
+  padding:4px 10px;
   white-space:nowrap;
+  line-height:1;
 }
-/* Mobile: stack the header into a clean 2-line layout */
+[data-theme="light"] .hab-sync-badge{
+  background:rgba(91,110,245,.05);
+  border-color:rgba(91,110,245,.12);
+}
+
+/* Mobile: refined single-row layout */
 @media(max-width:700px){
   .hab-section-header{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:6px;
+    flex-direction:row;
+    align-items:center;
+    gap:8px;
     margin-bottom:12px;
+    padding:11px 13px;
+  }
+  .hab-section-left{
+    flex:1;
+    min-width:0;
   }
   .hab-section-title{
-    font-size:15px;
-    line-height:1.2;
+    font-size:13px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .hab-section-subtitle{
+    font-size:9px;
+    display:none;
   }
   .hab-section-meta{
-    width:100%;
-    justify-content:flex-start;
-    gap:6px;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:4px;
+    flex-shrink:0;
   }
   .hab-week-badge{
-    font-size:10px;
-    padding:3px 10px;
+    font-size:9px;
+    padding:3px 8px;
   }
   .hab-sync-badge{
-    font-size:10px;
-    padding:3px 9px;
+    font-size:9px;
+    padding:3px 8px;
   }
 }
 @media(max-width:380px){
-  .hab-section-title{font-size:14px}
-  .hab-week-badge,.hab-sync-badge{font-size:9px;padding:2px 8px}
+  .hab-section-title{font-size:12px}
+  .hab-week-badge,.hab-sync-badge{font-size:9px;padding:2px 7px}
+  .hab-section-header{padding:10px 11px}
 }
 
 /* ═══════════════════════════════════════════════════════════
-   CUSTOM MOBILE CATEGORY DROPDOWN — Premium Card UI
+   CUSTOM MOBILE CATEGORY DROPDOWN — Premium Compact Card UI
    ═══════════════════════════════════════════════════════════ */
 .mob-cat-btn{
   display:none;
@@ -1664,8 +1782,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   position:fixed;
   inset:0;
   z-index:290;
-  background:rgba(7,7,13,.45);
-  backdrop-filter:blur(2px);
+  background:rgba(7,7,13,.5);
+  backdrop-filter:blur(3px);
   animation:mcb-fadein .18s ease;
 }
 .mob-cat-backdrop.open{display:block}
@@ -1681,13 +1799,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   background:var(--card);
   border:1px solid var(--border2);
   border-radius:18px;
-  box-shadow:0 20px 60px rgba(0,0,0,.45),0 4px 16px rgba(0,0,0,.22);
+  box-shadow:0 24px 64px rgba(0,0,0,.5),0 4px 16px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.04);
   overflow:hidden;
   animation:mcp-slide .22s cubic-bezier(.34,1.4,.64,1);
 }
 .mob-cat-panel.open{display:block}
 @keyframes mcp-slide{
-  from{opacity:0;transform:translateY(10px) scale(.97)}
+  from{opacity:0;transform:translateY(12px) scale(.96)}
   to{opacity:1;transform:none}
 }
 
@@ -1696,22 +1814,24 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:16px 18px 12px;
+  padding:13px 15px 11px;
   border-bottom:1px solid var(--border);
+  background:var(--bg2);
 }
 .mob-cat-panel-title{
   font-family:var(--fh);
-  font-size:13px;
+  font-size:12px;
   font-weight:700;
-  letter-spacing:-.1px;
-  color:var(--text);
+  letter-spacing:.2px;
+  text-transform:uppercase;
+  color:var(--text2);
 }
 .mob-cat-panel-close{
-  width:28px;
-  height:28px;
-  border-radius:8px;
+  width:26px;
+  height:26px;
+  border-radius:7px;
   border:1px solid var(--border2);
-  background:var(--bg3);
+  background:var(--card);
   color:var(--text2);
   display:flex;
   align-items:center;
@@ -1727,57 +1847,50 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* Scrollable list */
 .mob-cat-list{
-  padding:10px 10px 14px;
+  padding:8px 8px 10px;
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:3px;
   max-height:52vh;
   overflow-y:auto;
   overscroll-behavior:contain;
 }
 
-/* Individual category card */
+/* Individual category card — compact, sleek */
 .mob-cat-item{
   display:flex;
   align-items:center;
-  gap:12px;
-  padding:11px 14px;
-  border-radius:12px;
+  gap:10px;
+  padding:8px 11px;
+  border-radius:10px;
   border:1px solid transparent;
   cursor:pointer;
-  transition:all .18s cubic-bezier(.4,0,.2,1);
+  transition:all .16s cubic-bezier(.4,0,.2,1);
   position:relative;
   overflow:hidden;
-}
-.mob-cat-item::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  border-radius:12px;
-  opacity:0;
-  transition:opacity .18s;
+  -webkit-tap-highlight-color:transparent;
 }
 .mob-cat-item:hover{
   border-color:var(--border2);
   background:var(--card2);
-  transform:translateX(2px);
 }
 .mob-cat-item:active{
-  transform:scale(.98);
+  transform:scale(.97);
+  opacity:.85;
 }
 .mob-cat-item.active{
   border-color:transparent;
 }
 
-/* Color icon badge */
+/* Compact color icon */
 .mob-cat-icon{
-  width:38px;
-  height:38px;
-  border-radius:11px;
+  width:30px;
+  height:30px;
+  border-radius:8px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:17px;
+  font-size:14px;
   flex-shrink:0;
   position:relative;
   z-index:1;
@@ -1789,36 +1902,44 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   min-width:0;
   position:relative;
   z-index:1;
+  display:flex;
+  align-items:center;
+  gap:7px;
 }
 .mob-cat-name{
-  font-family:var(--fh);
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:-.1px;
-  margin-bottom:2px;
+  font-family:var(--fb);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  line-height:1.3;
 }
 .mob-cat-meta{
   font-size:10px;
   font-weight:500;
-  color:var(--text2);
+  color:var(--text3);
   white-space:nowrap;
+  flex-shrink:0;
+  padding:1px 6px;
+  border-radius:20px;
+  background:var(--bg3);
+  border:1px solid var(--border);
 }
 
 /* Checkmark */
 .mob-cat-check{
-  width:22px;
-  height:22px;
+  width:18px;
+  height:18px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-shrink:0;
   opacity:0;
-  transform:scale(.6);
-  transition:all .2s cubic-bezier(.34,1.4,.64,1);
+  transform:scale(.5);
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
   position:relative;
   z-index:1;
 }
@@ -1842,9 +1963,118 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   border-color:var(--border2);
   box-shadow:0 16px 50px rgba(60,60,120,.18),0 4px 14px rgba(60,60,120,.10);
 }
-[data-theme="light"] .mob-cat-panel-hdr{border-bottom-color:var(--border)}
-[data-theme="light"] .mob-cat-panel-close{background:var(--bg3);border-color:var(--border2)}
+[data-theme="light"] .mob-cat-panel-hdr{border-bottom-color:var(--border);background:var(--bg3)}
+[data-theme="light"] .mob-cat-panel-close{background:var(--card);border-color:var(--border2)}
 [data-theme="light"] .mob-cat-item:hover{background:var(--card2);border-color:var(--border2)}
+[data-theme="light"] .mob-cat-meta{background:var(--bg3);border-color:var(--border)}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE ANALYTICS RANGE DROPDOWN — Consistent Card UI
+   ═══════════════════════════════════════════════════════════ */
+/* Custom mobile-only dropdown for Weekly Completion Trend */
+.mob-ana-range-btn{
+  display:none;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px 4px 9px;
+  height:28px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:7px;
+  font-family:var(--fb);
+  font-size:10px;
+  font-weight:600;
+  color:var(--text);
+  cursor:pointer;
+  transition:all .18s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.mob-ana-range-btn:hover{border-color:var(--p1);background:rgba(91,110,245,.06)}
+.mob-ana-range-btn .mar-chevron{
+  width:10px;height:10px;flex-shrink:0;color:var(--text2);
+  transition:transform .2s;
+}
+.mob-ana-range-btn.open .mar-chevron{transform:rotate(180deg)}
+
+/* Panel */
+.mob-ana-panel{
+  display:none;
+  position:fixed;
+  left:12px;
+  right:12px;
+  z-index:295;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  box-shadow:0 20px 56px rgba(0,0,0,.5),0 4px 16px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.04);
+  overflow:hidden;
+  animation:mcp-slide .22s cubic-bezier(.34,1.4,.64,1);
+}
+.mob-ana-panel.open{display:block}
+
+.mob-ana-panel-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 14px 10px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+}
+.mob-ana-panel-title{
+  font-family:var(--fb);font-size:11px;font-weight:700;
+  letter-spacing:.2px;text-transform:uppercase;color:var(--text2);
+}
+.mob-ana-panel-close{
+  width:24px;height:24px;border-radius:6px;border:1px solid var(--border2);
+  background:var(--card);color:var(--text2);display:flex;align-items:center;
+  justify-content:center;cursor:pointer;transition:all .18s;
+}
+.mob-ana-panel-close:hover{background:var(--card2);color:var(--text)}
+
+.mob-ana-list{
+  padding:7px 7px 9px;display:flex;flex-direction:column;gap:3px;
+}
+.mob-ana-item{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;
+  border-radius:9px;border:1px solid transparent;cursor:pointer;
+  transition:all .16s cubic-bezier(.4,0,.2,1);
+  -webkit-tap-highlight-color:transparent;
+}
+.mob-ana-item:hover{border-color:var(--border2);background:var(--card2)}
+.mob-ana-item:active{transform:scale(.97);opacity:.85}
+.mob-ana-item-ico{
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;
+}
+.mob-ana-item-label{
+  font-family:var(--fb);font-size:12px;font-weight:600;flex:1;min-width:0;color:var(--text);
+}
+.mob-ana-item-check{
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;opacity:0;transform:scale(.5);
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+}
+.mob-ana-item.active .mob-ana-item-check{opacity:1;transform:scale(1)}
+
+@media(max-width:700px){
+  .mob-ana-range-btn{display:inline-flex}
+  .ana-range-native{display:none!important}
+}
+@media(min-width:701px){
+  .mob-ana-range-btn{display:none!important}
+  .mob-ana-panel,.mob-ana-backdrop{display:none!important}
+}
+
+.mob-ana-backdrop{
+  display:none;position:fixed;inset:0;z-index:290;
+  background:rgba(7,7,13,.5);backdrop-filter:blur(3px);
+  animation:mcb-fadein .18s ease;
+}
+.mob-ana-backdrop.open{display:block}
+
+[data-theme="light"] .mob-ana-panel{background:var(--card);border-color:var(--border2);box-shadow:0 14px 44px rgba(60,60,120,.18)}
+[data-theme="light"] .mob-ana-panel-hdr{background:var(--bg3);border-bottom-color:var(--border)}
+[data-theme="light"] .mob-ana-item:hover{background:var(--card2);border-color:var(--border2)}
 </style>
 </head>
 <body>
@@ -2046,6 +2276,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="mob-cat-list" id="mob-cat-list"></div>
 </div>
 
+<!-- Mobile Analytics Range Dropdown -->
+<div class="mob-ana-backdrop" id="mob-ana-backdrop" onclick="closeMobAnaPanel()"></div>
+<div class="mob-ana-panel" id="mob-ana-panel">
+  <div class="mob-ana-panel-hdr">
+    <span class="mob-ana-panel-title">Date Range</span>
+    <div class="mob-ana-panel-close" onclick="closeMobAnaPanel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+  <div class="mob-ana-list" id="mob-ana-list"></div>
+</div>
+
 <!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile -->
 <!-- Secondary scrollable: Focus Timer, Notes, Settings -->
 <!-- Primary nav: Dashboard, Schedule, Analytics, Habits, Profile -->
@@ -2200,6 +2442,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- Hidden file input for avatar -->
 <input type="file" id="av-file" accept="image/*" style="display:none" onchange="handleAvatar(event)">
+<!-- Hidden file input for restore backup -->
+<input type="file" id="restore-file-input" accept=".json,application/json" style="display:none" onchange="restoreJSON(event)">
 
 <script>
 // ════════════════════════════════════════════════════════════
@@ -2433,18 +2677,18 @@ function buildMobCatList(){
   list.innerHTML=allCats.map(({id,label,emoji,color})=>{
     const isActive=S.catFilt===id;
     const count=taskCountMap[id]||0;
-    const colorRaw=id==='all'?'rgba(91,110,245,1)':color;
-    const bgAlpha=id==='all'?'rgba(91,110,245,.13)':`${colorRaw}22`;
-    const activeBg=id==='all'?'rgba(91,110,245,.12)':`${colorRaw}18`;
-    const activeBorder=id==='all'?'rgba(91,110,245,.35)':`${colorRaw}55`;
+    const colorRaw=id==='all'?'#5b6ef5':color;
+    const bgAlpha=id==='all'?'rgba(91,110,245,.13)':`${colorRaw}20`;
+    const activeBg=id==='all'?'rgba(91,110,245,.11)':`${colorRaw}14`;
+    const activeBorder=id==='all'?'rgba(91,110,245,.32)':`${colorRaw}44`;
     return`<div class="mob-cat-item${isActive?' active':''}" onclick="mobCatSelect('${id}')" style="${isActive?`background:${activeBg};border-color:${activeBorder};`:''}">
       <div class="mob-cat-icon" style="background:${bgAlpha}">${emoji}</div>
       <div class="mob-cat-info">
         <div class="mob-cat-name" style="color:${isActive?colorRaw:'var(--text)'}">${label}</div>
-        <div class="mob-cat-meta">${count} task${count!==1?'s':''}</div>
+        <span class="mob-cat-meta">${count} task${count!==1?'s':''}</span>
       </div>
       <div class="mob-cat-check" style="background:${colorRaw}22;border:1.5px solid ${colorRaw}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="${colorRaw}" stroke-width="2.8" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="${colorRaw}" stroke-width="2.8" width="9" height="9"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
     </div>`;
   }).join('');
@@ -2510,6 +2754,68 @@ function mobCatSelect(cat){
   updateMobCatBtn();
   closeMobCatPanel();
   renderTT(getWeekDates(S.weekOff));
+}
+
+// ════════════════════════════════════════════════════════════
+// MOBILE ANALYTICS RANGE DROPDOWN
+// ════════════════════════════════════════════════════════════
+const ANA_RANGE_OPTIONS=[
+  {value:4,label:'Last 4 Weeks',emoji:'📅'},
+  {value:8,label:'Last 8 Weeks',emoji:'🗓'},
+  {value:12,label:'Last 12 Weeks',emoji:'📆'},
+];
+
+function buildMobAnaList(){
+  const list=document.getElementById('mob-ana-list');
+  if(!list)return;
+  list.innerHTML=ANA_RANGE_OPTIONS.map(({value,label,emoji})=>{
+    const isActive=_anaOpts.range===value;
+    return`<div class="mob-ana-item${isActive?' active':''}" onclick="mobAnaSelect(${value})">
+      <div class="mob-ana-item-ico" style="background:${isActive?'rgba(91,110,245,.14)':'var(--bg3)'};">${emoji}</div>
+      <span class="mob-ana-item-label" style="color:${isActive?'var(--p1)':'var(--text)'}">${label}</span>
+      <div class="mob-ana-item-check" style="background:rgba(91,110,245,.14);border:1.5px solid var(--p1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--p1)" stroke-width="2.8" width="9" height="9"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>`;
+  }).join('');
+  // Position above bottom nav
+  const panel=document.getElementById('mob-ana-panel');
+  if(panel){panel.style.bottom='90px';panel.style.top='auto';}
+}
+
+function toggleMobAnaPanel(){
+  const panel=document.getElementById('mob-ana-panel');
+  const backdrop=document.getElementById('mob-ana-backdrop');
+  const btn=document.getElementById('mob-ana-range-btn');
+  if(!panel)return;
+  const isOpen=panel.classList.contains('open');
+  if(isOpen){closeMobAnaPanel();}
+  else{
+    buildMobAnaList();
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    if(btn)btn.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+}
+
+function closeMobAnaPanel(){
+  const panel=document.getElementById('mob-ana-panel');
+  const backdrop=document.getElementById('mob-ana-backdrop');
+  const btn=document.getElementById('mob-ana-range-btn');
+  if(panel)panel.classList.remove('open');
+  if(backdrop)backdrop.classList.remove('open');
+  if(btn)btn.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function mobAnaSelect(value){
+  _anaOpts.range=value;
+  // Update label
+  const lbl=document.getElementById('mob-ana-range-label');
+  if(lbl)lbl.textContent=`Last ${value} Weeks`;
+  closeMobAnaPanel();
+  renderAna(getWeekDates(S.weekOff));
 }
 
 // ════════════════════════════════════════════════════════════
@@ -2829,11 +3135,17 @@ function renderAna(dates){
   <div class="ac" style="margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.1)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
       <h3 style="margin-bottom:0">Weekly Completion Trend</h3>
-      <select class="ana-sel" onchange="_anaOpts.range=parseInt(this.value);renderAna(getWeekDates(S.weekOff))">
-        <option value="4" ${_anaOpts.range===4?'selected':''}>Last 4 Weeks</option>
-        <option value="8" ${_anaOpts.range===8?'selected':''}>Last 8 Weeks</option>
-        <option value="12" ${_anaOpts.range===12?'selected':''}>Last 12 Weeks</option>
-      </select>
+      <div style="display:flex;align-items:center;gap:6px">
+        <select class="ana-sel ana-range-native" onchange="_anaOpts.range=parseInt(this.value);renderAna(getWeekDates(S.weekOff))">
+          <option value="4" ${_anaOpts.range===4?'selected':''}>Last 4 Weeks</option>
+          <option value="8" ${_anaOpts.range===8?'selected':''}>Last 8 Weeks</option>
+          <option value="12" ${_anaOpts.range===12?'selected':''}>Last 12 Weeks</option>
+        </select>
+        <div class="mob-ana-range-btn" id="mob-ana-range-btn" onclick="toggleMobAnaPanel()">
+          <span id="mob-ana-range-label">Last ${_anaOpts.range} Weeks</span>
+          <svg class="mar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
     </div>
     <div class="ac-sub">Track your performance week over week</div>
     <div class="chbox" style="height:220px"><canvas id="lc"></canvas></div>
@@ -3043,15 +3355,18 @@ function renderHabits(dates){
     }).join('')}</div>
   </div>
   <div class="hab-section-header">
-    <div class="hab-section-title">Habit Cards</div>
+    <div class="hab-section-left">
+      <div class="hab-section-title">Habit Cards</div>
+      <div class="hab-section-subtitle">Track your daily routines</div>
+    </div>
     <div class="hab-section-meta">
       <span class="hab-week-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="9" height="9"><polyline points="20 6 9 17 4 12"/></svg>
         Current Week
       </span>
       <span class="hab-sync-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        Synced with schedule
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="9" height="9"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Synced
       </span>
     </div>
   </div>
@@ -3752,7 +4067,45 @@ function renderSettings(){
     <div class="set-sec">
       <h3><span class="sh3-ico">💾</span> Data Management</h3>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <button class="btn btn-ghost" style="justify-content:flex-start;width:100%;gap:10px" onclick="expJSON()"><span>📄</span> Export JSON Backup</button>
+
+        <!-- Info banner -->
+        <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(91,110,245,.07);border:1px solid rgba(91,110,245,.16);margin-bottom:2px">
+          <span style="font-size:15px;flex-shrink:0;margin-top:1px">💡</span>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">
+            <strong style="color:var(--text);font-weight:700">Keep your data safe.</strong> Since APEX stores data locally in your browser, exporting a backup protects you if you switch devices, clear your cache, or use a different browser. Export regularly and restore anytime.
+          </div>
+        </div>
+
+        <!-- Export & Restore pair -->
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <!-- Export -->
+          <div style="padding:11px 14px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div>
+                <div style="font-size:12px;font-weight:700;margin-bottom:2px">Export JSON Backup</div>
+                <div style="font-size:10px;color:var(--text2)">Downloads a complete backup of all your data — tasks, habits, notes, timer logs, and profile.</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="flex-shrink:0;gap:6px;white-space:nowrap" onclick="expJSON()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export
+              </button>
+            </div>
+          </div>
+          <!-- Restore -->
+          <div style="padding:11px 14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div>
+                <div style="font-size:12px;font-weight:700;margin-bottom:2px">Restore Backup</div>
+                <div style="font-size:10px;color:var(--text2)">Upload a previously exported <code style="font-size:9px;background:var(--bg3);padding:1px 5px;border-radius:4px;border:1px solid var(--border2)">.json</code> backup file to fully restore your data on any device.</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="flex-shrink:0;gap:6px;white-space:nowrap;border-color:rgba(91,110,245,.35);color:var(--p1)" onclick="document.getElementById('restore-file-input').click()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Restore
+              </button>
+            </div>
+          </div>
+        </div>
+
         <button class="btn btn-ghost" style="justify-content:flex-start;width:100%;gap:10px" onclick="expCSV()"><span>📊</span> Export CSV Report</button>
         <div style="height:1px;background:var(--border);margin:4px 0"></div>
         <button style="display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;background:transparent;border:1px solid rgba(244,63,94,.3);color:var(--r1);transition:all .2s;width:100%" onmouseover="this.style.background='rgba(244,63,94,.08)'" onmouseout="this.style.background='transparent'" onclick="confirmReset()"><span>🗑</span> Reset All Data</button>
@@ -3782,6 +4135,20 @@ function renderSettings(){
           </div>
         </div>
         <button onclick="const d=document.getElementById('about-details');const showing=d.style.display!=='none';d.style.display=showing?'none':'block';this.textContent=showing?'Learn more ↓':'Show less ↑'" style="margin-top:12px;background:transparent;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0">Learn more ↓</button>
+
+        <!-- ── LEGAL FOOTER ── -->
+        <div style="margin-top:20px;padding:14px 16px;border-top:1px solid var(--border);border-radius:10px;background:var(--bg3);text-align:center">
+          <div style="font-size:11px;color:var(--text3);line-height:1.75;margin-bottom:8px">
+            © 2026 APEX. All rights reserved. This product, including its design, features, and content,<br>is the intellectual property of APEX. Unauthorized reproduction or misuse is strictly prohibited.
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap">
+            <span style="font-size:11px;color:var(--text3)">© 2026 APEX. All rights reserved.</span>
+            <span style="color:var(--text3);margin:0 8px;font-size:11px">|</span>
+            <button onclick="document.getElementById('terms-modal').classList.add('open')" style="background:none;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0;transition:color .2s" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Terms of Use</button>
+            <span style="color:var(--text3);margin:0 8px;font-size:11px">|</span>
+            <button onclick="document.getElementById('privacy-modal').classList.add('open')" style="background:none;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0;transition:color .2s" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Privacy Policy</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -3965,13 +4332,148 @@ document.addEventListener('keydown',e=>{
 // ════════════════════════════════════════════════════════════
 function expJSON(){
   try{
-    const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+    // Build a complete snapshot of ALL persistent data
+    const exportData={
+      tasks:   S.tasks,
+      checks:  S.checks,
+      sett:    S.sett,
+      weekOff: S.weekOff,
+      catFilt: S.catFilt,
+      profile: S.profile,
+      notes:   S.notes,
+      timerLog:S.timerLog,
+      _apexExport:true,
+      _exportedAt:new Date().toISOString(),
+      _version:'apex_v6_2026',
+    };
+    const blob=new Blob([JSON.stringify(exportData,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download='apex-backup.json';
+    const a=document.createElement('a');
+    const dateStr=new Date().toISOString().slice(0,10);
+    a.href=url;a.download=`apex-backup-${dateStr}.json`;
     document.body.appendChild(a);a.click();document.body.removeChild(a);
     setTimeout(()=>URL.revokeObjectURL(url),100);
-    toast('JSON exported ✓','#34d399');
+    toast('Full backup exported ✓','#34d399');
   }catch(e){toast('Export failed: '+e.message,'#f43f5e');}
+}
+
+// ════════════════════════════════════════════════════════════
+// RESTORE BACKUP
+// ════════════════════════════════════════════════════════════
+function restoreJSON(event){
+  const file=event.target.files[0];
+  // Reset input so same file can be re-selected if needed
+  event.target.value='';
+  if(!file)return;
+
+  // Validate file type
+  if(!file.name.endsWith('.json')&&file.type!=='application/json'){
+    toast('Invalid file. Please select a .json backup file.','#f43f5e');
+    return;
+  }
+
+  // Limit file size to 10 MB to avoid freezing
+  if(file.size>10*1024*1024){
+    toast('File too large. Max 10 MB.','#f43f5e');
+    return;
+  }
+
+  const reader=new FileReader();
+  reader.onload=function(e){
+    let data;
+    try{
+      data=JSON.parse(e.target.result);
+    }catch(err){
+      toast('Corrupted file — could not parse JSON.','#f43f5e');
+      return;
+    }
+
+    // ── Validate structure ──────────────────────────────────
+    // Must be an object
+    if(!data||typeof data!=='object'||Array.isArray(data)){
+      toast('Invalid backup: unexpected file format.','#f43f5e');
+      return;
+    }
+
+    // Must contain at least one recognisable APEX key
+    const knownKeys=['tasks','checks','sett','notes','timerLog','profile','_apexExport'];
+    const hasAny=knownKeys.some(k=>k in data);
+    if(!hasAny){
+      toast('Invalid backup: file does not appear to be an APEX export.','#f43f5e');
+      return;
+    }
+
+    // tasks must be an array if present
+    if('tasks' in data&&!Array.isArray(data.tasks)){
+      toast('Invalid backup: tasks data is corrupted.','#f43f5e');
+      return;
+    }
+
+    // ── Version mismatch warning (non-blocking) ─────────────
+    const fileVersion=data._version||'unknown';
+    const currentVersion='apex_v6_2026';
+    const versionMismatch=fileVersion!=='unknown'&&fileVersion!==currentVersion;
+
+    // ── Merge / restore ─────────────────────────────────────
+    // We do a safe merge: restore known keys, fallback to current state for anything missing
+    const restored={
+      tasks:   Array.isArray(data.tasks)   ? data.tasks   : S.tasks,
+      checks:  (data.checks&&typeof data.checks==='object'&&!Array.isArray(data.checks)) ? data.checks : S.checks,
+      sett:    (data.sett  &&typeof data.sett==='object')   ? {...S.sett,...data.sett}  : S.sett,
+      weekOff: typeof data.weekOff==='number' ? data.weekOff : 0,
+      catFilt: typeof data.catFilt==='string' ? data.catFilt : 'all',
+      editId:  null,
+      profile: (data.profile&&typeof data.profile==='object') ? {...defaultProfile(),...data.profile} : S.profile,
+      notes:   Array.isArray(data.notes)   ? data.notes   : S.notes,
+      timerLog:Array.isArray(data.timerLog)? data.timerLog: S.timerLog,
+    };
+
+    // Validate each task has minimum required fields — drop malformed ones
+    restored.tasks=restored.tasks.filter(t=>
+      t&&typeof t==='object'&&
+      typeof t.id==='string'&&
+      typeof t.name==='string'&&
+      typeof t.start==='string'&&
+      typeof t.end==='string'&&
+      Array.isArray(t.days)
+    );
+
+    // ── Confirm before overwriting ───────────────────────────
+    const taskCount=restored.tasks.length;
+    const noteCount=restored.notes.length;
+    const checkCount=Object.keys(restored.checks).length;
+    const exportedAt=data._exportedAt?new Date(data._exportedAt).toLocaleString():'Unknown date';
+
+    let confirmMsg=`Restore this backup?\n\n`;
+    confirmMsg+=`📅 Exported: ${exportedAt}\n`;
+    confirmMsg+=`📋 Tasks: ${taskCount}\n`;
+    confirmMsg+=`📝 Notes: ${noteCount}\n`;
+    confirmMsg+=`✅ Completed entries: ${checkCount}\n`;
+    if(versionMismatch){
+      confirmMsg+=`\n⚠️ Version mismatch (backup: ${fileVersion}, current: ${currentVersion}). Data will still be restored but some new features may use defaults.\n`;
+    }
+    confirmMsg+=`\nThis will replace your current data. Continue?`;
+
+    if(!window.confirm(confirmMsg))return;
+
+    // ── Apply & save ─────────────────────────────────────────
+    S=restored;
+    document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');
+    saveS();
+    render();
+    renderSettings();
+
+    const msg=versionMismatch
+      ?`Backup restored ✓ (version mismatch — some defaults applied)`
+      :`Backup restored successfully ✓`;
+    toast(msg,'#34d399');
+  };
+
+  reader.onerror=function(){
+    toast('Could not read the file. Please try again.','#f43f5e');
+  };
+
+  reader.readAsText(file);
 }
 function expCSV(){
   try{
@@ -4208,5 +4710,196 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
   requestAnimationFrame(()=>setTimeout(updateHint,120));
 })();
 </script>
+
+<!-- ── TERMS OF USE MODAL ──────────────────────────────────── -->
+<div class="legal-mo" id="terms-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="legal-modal">
+    <div class="legal-modal-head">
+      <h2>
+        <span style="width:28px;height:28px;border-radius:8px;background:rgba(91,110,245,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📋</span>
+        Terms of Use
+      </h2>
+      <button class="mc" onclick="document.getElementById('terms-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="legal-modal-body">
+      <div class="legal-effective">Effective Date: January 1, 2026 &nbsp;|&nbsp; Last Updated: April 1, 2026</div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">1. Acceptance of Terms</div>
+        <div class="legal-section-body">
+          <p>By accessing or using APEX ("the Product"), you agree to be bound by these Terms of Use. If you do not agree to these terms, please discontinue use of the Product immediately. These terms apply to all users of APEX, including without limitation users who are browsers, customers, merchants, or contributors of content.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">2. Intellectual Property</div>
+        <div class="legal-section-body">
+          <p>APEX, including its design, features, interface, code, content, and branding, is the exclusive intellectual property of APEX and its creators. All rights are reserved.</p>
+          <p>Unauthorized reproduction, distribution, resale, sublicensing, modification, or misuse of this product — in whole or in part — is strictly prohibited and may result in civil and/or criminal legal action.</p>
+          <ul>
+            <li>You may not copy, reverse-engineer, decompile, or disassemble any part of the Product.</li>
+            <li>You may not remove or alter any copyright, trademark, or proprietary notices.</li>
+            <li>You may not use the APEX name, logo, or branding without prior written permission.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">3. Permitted Use</div>
+        <div class="legal-section-body">
+          <p>APEX grants you a limited, non-exclusive, non-transferable, revocable license to access and use the Product solely for your personal, non-commercial productivity purposes.</p>
+          <ul>
+            <li>Personal use: tracking tasks, habits, focus sessions, and notes for yourself.</li>
+            <li>You may export your own data (CSV/JSON) for personal record-keeping.</li>
+            <li>You must not use the Product in any way that violates applicable laws or regulations.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">4. Data &amp; Local Storage</div>
+        <div class="legal-section-body">
+          <p>All data entered into APEX is stored locally on your device using browser storage mechanisms. APEX does not collect, transmit, or store your personal data on any external server. You are solely responsible for the security and backup of your data.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">5. Disclaimer of Warranties</div>
+        <div class="legal-section-body">
+          <p>APEX is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, either express or implied. We do not warrant that the Product will be uninterrupted, error-free, or free of harmful components. Use of the Product is at your sole risk.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">6. Limitation of Liability</div>
+        <div class="legal-section-body">
+          <p>To the maximum extent permitted by applicable law, APEX and its creators shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the Product, even if advised of the possibility of such damages.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">7. Modifications to Terms</div>
+        <div class="legal-section-body">
+          <p>We reserve the right to update or modify these Terms of Use at any time. Continued use of the Product after any changes constitutes your acceptance of the new terms. We encourage you to review these terms periodically.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">8. Governing Law</div>
+        <div class="legal-section-body">
+          <p>These Terms of Use shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the competent courts.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding:12px 16px;background:rgba(91,110,245,.07);border:1px solid rgba(91,110,245,.18);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6">
+        © 2026 APEX. All rights reserved. This product, including its design, features, and content, is the intellectual property of APEX. Unauthorized reproduction, distribution, resale, or misuse of this product, in whole or in part, is strictly prohibited and may result in legal action.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRIVACY POLICY MODAL ─────────────────────────────────── -->
+<div class="legal-mo" id="privacy-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="legal-modal">
+    <div class="legal-modal-head">
+      <h2>
+        <span style="width:28px;height:28px;border-radius:8px;background:rgba(16,185,129,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🔒</span>
+        Privacy Policy
+      </h2>
+      <button class="mc" onclick="document.getElementById('privacy-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="legal-modal-body">
+      <div class="legal-effective">Effective Date: January 1, 2026 &nbsp;|&nbsp; Last Updated: April 1, 2026</div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">1. Our Commitment to Privacy</div>
+        <div class="legal-section-body">
+          <p>At APEX, your privacy is not just a policy — it's a core design principle. APEX is built as a fully offline-first, local-storage application. We do not collect, process, or transmit any personal data to external servers. Your data belongs to you, and it stays on your device.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">2. Information We Do NOT Collect</div>
+        <div class="legal-section-body">
+          <p>APEX does not collect any of the following:</p>
+          <ul>
+            <li>Personal identification information (name, email, phone number)</li>
+            <li>Usage analytics or behavioral tracking data</li>
+            <li>Device identifiers or IP addresses</li>
+            <li>Location data of any kind</li>
+            <li>Task content, notes, or habit data (all stored locally only)</li>
+            <li>Cookies used for tracking or advertising</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">3. Local Data Storage</div>
+        <div class="legal-section-body">
+          <p>All data you create within APEX — including your tasks, habits, focus sessions, notes, profile information, and settings — is stored exclusively in your browser's local storage. This data:</p>
+          <ul>
+            <li>Never leaves your device unless you explicitly export it.</li>
+            <li>Is not accessible to APEX or any third party.</li>
+            <li>Is cleared if you clear your browser data or use a different browser/device.</li>
+            <li>Is fully under your control — you can export or delete it at any time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">4. Notifications &amp; Permissions</div>
+        <div class="legal-section-body">
+          <p>If you enable Smart Reminders, APEX requests browser notification permission. This permission is used solely to deliver task reminder notifications on your device. No notification content is shared with any external service. You can revoke this permission at any time through your browser settings.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">5. Data Export &amp; Portability</div>
+        <div class="legal-section-body">
+          <p>APEX gives you full control over your data. You can export your data at any time in JSON or CSV format using the Export functions in Settings. This ensures your data is always portable and never locked in.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">6. Third-Party Services</div>
+        <div class="legal-section-body">
+          <p>APEX uses the following third-party resources solely for rendering purposes:</p>
+          <ul>
+            <li><strong style="color:var(--text)">Google Fonts</strong> — for typography (Syne, Plus Jakarta Sans). Font files may be loaded from Google's CDN.</li>
+            <li><strong style="color:var(--text)">Chart.js</strong> — for analytics charts, loaded from a public CDN.</li>
+          </ul>
+          <p>These services may have their own privacy policies. No user data from APEX is shared with these services.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">7. Children's Privacy</div>
+        <div class="legal-section-body">
+          <p>APEX is not directed at children under the age of 13. We do not knowingly collect any personal information from children. If you are under 13, please do not use this Product.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">8. Changes to This Policy</div>
+        <div class="legal-section-body">
+          <p>We may update this Privacy Policy from time to time to reflect changes in best practices or applicable law. We will indicate the date of the most recent revision at the top of this document. Continued use of APEX after changes constitutes acceptance of the updated policy.</p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <div class="legal-section-title">9. Contact</div>
+        <div class="legal-section-body">
+          <p>If you have any questions, concerns, or feedback regarding this Privacy Policy or your data, please reach out to the APEX team. We are committed to addressing any privacy-related inquiries promptly and transparently.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding:12px 16px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:16px;flex-shrink:0">🔒</span>
+        <span><strong style="color:#34d399">Your Privacy is Our Priority.</strong> APEX is designed from the ground up to keep your data private, local, and fully under your control. No accounts. No servers. No tracking.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
