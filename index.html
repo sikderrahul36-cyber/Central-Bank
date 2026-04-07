@@ -152,7 +152,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);overflow:auto;margin-bottom:20px;transition:background .3s}
 .tt{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
 .tt th{padding:9px 7px;font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);background:var(--bg3);white-space:nowrap}
-.tt th:first-child{text-align:left;padding-left:16px}
+.tt th:first-child{text-align:left;padding-left:18px}
+.tt-task-th{text-align:left!important;padding-left:18px!important}
 .tt th:last-child{border-right:none}
 .tt th.tc{color:var(--p1)}
 .tt td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:middle;transition:background .15s}
@@ -687,7 +688,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 /* ── SCROLLBAR ─────────────────────────────────────────────── */
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-/* ── BOTTOM NAV (mobile) ─── SINGLE ROW SCROLLABLE ──────── */
+/* ═══════════════════════════════════════════════════════════
+   BOTTOM NAV — Mobile Scrollable, 5 visible + partial 6th
+   ═══════════════════════════════════════════════════════════ */
 .bnav{
   display:none;
   position:fixed;
@@ -699,24 +702,38 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   z-index:200;
   padding:0;
   flex-direction:column;
-  min-height:60px;
+  /* Height: icon + label + safe area */
+  min-height:62px;
 }
-/* Single scrollable primary row */
+/* Scrollable row wrapper — clips the scroll track but lets fade overlay work */
+.bnav-scroll-wrap{
+  position:relative;
+  overflow:hidden;
+  flex:1;
+  display:flex;
+  align-items:stretch;
+}
+/* The actual scrollable row */
 .bnav-primary{
   display:flex;
   align-items:stretch;
   overflow-x:auto;
+  overflow-y:hidden;
   scroll-behavior:smooth;
   scrollbar-width:none;
   -ms-overflow-style:none;
-  padding:5px 8px max(6px,env(safe-area-inset-bottom));
-  gap:2px;
-  position:relative;
+  /* Left padding so first icon has breathing room */
+  padding:5px 0 max(6px,env(safe-area-inset-bottom));
+  /* No gap — width-based sizing creates natural breathing room */
+  gap:0;
+  width:100%;
+  /* Momentum scrolling on iOS */
+  -webkit-overflow-scrolling:touch;
 }
 .bnav-primary::-webkit-scrollbar{display:none}
-/* Hide the secondary row entirely — merged into primary */
-.bnav-secondary-wrap{display:none}
-.bnav-secondary{display:none}
+
+/* ── Each nav item: exactly 1/5.4 of viewport width ─────────
+   5 full icons visible + ~0.4 of the 6th peeking = scroll cue */
 .bn{
   display:flex;
   flex-direction:column;
@@ -724,75 +741,146 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   justify-content:center;
   gap:3px;
   cursor:pointer;
-  padding:5px 4px;
-  border-radius:10px;
+  /* Fixed-width based on viewport: 5.4 items visible */
+  flex:0 0 calc(100vw / 5.4);
+  max-width:76px;
+  min-width:52px;
+  padding:6px 4px 5px;
+  border-radius:12px;
   color:var(--text2);
-  transition:all .2s;
-  min-width:54px;
-  flex-shrink:0;
+  /* Smooth colour + scale transition */
+  transition:color .2s, background .2s, transform .15s;
+  position:relative;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
 }
-.bn svg{width:20px;height:20px;flex-shrink:0}
-.bn .bn-l{font-size:9px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56px}
-.bn.on{color:var(--p1);background:rgba(91,110,245,.07);border-radius:12px}
-.bn.on .bn-l{color:var(--p1);font-weight:700}
-/* Secondary nav items (smaller) — keep for compat but unused in single-row */
-.bn-sec{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:2px;
-  cursor:pointer;
-  padding:5px 4px;
-  border-radius:10px;
-  color:var(--text2);
-  transition:all .2s;
-  min-width:54px;
+.bn:active{transform:scale(.92);}
+.bn svg{
+  width:20px;
+  height:20px;
   flex-shrink:0;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1);
+}
+.bn.on svg{transform:scale(1.1);}
+.bn .bn-l{
+  font-size:9px;
+  font-weight:600;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+  letter-spacing:.1px;
+  transition:color .2s;
+}
+.bn.on{color:var(--p1);}
+.bn.on .bn-l{color:var(--p1);font-weight:700;}
+
+/* Active pill background — tight around icon+label */
+.bn.on::before{
+  content:'';
+  position:absolute;
+  inset:3px 6px;
+  border-radius:10px;
+  background:rgba(91,110,245,.10);
+  border:1px solid rgba(91,110,245,.18);
+  z-index:0;
+  transition:opacity .2s;
+}
+/* Active underline dot */
+.bn.on::after{
+  content:'';
+  position:absolute;
+  bottom:2px;
+  left:50%;
+  transform:translateX(-50%);
+  width:16px;
+  height:3px;
+  border-radius:3px;
+  background:var(--p1);
+  opacity:.9;
+}
+/* Keep icon+label above the pill pseudo-element */
+.bn svg,.bn .bn-l{position:relative;z-index:1;}
+
+/* ── Secondary nav compat (legacy, hidden in single-row) ── */
+.bnav-secondary-wrap{display:none}
+.bnav-secondary{display:none}
+.bn-sec{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;cursor:pointer;padding:5px 4px;border-radius:10px;color:var(--text2);
+  transition:all .2s;min-width:54px;flex-shrink:0;
 }
 .bn-sec svg{width:20px;height:20px;flex-shrink:0}
 .bn-sec .bn-l{font-size:9px;font-weight:600;white-space:nowrap}
-.bn-sec.on{
-  color:var(--p1);
-  background:rgba(91,110,245,.07);
-  border-radius:12px;
-}
+.bn-sec.on{color:var(--p1);background:rgba(91,110,245,.07);border-radius:12px;}
 .bn-sec:hover{color:var(--p1);background:rgba(91,110,245,.07)}
-/* ── BNAV FADE WRAPPER ── */
-.bnav-scroll-wrap{
-  position:relative;
-  overflow:hidden;
-  flex:1;
-}
+
+/* ── Right-edge gradient fade — premium scroll affordance ── */
 .bnav-scroll-wrap::after{
   content:'';
   position:absolute;
   right:0;
   top:0;
   bottom:0;
-  width:40px;
-  background:linear-gradient(to right,transparent,var(--bg2));
+  /* Wide enough to softly dissolve the last visible icon */
+  width:56px;
+  background:linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(var(--bg2-rgb, 14,14,26),.55) 45%,
+    var(--bg2) 100%
+  );
   pointer-events:none;
-  z-index:2;
-  transition:opacity .3s;
+  z-index:4;
+  transition:opacity .35s ease;
 }
+/* When scrolled to the very end, fade out the overlay */
 .bnav-scroll-wrap.at-end::after{
   opacity:0;
+  pointer-events:none;
 }
-/* Scroll hint chevron */
+/* Theme-aware bg2 RGB for the gradient */
+[data-theme="dark"]  .bnav-scroll-wrap::after{
+  background:linear-gradient(to right,transparent 0%,rgba(14,14,26,.6) 40%,#0e0e1a 100%);
+}
+[data-theme="light"] .bnav-scroll-wrap::after{
+  background:linear-gradient(to right,transparent 0%,rgba(255,255,255,.65) 40%,#ffffff 100%);
+}
+
+/* ── Scroll hint arrow — SVG chevron, animated ─────────── */
 .bnav-scroll-hint{
   position:absolute;
-  right:4px;
+  right:5px;
   top:50%;
   transform:translateY(-50%);
-  color:var(--text3);
-  font-size:12px;
   pointer-events:none;
-  z-index:3;
-  animation:hint-pulse 2s ease-in-out infinite;
-  line-height:1;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:rgba(91,110,245,.15);
+  border:1px solid rgba(91,110,245,.25);
+  color:var(--p1);
+  animation:bnav-hint-pulse 2.2s ease-in-out infinite;
+  transition:opacity .35s ease;
 }
-@keyframes hint-pulse{0%,100%{opacity:.4;transform:translateY(-50%) translateX(0)}50%{opacity:.85;transform:translateY(-50%) translateX(2px)}}
+.bnav-scroll-hint svg{
+  width:11px;
+  height:11px;
+  flex-shrink:0;
+  margin-left:1px; /* optical centre for chevron-right */
+}
+/* Fade out hint when at end */
+.bnav-scroll-wrap.at-end .bnav-scroll-hint{
+  opacity:0;
+}
+@keyframes bnav-hint-pulse{
+  0%,100%{opacity:.55;transform:translateY(-50%) translateX(0);}
+  50%{opacity:1;transform:translateY(-50%) translateX(3px);}
+}
 .confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
 .confirm-mo.open{display:flex}
 .confirm-box{background:var(--card);border:1px solid var(--border2);border-radius:var(--rl);padding:32px 28px;width:100%;max-width:360px;text-align:center;animation:mi .23s ease}
@@ -913,7 +1001,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── CAT FILTER: BUTTON HEIGHT ALIGNMENT ─────────────────── */
 .cat-filter-select-styled{
   height:34px;
-  padding:0 32px 0 10px;
+  padding:0 36px 0 10px;
   display:flex;
   align-items:center;
   border-radius:var(--rs);
@@ -955,11 +1043,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     font-size:11px;
     min-width:0;
     max-width:145px;
-    padding:0 30px 0 9px;
+    padding:0 34px 0 9px;
     border-radius:9px;
     text-overflow:ellipsis;
     white-space:nowrap;
     overflow:hidden;
+  }
+  .cat-filter-wrapper .cat-chevron{
+    right:10px;
   }
   .add-task-btn-aligned{
     height:34px !important;
@@ -1080,8 +1171,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .sh > div{display:flex;gap:8px;align-items:center;flex-wrap:nowrap;flex:1;justify-content:flex-end}
   .sh .ana-sel{flex:0 1 auto;min-width:0;max-width:140px}
   .cat-filter-wrapper{flex:0 1 auto}
-  .cat-filter-select-styled{min-width:0;max-width:138px;font-size:11px}
+  .cat-filter-select-styled{min-width:0;max-width:138px;font-size:11px;padding:0 34px 0 9px}
   .add-task-btn-aligned{flex-shrink:0;white-space:nowrap}
+  /* Task heading: shift right on mobile for visual balance with row content */
+  .tt-task-th{padding-left:20px!important}
+  .tt th:first-child{padding-left:20px}
   /* KPI Cards: improved mobile layout */
   .kc{padding:12px}
   .kc-v{font-size:20px}
@@ -1100,11 +1194,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .kc-ico{width:30px;height:30px;font-size:13px}
   .focus-insights-row{padding:11px 12px}
   .ana-perf-insight{padding:11px 12px}
-  .bn .bn-l{font-size:8px}
-  .bn{padding:5px 3px;min-width:48px}
+  .bn .bn-l{font-size:8px;letter-spacing:0}
+  .bn{padding:5px 2px 4px;min-width:48px}
   .bn svg{width:18px;height:18px}
   .sh h2{font-size:13px}
-  .cat-filter-select-styled{font-size:10px;max-width:120px}
+  .cat-filter-select-styled{font-size:10px;max-width:120px;padding:0 30px 0 8px}
+  .cat-filter-wrapper .cat-chevron{right:9px;width:11px;height:11px}
   .btn.btn-pri.btn-sm{padding:6px 10px;font-size:10px}
 }
 
@@ -1250,23 +1345,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt th:not(:first-child),.tt td:not(:first-child){width:7.71%;min-width:52px;padding:8px 2px}
 .tt-dc{text-align:center;padding:6px 2px}
 
-/* ── MOBILE BOTTOM NAV - SINGLE ROW ─────────────────────── */
-.bnav{flex-wrap:nowrap;overflow:visible}
-.bn{flex-shrink:0;min-width:54px;position:relative}
-/* Active dot indicator under the icon */
-.bn.on::after{
-  content:'';
-  position:absolute;
-  bottom:1px;
-  left:50%;
-  transform:translateX(-50%);
-  width:18px;
-  height:3px;
-  border-radius:3px;
-  background:var(--p1);
-  opacity:.85;
-}
-
 
 /* ── TODAY'S FOCUS mobile redesign ─────────────────────── */
 @media(max-width:700px){
@@ -1343,8 +1421,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .sbi:hover{box-shadow:0 6px 20px rgba(60,60,120,.11)}
 [data-theme="light"] .toast{background:var(--card);border-color:var(--border2);box-shadow:0 4px 20px rgba(60,60,120,.13);color:var(--text)}
 [data-theme="light"] .bnav{background:var(--bg2);border-top:1px solid var(--border);box-shadow:0 -2px 16px rgba(60,60,120,.08)}
-[data-theme="light"] .bn.on{color:var(--p1);background:rgba(91,110,245,.09)}
+[data-theme="light"] .bn.on{color:var(--p1)}
+[data-theme="light"] .bn.on::before{background:rgba(91,110,245,.08);border-color:rgba(91,110,245,.18)}
 [data-theme="light"] .bn.on::after{background:var(--p1)}
+[data-theme="light"] .bnav-scroll-hint{background:rgba(91,110,245,.12);border-color:rgba(91,110,245,.22)}
 [data-theme="light"] .bn-sec.on{background:rgba(91,110,245,.08);border-color:rgba(91,110,245,.22)}
 [data-theme="light"] .confirm-mo{background:rgba(60,60,120,.45)}
 [data-theme="light"] .confirm-box{background:var(--card);border-color:var(--border2);box-shadow:0 20px 60px rgba(60,60,120,.18)}
@@ -1390,7 +1470,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .sb-prof-role{color:var(--text2)}
 [data-theme="light"] .bnav-secondary{border-top-color:var(--border)}
 [data-theme="light"] .bnav-secondary-wrap::after{background:linear-gradient(to right,transparent,var(--bg2))}
-[data-theme="light"] .bnav-scroll-wrap::after{background:linear-gradient(to right,transparent,var(--bg2))}
 /* Profile hero card — light treatment */
 [data-theme="light"] #prof-cx>div:first-child{
   background:linear-gradient(135deg,rgba(91,110,245,.15) 0%,rgba(124,58,237,.10) 45%,rgba(14,165,233,.08) 100%)!important;
@@ -1671,8 +1750,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <span class="bn-l">Settings</span>
       </div>
     </div>
-    <!-- Scroll hint -->
-    <div class="bnav-scroll-hint" id="bnav-scroll-hint">›</div>
+    <!-- Scroll hint: animated chevron pill -->
+    <div class="bnav-scroll-hint" id="bnav-scroll-hint" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </div>
   </div>
 </div>
 
@@ -2016,7 +2099,7 @@ function statusBadgeHtml(status,done){
 function renderTT(dates){
   const tasks=S.catFilt==='all'?S.tasks:S.tasks.filter(t=>t.cat===S.catFilt);
   const isCurrentWeek=S.weekOff===0;
-  let th='<thead><tr><th style="text-align:left;padding-left:12px">Task</th>';
+  let th='<thead><tr><th class="tt-task-th">Task</th>';
   dates.forEach((d,i)=>{
     const iT=i===TODAY_DOW&&isCurrentWeek;
     th+=`<th class="${iT?'tc':''}">${DAYS7[i]}<br><span style="font-weight:400;font-size:9px;color:${iT?'rgba(91,110,245,.7)':'var(--text3)'}">${fmtD(d)}</span></th>`;
@@ -3663,22 +3746,23 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
 }
 
 // ════════════════════════════════════════════════════════════
-// NAV SCROLL HINT
+// NAV SCROLL HINT — driven entirely by CSS .at-end class
 // ════════════════════════════════════════════════════════════
 (function initNavScrollHint(){
   const nav=document.getElementById('bnav-primary');
   const wrap=document.getElementById('bnav-scroll-wrap');
-  const hint=document.getElementById('bnav-scroll-hint');
-  if(!nav||!hint)return;
+  if(!nav||!wrap)return;
+
   function updateHint(){
-    const atEnd=nav.scrollLeft+nav.clientWidth>=nav.scrollWidth-4;
-    hint.style.opacity=atEnd?'0':'1';
-    if(wrap){wrap.classList.toggle('at-end',atEnd);}
+    // Threshold of 6px handles sub-pixel rounding on iOS/Android
+    const atEnd=nav.scrollLeft+nav.clientWidth>=nav.scrollWidth-6;
+    wrap.classList.toggle('at-end',atEnd);
   }
+
   nav.addEventListener('scroll',updateHint,{passive:true});
-  window.addEventListener('resize',updateHint);
-  // Initial check after layout
-  setTimeout(updateHint,300);
+  window.addEventListener('resize',updateHint,{passive:true});
+  // Run after first layout paint so scrollWidth is correct
+  requestAnimationFrame(()=>setTimeout(updateHint,120));
 })();
 </script>
 </body>
