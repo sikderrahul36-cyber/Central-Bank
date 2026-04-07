@@ -900,10 +900,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   z-index:4;
   transition:opacity .35s ease;
 }
-/* When scrolled to the very end, fade out the overlay */
+/* When scrolled to the very end, fade out the right overlay */
 .bnav-scroll-wrap.at-end::after{
   opacity:0;
   pointer-events:none;
+}
+/* Left-edge gradient fade — appears when at end to hint leftward scroll */
+.bnav-scroll-wrap::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:56px;
+  pointer-events:none;
+  z-index:4;
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.bnav-scroll-wrap.at-end::before{
+  opacity:1;
 }
 /* Theme-aware bg2 RGB for the gradient */
 [data-theme="dark"]  .bnav-scroll-wrap::after{
@@ -912,11 +928,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .bnav-scroll-wrap::after{
   background:linear-gradient(to right,transparent 0%,rgba(255,255,255,.65) 40%,#ffffff 100%);
 }
+[data-theme="dark"]  .bnav-scroll-wrap::before{
+  background:linear-gradient(to left,transparent 0%,rgba(14,14,26,.6) 40%,#0e0e1a 100%);
+}
+[data-theme="light"] .bnav-scroll-wrap::before{
+  background:linear-gradient(to left,transparent 0%,rgba(255,255,255,.65) 40%,#ffffff 100%);
+}
 
 /* ── Scroll hint arrow — SVG chevron, animated ─────────── */
 .bnav-scroll-hint{
   position:absolute;
   right:5px;
+  left:auto;
   top:50%;
   transform:translateY(-50%);
   pointer-events:none;
@@ -930,22 +953,34 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   background:rgba(91,110,245,.15);
   border:1px solid rgba(91,110,245,.25);
   color:var(--p1);
-  animation:bnav-hint-pulse 2.2s ease-in-out infinite;
-  transition:opacity .35s ease;
+  animation:bnav-hint-pulse-right 2.2s ease-in-out infinite;
+  transition:right .35s ease, left .35s ease, opacity .35s ease;
 }
 .bnav-scroll-hint svg{
   width:11px;
   height:11px;
   flex-shrink:0;
   margin-left:1px; /* optical centre for chevron-right */
+  transition:transform .35s ease, margin .35s ease;
 }
-/* Fade out hint when at end */
+/* When at end: move arrow to left side and flip direction */
 .bnav-scroll-wrap.at-end .bnav-scroll-hint{
-  opacity:0;
+  right:auto;
+  left:5px;
+  animation:bnav-hint-pulse-left 2.2s ease-in-out infinite;
 }
-@keyframes bnav-hint-pulse{
+.bnav-scroll-wrap.at-end .bnav-scroll-hint svg{
+  transform:rotate(180deg);
+  margin-left:0;
+  margin-right:1px; /* optical centre for chevron-left */
+}
+@keyframes bnav-hint-pulse-right{
   0%,100%{opacity:.55;transform:translateY(-50%) translateX(0);}
   50%{opacity:1;transform:translateY(-50%) translateX(3px);}
+}
+@keyframes bnav-hint-pulse-left{
+  0%,100%{opacity:.55;transform:translateY(-50%) translateX(0);}
+  50%{opacity:1;transform:translateY(-50%) translateX(-3px);}
 }
 .confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
 .confirm-mo.open{display:flex}
@@ -1595,36 +1630,31 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* ── HABITS CARD SECTION HEADER ──────────────────────────── */
 /* ── HABIT SECTION HEADER — Premium Redesign ─────────────────── */
+/* ── HABIT CARDS SECTION HEADER ─────────────────────────── */
 .hab-section-header{
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-bottom:14px;
-  gap:10px;
-  padding:12px 14px;
-  background:linear-gradient(135deg,rgba(91,110,245,.07) 0%,rgba(124,58,237,.04) 60%,rgba(14,165,233,.04) 100%);
-  border:1px solid rgba(91,110,245,.14);
-  border-radius:12px;
+  gap:12px;
+  padding:0 0 11px 0;
+  background:none;
+  border:none;
+  border-bottom:1px solid var(--border);
+  border-radius:0;
   position:relative;
-  overflow:hidden;
+  overflow:visible;
 }
-.hab-section-header::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:2px;
-  background:linear-gradient(90deg,#5b6ef5,#7c3aed,#0ea5e9);
-  border-radius:12px 12px 0 0;
-}
+.hab-section-header::before{display:none}
 [data-theme="light"] .hab-section-header{
-  background:linear-gradient(135deg,rgba(91,110,245,.05) 0%,rgba(124,58,237,.03) 60%,rgba(14,165,233,.03) 100%);
-  border-color:rgba(91,110,245,.12);
+  border-bottom-color:var(--border);
 }
 .hab-section-left{
   display:flex;
   flex-direction:column;
-  gap:3px;
+  gap:2px;
   min-width:0;
+  flex:1;
 }
 .hab-section-title{
   font-family:var(--fh);
@@ -1635,93 +1665,94 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   line-height:1.2;
 }
 .hab-section-subtitle{
-  font-size:10px;
+  font-size:10.5px;
   color:var(--text3);
   font-weight:400;
   line-height:1.3;
 }
+/* Meta row: badges sit inline, right-aligned */
 .hab-section-meta{
   display:flex;
   align-items:center;
   gap:6px;
   flex-shrink:0;
 }
+/* "Current Week" — primary, slightly bolder */
 .hab-week-badge{
   display:inline-flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
   font-size:10px;
-  font-weight:700;
+  font-weight:600;
   padding:4px 10px;
-  border-radius:20px;
-  background:rgba(52,211,153,.12);
+  border-radius:6px;
+  background:rgba(52,211,153,.1);
   color:#34d399;
-  border:1px solid rgba(52,211,153,.22);
-  letter-spacing:.2px;
+  border:1px solid rgba(52,211,153,.20);
+  letter-spacing:.1px;
   white-space:nowrap;
   line-height:1;
 }
+/* Divider dot between badges */
+.hab-badge-sep{
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:var(--border2);
+  flex-shrink:0;
+}
+/* "Synced" — secondary, subtle, no border */
 .hab-sync-badge{
   display:inline-flex;
   align-items:center;
   gap:4px;
   font-size:10px;
   font-weight:500;
-  color:var(--text2);
-  background:rgba(91,110,245,.07);
-  border:1px solid rgba(91,110,245,.15);
-  border-radius:20px;
-  padding:4px 10px;
+  color:var(--text3);
+  background:none;
+  border:none;
+  border-radius:0;
+  padding:0;
   white-space:nowrap;
   line-height:1;
 }
 [data-theme="light"] .hab-sync-badge{
-  background:rgba(91,110,245,.05);
-  border-color:rgba(91,110,245,.12);
+  color:var(--text3);
 }
 
-/* Mobile: refined single-row layout */
+/* Mobile: keep single row, tighten spacing */
 @media(max-width:700px){
   .hab-section-header{
     flex-direction:row;
     align-items:center;
-    gap:8px;
+    gap:10px;
     margin-bottom:12px;
-    padding:11px 13px;
-  }
-  .hab-section-left{
-    flex:1;
-    min-width:0;
+    padding:0 0 10px 0;
   }
   .hab-section-title{
     font-size:13px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
   }
   .hab-section-subtitle{
-    font-size:9px;
-    display:none;
+    font-size:9.5px;
   }
   .hab-section-meta{
-    flex-direction:column;
-    align-items:flex-end;
-    gap:4px;
+    flex-direction:row;
+    align-items:center;
+    gap:5px;
     flex-shrink:0;
   }
   .hab-week-badge{
-    font-size:9px;
-    padding:3px 8px;
+    font-size:9.5px;
+    padding:3px 9px;
   }
   .hab-sync-badge{
     font-size:9px;
-    padding:3px 8px;
   }
 }
 @media(max-width:380px){
   .hab-section-title{font-size:12px}
-  .hab-week-badge,.hab-sync-badge{font-size:9px;padding:2px 7px}
-  .hab-section-header{padding:10px 11px}
+  .hab-week-badge{font-size:9px;padding:3px 8px}
+  .hab-section-subtitle{display:none}
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2075,6 +2106,121 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .mob-ana-panel{background:var(--card);border-color:var(--border2);box-shadow:0 14px 44px rgba(60,60,120,.18)}
 [data-theme="light"] .mob-ana-panel-hdr{background:var(--bg3);border-bottom-color:var(--border)}
 [data-theme="light"] .mob-ana-item:hover{background:var(--card2);border-color:var(--border2)}
+
+/* ═══════════════════════════════════════════════════════════
+   SETTINGS — LEAD TIME MOBILE DROPDOWN (matches mob-cat/mob-ana pattern)
+   ═══════════════════════════════════════════════════════════ */
+/* Trigger button — mobile only */
+.mob-lead-btn{
+  display:none;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px 4px 9px;
+  height:30px;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:8px;
+  font-family:var(--fb);
+  font-size:11px;
+  font-weight:600;
+  color:var(--text);
+  cursor:pointer;
+  transition:all .18s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.mob-lead-btn:hover{border-color:var(--p1);background:rgba(91,110,245,.06)}
+.mob-lead-btn .mlb-chevron{
+  width:11px;height:11px;flex-shrink:0;color:var(--text2);
+  transition:transform .2s;
+}
+.mob-lead-btn.open .mlb-chevron{transform:rotate(180deg)}
+
+/* Backdrop */
+.mob-lead-backdrop{
+  display:none;position:fixed;inset:0;z-index:290;
+  background:rgba(7,7,13,.5);backdrop-filter:blur(3px);
+  animation:mcb-fadein .18s ease;
+}
+.mob-lead-backdrop.open{display:block}
+
+/* Panel */
+.mob-lead-panel{
+  display:none;
+  position:fixed;
+  left:12px;
+  right:12px;
+  z-index:295;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:16px;
+  box-shadow:0 20px 56px rgba(0,0,0,.5),0 4px 16px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.04);
+  overflow:hidden;
+  animation:mcp-slide .22s cubic-bezier(.34,1.4,.64,1);
+}
+.mob-lead-panel.open{display:block}
+
+/* Panel header */
+.mob-lead-panel-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 14px 10px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+}
+.mob-lead-panel-title{
+  font-family:var(--fb);font-size:11px;font-weight:700;
+  letter-spacing:.2px;text-transform:uppercase;color:var(--text2);
+}
+.mob-lead-panel-close{
+  width:24px;height:24px;border-radius:6px;border:1px solid var(--border2);
+  background:var(--card);color:var(--text2);display:flex;align-items:center;
+  justify-content:center;cursor:pointer;transition:all .18s;
+}
+.mob-lead-panel-close:hover{background:var(--card2);color:var(--text)}
+
+/* List */
+.mob-lead-list{
+  padding:7px 7px 9px;display:flex;flex-direction:column;gap:3px;
+}
+
+/* Each item */
+.mob-lead-item{
+  display:flex;align-items:center;gap:10px;padding:9px 11px;
+  border-radius:9px;border:1px solid transparent;cursor:pointer;
+  transition:all .16s cubic-bezier(.4,0,.2,1);
+  -webkit-tap-highlight-color:transparent;
+}
+.mob-lead-item:hover{border-color:var(--border2);background:var(--card2)}
+.mob-lead-item:active{transform:scale(.97);opacity:.85}
+.mob-lead-item-ico{
+  width:28px;height:28px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;
+}
+.mob-lead-item-label{
+  font-family:var(--fb);font-size:12px;font-weight:600;flex:1;min-width:0;color:var(--text);
+}
+.mob-lead-item.active .mob-lead-item-label{color:var(--p1)}
+.mob-lead-item-check{
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;opacity:0;transform:scale(.5);
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+}
+.mob-lead-item.active .mob-lead-item-check{opacity:1;transform:scale(1)}
+
+/* Show on mobile, hide native select */
+@media(max-width:700px){
+  .mob-lead-btn{display:inline-flex}
+  .lead-sel-native{display:none!important}
+}
+@media(min-width:701px){
+  .mob-lead-btn{display:none!important}
+  .mob-lead-panel,.mob-lead-backdrop{display:none!important}
+}
+
+[data-theme="light"] .mob-lead-panel{background:var(--card);border-color:var(--border2);box-shadow:0 14px 44px rgba(60,60,120,.18)}
+[data-theme="light"] .mob-lead-panel-hdr{background:var(--bg3);border-bottom-color:var(--border)}
+[data-theme="light"] .mob-lead-item:hover{background:var(--card2);border-color:var(--border2)}
 </style>
 </head>
 <body>
@@ -2278,6 +2424,18 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- Mobile Analytics Range Dropdown -->
 <div class="mob-ana-backdrop" id="mob-ana-backdrop" onclick="closeMobAnaPanel()"></div>
+
+<!-- Mobile Settings Lead Time Dropdown -->
+<div class="mob-lead-backdrop" id="mob-lead-backdrop" onclick="closeMobLeadPanel()"></div>
+<div class="mob-lead-panel" id="mob-lead-panel">
+  <div class="mob-lead-panel-hdr">
+    <span class="mob-lead-panel-title">Reminder Lead Time</span>
+    <div class="mob-lead-panel-close" onclick="closeMobLeadPanel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+  <div class="mob-lead-list" id="mob-lead-list"></div>
+</div>
 <div class="mob-ana-panel" id="mob-ana-panel">
   <div class="mob-ana-panel-hdr">
     <span class="mob-ana-panel-title">Date Range</span>
@@ -2816,6 +2974,74 @@ function mobAnaSelect(value){
   if(lbl)lbl.textContent=`Last ${value} Weeks`;
   closeMobAnaPanel();
   renderAna(getWeekDates(S.weekOff));
+}
+
+// ════════════════════════════════════════════════════════════
+// SETTINGS — LEAD TIME MOBILE DROPDOWN
+// ════════════════════════════════════════════════════════════
+const LEAD_TIME_OPTIONS=[
+  {value:5, label:'5 minutes', emoji:'⚡'},
+  {value:10, label:'10 minutes', emoji:'🔔'},
+  {value:15, label:'15 minutes', emoji:'⏰'},
+  {value:30, label:'30 minutes', emoji:'🕐'},
+];
+
+function buildMobLeadList(){
+  const list=document.getElementById('mob-lead-list');
+  if(!list)return;
+  const cur=S.sett.leadMins||10;
+  list.innerHTML=LEAD_TIME_OPTIONS.map(({value,label,emoji})=>{
+    const isActive=cur===value;
+    return`<div class="mob-lead-item${isActive?' active':''}" onclick="mobLeadSelect(${value})">
+      <div class="mob-lead-item-ico" style="background:${isActive?'rgba(91,110,245,.14)':'var(--bg3)'}">${emoji}</div>
+      <span class="mob-lead-item-label">${label}</span>
+      <div class="mob-lead-item-check" style="background:rgba(91,110,245,.14);border:1.5px solid var(--p1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--p1)" stroke-width="2.8" width="9" height="9"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+    </div>`;
+  }).join('');
+  // Position above bottom nav
+  const panel=document.getElementById('mob-lead-panel');
+  if(panel){panel.style.bottom='90px';panel.style.top='auto';}
+}
+
+function toggleMobLeadPanel(){
+  const panel=document.getElementById('mob-lead-panel');
+  const backdrop=document.getElementById('mob-lead-backdrop');
+  const btn=document.getElementById('mob-lead-btn');
+  if(!panel)return;
+  const isOpen=panel.classList.contains('open');
+  if(isOpen){closeMobLeadPanel();}
+  else{
+    buildMobLeadList();
+    panel.classList.add('open');
+    backdrop.classList.add('open');
+    if(btn)btn.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+}
+
+function closeMobLeadPanel(){
+  const panel=document.getElementById('mob-lead-panel');
+  const backdrop=document.getElementById('mob-lead-backdrop');
+  const btn=document.getElementById('mob-lead-btn');
+  if(panel)panel.classList.remove('open');
+  if(backdrop)backdrop.classList.remove('open');
+  if(btn)btn.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function mobLeadSelect(value){
+  S.sett.leadMins=value;
+  saveS();
+  updateMobLeadLabel();
+  closeMobLeadPanel();
+  renderSettings();
+}
+
+function updateMobLeadLabel(){
+  const lbl=document.getElementById('mob-lead-label');
+  if(lbl)lbl.textContent=`${S.sett.leadMins||10} min`;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -3364,6 +3590,7 @@ function renderHabits(dates){
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="9" height="9"><polyline points="20 6 9 17 4 12"/></svg>
         Current Week
       </span>
+      <span class="hab-badge-sep"></span>
       <span class="hab-sync-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="9" height="9"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
         Synced
@@ -4041,12 +4268,20 @@ function renderSettings(){
       </div>
       <div class="set-row">
         <div class="set-info"><div class="t">Reminder Lead Time</div><div class="d">Minutes before a task to notify you</div></div>
-        <select class="ana-sel" style="width:90px;flex-shrink:0" onchange="S.sett.leadMins=parseInt(this.value);saveS()">
-          <option value="5" ${(S.sett.leadMins||10)===5?'selected':''}>5 min</option>
-          <option value="10" ${(S.sett.leadMins||10)===10?'selected':''}>10 min</option>
-          <option value="15" ${(S.sett.leadMins||10)===15?'selected':''}>15 min</option>
-          <option value="30" ${(S.sett.leadMins||10)===30?'selected':''}>30 min</option>
-        </select>
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+          <!-- Desktop native select -->
+          <select class="ana-sel lead-sel-native" style="width:90px;flex-shrink:0" onchange="S.sett.leadMins=parseInt(this.value);saveS();updateMobLeadLabel()">
+            <option value="5" ${(S.sett.leadMins||10)===5?'selected':''}>5 min</option>
+            <option value="10" ${(S.sett.leadMins||10)===10?'selected':''}>10 min</option>
+            <option value="15" ${(S.sett.leadMins||10)===15?'selected':''}>15 min</option>
+            <option value="30" ${(S.sett.leadMins||10)===30?'selected':''}>30 min</option>
+          </select>
+          <!-- Mobile custom trigger -->
+          <div class="mob-lead-btn" id="mob-lead-btn" onclick="toggleMobLeadPanel()">
+            <span id="mob-lead-label">${S.sett.leadMins||10} min</span>
+            <svg class="mlb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
       </div>
       ${notifOn&&upcomingTasks.length?`
       <div style="margin-top:10px">
@@ -4083,7 +4318,7 @@ function renderSettings(){
             <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
               <div>
                 <div style="font-size:12px;font-weight:700;margin-bottom:2px">Export JSON Backup</div>
-                <div style="font-size:10px;color:var(--text2)">Downloads a complete backup of all your data — tasks, habits, notes, timer logs, and profile.</div>
+                <div style="font-size:10px;color:var(--text2)">Downloads a full backup of your APEX data as a JSON file.</div>
               </div>
               <button class="btn btn-ghost btn-sm" style="flex-shrink:0;gap:6px;white-space:nowrap" onclick="expJSON()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -4096,7 +4331,7 @@ function renderSettings(){
             <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
               <div>
                 <div style="font-size:12px;font-weight:700;margin-bottom:2px">Restore Backup</div>
-                <div style="font-size:10px;color:var(--text2)">Upload a previously exported <code style="font-size:9px;background:var(--bg3);padding:1px 5px;border-radius:4px;border:1px solid var(--border2)">.json</code> backup file to fully restore your data on any device.</div>
+                <div style="font-size:10px;color:var(--text2)">Upload a <code style="font-size:9px;background:var(--bg3);padding:1px 5px;border-radius:4px;border:1px solid var(--border2)">.json</code> backup file to restore your data.</div>
               </div>
               <button class="btn btn-ghost btn-sm" style="flex-shrink:0;gap:6px;white-space:nowrap;border-color:rgba(91,110,245,.35);color:var(--p1)" onclick="document.getElementById('restore-file-input').click()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -4106,7 +4341,7 @@ function renderSettings(){
           </div>
         </div>
 
-        <button class="btn btn-ghost" style="justify-content:flex-start;width:100%;gap:10px" onclick="expCSV()"><span>📊</span> Export CSV Report</button>
+        <button class="btn btn-ghost" style="justify-content:flex-start;width:100%;gap:10px" onclick="openCSVModal()"><span>📊</span> Export CSV Report</button>
         <div style="height:1px;background:var(--border);margin:4px 0"></div>
         <button style="display:flex;align-items:center;gap:10px;padding:8px 14px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;background:transparent;border:1px solid rgba(244,63,94,.3);color:var(--r1);transition:all .2s;width:100%" onmouseover="this.style.background='rgba(244,63,94,.08)'" onmouseout="this.style.background='transparent'" onclick="confirmReset()"><span>🗑</span> Reset All Data</button>
       </div>
@@ -4137,16 +4372,37 @@ function renderSettings(){
         <button onclick="const d=document.getElementById('about-details');const showing=d.style.display!=='none';d.style.display=showing?'none':'block';this.textContent=showing?'Learn more ↓':'Show less ↑'" style="margin-top:12px;background:transparent;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0">Learn more ↓</button>
 
         <!-- ── LEGAL FOOTER ── -->
-        <div style="margin-top:20px;padding:14px 16px;border-top:1px solid var(--border);border-radius:10px;background:var(--bg3);text-align:center">
-          <div style="font-size:11px;color:var(--text3);line-height:1.75;margin-bottom:8px">
-            © 2026 APEX. All rights reserved. This product, including its design, features, and content,<br>is the intellectual property of APEX. Unauthorized reproduction or misuse is strictly prohibited.
-          </div>
-          <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap">
-            <span style="font-size:11px;color:var(--text3)">© 2026 APEX. All rights reserved.</span>
-            <span style="color:var(--text3);margin:0 8px;font-size:11px">|</span>
-            <button onclick="document.getElementById('terms-modal').classList.add('open')" style="background:none;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0;transition:color .2s" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Terms of Use</button>
-            <span style="color:var(--text3);margin:0 8px;font-size:11px">|</span>
-            <button onclick="document.getElementById('privacy-modal').classList.add('open')" style="background:none;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0;transition:color .2s" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Privacy Policy</button>
+        <div style="margin-top:24px;border-radius:14px;overflow:hidden;border:1px solid var(--border2)">
+          <!-- Top gradient bar -->
+          <div style="height:3px;background:var(--grad)"></div>
+          <!-- Body -->
+          <div style="padding:18px 20px 16px;background:var(--card2)">
+            <!-- Copyright line -->
+            <div style="font-size:11px;color:var(--text2);line-height:1.75;margin-bottom:14px;text-align:center">
+              © 2026 APEX. All rights reserved. All content, design, and features are proprietary to APEX.
+              Any unauthorized use, reproduction, distribution, or resale, in whole or in part, is strictly
+              prohibited and may result in legal action.
+            </div>
+            <!-- Divider -->
+            <div style="height:1px;background:var(--border);margin-bottom:14px"></div>
+            <!-- Links row -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+              <button onclick="document.getElementById('terms-modal').classList.add('open')"
+                style="display:inline-flex;align-items:center;gap:5px;background:rgba(91,110,245,.08);border:1px solid rgba(91,110,245,.22);color:var(--p1);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--fb);padding:6px 13px;border-radius:20px;transition:all .2s;letter-spacing:.1px"
+                onmouseover="this.style.background='rgba(91,110,245,.18)';this.style.borderColor='rgba(91,110,245,.4)'"
+                onmouseout="this.style.background='rgba(91,110,245,.08)';this.style.borderColor='rgba(91,110,245,.22)'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Terms of Use
+              </button>
+              <span style="color:var(--text3);font-size:13px;line-height:1">·</span>
+              <button onclick="document.getElementById('privacy-modal').classList.add('open')"
+                style="display:inline-flex;align-items:center;gap:5px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22);color:#34d399;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--fb);padding:6px 13px;border-radius:20px;transition:all .2s;letter-spacing:.1px"
+                onmouseover="this.style.background='rgba(16,185,129,.16)';this.style.borderColor='rgba(16,185,129,.4)'"
+                onmouseout="this.style.background='rgba(16,185,129,.07)';this.style.borderColor='rgba(16,185,129,.22)'">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Privacy Policy
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -4475,25 +4731,110 @@ function restoreJSON(event){
 
   reader.readAsText(file);
 }
-function expCSV(){
+function openCSVModal(){
+  let mo=document.getElementById('csv-export-modal');
+  if(!mo){
+    mo=document.createElement('div');
+    mo.id='csv-export-modal';
+    mo.style.cssText='position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);padding:16px';
+    mo.innerHTML=`
+      <div id="csv-mo-box" style="background:var(--card);border:1px solid var(--border2);border-radius:18px;width:100%;max-width:400px;box-shadow:0 24px 60px rgba(0,0,0,.45);overflow:hidden;animation:fu .22s ease">
+        <div style="padding:20px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div>
+            <div style="font-family:var(--fh);font-size:15px;font-weight:800;margin-bottom:3px">Export CSV Report</div>
+            <div style="font-size:11px;color:var(--text2)">Choose a time range to include in your export</div>
+          </div>
+          <button onclick="document.getElementById('csv-export-modal').remove()" style="width:30px;height:30px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .2s" onmouseover="this.style.background='var(--card2)'" onmouseout="this.style.background='transparent'">✕</button>
+        </div>
+        <div style="padding:18px 22px;display:flex;flex-direction:column;gap:10px">
+          ${[
+            {weeks:4,  label:'Last 4 Weeks',  desc:'~1 month of data',   icon:'📅'},
+            {weeks:8,  label:'Last 8 Weeks',  desc:'~2 months of data',  icon:'📆'},
+            {weeks:12, label:'Last 12 Weeks', desc:'~3 months of data',  icon:'🗓'},
+          ].map(o=>`
+            <button onclick="expCSV(${o.weeks});document.getElementById('csv-export-modal').remove()"
+              style="display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:12px;border:1px solid var(--border2);background:var(--card2);cursor:pointer;transition:all .2s;text-align:left;width:100%;font-family:var(--fb)"
+              onmouseover="this.style.background='rgba(91,110,245,.1)';this.style.borderColor='rgba(91,110,245,.35)'"
+              onmouseout="this.style.background='var(--card2)';this.style.borderColor='var(--border2)'">
+              <span style="font-size:22px;flex-shrink:0">${o.icon}</span>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px">${o.label}</div>
+                <div style="font-size:11px;color:var(--text2)">${o.desc}</div>
+              </div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14" style="color:var(--text3);flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          `).join('')}
+        </div>
+        <div style="padding:12px 22px 18px">
+          <button onclick="document.getElementById('csv-export-modal').remove()" style="width:100%;padding:9px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:var(--fb);font-size:12px;font-weight:600;transition:all .2s" onmouseover="this.style.background='var(--card2)'" onmouseout="this.style.background='transparent'">Cancel</button>
+        </div>
+      </div>`;
+    mo.addEventListener('click',e=>{if(e.target===mo)mo.remove();});
+    document.body.appendChild(mo);
+  } else {
+    mo.remove();
+  }
+}
+
+function expCSV(numWeeks){
   try{
-    const dates=getWeekDates(S.weekOff);
-    let csv='Task,Category,Priority,Start,End,Duration,'+DAYS7.join(',')+',Week%\n';
-    S.tasks.forEach(t=>{
-      const dur=tdiff(t.start,t.end).toFixed(1);
-      const dc=dates.map((d,i)=>!t.days.includes(i)?'N/A':isDone(t.id,fmtKey(d))?'Done':'Pending');
-      const wd=dates.filter((d,i)=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length;
-      const wt=dates.filter((_,i)=>t.days.includes(i)).length;
-      const pct=wt?Math.round(wd/wt*100)+'%':'0%';
-      csv+=`"${t.name}","${getCatLabel(t.cat)}","${t.pri}","${fmtT(t.start)}","${fmtT(t.end)}",${dur}h,${dc.join(',')},${pct}\n`;
+    numWeeks = numWeeks || 1;
+    // Build all dates for the requested range (going back numWeeks from current week)
+    let allWeekDates = [];
+    let weekLabels = [];
+    for(let w = -(numWeeks-1); w <= 0; w++){
+      const offset = S.weekOff + w;
+      const dates = getWeekDates(offset);
+      allWeekDates.push(dates);
+      const startStr = fmtD(dates[0]);
+      const endStr = fmtD(dates[6]);
+      weekLabels.push(`${startStr} - ${endStr}`);
+    }
+
+    // Header: Task, Category, Priority, Start, End, Duration, then per-week columns
+    let headerCols = ['Task','Category','Priority','Start','End','Duration(h)'];
+    allWeekDates.forEach((dates, wi) => {
+      DAYS7.forEach(day => headerCols.push(`W${wi+1}_${day}`));
+      headerCols.push(`W${wi+1}_Completion%`);
     });
-    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download='apex-report.csv';
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-    setTimeout(()=>URL.revokeObjectURL(url),100);
-    toast('CSV exported ✓','#34d399');
-  }catch(e){toast('Export failed: '+e.message,'#f43f5e');}
+    let csv = headerCols.join(',') + '\n';
+
+    // Also add a legend row at top with week date ranges
+    let legendRow = ['Week Ranges:','','','','',''];
+    allWeekDates.forEach((dates, wi) => {
+      legendRow.push(weekLabels[wi]);
+      DAYS7.slice(1).forEach(() => legendRow.push(''));
+      legendRow.push('');
+    });
+    // Skip legend row insertion as it complicates parsing; put ranges in a comment header
+    let rangeHeader = '# Range: ' + weekLabels.join(' | ') + '\n';
+    csv = rangeHeader + csv;
+
+    S.tasks.forEach(t => {
+      const dur = tdiff(t.start, t.end).toFixed(1);
+      let row = [`"${t.name}"`, `"${getCatLabel(t.cat)}"`, `"${t.pri}"`, `"${fmtT(t.start)}"`, `"${fmtT(t.end)}"`, dur];
+      allWeekDates.forEach(dates => {
+        const dc = dates.map((d,i) => !t.days.includes(i) ? 'N/A' : isDone(t.id,fmtKey(d)) ? 'Done' : 'Pending');
+        const wd = dates.filter((d,i) => t.days.includes(i) && isDone(t.id,fmtKey(d))).length;
+        const wt = dates.filter((_,i) => t.days.includes(i)).length;
+        const pct = wt ? Math.round(wd/wt*100)+'%' : '0%';
+        dc.forEach(v => row.push(v));
+        row.push(pct);
+      });
+      csv += row.join(',') + '\n';
+    });
+
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `apex-report-${numWeeks}wk.csv`;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+    toast(`CSV exported (${numWeeks}w) ✓`, '#34d399');
+  } catch(e) {
+    toast('Export failed: '+e.message, '#f43f5e');
+  }
 }
 
 // ════════════════════════════════════════════════════════════
@@ -4696,12 +5037,17 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
 (function initNavScrollHint(){
   const nav=document.getElementById('bnav-primary');
   const wrap=document.getElementById('bnav-scroll-wrap');
+  const hint=document.getElementById('bnav-scroll-hint');
   if(!nav||!wrap)return;
 
   function updateHint(){
+    const scrollable=nav.scrollWidth>nav.clientWidth+6;
     // Threshold of 6px handles sub-pixel rounding on iOS/Android
     const atEnd=nav.scrollLeft+nav.clientWidth>=nav.scrollWidth-6;
-    wrap.classList.toggle('at-end',atEnd);
+    // Toggle at-end class: true = show left arrow, false = show right arrow
+    wrap.classList.toggle('at-end',atEnd&&scrollable);
+    // Hide hint entirely if nav content fits without scrolling
+    if(hint) hint.style.opacity=scrollable?'':0;
   }
 
   nav.addEventListener('scroll',updateHint,{passive:true});
@@ -4716,84 +5062,79 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
   <div class="legal-modal">
     <div class="legal-modal-head">
       <h2>
-        <span style="width:28px;height:28px;border-radius:8px;background:rgba(91,110,245,.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📋</span>
+        <span style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,rgba(91,110,245,.2),rgba(124,58,237,.15));border:1px solid rgba(91,110,245,.3);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">📋</span>
         Terms of Use
       </h2>
       <button class="mc" onclick="document.getElementById('terms-modal').classList.remove('open')">✕</button>
     </div>
     <div class="legal-modal-body">
-      <div class="legal-effective">Effective Date: January 1, 2026 &nbsp;|&nbsp; Last Updated: April 1, 2026</div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">1. Acceptance of Terms</div>
-        <div class="legal-section-body">
-          <p>By accessing or using APEX ("the Product"), you agree to be bound by these Terms of Use. If you do not agree to these terms, please discontinue use of the Product immediately. These terms apply to all users of APEX, including without limitation users who are browsers, customers, merchants, or contributors of content.</p>
+      <!-- Intro banner -->
+      <div style="display:flex;align-items:flex-start;gap:11px;padding:12px 14px;border-radius:11px;background:rgba(91,110,245,.07);border:1px solid rgba(91,110,245,.18);margin-bottom:20px">
+        <span style="font-size:18px;flex-shrink:0;margin-top:1px">📌</span>
+        <div style="font-size:11.5px;color:var(--text2);line-height:1.7">
+          By purchasing and using APEX, you agree to the following terms. Please read them carefully before use.
         </div>
       </div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">2. Intellectual Property</div>
-        <div class="legal-section-body">
-          <p>APEX, including its design, features, interface, code, content, and branding, is the exclusive intellectual property of APEX and its creators. All rights are reserved.</p>
-          <p>Unauthorized reproduction, distribution, resale, sublicensing, modification, or misuse of this product — in whole or in part — is strictly prohibited and may result in civil and/or criminal legal action.</p>
-          <ul>
-            <li>You may not copy, reverse-engineer, decompile, or disassemble any part of the Product.</li>
-            <li>You may not remove or alter any copyright, trademark, or proprietary notices.</li>
-            <li>You may not use the APEX name, logo, or branding without prior written permission.</li>
-          </ul>
+      <!-- Term items as clean cards -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(91,110,245,.12);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">🛒</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">One-Time Purchase</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">APEX is sold as a one-time product. No ongoing support, updates, maintenance, or feature enhancements are guaranteed.</div>
+          </div>
         </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(249,115,22,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">⚠️</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">No Warranty</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">The product is provided "as is" without warranties of any kind. Performance and compatibility are not guaranteed across all devices or environments.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(14,165,233,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">👤</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">User Responsibility</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">You are solely responsible for managing, backing up, and maintaining your data. APEX is not liable for any data loss or corruption.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(168,85,247,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">🔒</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">Personal Use Only</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">This product is licensed for individual use only. Resale, redistribution, sharing, or commercial use is strictly prohibited.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(91,110,245,.12);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">💡</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">Intellectual Property</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">All content, design, features, and code are the property of APEX. Unauthorized copying, modification, or reverse engineering is prohibited.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(244,63,94,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">🚫</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">Limitation of Liability</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">APEX shall not be held liable for any direct, indirect, or incidental damages arising from the use or inability to use the product.</div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">3. Permitted Use</div>
-        <div class="legal-section-body">
-          <p>APEX grants you a limited, non-exclusive, non-transferable, revocable license to access and use the Product solely for your personal, non-commercial productivity purposes.</p>
-          <ul>
-            <li>Personal use: tracking tasks, habits, focus sessions, and notes for yourself.</li>
-            <li>You may export your own data (CSV/JSON) for personal record-keeping.</li>
-            <li>You must not use the Product in any way that violates applicable laws or regulations.</li>
-          </ul>
-        </div>
+      <!-- Footer copyright -->
+      <div style="margin-top:20px;padding:12px 15px;background:rgba(91,110,245,.05);border:1px solid rgba(91,110,245,.14);border-radius:10px;font-size:10.5px;color:var(--text3);line-height:1.65;text-align:center">
+        © 2026 APEX. All rights reserved. All content, design, and features are proprietary to APEX. Any unauthorized use, reproduction, distribution, or resale, in whole or in part, is strictly prohibited and may result in legal action.
       </div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">4. Data &amp; Local Storage</div>
-        <div class="legal-section-body">
-          <p>All data entered into APEX is stored locally on your device using browser storage mechanisms. APEX does not collect, transmit, or store your personal data on any external server. You are solely responsible for the security and backup of your data.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">5. Disclaimer of Warranties</div>
-        <div class="legal-section-body">
-          <p>APEX is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, either express or implied. We do not warrant that the Product will be uninterrupted, error-free, or free of harmful components. Use of the Product is at your sole risk.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">6. Limitation of Liability</div>
-        <div class="legal-section-body">
-          <p>To the maximum extent permitted by applicable law, APEX and its creators shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the Product, even if advised of the possibility of such damages.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">7. Modifications to Terms</div>
-        <div class="legal-section-body">
-          <p>We reserve the right to update or modify these Terms of Use at any time. Continued use of the Product after any changes constitutes your acceptance of the new terms. We encourage you to review these terms periodically.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">8. Governing Law</div>
-        <div class="legal-section-body">
-          <p>These Terms of Use shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the competent courts.</p>
-        </div>
-      </div>
-
-      <div style="margin-top:20px;padding:12px 16px;background:rgba(91,110,245,.07);border:1px solid rgba(91,110,245,.18);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6">
-        © 2026 APEX. All rights reserved. This product, including its design, features, and content, is the intellectual property of APEX. Unauthorized reproduction, distribution, resale, or misuse of this product, in whole or in part, is strictly prohibited and may result in legal action.
-      </div>
     </div>
   </div>
 </div>
@@ -4803,100 +5144,76 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
   <div class="legal-modal">
     <div class="legal-modal-head">
       <h2>
-        <span style="width:28px;height:28px;border-radius:8px;background:rgba(16,185,129,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🔒</span>
+        <span style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(6,182,212,.12));border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">🔒</span>
         Privacy Policy
       </h2>
       <button class="mc" onclick="document.getElementById('privacy-modal').classList.remove('open')">✕</button>
     </div>
     <div class="legal-modal-body">
-      <div class="legal-effective">Effective Date: January 1, 2026 &nbsp;|&nbsp; Last Updated: April 1, 2026</div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">1. Our Commitment to Privacy</div>
-        <div class="legal-section-body">
-          <p>At APEX, your privacy is not just a policy — it's a core design principle. APEX is built as a fully offline-first, local-storage application. We do not collect, process, or transmit any personal data to external servers. Your data belongs to you, and it stays on your device.</p>
+      <!-- Privacy-first hero banner -->
+      <div style="display:flex;align-items:center;gap:13px;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,rgba(16,185,129,.09),rgba(6,182,212,.06));border:1px solid rgba(16,185,129,.22);margin-bottom:20px">
+        <div style="width:40px;height:40px;border-radius:12px;background:rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🛡️</div>
+        <div>
+          <div style="font-size:12px;font-weight:800;color:#34d399;margin-bottom:3px;font-family:var(--fh)">Privacy-First by Design</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">APEX is built with a privacy-first approach — your data never leaves your device.</div>
         </div>
       </div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">2. Information We Do NOT Collect</div>
-        <div class="legal-section-body">
-          <p>APEX does not collect any of the following:</p>
-          <ul>
-            <li>Personal identification information (name, email, phone number)</li>
-            <li>Usage analytics or behavioral tracking data</li>
-            <li>Device identifiers or IP addresses</li>
-            <li>Location data of any kind</li>
-            <li>Task content, notes, or habit data (all stored locally only)</li>
-            <li>Cookies used for tracking or advertising</li>
-          </ul>
+      <!-- Policy cards -->
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(16,185,129,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">💾</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">Local-First Data</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">All your data is stored locally on your device. Nothing is sent to any server, cloud, or third party.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(244,63,94,.08);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">🚫</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">No Data Collection</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">APEX does not collect, store, or transmit your personal data to any external servers — ever.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(168,85,247,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">🤝</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">No Third-Party Sharing</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">Your data is never sold, shared, or accessed by APEX or any third party. Full stop.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid var(--border)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(91,110,245,.12);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">🎛️</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">User-Controlled Data</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">You are fully responsible for managing, exporting, and backing up your data. Use the JSON export to keep a safe copy.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:13px;padding:13px 15px;border-radius:11px;background:var(--card2);border:1px solid rgba(249,115,22,.2)">
+          <div style="width:32px;height:32px;border-radius:9px;background:rgba(249,115,22,.1);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px">☁️</div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">No Cloud Dependency</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.65">Since no cloud services are used, data recovery is not possible if your local data is lost. Export regularly.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer note -->
+      <div style="margin-top:20px;padding:12px 15px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);border-radius:10px;display:flex;align-items:flex-start;gap:10px">
+        <span style="font-size:16px;flex-shrink:0;margin-top:1px">🔒</span>
+        <div style="font-size:10.5px;color:var(--text3);line-height:1.7">
+          <strong style="color:#34d399;font-size:11px">Your Privacy is Our Priority.</strong><br>
+          © 2026 APEX. All rights reserved. All content, design, and features are proprietary to APEX. Any unauthorized use, reproduction, distribution, or resale is strictly prohibited and may result in legal action.
         </div>
       </div>
 
-      <div class="legal-section">
-        <div class="legal-section-title">3. Local Data Storage</div>
-        <div class="legal-section-body">
-          <p>All data you create within APEX — including your tasks, habits, focus sessions, notes, profile information, and settings — is stored exclusively in your browser's local storage. This data:</p>
-          <ul>
-            <li>Never leaves your device unless you explicitly export it.</li>
-            <li>Is not accessible to APEX or any third party.</li>
-            <li>Is cleared if you clear your browser data or use a different browser/device.</li>
-            <li>Is fully under your control — you can export or delete it at any time.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">4. Notifications &amp; Permissions</div>
-        <div class="legal-section-body">
-          <p>If you enable Smart Reminders, APEX requests browser notification permission. This permission is used solely to deliver task reminder notifications on your device. No notification content is shared with any external service. You can revoke this permission at any time through your browser settings.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">5. Data Export &amp; Portability</div>
-        <div class="legal-section-body">
-          <p>APEX gives you full control over your data. You can export your data at any time in JSON or CSV format using the Export functions in Settings. This ensures your data is always portable and never locked in.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">6. Third-Party Services</div>
-        <div class="legal-section-body">
-          <p>APEX uses the following third-party resources solely for rendering purposes:</p>
-          <ul>
-            <li><strong style="color:var(--text)">Google Fonts</strong> — for typography (Syne, Plus Jakarta Sans). Font files may be loaded from Google's CDN.</li>
-            <li><strong style="color:var(--text)">Chart.js</strong> — for analytics charts, loaded from a public CDN.</li>
-          </ul>
-          <p>These services may have their own privacy policies. No user data from APEX is shared with these services.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">7. Children's Privacy</div>
-        <div class="legal-section-body">
-          <p>APEX is not directed at children under the age of 13. We do not knowingly collect any personal information from children. If you are under 13, please do not use this Product.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">8. Changes to This Policy</div>
-        <div class="legal-section-body">
-          <p>We may update this Privacy Policy from time to time to reflect changes in best practices or applicable law. We will indicate the date of the most recent revision at the top of this document. Continued use of APEX after changes constitutes acceptance of the updated policy.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <div class="legal-section-title">9. Contact</div>
-        <div class="legal-section-body">
-          <p>If you have any questions, concerns, or feedback regarding this Privacy Policy or your data, please reach out to the APEX team. We are committed to addressing any privacy-related inquiries promptly and transparently.</p>
-        </div>
-      </div>
-
-      <div style="margin-top:20px;padding:12px 16px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:10px;font-size:11px;color:var(--text2);line-height:1.6;display:flex;align-items:flex-start;gap:10px">
-        <span style="font-size:16px;flex-shrink:0">🔒</span>
-        <span><strong style="color:#34d399">Your Privacy is Our Priority.</strong> APEX is designed from the ground up to keep your data private, local, and fully under your control. No accounts. No servers. No tracking.</span>
-      </div>
     </div>
   </div>
 </div>
