@@ -118,10 +118,35 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tb h1{font-family:var(--fh);font-size:20px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;letter-spacing:-.3px}
 .tb-sub{font-size:11px;color:var(--text2);margin-top:2px;font-weight:400;line-height:1.4}
 .tb-r{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.wk-pill{display:flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border2);border-radius:var(--rs);padding:4px 4px 4px 12px}
-.wk-pill span{font-size:12px;font-weight:500;min-width:155px;text-align:center}
-.wk-b{width:26px;height:26px;border-radius:6px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s}
-.wk-b:hover{background:var(--card2);color:var(--text)}
+/* wk-pill kept for any other usage but hidden in dash */
+.wk-pill{display:flex;align-items:center;gap:2px;background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:3px}
+.wk-pill span{font-size:11px;font-weight:600;min-width:136px;text-align:center;color:var(--text);letter-spacing:-.1px;padding:0 4px}
+.wk-b{width:28px;height:28px;border-radius:7px;border:none;background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;transition:all .18s;line-height:1}
+.wk-b:hover{background:var(--card3);color:var(--p1)}
+/* ── Inline week date navigator (inside toolbar) ── */
+.dash-wk-nav{
+  display:flex;align-items:center;gap:1px;
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:2px;
+}
+.dash-wk-btn{
+  width:26px;height:26px;border-radius:6px;
+  border:none;background:transparent;
+  color:var(--text3);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;flex-shrink:0;
+}
+.dash-wk-btn:hover{background:var(--card);color:var(--p1);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.dash-wk-label{
+  font-size:11px;font-weight:600;
+  color:var(--text2);
+  letter-spacing:-.1px;
+  white-space:nowrap;
+  padding:0 6px;
+  min-width:128px;text-align:center;
+}
 /* ── BUTTONS ───────────────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border2);white-space:nowrap}
 .btn-ghost{background:transparent;color:var(--text2)}.btn-ghost:hover{background:var(--card2);color:var(--text)}
@@ -145,9 +170,38 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── SEC HEAD ──────────────────────────────────────────────── */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px;flex-wrap:wrap}
 .sh h2{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.1px}
-.tabs{display:flex;gap:3px;background:var(--card);padding:3px;border-radius:var(--rs);border:1px solid var(--border);flex-wrap:wrap}
-.tab{padding:4px 11px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text2);transition:all .2s;border:none;background:transparent;font-family:var(--fb)}
-.tab.on{background:var(--card3);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.tabs{display:flex;gap:0;background:var(--bg3);padding:3px;border-radius:10px;border:1px solid var(--border);flex-wrap:nowrap}
+.tab{padding:5px 14px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text3);transition:all .18s;border:none;background:transparent;font-family:var(--fb);white-space:nowrap;letter-spacing:-.1px}
+.tab:hover{color:var(--text)}
+.tab.on{background:var(--card);color:var(--text);box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1px var(--border)}
+/* ── DASHBOARD TOOLBAR ─────────────────────────────────────── */
+.dash-toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:14px;flex-wrap:nowrap;
+}
+.dash-toolbar-left{display:flex;align-items:center;gap:10px;min-width:0}
+.dash-toolbar-title{
+  font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.2px;
+  color:var(--text);white-space:nowrap;
+}
+.dash-toolbar-right{
+  display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0;
+}
+/* Add Task primary button — compact gradient pill */
+.dash-add-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 13px;
+  border-radius:9px;
+  background:var(--grad);
+  color:#fff;
+  font-family:var(--fb);font-size:11px;font-weight:700;
+  border:none;cursor:pointer;
+  box-shadow:0 2px 10px rgba(91,110,245,.32);
+  transition:opacity .18s,transform .18s,box-shadow .18s;
+  white-space:nowrap;letter-spacing:-.1px;
+}
+.dash-add-btn:hover{opacity:.88;transform:translateY(-1px);box-shadow:0 4px 16px rgba(91,110,245,.42)}
+.dash-add-btn:active{transform:translateY(0);opacity:1}
 /* ── TIMETABLE ─────────────────────────────────────────────── */
 .tt-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);overflow:auto;margin-bottom:20px;transition:background .3s}
 .tt{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
@@ -730,7 +784,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── MODAL ─────────────────────────────────────────────────── */
 .mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.75);backdrop-filter:blur(6px);z-index:9500;align-items:center;justify-content:center;padding:16px}
 .mo.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;animation:mi .22s cubic-bezier(.34,1.56,.64,1);transition:background .3s;box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04)}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:420px;max-height:88vh;overflow-y:auto;animation:mi .22s cubic-bezier(.34,1.56,.64,1);transition:background .3s;box-shadow:0 16px 56px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04)}
 @keyframes mi{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
 .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .mh h2{font-family:var(--fh);font-size:16px;font-weight:800}
@@ -1266,14 +1320,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .tb-r .wk-pill{order:0;width:auto}
   .wk-pill span{min-width:90px;font-size:10px}
   .wk-b{width:22px;height:22px}
-  /* Section header: All Categories + Add Task — proper alignment */
-  .sh{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap;gap:8px}
-  .sh h2{white-space:nowrap;font-size:14px;flex-shrink:0}
-  .sh > div{display:flex;gap:8px;align-items:center;flex-wrap:nowrap;flex:1;justify-content:flex-end}
-  .sh .ana-sel{flex:0 1 auto;min-width:0;max-width:140px}
-  .cat-filter-wrapper{flex:0 1 auto}
-  .cat-filter-select-styled{min-width:0;max-width:138px;font-size:11px;padding:0 34px 0 9px}
-  .add-task-btn-aligned{flex-shrink:0;white-space:nowrap}
+  /* Dashboard toolbar mobile */
+  .dash-toolbar{flex-wrap:nowrap;align-items:center;gap:8px}
+  .dash-toolbar-left{gap:8px;min-width:0;flex:1}
+  .dash-toolbar-title{font-size:13px}
+  .dash-toolbar-right{gap:6px;flex-shrink:0}
+  .dash-wk-label{min-width:104px;font-size:10px}
+  .dash-add-btn{padding:5px 10px;font-size:10px}
+  .tab{padding:4px 10px;font-size:10px}
   /* Task heading: shift right on mobile for visual balance with row content */
   .tt-task-th{padding-left:28px!important}
   .tt th:first-child{padding-left:28px}
@@ -1298,7 +1352,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .bn .bn-l{font-size:8px;letter-spacing:0}
   .bn{padding:5px 2px 4px;min-width:48px}
   .bn svg{width:18px;height:18px}
-  .sh h2{font-size:13px}
+  .dash-toolbar-title{font-size:11px}
+  .dash-wk-label{min-width:88px;font-size:9px;padding:0 3px}
+  .dash-wk-btn{width:22px;height:22px}
+  .dash-add-btn{padding:5px 9px;font-size:10px;gap:4px}
+  .tab{padding:4px 8px;font-size:10px}
   .cat-filter-select-styled{font-size:10px;max-width:120px;padding:0 30px 0 8px}
   .cat-filter-wrapper .cat-chevron{right:9px;width:11px;height:11px}
   .btn.btn-pri.btn-sm{padding:6px 10px;font-size:10px}
@@ -1501,8 +1559,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .tabs{background:var(--bg3);border:1px solid var(--border)}
 [data-theme="light"] .tab.on{background:var(--card);color:var(--text);box-shadow:0 1px 6px rgba(60,60,120,.1)}
 [data-theme="light"] .wk-pill{background:var(--card);border:1px solid var(--border2)}
-[data-theme="light"] .wk-b{background:var(--bg3);border:1px solid var(--border2);color:var(--text2)}
-[data-theme="light"] .wk-b:hover{background:var(--card2);color:var(--p1);border-color:var(--p1)}
+[data-theme="light"] .wk-b:hover{background:var(--card3);color:var(--p1)}
+[data-theme="light"] .tabs{background:var(--bg3);border-color:var(--border2)}
+[data-theme="light"] .tab.on{background:#fff;box-shadow:0 1px 6px rgba(60,60,120,.12),0 0 0 1px var(--border2)}
+[data-theme="light"] .dash-wk-nav{background:var(--bg3);border-color:var(--border2)}
+[data-theme="light"] .dash-wk-btn:hover{background:#fff;box-shadow:0 1px 4px rgba(60,60,120,.12)}
+[data-theme="light"] .dash-wk-label{color:var(--text2)}
 [data-theme="light"] .btn-ghost{background:var(--card);border-color:var(--border2);color:var(--text2)}
 [data-theme="light"] .btn-ghost:hover{background:var(--bg3);color:var(--text);border-color:var(--border3)}
 [data-theme="light"] .mo{background:rgba(60,60,120,.45)}
@@ -3550,7 +3612,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <p class="tb-sub" id="dash-greeting" style="margin-top:2px;font-size:12px;color:var(--text2)">Good morning 👋</p>
     </div>
     <div class="tb-r">
-      <!-- Notification Bell -->
+      <!-- Notification Bell only -->
       <div style="position:relative" id="notif-bell-wrap">
         <div class="notif-bell-btn" id="notif-bell-btn" onclick="toggleNotifPanel()" title="Notifications">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
@@ -3567,14 +3629,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <div id="notif-panel-body"></div>
         </div>
       </div>
-      <div style="position:relative;display:inline-flex">
-        <div class="wk-pill">
-          <button class="wk-b" onclick="chWeek(-1)">‹</button>
-          <span id="wk-label">—</span>
-          <button class="wk-b" onclick="chWeek(1)">›</button>
-        </div>
-      </div>
-      <button class="btn btn-ghost btn-sm" style="display:none" onclick="openTaskModal()">+ Add Task</button>
     </div>
   </div>
   <div class="cx">
@@ -3601,22 +3655,34 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="insights-panel" id="insights-panel" style="display:none">
       <div class="ig" id="ig"></div>
     </div>
-    <div class="sh">
-      <h2>Weekly Schedule</h2>
-      <div style="display:flex;align-items:center;gap:8px">
-        <div class="cat-filter-wrapper">
-          <select class="ana-sel cat-filter-select-styled" id="cat-filter-select" onchange="setFilterFromSelect(this.value)">
-            <option value="all">All Categories</option>
-          </select>
-          <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    <!-- ── Dashboard Schedule Toolbar ─────────────────────── -->
+    <div class="dash-toolbar">
+      <!-- Left: title + week navigator (weekly view only) -->
+      <div class="dash-toolbar-left">
+        <h2 class="dash-toolbar-title" id="dash-schedule-title">Today's Tasks</h2>
+        <!-- Week date navigator — shown only in Weekly view -->
+        <div class="dash-wk-nav" id="dash-wk-nav" style="display:none">
+          <button class="dash-wk-btn" onclick="chWeek(-1)" title="Previous week">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <span class="dash-wk-label" id="wk-label">—</span>
+          <button class="dash-wk-btn" onclick="chWeek(1)" title="Next week">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
-        <!-- Mobile-only custom category button -->
-        <div class="mob-cat-btn" id="mob-cat-btn" onclick="toggleMobCatPanel()">
-          <span class="mcb-color-dot" id="mob-cat-dot" style="background:#8888aa"></span>
-          <span class="mcb-label" id="mob-cat-label">All Categories</span>
-          <svg class="mcb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <!-- Right: view toggle + add task -->
+      <div class="dash-toolbar-right">
+        <!-- Today / Weekly segmented toggle -->
+        <div class="tabs" id="dash-view-tabs">
+          <button class="tab on" id="tab-today" onclick="setDashView('today')">Today</button>
+          <button class="tab" id="tab-weekly" onclick="setDashView('weekly')">Weekly</button>
         </div>
-        <button class="btn btn-pri btn-sm add-task-btn-aligned" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;gap:5px">+ Add Task</button>
+        <!-- Add Task CTA -->
+        <button class="dash-add-btn" onclick="openTaskModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Task
+        </button>
       </div>
     </div>
     <div class="tt-wrap" id="tt-wrap"></div>
@@ -3774,59 +3840,56 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="mo" id="mo-task" onclick="moClick(event,'mo-task')">
   <div class="modal">
     <!-- Header with gradient accent -->
-    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div style="width:36px;height:36px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;box-shadow:0 4px 12px rgba(91,110,245,.3)">📋</div>
-        <div>
-          <h2 id="mo-task-title" style="font-family:var(--fh);font-size:16px;font-weight:800;line-height:1;margin-bottom:3px">Add Task Block</h2>
-          <div style="font-size:10px;color:var(--text3);font-weight:500">Fill in the details below</div>
-        </div>
+    <div style="padding:13px 16px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;box-shadow:0 3px 8px rgba(91,110,245,.28)">📋</div>
+        <h2 id="mo-task-title" style="font-family:var(--fh);font-size:14px;font-weight:800;line-height:1">Add Task Block</h2>
       </div>
       <button class="mc" onclick="closeMo('mo-task')">×</button>
     </div>
 
     <!-- Body -->
-    <div style="padding:20px 24px">
+    <div style="padding:13px 16px">
 
       <!-- Task name -->
-      <div class="fg" style="margin-bottom:14px">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:block">Task Name *</label>
-        <input id="f-name" type="text" placeholder="e.g. Deep Work Session" style="font-size:13px;padding:10px 12px;border-radius:10px">
+      <div class="fg" style="margin-bottom:9px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:block">Task Name *</label>
+        <input id="f-name" type="text" placeholder="e.g. Deep Work Session" style="font-size:12px;padding:7px 10px;border-radius:8px">
       </div>
 
       <!-- Time row -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px">
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Start Time
           </label>
-          <input id="f-start" type="time" value="09:00" style="font-size:12px;padding:9px 12px;border-radius:10px">
+          <input id="f-start" type="time" value="09:00" style="font-size:11px;padding:6px 9px;border-radius:8px">
         </div>
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             End Time
           </label>
-          <input id="f-end" type="time" value="10:00" style="font-size:12px;padding:9px 12px;border-radius:10px">
+          <input id="f-end" type="time" value="10:00" style="font-size:11px;padding:6px 9px;border-radius:8px">
         </div>
       </div>
 
       <!-- Category + Priority row -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px">
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
             Category
           </label>
-          <input id="f-cat" type="text" placeholder="Personal, Career…" style="font-size:12px;padding:9px 12px;border-radius:10px">
+          <input id="f-cat" type="text" placeholder="Personal, Career…" style="font-size:11px;padding:6px 9px;border-radius:8px">
         </div>
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             Priority
           </label>
-          <select id="f-pri" style="font-size:12px;padding:9px 12px;border-radius:10px">
+          <select id="f-pri" style="font-size:11px;padding:6px 9px;border-radius:8px">
             <option value="high">🔴 High</option>
             <option value="med">🟡 Medium</option>
             <option value="low">🟢 Low</option>
@@ -3835,8 +3898,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
 
       <!-- Active Days -->
-      <div style="margin-bottom:14px">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:5px">
+      <div style="margin-bottom:9px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;display:flex;align-items:center;gap:5px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           Active Days
         </label>
@@ -3850,16 +3913,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
       <!-- Notes -->
       <div class="fg" style="margin-bottom:0">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Notes
         </label>
-        <textarea id="f-notes" placeholder="Any notes or reminders…" style="font-size:12px;padding:10px 12px;border-radius:10px;min-height:72px;resize:vertical"></textarea>
+        <textarea id="f-notes" placeholder="Any notes or reminders…" style="font-size:11px;padding:6px 9px;border-radius:8px;min-height:52px;resize:vertical"></textarea>
       </div>
     </div>
 
     <!-- Footer -->
-    <div style="padding:14px 24px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
+    <div style="padding:10px 16px 13px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
       <div id="mo-task-del-wrap" style="display:none">
         <button class="btn btn-danger btn-sm" onclick="delTask(S.editId)" style="gap:5px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
@@ -3918,8 +3981,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="confirm-mo" id="mo-confirm-task">
   <div class="confirm-box">
     <div class="ci-ico">🗑️</div>
-    <p>Are you sure you want to delete this task?</p>
-    <p class="warn-txt">This action cannot be undone.</p>
+    <p>Remove this task from today onward?</p>
+    <p class="warn-txt">Past history and check data will be preserved. The task will no longer appear from today forward.</p>
     <div class="cf-btns">
       <button class="btn btn-ghost" onclick="document.getElementById('mo-confirm-task').classList.remove('open')">Cancel</button>
       <button class="btn btn-danger" onclick="confirmDelTask()">Delete</button>
@@ -4047,6 +4110,12 @@ function getWeekDates(off){
 }
 function fmtD(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 function fmtKey(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${dd}`;}
+// A task is active on a given dateKey if it has no deletedFrom, or deletedFrom > dateKey.
+// This preserves full past history while hiding the task from its deletion date onward.
+function isTaskActiveOnDate(task,dateKey){
+  if(!task.deletedFrom)return true;
+  return dateKey<task.deletedFrom;
+}
 function tdiff(s,e){
   if(!s||!e)return 0;
   let[sh,sm]=s.split(':').map(Number),[eh,em]=e.split(':').map(Number);
@@ -4073,12 +4142,16 @@ function togDone(tid,dk){
 // ════════════════════════════════════════════════════════════
 function weekStats(dates){
   let done=0,total=0;
-  S.tasks.forEach(t=>dates.forEach((d,i)=>{if(t.days.includes(i)){total++;if(isDone(t.id,fmtKey(d)))done++;}}));
+  S.tasks.forEach(t=>dates.forEach((d,i)=>{
+    const dk=fmtKey(d);
+    if(t.days.includes(i)&&isTaskActiveOnDate(t,dk)){total++;if(isDone(t.id,dk))done++;}
+  }));
   return{done,total,pct:total?Math.round(done/total*100):0};
 }
 function dayStats(dates,di){
   let done=0,total=0;
-  S.tasks.forEach(t=>{if(t.days.includes(di)){total++;if(isDone(t.id,fmtKey(dates[di])))done++;}});
+  const dk=fmtKey(dates[di]);
+  S.tasks.forEach(t=>{if(t.days.includes(di)&&isTaskActiveOnDate(t,dk)){total++;if(isDone(t.id,dk))done++;}});
   return{done,total,pct:total?Math.round(done/total*100):0};
 }
 function streakN(dates){
@@ -4088,7 +4161,10 @@ function streakN(dates){
 }
 function catStats(dates,cat){
   let done=0,total=0;
-  S.tasks.filter(t=>t.cat===cat).forEach(t=>dates.forEach((d,i)=>{if(t.days.includes(i)){total++;if(isDone(t.id,fmtKey(d)))done++;}}));
+  S.tasks.filter(t=>t.cat===cat).forEach(t=>dates.forEach((d,i)=>{
+    const dk=fmtKey(d);
+    if(t.days.includes(i)&&isTaskActiveOnDate(t,dk)){total++;if(isDone(t.id,dk))done++;}
+  }));
   return{done,total,pct:total?Math.round(done/total*100):0};
 }
 function totalTasksDoneAllTime(){return Object.values(S.checks).filter(Boolean).length;}
@@ -4099,7 +4175,9 @@ function totalTasksDoneAllTime(){return Object.values(S.checks).filter(Boolean).
 function render(){
   const dates=getWeekDates(S.weekOff);
   document.getElementById('wk-label').textContent=`${fmtD(dates[0])} – ${fmtD(dates[6])}`;
-  renderKPIs(dates); renderDynCatTabs(); renderTT(dates); renderInsights(dates);
+  renderKPIs(dates); renderDynCatTabs();
+  if(_dashView==='today') renderTodayTT(); else renderTT(dates);
+  renderInsights(dates);
   const av=document.querySelector('.view.on');
   if(av){
     const id=av.id;
@@ -4129,8 +4207,9 @@ function render(){
 function renderKPIs(dates){
   const ws=weekStats(dates),td=dayStats(dates,TODAY_DOW),str=streakN(dates);
   const hrs=S.tasks.reduce((s,t)=>s+tdiff(t.start,t.end),0);
-  // Today's load = only tasks scheduled for today
-  const todayHrs=S.tasks.filter(t=>t.days.includes(TODAY_DOW)).reduce((s,t)=>s+tdiff(t.start,t.end),0);
+  // Today's load = only tasks scheduled for today AND not soft-deleted
+  const todayKey=fmtKey(dates[TODAY_DOW]);
+  const todayHrs=S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&isTaskActiveOnDate(t,todayKey)).reduce((s,t)=>s+tdiff(t.start,t.end),0);
   document.getElementById('kpi-grid').innerHTML=
     kc('🗓','Week Progress', ws.pct+'%',`${ws.done} of ${ws.total} tasks`,ws.pct,'linear-gradient(135deg,#5b6ef5,#7c3aed)','rgba(91,110,245,.13)')+
     kc('⚡',"Today's Score",  td.pct+'%',`${td.done} of ${td.total} done`,td.pct,'linear-gradient(135deg,#10b981,#0ea5e9)','rgba(16,185,129,.13)')+
@@ -4165,7 +4244,7 @@ function renderDynCatTabs(){
 }
 function setFilterFromSelect(cat){
   S.catFilt=cat;
-  renderTT(getWeekDates(S.weekOff));
+  if(_dashView==='today') renderTodayTT(); else renderTT(getWeekDates(S.weekOff));
 }
 
 // ════════════════════════════════════════════════════════════
@@ -4258,12 +4337,11 @@ function closeMobCatPanel(){
 
 function mobCatSelect(cat){
   S.catFilt=cat;
-  // Also update the native select to stay in sync
   const sel=document.getElementById('cat-filter-select');
   if(sel)sel.value=cat;
   updateMobCatBtn();
   closeMobCatPanel();
-  renderTT(getWeekDates(S.weekOff));
+  if(_dashView==='today') renderTodayTT(); else renderTT(getWeekDates(S.weekOff));
 }
 
 // ════════════════════════════════════════════════════════════
@@ -4418,7 +4496,13 @@ function statusBadgeHtml(status,done){
   return `<span class="status-badge status-overdue">⚠ Overdue</span>`;
 }
 function renderTT(dates){
-  const tasks=S.catFilt==='all'?S.tasks:S.tasks.filter(t=>t.cat===S.catFilt);
+  // For the week view, show a task in the row only if it's active on at least one day of this week.
+  // Per-cell visibility is then governed by isTaskActiveOnDate per date.
+  const weekStart=fmtKey(dates[0]);
+  const weekEnd=fmtKey(dates[6]);
+  const allTasks=S.catFilt==='all'?S.tasks:S.tasks.filter(t=>t.cat===S.catFilt);
+  // Include task if active on ANY day of this week
+  const tasks=allTasks.filter(t=>dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))));
   const isCurrentWeek=S.weekOff===0;
   let th='<thead><tr><th class="tt-task-th">Task</th>';
   dates.forEach((d,i)=>{
@@ -4463,7 +4547,7 @@ function renderTT(dates){
       const isFuture=isCurrentWeek&&i>TODAY_DOW;
       const canInteract=isTodayCol;
       const colClass=isTodayCol?'today-col':isPast?'past-col':isFuture?'future-col':'';
-      if(!t.days.includes(i)){
+      if(!t.days.includes(i)||!isTaskActiveOnDate(t,dk)){
         tb+=`<td class="${colClass}"><div class="tt-x"><div class="tt-dash"></div></div></td>`;
       } else {
         const done=isDone(t.id,dk);
@@ -4493,6 +4577,105 @@ function renderTT(dates){
 }
 
 // ════════════════════════════════════════════════════════════
+// DASHBOARD VIEW TOGGLE (Today / Weekly)
+// ════════════════════════════════════════════════════════════
+let _dashView = 'today'; // default
+
+function setDashView(view){
+  _dashView = view;
+  const tabToday  = document.getElementById('tab-today');
+  const tabWeekly = document.getElementById('tab-weekly');
+  const wkNav     = document.getElementById('dash-wk-nav');
+  const titleEl   = document.getElementById('dash-schedule-title');
+  if(view === 'today'){
+    tabToday.classList.add('on');
+    tabWeekly.classList.remove('on');
+    if(wkNav) wkNav.style.display = 'none';
+    if(titleEl) titleEl.textContent = "Today's Tasks";
+    renderTodayTT();
+  } else {
+    tabWeekly.classList.add('on');
+    tabToday.classList.remove('on');
+    if(wkNav) wkNav.style.display = 'flex';
+    if(titleEl) titleEl.textContent = 'Weekly Schedule';
+    renderTT(getWeekDates(S.weekOff));
+  }
+}
+
+function renderTodayTT(){
+  const dates = getWeekDates(S.weekOff);
+  const todayDate = dates[TODAY_DOW];
+  const dk = fmtKey(todayDate);
+  const isCurrentWeek = S.weekOff === 0;
+  const tasks = S.tasks.filter(t => t.days.includes(TODAY_DOW) && isTaskActiveOnDate(t, dk));
+
+  if(tasks.length === 0){
+    document.getElementById('tt-wrap').innerHTML =
+      `<div style="padding:40px 24px;text-align:center;color:var(--text3)">
+        <div style="font-size:32px;margin-bottom:10px">🎉</div>
+        <div style="font-family:var(--fh);font-size:14px;font-weight:700;margin-bottom:4px">No tasks for today</div>
+        <div style="font-size:12px">Add a task and assign it to today to get started.</div>
+      </div>`;
+    return;
+  }
+
+  const dayName = DAYS7[TODAY_DOW];
+  const dateLabel = fmtD(todayDate);
+
+  let th = `<thead><tr>
+    <th class="tt-task-th">Task</th>
+    <th class="tc">${dayName}<br><span style="font-weight:400;font-size:9px;color:rgba(91,110,245,.7)">${dateLabel}</span></th>
+  </tr></thead>`;
+
+  let tb = '<tbody>';
+  tasks.forEach(t => {
+    const col = getCatColor(t.cat);
+    const done = isDone(t.id, dk);
+    const status = isCurrentWeek ? getTaskStatus(t) : null;
+    const rowDone = done && isCurrentWeek;
+    const catTagHtml = `<span class="tt-tag" style="background:${col}18;color:${col};border-color:${col}35;font-size:8px;padding:2px 6px;border-radius:5px">${getCatLabel(t.cat)}</span>`;
+    const showStatus = status && isCurrentWeek;
+
+    tb += `<tr class="${rowDone ? 'row-done' : ''}"><td class="tt-task-cell">
+      <div class="tt-row-inner">
+        <div class="tt-left">
+          <div class="tt-dot" style="background:${col};margin-top:2px;flex-shrink:0"></div>
+          <div class="tt-tx">
+            <div class="tt-n-full" title="${t.name}">${t.name}</div>
+            <div class="tt-m" style="gap:5px;flex-wrap:wrap;align-items:center;margin-top:3px">
+              <span class="tt-t">${fmtT(t.start)} – ${fmtT(t.end)}</span>
+              ${catTagHtml}
+            </div>
+          </div>
+        </div>
+        <div class="tt-right">
+          ${showStatus ? statusBadgeHtml(status, done) : ''}
+          <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+        </div>
+      </div>
+    </td>
+    <td class="tt-dc today-col">
+      <button class="chk ${done ? `dn-${t.cat||'personal'}` : ''}"
+        style="${done ? `background:${col}33;border-color:${col}` : 'border-color:var(--border3)'}"
+        onclick="togDone('${t.id}','${dk}')">
+        <svg viewBox="0 0 12 10" fill="none" stroke="${done ? col : 'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done ? 1 : 0}"><polyline points="1,5 4.5,9 11,1"/></svg>
+      </button>
+    </td></tr>`;
+  });
+  tb += '</tbody>';
+
+  const { pct } = dayStats(dates, TODAY_DOW);
+  const pCol = pct===100?'var(--g2)':pct>=50?'var(--p1)':pct>0?'var(--o1)':'var(--text3)';
+  let tf = `<tfoot><tr>
+    <td>Progress</td>
+    <td><div class="pp" style="color:${pCol}">${pct}%</div><div class="pm"><div class="pf" style="width:${pct}%;background:${pCol}"></div></div></td>
+  </tr></tfoot>`;
+
+  document.getElementById('tt-wrap').innerHTML = `<table class="tt">${th}${tb}${tf}</table>`;
+}
+
+// ════════════════════════════════════════════════════════════
 // INSIGHTS
 // ════════════════════════════════════════════════════════════
 function toggleInsightsPanel(){
@@ -4514,7 +4697,7 @@ function renderInsights(dates){
     const now=new Date();
     const curMins=now.getHours()*60+now.getMinutes();
     // Get all pending tasks for today, sorted by start time
-    const pendingTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&!isDone(t.id,fmtKey(dates[TODAY_DOW])))].sort((a,b)=>a.start.localeCompare(b.start));
+    const pendingTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&isTaskActiveOnDate(t,fmtKey(dates[TODAY_DOW]))&&!isDone(t.id,fmtKey(dates[TODAY_DOW])))].sort((a,b)=>a.start.localeCompare(b.start));
     if(pendingTasks.length>0){
       // Find ongoing task first
       const ongoingTask=pendingTasks.find(t=>{
@@ -4556,7 +4739,7 @@ function renderInsights(dates){
   } else {
     // No tasks done yet
     const now2=new Date();const curMins2=now2.getHours()*60+now2.getMinutes();
-    const todayTasks2=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW))].sort((a,b)=>a.start.localeCompare(b.start));
+    const todayTasks2=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&isTaskActiveOnDate(t,fmtKey(dates[TODAY_DOW])))].sort((a,b)=>a.start.localeCompare(b.start));
     // Check if a task is currently ongoing
     const ongoingNow=todayTasks2.find(t=>{
       const[sh,sm]=t.start.split(':').map(Number);
@@ -4791,7 +4974,8 @@ function renderAna(dates){
       labels.push(w===0?'This week':w===1?'Last week':`${w}w ago`);
       let done=0,total=0;
       S.tasks.forEach(t=>wDates.forEach((d,i)=>{
-        if(t.days.includes(i)){total++;if(isDone(t.id,fmtKey(d)))done++;}
+        const wdk=fmtKey(d);
+        if(t.days.includes(i)&&isTaskActiveOnDate(t,wdk)){total++;if(isDone(t.id,wdk))done++;}
       }));
       trendData.push(total?Math.round(done/total*100):0);
     }
@@ -4902,7 +5086,7 @@ function renderHabits(dates){
       </span>
     </div>
   </div>
-  <div class="hg">${S.tasks.map(t=>{
+  <div class="hg">${S.tasks.filter(t=>dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d)))).map(t=>{
     const col=getCatColor(t.cat);
     const wkD=dates.filter((d,i)=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length;
     const wkT=dates.filter((_,i)=>t.days.includes(i)).length;
@@ -5022,9 +5206,9 @@ function renderTimer(){
       <!-- Custom dropdown panel -->
       <div class="ttp-panel" id="ttp-panel" role="listbox">
         <div class="ttp-list" id="ttp-list">
-          ${S.tasks.length===0
+          ${(()=>{const todayK=fmtKey(new Date(BASE));const activeTasks=S.tasks.filter(t=>isTaskActiveOnDate(t,todayK));return activeTasks.length===0
             ? `<div class="ttp-empty">Add tasks in Schedule to pick one here.</div>`
-            : S.tasks.map(t=>{
+            : activeTasks.map(t=>{
                 const col=getCatColor(t.cat||'');
                 const isSel=ts.task===t.name;
                 return`<div class="ttp-item${isSel?' selected':''}" onclick="selectTTPTask('${t.name.replace(/'/g,"\\'")}','${col}')" role="option" aria-selected="${isSel}">
@@ -5034,7 +5218,7 @@ function renderTimer(){
                     <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" width="9" height="9"><polyline points="2 6 5 9 10 3"/></svg>
                   </span>
                 </div>`;
-              }).join('')}
+              }).join('');})()}
         </div>
         ${ts.task?`<div class="ttp-clear" onclick="selectTTPTask('','')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
@@ -5547,8 +5731,9 @@ function renderSettings(){
   const notifOn=S.sett.notif;
   const now=new Date();
   const curMins=now.getHours()*60+now.getMinutes();
+  const todayKey=fmtKey(new Date(BASE));
   const upcomingTasks=S.tasks
-    .filter(t=>t.days.includes(TODAY_DOW))
+    .filter(t=>t.days.includes(TODAY_DOW)&&isTaskActiveOnDate(t,todayKey))
     .map(t=>{const[h,m]=t.start.split(':').map(Number);return{...t,startMins:h*60+m};})
     .filter(t=>t.startMins>curMins)
     .sort((a,b)=>a.startMins-b.startMins)
@@ -5723,7 +5908,8 @@ function scheduleSmartReminders(){
   const now=new Date();
   const curMins=now.getHours()*60+now.getMinutes();
   const lead=S.sett.leadMins||10;
-  S.tasks.filter(t=>t.days.includes(TODAY_DOW)).forEach(t=>{
+  const todayReminderKey=fmtKey(new Date(BASE));
+  S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&isTaskActiveOnDate(t,todayReminderKey)).forEach(t=>{
     const[h,m]=t.start.split(':').map(Number);
     const taskMins=h*60+m;
     const notifMins=taskMins-lead;
@@ -5837,7 +6023,7 @@ function saveTask(){
     notes:document.getElementById('f-notes').value.trim(),days};
   if(S.editId){
     const idx=S.tasks.findIndex(t=>t.id===S.editId);
-    if(idx>-1)S.tasks[idx]={...S.tasks[idx],...data};
+    if(idx>-1)S.tasks[idx]={...S.tasks[idx],...data,deletedFrom:undefined};
     toast('Task updated ✓','#34d399');
   } else {
     S.tasks.push({id:'u'+Date.now(),...data});
@@ -5854,17 +6040,25 @@ function delTask(id){
 function confirmDelTask(){
   if(!_taskToDelete)return;
   const id=_taskToDelete;
-  S.tasks=S.tasks.filter(t=>t.id!==id);
-  Object.keys(S.checks).forEach(k=>{if(k.startsWith(id+'__'))delete S.checks[k];});
+  const task=S.tasks.find(t=>t.id===id);
+  if(task){
+    // Soft-delete: record the date from which this task is removed.
+    // Past check history is preserved; the task is hidden from today onward.
+    task.deletedFrom=fmtKey(new Date(BASE));
+  }
   _taskToDelete=null;
   document.getElementById('mo-confirm-task').classList.remove('open');
-  saveS();render();toast('Task deleted','#f97316');
+  closeMo('mo-task');
+  saveS();render();toast('Task removed from today onward','#f97316');
 }
 function confirmReset(){
   document.getElementById('mo-confirm-reset').classList.add('open');
 }
 function doConfirmedReset(){
-  S.checks={};S.timerLog=[];saveS();render();
+  S.checks={};S.timerLog=[];
+  // Also restore any soft-deleted tasks so they reappear after a reset
+  S.tasks.forEach(t=>{ delete t.deletedFrom; });
+  saveS();render();
   document.getElementById('mo-confirm-reset').classList.remove('open');
   toast('Data cleared','#f97316');
 }
@@ -6135,9 +6329,9 @@ function expCSV(numWeeks){
       const dur = tdiff(t.start, t.end).toFixed(1);
       let row = [`"${t.name}"`, `"${getCatLabel(t.cat)}"`, `"${t.pri}"`, `"${fmtT(t.start)}"`, `"${fmtT(t.end)}"`, dur];
       allWeekDates.forEach(dates => {
-        const dc = dates.map((d,i) => !t.days.includes(i) ? 'N/A' : isDone(t.id,fmtKey(d)) ? 'Done' : 'Pending');
-        const wd = dates.filter((d,i) => t.days.includes(i) && isDone(t.id,fmtKey(d))).length;
-        const wt = dates.filter((_,i) => t.days.includes(i)).length;
+        const dc = dates.map((d,i) => !t.days.includes(i)||!isTaskActiveOnDate(t,fmtKey(d)) ? 'N/A' : isDone(t.id,fmtKey(d)) ? 'Done' : 'Pending');
+        const wd = dates.filter((d,i) => t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))&&isDone(t.id,fmtKey(d))).length;
+        const wt = dates.filter((d,i) => t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))).length;
         const pct = wt ? Math.round(wd/wt*100)+'%' : '0%';
         dc.forEach(v => row.push(v));
         row.push(pct);
@@ -6212,7 +6406,8 @@ function renderNotifPanel(){
   const now=new Date();
   const curMins=now.getHours()*60+now.getMinutes();
   const todayKey=fmtKey(new Date());
-  const todayTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0)].sort((a,b)=>a.start.localeCompare(b.start));
+  const todayKey2=fmtKey(new Date(BASE));
+  const todayTasks=[...S.tasks.filter(t=>t.days.includes(TODAY_DOW)&&S.weekOff===0&&isTaskActiveOnDate(t,todayKey2))].sort((a,b)=>a.start.localeCompare(b.start));
 
   if(!S.sett.notif){
     const leadMins0=S.sett.leadMins||10;
@@ -6360,7 +6555,8 @@ const schedState = {
 // ── helpers shared ────────────────────────────────────────
 function tasksForDate(d){
   const dow = d.getDay()===0?6:d.getDay()-1;
-  return S.tasks.filter(t=>t.days.includes(dow));
+  const dk = fmtKey(d);
+  return S.tasks.filter(t=>t.days.includes(dow)&&isTaskActiveOnDate(t,dk));
 }
 function dateFromKey(k){
   const[y,m,d]=k.split('-').map(Number);
@@ -6620,7 +6816,8 @@ function renderSchedMonth(cx){
     const isPastDay=k<todayKey;
     const dow=d.getDay()===0?6:d.getDay()-1;
     const isWknd=dow>=5;
-    const tasks=S.tasks.filter(t=>t.days.includes(dow));
+    const todayDateKey=fmtKey(new Date(BASE));
+  const tasks=S.tasks.filter(t=>t.days.includes(dow)&&isTaskActiveOnDate(t,todayDateKey));
     const total=tasks.length;
     const doneCount=tasks.filter(t=>isDone(t.id,k)).length;
     const pct=total?Math.round(doneCount/total*100):0;
@@ -6691,10 +6888,10 @@ function renderSchedWeek(cx){
   const SLOT_H=60;
 
   // Week stats
-  const wDone=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length,0);
-  const wTotal=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.days.includes(i)).length,0);
+  const wDone=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))&&isDone(t.id,fmtKey(d))).length,0);
+  const wTotal=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))).length,0);
   const wPct=wTotal?Math.round(wDone/wTotal*100):0;
-  const wHrs=Math.round(S.tasks.reduce((s,t)=>s+dates.filter((_,i)=>t.days.includes(i)).length*tdiff(t.start,t.end),0));
+  const wHrs=Math.round(S.tasks.reduce((s,t)=>s+dates.filter((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))).length*tdiff(t.start,t.end),0));
   const rangeLabel=`${fmtD(dates[0])} – ${fmtD(dates[6])}`;
 
   // Header — DOW on top, date circle below
@@ -6727,7 +6924,7 @@ function renderSchedWeek(cx){
   // Day columns with event blocks
   const dayCols=dates.map((d,i)=>{
     const k=fmtKey(d),isToday=k===todayKey,isPast=k<todayKey;
-    const tasks=S.tasks.filter(t=>t.days.includes(i));
+    const tasks=S.tasks.filter(t=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(dates[i])));
     const slots=HOURS.map(()=>`<div class="cwk-slot"></div>`).join('');
     const blocks=tasks.map(t=>{
       const[sh,sm]=t.start.split(':').map(Number);
@@ -6823,8 +7020,8 @@ function renderSchedWeek(cx){
               const cats=[...new Set(S.tasks.map(t=>t.cat).filter(Boolean))];
               if(!cats.length) return`<div style="font-size:10px;color:var(--text3);text-align:center;padding:8px 0">No categories yet</div>`;
               const catData=cats.map(c=>{
-                const total=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.cat===c&&t.days.includes(i)).length,0);
-                const done=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.cat===c&&t.days.includes(i)&&isDone(t.id,fmtKey(d))).length,0);
+                const total=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.cat===c&&t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))).length,0);
+                const done=dates.reduce((s,d,i)=>s+S.tasks.filter(t=>t.cat===c&&t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))&&isDone(t.id,fmtKey(d))).length,0);
                 return{c,total,done,col:getCatColor(c),label:getCatLabel(c),emoji:getCatEmoji(c)};
               }).filter(x=>x.total>0).sort((a,b)=>b.total-a.total);
               return catData.map(x=>{
