@@ -3332,7 +3332,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     max-height:420px !important;
     grid-template-columns:28px repeat(7,1fr) !important;
   }
-  .cwk-time-hdr{ font-size:6px !important; padding-bottom:5px; }
+  .cwk-time-hdr{ font-size:0 !important; padding-bottom:5px; } /* hide "UTC" label — col too narrow */
   .cwk-day-hdr{ padding:6px 1px 8px !important; gap:3px !important; }
   .wh-dow{ font-size:7.5px !important; letter-spacing:.5px; }
   .wh-num{
@@ -3340,9 +3340,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     border-radius:50% !important;
   }
   .cwk-time-slot{
-    height:36px !important; font-size:7.5px !important;
-    padding:3px 4px 0 0 !important;
+    height:36px !important;
+    font-size:8px !important;
+    padding:3px 2px 0 0 !important;
+    justify-content:flex-end !important;
+    overflow:visible !important;
+    white-space:nowrap !important;
+    position:relative;
+    z-index:2;
   }
+  .cwk-time-col{ overflow:visible !important; z-index:2; position:relative; }
   .cwk-slot{ height:36px !important; }
   .cwk-slot::after{ opacity:.2; }
   .cwk-block{
@@ -6700,9 +6707,22 @@ function renderSchedWeek(cx){
     </div>`;
   }).join('');
 
-  // Time column — show only even hours to reduce clutter
+  // Time column — mobile: short label (8a/8p) every 3h; desktop: HH:00 every 2h
   const HOURS=Array.from({length:24},(_,i)=>i);
-  const timeCol=HOURS.map(h=>`<div class="cwk-time-slot">${h===0?'':h%2===0?(String(h).padStart(2,'0')+':00'):'&nbsp;'}</div>`).join('');
+  const isMobView = window.innerWidth <= 700;
+  const timeCol=HOURS.map(h=>{
+    if(h===0) return`<div class="cwk-time-slot"></div>`;
+    if(isMobView){
+      // Show every 3 hours with short am/pm label
+      if(h%3!==0) return`<div class="cwk-time-slot"></div>`;
+      const ampm=h<12?'a':'p';
+      const label=(h===12)?`12p`:h>12?`${h-12}${ampm}`:`${h}${ampm}`;
+      return`<div class="cwk-time-slot">${label}</div>`;
+    } else {
+      if(h%2!==0) return`<div class="cwk-time-slot">&nbsp;</div>`;
+      return`<div class="cwk-time-slot">${String(h).padStart(2,'0')}:00</div>`;
+    }
+  }).join('');
 
   // Day columns with event blocks
   const dayCols=dates.map((d,i)=>{
@@ -6921,8 +6941,20 @@ function renderSchedDay(cx){
   const dates=getWeekDates(schedState.weekOff);
   const wStreak=streakN(dates);
 
-  // Time column
-  const timeCol=HOURS.map(h=>`<div class="cwk-time-slot">${h===0?'':h%2===0?(String(h).padStart(2,'0')+':00'):'&nbsp;'}</div>`).join('');
+  // Time column — mobile: short label (8a/8p) every 3h; desktop: HH:00 every 2h
+  const isMobView = window.innerWidth <= 700;
+  const timeCol=HOURS.map(h=>{
+    if(h===0) return`<div class="cwk-time-slot"></div>`;
+    if(isMobView){
+      if(h%3!==0) return`<div class="cwk-time-slot"></div>`;
+      const ampm=h<12?'a':'p';
+      const label=(h===12)?`12p`:h>12?`${h-12}${ampm}`:`${h}${ampm}`;
+      return`<div class="cwk-time-slot">${label}</div>`;
+    } else {
+      if(h%2!==0) return`<div class="cwk-time-slot">&nbsp;</div>`;
+      return`<div class="cwk-time-slot">${String(h).padStart(2,'0')}:00</div>`;
+    }
+  }).join('');
 
   // Slots + blocks for the single day
   const slots=HOURS.map(()=>`<div class="cwk-slot"></div>`).join('');
