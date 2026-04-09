@@ -3042,14 +3042,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .cwk-body{grid-template-columns:40px repeat(7,1fr)}
 }
 @media(max-width:700px){
-  .gcal-left{flex-direction:column}
-  .mcal-wrap{max-width:100%}
-  .gcal-stats{grid-template-columns:repeat(2,1fr)}
-  .sched-view-tab span{display:none}
-  .sched-view-tab{padding:6px 10px}
+  /* gcal layout handled by new mobile schedule block below */
   .cwk-wrap{overflow-x:auto}
-  .cwk-header{min-width:480px}
-  .cwk-body{min-width:480px;max-height:420px}
 }
 
 /* ── Today view ──────────────────────────────────────── */
@@ -3213,29 +3207,279 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .cwk-header{grid-template-columns:40px repeat(7,1fr)}
   .cwk-body{grid-template-columns:40px repeat(7,1fr)}
 }
-@media(max-width:700px){
-  .sched-view-tab span{display:none}
-  .sched-view-tab{padding:6px 10px}
-  .sched-stat-strip{grid-template-columns:repeat(2,1fr)}
-  .smtask-kanban{grid-template-columns:1fr}
-  .smtask-kanban > :last-child{grid-column:auto}
-  .cwk-wrap{overflow-x:auto}
-  .cwk-header{min-width:520px}
-  .cwk-body{min-width:520px;max-height:400px}
-  .sched-cal-cell{min-height:58px;padding:5px 4px}
-  .sched-day-num{font-size:11px;width:19px;height:19px}
-  .sched-cell-count{font-size:8.5px}
-  .sched-tl-time{width:50px;padding:12px 6px 12px 10px}
-}
+/* old 700px schedule rules merged into new mobile redesign block below */
 @media(max-width:480px){
-  .sched-stat-strip{grid-template-columns:repeat(2,1fr)}
-  .sched-cal-cell{min-height:46px;padding:4px 3px}
-  .sched-cell-count{font-size:8px}
-  .sched-cell-bar{height:2px}
-  .cwk-block-time{display:none}
-  .sched-today-hero-day{font-size:20px}
+  /* handled by new mobile redesign block */
 }
 
+/* ══════════════════════════════════════════════════════════════
+   SCHEDULE TAB — MOBILE REDESIGN (≤700px)
+   Only affects mobile; desktop/PC layout is untouched.
+   ══════════════════════════════════════════════════════════════ */
+@media(max-width:700px){
+
+  /* ── Schedule topbar: title left, Add Task right, no overflow ── */
+  .sch-tb{
+    padding:10px 14px 8px !important;
+    align-items:center !important;
+    flex-wrap:nowrap !important;
+    gap:10px !important;
+  }
+  .sch-tb > div:first-child{
+    flex:1;min-width:0;
+  }
+  #sched-tb-h1{
+    font-size:17px !important;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .sch-tb .tb-sub{
+    font-size:10px !important;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    max-width:160px;
+  }
+  #sched-tb-r .btn{
+    padding:7px 13px !important;
+    font-size:11px !important;
+    white-space:nowrap;flex-shrink:0;
+  }
+
+  /* ── View mode tabs: icon-only, pill style, no text labels ── */
+  .sched-view-tabs{
+    display:flex;
+    gap:2px;
+    padding:2px;
+    border-radius:10px;
+    background:var(--card);
+    border:1px solid var(--border);
+    width:100%;
+    margin-bottom:14px;
+  }
+  .sched-view-tab{
+    flex:1;
+    justify-content:center;
+    padding:8px 4px !important;
+    border-radius:8px;
+    font-size:10px !important;
+    font-weight:700;
+    letter-spacing:.1px;
+    gap:4px;
+  }
+  /* Show short text labels in tabs on mobile */
+  .sched-view-tab span{
+    display:inline !important;
+    font-size:10px;
+  }
+  .sched-view-tab.active{
+    background:rgba(91,110,245,.14);
+    color:var(--p1);
+    box-shadow:none;
+    border:1px solid rgba(91,110,245,.25);
+  }
+
+  /* ── Stat strip: month view keeps default (2-col from existing rules) ── */
+
+  /* ── Month nav: keep default sizing ── */
+
+  /* ── Month calendar cells: keep default ── */
+
+  /* ══════════════════════════════════════════════════════
+     WEEK & DAY tabs — hide the entire left sidebar panel
+     ══════════════════════════════════════════════════════ */
+  .gcal-layout{ display:block !important; }
+  .gcal-left{ display:none !important; }
+  .gcal-right{ min-width:0; width:100%; }
+  .gcal-panel-toggle{ display:none !important; }
+
+  /* Topbar: single compact row — nav arrows + date label */
+  .gcal-topbar{
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    flex-wrap:nowrap !important;
+    gap:8px !important;
+    padding-bottom:10px;
+  }
+  .gcal-topbar > div:first-child{
+    display:flex;align-items:center;gap:5px;flex:1;min-width:0;
+  }
+  .sched-nav-title{
+    font-size:13px !important;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    flex:1;min-width:0;
+  }
+  .sched-nav-btn{
+    width:28px !important; height:28px !important;
+    border-radius:8px !important;
+    flex-shrink:0;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     WEEK TAB — compact 7-column scrollable grid
+     ══════════════════════════════════════════════════════ */
+  .cwk-wrap{
+    overflow-x:auto !important;
+    -webkit-overflow-scrolling:touch;
+    border-radius:12px;
+    box-shadow:0 2px 16px rgba(0,0,0,.18);
+  }
+  /* Time col 28px, 7 day cols share remaining width */
+  .cwk-wrap .cwk-header{
+    min-width:340px !important;
+    grid-template-columns:28px repeat(7,1fr) !important;
+  }
+  .cwk-wrap .cwk-body{
+    min-width:340px !important;
+    max-height:420px !important;
+    grid-template-columns:28px repeat(7,1fr) !important;
+  }
+  .cwk-time-hdr{ font-size:6px !important; padding-bottom:5px; }
+  .cwk-day-hdr{ padding:6px 1px 8px !important; gap:3px !important; }
+  .wh-dow{ font-size:7.5px !important; letter-spacing:.5px; }
+  .wh-num{
+    font-size:12px !important; width:24px !important; height:24px !important;
+    border-radius:50% !important;
+  }
+  .cwk-time-slot{
+    height:36px !important; font-size:7.5px !important;
+    padding:3px 4px 0 0 !important;
+  }
+  .cwk-slot{ height:36px !important; }
+  .cwk-slot::after{ opacity:.2; }
+  .cwk-block{
+    left:1px !important; right:1px !important;
+    padding:2px 4px 3px !important;
+    border-radius:4px !important; border-left-width:2px !important;
+  }
+  .cwk-block-name{ font-size:8.5px !important; font-weight:700; line-height:1.25; }
+  .cwk-block-time{ display:none !important; }
+  .cwk-block-status{ display:none !important; }
+  .cwk-now-line{ height:1.5px !important; }
+  .cwk-now-line::before{ width:6px !important; height:6px !important; left:1px !important; }
+  /* Hint bar */
+  .gcal-right > div:last-of-type{
+    font-size:8.5px !important; padding:5px 0 4px !important;
+    gap:6px !important; flex-wrap:wrap; justify-content:center;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     DAY TAB — single column, time col thin, day col
+     stretches full width edge-to-edge
+     ══════════════════════════════════════════════════════ */
+
+  /* The day grid uses inline style grid-template-columns:52px 1fr
+     Override both the header and body to use a thin time col */
+  .cwk-wrap .cwk-header[style*="grid-template-columns"],
+  .cwk-wrap .cwk-body[style*="grid-template-columns"]{
+    /* override the inline 52px to 32px, day col fills rest */
+    grid-template-columns:32px 1fr !important;
+    min-width:0 !important;          /* no horizontal scroll */
+    width:100% !important;
+  }
+  /* Also target by id since day body has id=cwk-body */
+  .cwk-wrap #cwk-body[style]{
+    grid-template-columns:32px 1fr !important;
+    min-width:0 !important;
+    width:100% !important;
+    max-height:calc(100vh - 260px) !important;
+    max-height:460px !important;
+  }
+  /* Day event blocks can be wider since there's only one column */
+  .cwk-day-col[style]{
+    min-height:0 !important;   /* let grid define height */
+  }
+
+  /* ── Tasks (kanban) view on mobile: single column ── */
+  .smtask-kanban{
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+  .smtask-kanban > :last-child{grid-column:auto !important}
+  .smtask-col-hdr{
+    border-radius:10px !important;
+    padding:9px 13px !important;
+  }
+  .smtask-card{
+    padding:11px 11px 9px !important;
+    border-radius:10px !important;
+  }
+  .smtask-name{font-size:12px !important}
+  .smtask-time{font-size:10px !important}
+
+  /* Hide inline desktop view-tabs inside month/week nav — replaced by top tab bar */
+  .sched-month-nav .sched-view-tabs,
+  .gcal-topbar .sched-view-tabs{
+    display:none !important;
+  }
+  /* Also hide the tasks view desktop header */
+  .sched-tasks-deskhead{display:none !important}
+
+  #day-drawer-panel{
+    /* Switch from right-side panel to bottom sheet */
+    right:0 !important;
+    left:0 !important;
+    top:auto !important;
+    bottom:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    border-left:none !important;
+    border-top:1px solid var(--border2) !important;
+    border-radius:20px 20px 0 0 !important;
+    padding:16px 16px max(16px,env(safe-area-inset-bottom)) !important;
+    max-height:75vh !important;
+    transform:translateY(100%) !important;
+    box-shadow:0 -8px 40px rgba(0,0,0,.4) !important;
+  }
+  #day-drawer.open #day-drawer-panel{
+    transform:translateY(0) !important;
+  }
+  /* Bottom sheet drag handle */
+  #day-drawer-panel::before{
+    content:'';
+    display:block;
+    width:36px;height:4px;
+    background:var(--border2);
+    border-radius:2px;
+    margin:0 auto 14px;
+  }
+  .sched-day-panel-head{
+    padding-bottom:10px !important;
+    margin-bottom:10px !important;
+    flex-wrap:nowrap;
+  }
+  .sched-day-panel-date-main{font-size:13px !important}
+  .sched-ring-row{
+    padding:9px 11px !important;
+    margin-bottom:10px !important;
+    border-radius:9px !important;
+  }
+  .sched-ring-tasks{font-size:12px !important}
+  .sched-ring-hours{font-size:10px !important}
+  .sched-ev-item{
+    padding:8px 10px !important;
+    border-radius:9px !important;
+    gap:8px !important;
+  }
+  .sched-ev-name{font-size:11px !important}
+  .sched-ev-time{font-size:9.5px !important}
+  .sched-panel-sec-lbl{font-size:9px !important}
+}
+
+/* ── EXTRA SMALL mobile (≤420px) — week & day only ─── */
+@media(max-width:420px){
+  .sched-view-tab{padding:7px 2px !important}
+  .sched-view-tab span{font-size:9px !important}
+  /* Even tighter week grid */
+  .cwk-wrap .cwk-header{ min-width:300px !important; }
+  .cwk-wrap .cwk-body{ min-width:300px !important; }
+  .cwk-time-slot{height:32px !important}
+  .cwk-slot{height:32px !important}
+  .cwk-block-name{font-size:8px !important}
+  /* Day: even thinner time column */
+  .cwk-wrap .cwk-header[style*="grid-template-columns"],
+  .cwk-wrap #cwk-body[style]{
+    grid-template-columns:26px 1fr !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -6131,10 +6375,16 @@ function buildCalViewTabs(){ return buildSchedViewTabs(); }
 function renderSchedTopbar(){
   const tbr = document.getElementById('sched-tb-r');
   if(!tbr) return;
-  tbr.innerHTML = `<button class="btn btn-pri btn-sm" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;gap:5px">+ Add Task</button>`;
+  tbr.innerHTML = `<button class="btn btn-pri btn-sm" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;gap:5px;flex-shrink:0">+ Add Task</button>`;
   const subs={month:'Monthly overview',week:'7-day timeline',day:'Single day view',tasks:'All task blocks'};
   const el=document.getElementById('sched-tb-sub');
   if(el) el.textContent=subs[schedState.tab]||'';
+}
+
+function buildMobViewTabsBar(){
+  // Full-width tab bar injected at top of cx on mobile only
+  if(window.innerWidth > 700) return '';
+  return buildSchedViewTabs();
 }
 
 function setSchedTab(tab){
@@ -6398,6 +6648,7 @@ function renderSchedMonth(cx){
   }).join('');
 
   cx.innerHTML=`
+    ${buildMobViewTabsBar()}
     <div class="sched-month-nav" style="margin-bottom:12px">
       <div class="sched-nav-btns">
         <button class="sched-nav-btn" onclick="schedNavMonth(-1)">
@@ -6509,6 +6760,7 @@ function renderSchedWeek(cx){
   const wStreak=streakN(dates);
 
   cx.innerHTML=`
+    ${buildMobViewTabsBar()}
     <div class="gcal-layout">
       <!-- LEFT: mini cal + stats + categories -->
       <div class="gcal-left">
@@ -6712,6 +6964,7 @@ function renderSchedDay(cx){
   })();
 
   cx.innerHTML=`
+    ${buildMobViewTabsBar()}
     <div class="gcal-layout">
       <!-- LEFT -->
       <div class="gcal-left">
@@ -6909,6 +7162,7 @@ function renderSchedToday(cx){
   </div>`;
 
   cx.innerHTML=`
+    ${buildMobViewTabsBar()}
     <div class="sched-today-hero">
       <div class="sched-today-hero-date">
         <div class="sched-today-hero-day">${dayName}</div>
@@ -7007,9 +7261,10 @@ function renderSchedTasks(cx){
   const totalHrs=S.tasks.reduce((s,t)=>s+tdiff(t.start,t.end),0);
 
   cx.innerHTML=`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+    ${buildMobViewTabsBar()}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px${window.innerWidth<=700?';display:none':''}" class="sched-tasks-deskhead">
       <div style="font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.1px">All Tasks</div>
-      ${buildCalViewTabs()}
+      ${window.innerWidth>700?buildCalViewTabs():''}
     </div>
 
     <div class="smtask-kanban">
