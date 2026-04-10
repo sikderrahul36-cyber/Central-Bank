@@ -125,33 +125,87 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .wk-b:hover{background:var(--card3);color:var(--p1)}
 /* ── Inline week date navigator (inside toolbar) ── */
 .dash-wk-nav{
-  display:flex;align-items:center;gap:1px;
-  background:var(--bg3);
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:2px;
+  display:flex;align-items:center;gap:2px;
 }
 .dash-wk-btn{
-  width:26px;height:26px;border-radius:6px;
-  border:none;background:transparent;
-  color:var(--text3);cursor:pointer;
+  width:26px;height:26px;border-radius:7px;
+  border:1.5px solid var(--border2);background:var(--card);
+  color:var(--text2);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
   transition:all .18s;flex-shrink:0;
+  padding:0;box-shadow:0 1px 3px rgba(0,0,0,.1);
 }
-.dash-wk-btn:hover{background:var(--card);color:var(--p1);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.dash-wk-btn:hover{color:var(--p1);background:rgba(91,110,245,.1);border-color:rgba(91,110,245,.35);box-shadow:0 2px 8px rgba(91,110,245,.15)}
 .dash-wk-label{
-  font-size:11px;font-weight:600;
-  color:var(--text2);
-  letter-spacing:-.1px;
+  font-size:11px;font-weight:700;
+  color:var(--text);
+  letter-spacing:-.2px;
   white-space:nowrap;
-  padding:0 6px;
-  min-width:128px;text-align:center;
+  padding:4px 11px;
+  min-width:0;text-align:center;
+  border:1.5px solid var(--border2);
+  border-radius:7px;
+  background:var(--card);
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+}
+/* ── DARK MODE TOGGLE (header) ─────────────────────────────── */
+.dm-tog-wrap{
+  display:flex;align-items:center;gap:7px;
+  padding:4px 10px 4px 7px;
+  border-radius:10px;
+  background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));
+  border:1px solid rgba(91,110,245,.18);
+  cursor:pointer;
+  transition:background .2s,border-color .2s,box-shadow .2s;
+  user-select:none;flex-shrink:0;
+}
+.dm-tog-wrap:hover{
+  background:linear-gradient(135deg,rgba(91,110,245,.14),rgba(124,58,237,.09));
+  border-color:rgba(91,110,245,.35);
+  box-shadow:0 2px 10px rgba(91,110,245,.13);
+}
+.dm-tog-ico{font-size:13px;line-height:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.dm-tog-wrap:hover .dm-tog-ico{transform:rotate(18deg) scale(1.12)}
+.dm-tog-label{font-size:11px;font-weight:700;color:var(--p1);letter-spacing:-.1px;white-space:nowrap;min-width:28px}
+[data-theme="light"] .dm-tog-wrap{
+  background:linear-gradient(135deg,rgba(234,179,8,.09),rgba(249,115,22,.05));
+  border-color:rgba(234,179,8,.32);
+}
+[data-theme="light"] .dm-tog-wrap:hover{
+  background:linear-gradient(135deg,rgba(234,179,8,.16),rgba(249,115,22,.09));
+  border-color:rgba(234,179,8,.52);
+  box-shadow:0 2px 10px rgba(234,179,8,.13);
+}
+/* ── IMPROVED TABS ─────────────────────────────────────────── */
+/* ── ANALYTICS DATE RANGE PILLS ───────────────────────────── */
+.ana-range-pills{
+  display:flex;align-items:center;gap:2px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:10px;padding:3px;
+}
+.arp{
+  padding:5px 14px;border-radius:7px;
+  font-size:11px;font-weight:600;
+  cursor:pointer;color:var(--text3);
+  transition:all .18s;border:none;background:transparent;
+  font-family:var(--fb);white-space:nowrap;letter-spacing:-.1px;
+}
+.arp:hover{color:var(--text)}
+.arp.on{
+  background:var(--card);color:var(--p1);
+  box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1px rgba(91,110,245,.25);
 }
 /* ── BUTTONS ───────────────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border2);white-space:nowrap}
 .btn-ghost{background:transparent;color:var(--text2)}.btn-ghost:hover{background:var(--card2);color:var(--text)}
 .btn-pri{background:var(--grad);color:#fff;border:none;box-shadow:0 2px 10px rgba(91,110,245,.3)}.btn-pri:hover{opacity:.85;transform:translateY(-1px);box-shadow:0 4px 18px rgba(91,110,245,.4)}
 .btn-danger{background:rgba(244,63,94,.1);color:var(--r1);border-color:rgba(244,63,94,.25)}.btn-danger:hover{background:rgba(244,63,94,.2)}
+/* Modal soft delete button — muted until hover */
+.mo-del-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:7px;font-family:var(--fb);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;background:transparent;border:1px solid var(--border2);color:var(--text3);white-space:nowrap;letter-spacing:-.1px}
+.mo-del-btn:hover{background:rgba(244,63,94,.07);border-color:rgba(244,63,94,.3);color:var(--r1)}
+.mo-del-btn:hover svg{stroke:var(--r1)}
+[data-theme="light"] .mo-del-btn{border-color:var(--border2);color:var(--text3)}
+[data-theme="light"] .mo-del-btn:hover{background:rgba(244,63,94,.06);border-color:rgba(244,63,94,.28);color:#e11d48}
 .btn-sm{padding:5px 10px;font-size:11px}
 /* ── CONTENT ───────────────────────────────────────────────── */
 .cx{padding:20px 24px;position:relative;z-index:1}
@@ -170,10 +224,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── SEC HEAD ──────────────────────────────────────────────── */
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px;flex-wrap:wrap}
 .sh h2{font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:-.1px}
-.tabs{display:flex;gap:0;background:var(--bg3);padding:3px;border-radius:10px;border:1px solid var(--border);flex-wrap:nowrap}
+.tabs{display:flex;gap:0;background:var(--bg3);padding:3px;border-radius:10px;border:1.5px solid var(--border2);flex-wrap:nowrap}
 .tab{padding:5px 14px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text3);transition:all .18s;border:none;background:transparent;font-family:var(--fb);white-space:nowrap;letter-spacing:-.1px}
 .tab:hover{color:var(--text)}
-.tab.on{background:var(--card);color:var(--text);box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1px var(--border)}
+.tab.on{background:linear-gradient(135deg,rgba(91,110,245,.18),rgba(124,58,237,.12));color:var(--p1);box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1.5px rgba(91,110,245,.3),inset 0 1px 0 rgba(255,255,255,.06)}
+[data-theme="light"] .tab.on{background:linear-gradient(135deg,rgba(91,110,245,.12),rgba(124,58,237,.07));color:var(--p1);box-shadow:0 1px 5px rgba(91,110,245,.15),0 0 0 1.5px rgba(91,110,245,.25)}
 /* ── DASHBOARD TOOLBAR ─────────────────────────────────────── */
 .dash-toolbar{
   display:flex;align-items:center;justify-content:space-between;
@@ -187,6 +242,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dash-toolbar-right{
   display:flex;align-items:center;gap:8px;flex-wrap:nowrap;flex-shrink:0;
 }
+.dash-wk-nav+.tabs{margin-left:4px}
 /* Add Task primary button — compact gradient pill */
 .dash-add-btn{
   display:inline-flex;align-items:center;gap:5px;
@@ -202,6 +258,182 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 }
 .dash-add-btn:hover{opacity:.88;transform:translateY(-1px);box-shadow:0 4px 16px rgba(91,110,245,.42)}
 .dash-add-btn:active{transform:translateY(0);opacity:1}
+
+/* ══════════════════════════════════════════════════════════════
+   TODAY TASK CARD LIST
+   ══════════════════════════════════════════════════════════════ */
+.today-list{
+  display:flex;flex-direction:column;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--rr);
+  overflow:hidden;
+  margin-bottom:20px;
+}
+
+/* ── header: date block + progress ──────────────────────────── */
+.today-list-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 11px;
+  background:var(--bg3);
+  border-bottom:1px solid var(--border);
+  gap:12px;
+}
+.today-hdr-date-block{display:flex;align-items:center;gap:10px}
+.today-hdr-date-badge{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--grad);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(91,110,245,.28);
+}
+.today-hdr-date-num{
+  font-family:var(--fh);font-size:15px;font-weight:800;color:#fff;line-height:1;
+}
+.today-hdr-date-mon{
+  font-size:7.5px;font-weight:700;color:rgba(255,255,255,.8);
+  text-transform:uppercase;letter-spacing:.5px;line-height:1;margin-top:1px;
+}
+.today-hdr-text{display:flex;flex-direction:column;gap:1px}
+.today-hdr-dayname{
+  font-family:var(--fh);font-size:13px;font-weight:800;
+  color:var(--text);letter-spacing:-.2px;line-height:1.2;
+}
+.today-hdr-subtitle{
+  font-size:10px;color:var(--text3);font-weight:500;
+}
+.today-hdr-right{display:flex;align-items:center;gap:10px}
+.today-hdr-count{
+  font-size:10px;font-weight:700;
+  color:var(--text3);
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:20px;padding:2px 9px;
+  white-space:nowrap;
+}
+.today-list-prog-wrap{display:flex;align-items:center;gap:7px}
+.today-list-prog-bar{
+  width:72px;height:5px;
+  background:var(--border);border-radius:3px;overflow:hidden;
+}
+.today-list-prog-fill{height:100%;border-radius:3px;transition:width .7s ease}
+.today-list-prog-pct{
+  font-family:var(--fh);font-size:11px;font-weight:800;
+  min-width:30px;text-align:right;
+}
+
+/* ── single task card ───────────────────────────────────────── */
+.tday-card{
+  display:flex;align-items:stretch;
+  border-bottom:1px solid var(--border);
+  transition:background .15s;
+  position:relative;
+}
+.tday-card:last-child{border-bottom:none}
+.tday-card:hover{background:rgba(91,110,245,.018)}
+.tday-card.tday-done{opacity:1}
+.tday-card.tday-ongoing{background:rgba(91,110,245,.025)}
+
+/* left accent stripe */
+.tday-stripe{width:3px;flex-shrink:0}
+
+/* checkbox column — flush left, vertically centered */
+.tday-chk-col{
+  display:flex;align-items:center;justify-content:center;
+  padding:0 4px 0 12px;flex-shrink:0;
+}
+.tday-chk{
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--border3);
+  background:transparent;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0;position:relative;
+}
+.tday-chk:hover{border-color:var(--p1);background:rgba(91,110,245,.08);transform:scale(1.12)}
+.tday-chk.chk-done{border-width:0}
+.tday-chk svg{
+  position:absolute;
+  transition:opacity .18s,transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.tday-chk:not(.chk-done) svg{opacity:0;transform:scale(.4)}
+.tday-chk.chk-done svg{opacity:1;transform:scale(1)}
+
+/* main content */
+.tday-body{
+  flex:1;min-width:0;
+  padding:10px 10px 10px 10px;
+  display:flex;flex-direction:column;gap:4px;
+  justify-content:center;
+}
+
+/* top row: name + status badge */
+.tday-top{display:flex;align-items:center;gap:7px;min-width:0}
+.tday-name{
+  font-size:12.5px;font-weight:700;
+  color:var(--text);
+  line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  flex:1;min-width:0;
+  transition:opacity .2s,color .2s;
+}
+.tday-done .tday-name{opacity:.35;text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:var(--text3)}
+.tday-status{
+  flex-shrink:0;
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:8.5px;font-weight:800;letter-spacing:.35px;
+  border-radius:20px;padding:2px 7px;white-space:nowrap;
+}
+
+/* bottom row: time · dur · cat · pri */
+.tday-meta{display:flex;align-items:center;gap:5px;flex-wrap:nowrap;overflow:hidden}
+.tday-done .tday-meta{opacity:.4}
+.tday-time{
+  font-size:10px;font-weight:600;color:var(--text3);
+  white-space:nowrap;flex-shrink:0;
+}
+.tday-sep{color:var(--border3);font-size:10px;flex-shrink:0;line-height:1}
+.tday-dur{
+  font-size:9px;font-weight:700;color:var(--text3);
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:4px;padding:1px 5px;
+  white-space:nowrap;flex-shrink:0;
+}
+.tday-cat{
+  font-size:9px;font-weight:700;
+  border-radius:5px;padding:2px 7px;
+  border:1px solid transparent;
+  white-space:nowrap;flex-shrink:0;
+}
+.tday-pri{
+  font-size:8px;font-weight:800;
+  border-radius:4px;padding:2px 5px;
+  white-space:nowrap;letter-spacing:.4px;
+  text-transform:uppercase;flex-shrink:0;
+}
+.pri-high{background:rgba(244,63,94,.12);color:#f43f5e;border:1px solid rgba(244,63,94,.2)}
+.pri-med {background:rgba(234,179,8,.11);color:#c48a00;border:1px solid rgba(234,179,8,.2)}
+.pri-low {background:rgba(16,185,129,.11);color:#10b981;border:1px solid rgba(16,185,129,.2)}
+[data-theme="light"] .pri-med{color:#a07000}
+
+/* action buttons column — always visible, compact */
+.tday-actions-col{
+  display:flex;align-items:center;gap:2px;
+  padding:0 10px 0 6px;
+  flex-shrink:0;
+  opacity:0;transition:opacity .18s;
+}
+.tday-card:hover .tday-actions-col{opacity:1}
+
+/* ── empty state ────────────────────────────────────────────── */
+.today-empty{
+  padding:40px 24px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.today-empty-ico{font-size:32px;margin-bottom:2px}
+.today-empty-title{font-family:var(--fh);font-size:14px;font-weight:700;color:var(--text)}
+.today-empty-sub{font-size:11.5px;color:var(--text3);line-height:1.55}
+
 /* ── TIMETABLE ─────────────────────────────────────────────── */
 .tt-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);overflow:auto;margin-bottom:20px;transition:background .3s}
 .tt{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
@@ -788,13 +1020,51 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 @keyframes mi{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
 .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .mh h2{font-family:var(--fh);font-size:16px;font-weight:800}
-.mc{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;transition:all .2s}
-.mc:hover{background:var(--card2);color:var(--text)}
+.mc{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;transition:all .2s;flex-shrink:0;padding:0;position:relative;z-index:1}
+.mc:hover{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.3);color:var(--r1)}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dp-row{display:flex;gap:4px}
 .dp{width:32px;height:28px;border-radius:6px;border:1px solid var(--border2);background:var(--inp-bg);color:var(--text2);font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:var(--fb);user-select:none}
 .dp.on{background:rgba(91,110,245,.2);border-color:var(--p1);color:var(--p1)}
 .mf{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+
+/* ── SCHEDULE PICKER ───────────────────────────────────────── */
+.sched-mode-tabs{display:flex;gap:0;background:var(--bg3);border:1.5px solid var(--border2);border-radius:10px;padding:3px;margin-bottom:10px}
+.sched-mode-tab{flex:1;padding:5px 8px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text3);transition:all .18s;border:none;background:transparent;font-family:var(--fb);text-align:center;letter-spacing:-.1px}
+.sched-mode-tab:hover{color:var(--text)}
+.sched-mode-tab.on{background:linear-gradient(135deg,rgba(91,110,245,.18),rgba(124,58,237,.12));color:var(--p1);box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1.5px rgba(91,110,245,.3),inset 0 1px 0 rgba(255,255,255,.06)}
+
+/* calendar widget */
+.cal-wrap{background:var(--card2);border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:8px}
+.cal-header{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 6px}
+.cal-title{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+.cal-nav{width:22px;height:22px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
+.cal-nav:hover{background:rgba(91,110,245,.1);border-color:rgba(91,110,245,.3);color:var(--p1)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:0 6px 6px}
+.cal-dow{font-size:8px;font-weight:800;color:var(--text3);text-align:center;padding:3px 0;letter-spacing:.3px;text-transform:uppercase}
+.cal-day{width:28px;height:28px;max-width:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;cursor:pointer;border-radius:50%;transition:all .15s;color:var(--text2);margin:1px auto;position:relative;user-select:none}
+.cal-day:hover:not(.cal-empty):not(.cal-disabled){background:rgba(91,110,245,.14);color:var(--p1)}
+.cal-day.cal-today{color:var(--p1);font-weight:800}
+.cal-day.cal-today::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--p1)}
+.cal-day.cal-selected{background:var(--grad);color:#fff!important;font-weight:800;box-shadow:0 2px 8px rgba(91,110,245,.4)}
+.cal-day.cal-selected.cal-today::after{background:#fff}
+.cal-day.cal-in-range{background:rgba(91,110,245,.12);color:var(--p1);border-radius:0}
+.cal-day.cal-range-start{background:var(--grad);color:#fff!important;border-radius:50% 0 0 50%!important;box-shadow:0 2px 8px rgba(91,110,245,.4)}
+.cal-day.cal-range-end{background:var(--grad);color:#fff!important;border-radius:0 50% 50% 0!important;box-shadow:0 2px 8px rgba(91,110,245,.4)}
+.cal-day.cal-range-start.cal-range-end{border-radius:50%!important}
+.cal-day.cal-disabled{color:var(--border3);cursor:default;pointer-events:none}
+.cal-day.cal-empty{cursor:default}
+.cal-day.cal-other-month{color:var(--border3)}
+
+/* selected summary pill */
+.sched-summary{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;background:rgba(91,110,245,.08);border:1px solid rgba(91,110,245,.2);margin-bottom:8px;min-height:34px}
+.sched-summary-ico{font-size:13px;flex-shrink:0}
+.sched-summary-text{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;flex:1}
+.sched-summary-clear{width:20px;height:20px;border-radius:5px;border:none;background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;transition:all .15s;flex-shrink:0}
+.sched-summary-clear:hover{background:rgba(244,63,94,.12);color:var(--r1)}
+/* recurring days shown only in recurring mode */
+.sched-recurring-wrap{display:none}
+.sched-recurring-wrap.show{display:block}
 /* note modal */
 .note-colors{display:flex;gap:7px;margin-top:4px}
 .nc-pick{width:24px;height:24px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all .2s}
@@ -1324,8 +1594,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .dash-toolbar{flex-wrap:nowrap;align-items:center;gap:8px}
   .dash-toolbar-left{gap:8px;min-width:0;flex:1}
   .dash-toolbar-title{font-size:13px}
-  .dash-toolbar-right{gap:6px;flex-shrink:0}
-  .dash-wk-label{min-width:104px;font-size:10px}
+  .dash-toolbar-right{gap:6px;flex-shrink:0;flex-wrap:nowrap}
+  .dash-wk-label{font-size:10.5px}
+  .dash-wk-btn{width:20px;height:20px}
   .dash-add-btn{padding:5px 10px;font-size:10px}
   .tab{padding:4px 10px;font-size:10px}
   /* Task heading: shift right on mobile for visual balance with row content */
@@ -1353,8 +1624,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .bn{padding:5px 2px 4px;min-width:48px}
   .bn svg{width:18px;height:18px}
   .dash-toolbar-title{font-size:11px}
-  .dash-wk-label{min-width:88px;font-size:9px;padding:0 3px}
-  .dash-wk-btn{width:22px;height:22px}
+  .dash-wk-label{font-size:9.5px}
+  .dash-wk-btn{width:18px;height:18px}
   .dash-add-btn{padding:5px 9px;font-size:10px;gap:4px}
   .tab{padding:4px 8px;font-size:10px}
   .cat-filter-select-styled{font-size:10px;max-width:120px;padding:0 30px 0 8px}
@@ -1556,15 +1827,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .tt td.today-col{background:rgba(91,110,245,.04)!important}
 [data-theme="light"] .ac,[data-theme="light"] .ic,[data-theme="light"] .sc,[data-theme="light"] .hcard,[data-theme="light"] .set-sec{background:var(--card);border:1px solid var(--border);box-shadow:0 2px 10px rgba(60,60,120,.06)}
 [data-theme="light"] .ic:hover,[data-theme="light"] .sc:hover{border-color:var(--border2);box-shadow:0 6px 20px rgba(60,60,120,.11)}
-[data-theme="light"] .tabs{background:var(--bg3);border:1px solid var(--border)}
+[data-theme="light"] .tabs{background:var(--bg3);border:1.5px solid var(--border2)}
 [data-theme="light"] .tab.on{background:var(--card);color:var(--text);box-shadow:0 1px 6px rgba(60,60,120,.1)}
 [data-theme="light"] .wk-pill{background:var(--card);border:1px solid var(--border2)}
 [data-theme="light"] .wk-b:hover{background:var(--card3);color:var(--p1)}
-[data-theme="light"] .tabs{background:var(--bg3);border-color:var(--border2)}
+[data-theme="light"] .tabs{background:var(--bg3);border:1.5px solid var(--border2)}
 [data-theme="light"] .tab.on{background:#fff;box-shadow:0 1px 6px rgba(60,60,120,.12),0 0 0 1px var(--border2)}
-[data-theme="light"] .dash-wk-nav{background:var(--bg3);border-color:var(--border2)}
-[data-theme="light"] .dash-wk-btn:hover{background:#fff;box-shadow:0 1px 4px rgba(60,60,120,.12)}
 [data-theme="light"] .dash-wk-label{color:var(--text2)}
+[data-theme="light"] .dash-wk-btn:hover{background:rgba(91,110,245,.06)}
 [data-theme="light"] .btn-ghost{background:var(--card);border-color:var(--border2);color:var(--text2)}
 [data-theme="light"] .btn-ghost:hover{background:var(--bg3);color:var(--text);border-color:var(--border3)}
 [data-theme="light"] .mo{background:rgba(60,60,120,.45)}
@@ -3612,6 +3882,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <p class="tb-sub" id="dash-greeting" style="margin-top:2px;font-size:12px;color:var(--text2)">Good morning 👋</p>
     </div>
     <div class="tb-r">
+      <!-- Dark Mode Toggle — settings style -->
+      <div class="dm-tog-wrap" onclick="toggleTheme()" id="dm-tog-wrap" title="Toggle dark / light theme">
+        <span class="dm-tog-ico" id="dm-tog-ico">🌙</span>
+        <span class="dm-tog-label" id="dm-tog-label">Dark</span>
+        <div class="tog on" id="dm-tog" style="width:38px;height:22px;border-radius:11px;pointer-events:none;flex-shrink:0"></div>
+      </div>
       <!-- Notification Bell only -->
       <div style="position:relative" id="notif-bell-wrap">
         <div class="notif-bell-btn" id="notif-bell-btn" onclick="toggleNotifPanel()" title="Notifications">
@@ -3657,10 +3933,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
     <!-- ── Dashboard Schedule Toolbar ─────────────────────── -->
     <div class="dash-toolbar">
-      <!-- Left: title + week navigator (weekly view only) -->
+      <!-- Left: section title -->
       <div class="dash-toolbar-left">
         <h2 class="dash-toolbar-title" id="dash-schedule-title">Today's Tasks</h2>
-        <!-- Week date navigator — shown only in Weekly view -->
+      </div>
+      <!-- Right: week nav (weekly only) + toggle + add task -->
+      <div class="dash-toolbar-right">
+        <!-- Week navigator — shown only in Weekly view -->
         <div class="dash-wk-nav" id="dash-wk-nav" style="display:none">
           <button class="dash-wk-btn" onclick="chWeek(-1)" title="Previous week">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="15 18 9 12 15 6"/></svg>
@@ -3670,13 +3949,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </div>
-      </div>
-      <!-- Right: view toggle + add task -->
-      <div class="dash-toolbar-right">
-        <!-- Today / Weekly segmented toggle -->
+        <!-- View toggle -->
         <div class="tabs" id="dash-view-tabs">
-          <button class="tab on" id="tab-today" onclick="setDashView('today')">Today</button>
           <button class="tab" id="tab-weekly" onclick="setDashView('weekly')">Weekly</button>
+          <button class="tab on" id="tab-today" onclick="setDashView('today')">Today</button>
         </div>
         <!-- Add Task CTA -->
         <button class="dash-add-btn" onclick="openTaskModal()">
@@ -3845,7 +4121,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div style="width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;box-shadow:0 3px 8px rgba(91,110,245,.28)">📋</div>
         <h2 id="mo-task-title" style="font-family:var(--fh);font-size:14px;font-weight:800;line-height:1">Add Task Block</h2>
       </div>
-      <button class="mc" onclick="closeMo('mo-task')">×</button>
+      <button class="mc" onclick="closeMo('mo-task')" title="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
 
     <!-- Body -->
@@ -3897,17 +4175,57 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         </div>
       </div>
 
-      <!-- Active Days -->
+      <!-- ── SCHEDULE SECTION ───────────────────────────────── -->
       <div style="margin-bottom:9px">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;display:flex;align-items:center;gap:5px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          Active Days
+          Schedule
         </label>
-        <div class="dp-row" id="dp-row" style="gap:6px">
-          <div class="dp on" data-d="0">Mo</div><div class="dp on" data-d="1">Tu</div>
-          <div class="dp on" data-d="2">We</div><div class="dp on" data-d="3">Th</div>
-          <div class="dp on" data-d="4">Fr</div><div class="dp" data-d="5">Sa</div>
-          <div class="dp" data-d="6">Su</div>
+
+        <!-- Mode tabs: Recurring / Single Date / Date Range -->
+        <div class="sched-mode-tabs">
+          <button class="sched-mode-tab on" id="smt-recurring" onclick="setSchedMode('recurring')">🔁 Recurring</button>
+          <button class="sched-mode-tab" id="smt-single" onclick="setSchedMode('single')">📅 Single Date</button>
+          <button class="sched-mode-tab" id="smt-range" onclick="setSchedMode('range')">📆 Date Range</button>
+        </div>
+
+        <!-- Selected summary pill (shown when date/range is chosen) -->
+        <div class="sched-summary" id="sched-summary" style="display:none">
+          <span class="sched-summary-ico" id="sched-summary-ico">📅</span>
+          <span class="sched-summary-text" id="sched-summary-text">—</span>
+          <button class="sched-summary-clear" onclick="clearSchedSelection()" title="Clear">✕</button>
+        </div>
+
+        <!-- Calendar widget -->
+        <div class="cal-wrap" id="cal-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" id="cal-prev" onclick="calNav(-1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <span class="cal-title" id="cal-title">April 2026</span>
+            <button class="cal-nav" id="cal-next" onclick="calNav(1)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <div class="cal-grid" id="cal-grid">
+            <!-- days of week headers -->
+            <div class="cal-dow">Su</div><div class="cal-dow">Mo</div><div class="cal-dow">Tu</div>
+            <div class="cal-dow">We</div><div class="cal-dow">Th</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div>
+          </div>
+        </div>
+
+        <!-- Recurring active-days (only shown in recurring mode) -->
+        <div class="sched-recurring-wrap show" id="sched-recurring-wrap">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;display:flex;align-items:center;gap:5px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+            Repeat on
+          </label>
+          <div class="dp-row" id="dp-row" style="gap:6px">
+            <div class="dp on" data-d="0">Mo</div><div class="dp on" data-d="1">Tu</div>
+            <div class="dp on" data-d="2">We</div><div class="dp on" data-d="3">Th</div>
+            <div class="dp on" data-d="4">Fr</div><div class="dp" data-d="5">Sa</div>
+            <div class="dp" data-d="6">Su</div>
+          </div>
         </div>
       </div>
 
@@ -3924,9 +4242,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- Footer -->
     <div style="padding:10px 16px 13px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
       <div id="mo-task-del-wrap" style="display:none">
-        <button class="btn btn-danger btn-sm" onclick="delTask(S.editId)" style="gap:5px">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-          Delete
+        <button class="mo-del-btn" onclick="delTask(S.editId)" title="Remove this task">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+          Remove
         </button>
       </div>
       <div style="display:flex;gap:8px;margin-left:auto">
@@ -4048,7 +4366,7 @@ function defaultProfile(){
 }
 function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
 let S=loadS();
-document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');
+document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');setTimeout(syncDmTog,0);
 
 // ════════════════════════════════════════════════════════════
 // CONSTANTS & HELPERS
@@ -4110,11 +4428,13 @@ function getWeekDates(off){
 }
 function fmtD(d){return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 function fmtKey(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');return`${y}-${m}-${dd}`;}
-// A task is active on a given dateKey if it has no deletedFrom, or deletedFrom > dateKey.
-// This preserves full past history while hiding the task from its deletion date onward.
+// A task is active on a given dateKey when:
+//   • dateKey >= createdFrom  (new tasks don't appear in the past)
+//   • dateKey <  deletedFrom  (deleted tasks disappear from that date onward)
 function isTaskActiveOnDate(task,dateKey){
-  if(!task.deletedFrom)return true;
-  return dateKey<task.deletedFrom;
+  if(task.createdFrom && dateKey<task.createdFrom) return false;
+  if(task.deletedFrom && dateKey>=task.deletedFrom) return false;
+  return true;
 }
 function tdiff(s,e){
   if(!s||!e)return 0;
@@ -4608,35 +4928,47 @@ function renderTodayTT(){
   const dk = fmtKey(todayDate);
   const isCurrentWeek = S.weekOff === 0;
   const tasks = S.tasks.filter(t => t.days.includes(TODAY_DOW) && isTaskActiveOnDate(t, dk));
+  const el = document.getElementById('tt-wrap');
 
+  // ── Empty state ──────────────────────────────────────────────
   if(tasks.length === 0){
-    document.getElementById('tt-wrap').innerHTML =
-      `<div style="padding:40px 24px;text-align:center;color:var(--text3)">
-        <div style="font-size:32px;margin-bottom:10px">🎉</div>
-        <div style="font-family:var(--fh);font-size:14px;font-weight:700;margin-bottom:4px">No tasks for today</div>
-        <div style="font-size:12px">Add a task and assign it to today to get started.</div>
-      </div>`;
+    el.innerHTML = `<div class="tt-wrap" style="padding:40px 24px;text-align:center;color:var(--text3)">
+      <div style="font-size:32px;margin-bottom:10px">🎯</div>
+      <div style="font-family:var(--fh);font-size:14px;font-weight:700;margin-bottom:4px;color:var(--text)">No tasks for today</div>
+      <div style="font-size:12px">Add a task and assign it to today to get started.</div>
+    </div>`;
     return;
   }
 
-  const dayName = DAYS7[TODAY_DOW];
-  const dateLabel = fmtD(todayDate);
+  // Priority tag map
+  const priMap = {
+    high:{ label:'High', bg:'rgba(244,63,94,.12)', color:'#f43f5e', border:'rgba(244,63,94,.22)' },
+    med: { label:'Med',  bg:'rgba(234,179,8,.11)', color:'#c48a00', border:'rgba(234,179,8,.22)' },
+    low: { label:'Low',  bg:'rgba(16,185,129,.11)',color:'#10b981', border:'rgba(16,185,129,.2)'  },
+  };
 
+  // ── Header — same style as weekly <thead> ────────────────────
+  const dayLabel = DAYS7[TODAY_DOW];
+  const dateLabel = fmtD(todayDate);
   let th = `<thead><tr>
     <th class="tt-task-th">Task</th>
-    <th class="tc">${dayName}<br><span style="font-weight:400;font-size:9px;color:rgba(91,110,245,.7)">${dateLabel}</span></th>
+    <th class="tc">${dayLabel}<br><span style="font-weight:400;font-size:9px;color:rgba(91,110,245,.7)">${dateLabel}</span></th>
   </tr></thead>`;
 
+  // ── Rows ─────────────────────────────────────────────────────
   let tb = '<tbody>';
   tasks.forEach(t => {
-    const col = getCatColor(t.cat);
-    const done = isDone(t.id, dk);
-    const status = isCurrentWeek ? getTaskStatus(t) : null;
-    const rowDone = done && isCurrentWeek;
-    const catTagHtml = `<span class="tt-tag" style="background:${col}18;color:${col};border-color:${col}35;font-size:8px;padding:2px 6px;border-radius:5px">${getCatLabel(t.cat)}</span>`;
+    const col      = getCatColor(t.cat);
+    const done     = isDone(t.id, dk);
+    const status   = isCurrentWeek ? getTaskStatus(t) : null;
+    const rowDone  = done && isCurrentWeek;
     const showStatus = status && isCurrentWeek;
+    const pri      = priMap[t.pri] || priMap.med;
 
-    tb += `<tr class="${rowDone ? 'row-done' : ''}"><td class="tt-task-cell">
+    const catTagHtml = `<span class="tt-tag" style="background:${col}18;color:${col};border-color:${col}35;font-size:8px;padding:2px 6px;border-radius:5px">${getCatLabel(t.cat)}</span>`;
+    const priTagHtml = `<span class="tt-tag" style="background:${pri.bg};color:${pri.color};border:1px solid ${pri.border};font-size:8px;padding:2px 6px;border-radius:5px;font-weight:800;letter-spacing:.3px">${pri.label}</span>`;
+
+    tb += `<tr class="${rowDone?'row-done':''}"><td class="tt-task-cell">
       <div class="tt-row-inner">
         <div class="tt-left">
           <div class="tt-dot" style="background:${col};margin-top:2px;flex-shrink:0"></div>
@@ -4645,6 +4977,7 @@ function renderTodayTT(){
             <div class="tt-m" style="gap:5px;flex-wrap:wrap;align-items:center;margin-top:3px">
               <span class="tt-t">${fmtT(t.start)} – ${fmtT(t.end)}</span>
               ${catTagHtml}
+              ${priTagHtml}
             </div>
           </div>
         </div>
@@ -4656,15 +4989,16 @@ function renderTodayTT(){
       </div>
     </td>
     <td class="tt-dc today-col">
-      <button class="chk ${done ? `dn-${t.cat||'personal'}` : ''}"
-        style="${done ? `background:${col}33;border-color:${col}` : 'border-color:var(--border3)'}"
+      <button class="chk ${done?`dn-${t.cat||'personal'}`:''}"
+        style="${done?`background:${col}33;border-color:${col}`:'border-color:var(--border3)'}"
         onclick="togDone('${t.id}','${dk}')">
-        <svg viewBox="0 0 12 10" fill="none" stroke="${done ? col : 'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done ? 1 : 0}"><polyline points="1,5 4.5,9 11,1"/></svg>
+        <svg viewBox="0 0 12 10" fill="none" stroke="${done?col:'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done?1:0}"><polyline points="1,5 4.5,9 11,1"/></svg>
       </button>
     </td></tr>`;
   });
   tb += '</tbody>';
 
+  // ── Footer progress — same as weekly ────────────────────────
   const { pct } = dayStats(dates, TODAY_DOW);
   const pCol = pct===100?'var(--g2)':pct>=50?'var(--p1)':pct>0?'var(--o1)':'var(--text3)';
   let tf = `<tfoot><tr>
@@ -4672,7 +5006,7 @@ function renderTodayTT(){
     <td><div class="pp" style="color:${pCol}">${pct}%</div><div class="pm"><div class="pf" style="width:${pct}%;background:${pCol}"></div></div></td>
   </tr></tfoot>`;
 
-  document.getElementById('tt-wrap').innerHTML = `<table class="tt">${th}${tb}${tf}</table>`;
+  el.innerHTML = `<table class="tt">${th}${tb}${tf}</table>`;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -4896,16 +5230,10 @@ function renderAna(dates){
   <div class="ac" style="margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.1)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
       <h3 style="margin-bottom:0">Weekly Completion Trend</h3>
-      <div style="display:flex;align-items:center;gap:6px">
-        <select class="ana-sel ana-range-native" onchange="_anaOpts.range=parseInt(this.value);renderAna(getWeekDates(S.weekOff))">
-          <option value="4" ${_anaOpts.range===4?'selected':''}>Last 4 Weeks</option>
-          <option value="8" ${_anaOpts.range===8?'selected':''}>Last 8 Weeks</option>
-          <option value="12" ${_anaOpts.range===12?'selected':''}>Last 12 Weeks</option>
-        </select>
-        <div class="mob-ana-range-btn" id="mob-ana-range-btn" onclick="toggleMobAnaPanel()">
-          <span id="mob-ana-range-label">Last ${_anaOpts.range} Weeks</span>
-          <svg class="mar-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
+      <div class="ana-range-pills">
+        <button class="arp ${_anaOpts.range===4?'on':''}" onclick="_anaOpts.range=4;renderAna(getWeekDates(S.weekOff))">4W</button>
+        <button class="arp ${_anaOpts.range===8?'on':''}" onclick="_anaOpts.range=8;renderAna(getWeekDates(S.weekOff))">8W</button>
+        <button class="arp ${_anaOpts.range===12?'on':''}" onclick="_anaOpts.range=12;renderAna(getWeekDates(S.weekOff))">12W</button>
       </div>
     </div>
     <div class="ac-sub">Track your performance week over week</div>
@@ -5926,11 +6254,20 @@ function scheduleSmartReminders(){
 function toggleTheme(){
   S.sett.theme=S.sett.theme==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',S.sett.theme);
-  saveS();renderSettings();
+  saveS();renderSettings();syncDmTog();
   const dates=getWeekDates(S.weekOff);
   if(document.getElementById('view-analytics').classList.contains('on')) renderAna(dates);
   if(document.getElementById('view-profile').classList.contains('on')) renderProfile();
   if(document.getElementById('view-notes').classList.contains('on')) renderNotes();
+}
+function syncDmTog(){
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const tog=document.getElementById('dm-tog');
+  const ico=document.getElementById('dm-tog-ico');
+  const lbl=document.getElementById('dm-tog-label');
+  if(tog){isDark?tog.classList.add('on'):tog.classList.remove('on');}
+  if(ico){ico.textContent=isDark?'🌙':'☀️';}
+  if(lbl){lbl.textContent=isDark?'Dark':'Light';}
 }
 
 // ════════════════════════════════════════════════════════════
@@ -5984,6 +6321,232 @@ function setFilter(cat,btn){
 // ════════════════════════════════════════════════════════════
 // TASK CRUD
 // ════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════
+// SCHEDULE PICKER (Google-Calendar-inspired)
+// ════════════════════════════════════════════════════════════
+const CAL = {
+  mode: 'recurring', // 'recurring' | 'single' | 'range'
+  viewYear: 0,
+  viewMonth: 0,
+  singleDate: null,    // 'YYYY-MM-DD'
+  rangeStart: null,    // 'YYYY-MM-DD'
+  rangeEnd:   null,    // 'YYYY-MM-DD'
+  hoverDate:  null,    // for range hover preview
+};
+
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function calInit(existingTask){
+  const now = new Date(BASE);
+  CAL.viewYear  = now.getFullYear();
+  CAL.viewMonth = now.getMonth();
+  CAL.hoverDate = null;
+
+  if(existingTask && existingTask.schedMode){
+    CAL.mode      = existingTask.schedMode;
+    CAL.singleDate= existingTask.schedSingle||null;
+    CAL.rangeStart= existingTask.schedRangeStart||null;
+    CAL.rangeEnd  = existingTask.schedRangeEnd||null;
+    // navigate to the relevant month
+    if(CAL.singleDate){
+      const d=new Date(CAL.singleDate+'T00:00:00');
+      CAL.viewYear=d.getFullYear(); CAL.viewMonth=d.getMonth();
+    } else if(CAL.rangeStart){
+      const d=new Date(CAL.rangeStart+'T00:00:00');
+      CAL.viewYear=d.getFullYear(); CAL.viewMonth=d.getMonth();
+    }
+  } else {
+    CAL.mode='recurring';
+    CAL.singleDate=null; CAL.rangeStart=null; CAL.rangeEnd=null;
+  }
+  setSchedMode(CAL.mode, true);
+}
+
+function setSchedMode(mode, silent){
+  CAL.mode = mode;
+  ['recurring','single','range'].forEach(m=>{
+    document.getElementById('smt-'+m).classList.toggle('on', m===mode);
+  });
+  const calWrap = document.getElementById('cal-wrap');
+  const recWrap = document.getElementById('sched-recurring-wrap');
+  if(mode==='recurring'){
+    calWrap.style.display='none';
+    recWrap.classList.add('show');
+  } else {
+    calWrap.style.display='block';
+    recWrap.classList.remove('show');
+    if(!silent) calRender();
+  }
+  if(!silent) updateSchedSummary();
+}
+
+function calNav(dir){
+  CAL.viewMonth += dir;
+  if(CAL.viewMonth < 0){ CAL.viewMonth=11; CAL.viewYear--; }
+  if(CAL.viewMonth > 11){ CAL.viewMonth=0; CAL.viewYear++; }
+  calRender();
+}
+
+function calRender(){
+  const grid = document.getElementById('cal-grid');
+  const title = document.getElementById('cal-title');
+  if(!grid||!title) return;
+
+  title.textContent = MONTHS[CAL.viewMonth]+' '+CAL.viewYear;
+
+  // remove old day cells (keep 7 dow headers)
+  const kids=[...grid.children];
+  kids.slice(7).forEach(k=>k.remove());
+
+  const today = new Date(BASE);
+  const todayStr = fmtDateKey(today);
+  const firstDay = new Date(CAL.viewYear, CAL.viewMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(CAL.viewYear, CAL.viewMonth+1, 0).getDate();
+
+  // blank cells before month start
+  for(let i=0;i<firstDay;i++){
+    const el=document.createElement('div');
+    el.className='cal-day cal-empty';
+    grid.appendChild(el);
+  }
+
+  for(let d=1;d<=daysInMonth;d++){
+    const ds = fmtDateKey(new Date(CAL.viewYear, CAL.viewMonth, d));
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+    el.dataset.date = ds;
+
+    if(ds===todayStr) el.classList.add('cal-today');
+
+    // mark selected / range
+    applyCalDayState(el, ds);
+
+    el.addEventListener('click', ()=>calDayClick(ds));
+    el.addEventListener('mouseenter', ()=>calDayHover(ds));
+    el.addEventListener('mouseleave', ()=>calDayLeave());
+    grid.appendChild(el);
+  }
+}
+
+function applyCalDayState(el, ds){
+  const {mode,singleDate,rangeStart,rangeEnd,hoverDate}=CAL;
+  el.classList.remove('cal-selected','cal-in-range','cal-range-start','cal-range-end');
+  if(mode==='single'){
+    if(ds===singleDate) el.classList.add('cal-selected');
+  } else if(mode==='range'){
+    const start=rangeStart;
+    const end=rangeEnd||(hoverDate&&rangeStart&&!rangeEnd?hoverDate:null);
+    const lo=start&&end?(start<=end?start:end):start;
+    const hi=start&&end?(start<=end?end:start):null;
+    if(lo&&ds===lo&&(!hi||lo===hi)) el.classList.add('cal-selected');
+    else if(lo&&hi){
+      if(ds===lo) el.classList.add('cal-range-start');
+      else if(ds===hi) el.classList.add('cal-range-end');
+      else if(ds>lo&&ds<hi) el.classList.add('cal-in-range');
+    }
+  }
+}
+
+function calDayClick(ds){
+  if(CAL.mode==='single'){
+    CAL.singleDate = (CAL.singleDate===ds)?null:ds;
+  } else if(CAL.mode==='range'){
+    if(!CAL.rangeStart || (CAL.rangeStart&&CAL.rangeEnd)){
+      // start fresh
+      CAL.rangeStart=ds; CAL.rangeEnd=null;
+    } else {
+      // second click — finalize range
+      if(ds<CAL.rangeStart){ CAL.rangeEnd=CAL.rangeStart; CAL.rangeStart=ds; }
+      else if(ds===CAL.rangeStart){ CAL.rangeStart=null; }
+      else { CAL.rangeEnd=ds; }
+    }
+  }
+  calRender();
+  updateSchedSummary();
+}
+
+function calDayHover(ds){
+  if(CAL.mode==='range'&&CAL.rangeStart&&!CAL.rangeEnd){
+    CAL.hoverDate=ds;
+    // re-apply states without full re-render for performance
+    document.querySelectorAll('.cal-day[data-date]').forEach(el=>{
+      applyCalDayState(el, el.dataset.date);
+    });
+  }
+}
+function calDayLeave(){
+  if(CAL.mode==='range'&&CAL.rangeStart&&!CAL.rangeEnd){
+    CAL.hoverDate=null;
+    document.querySelectorAll('.cal-day[data-date]').forEach(el=>{
+      applyCalDayState(el, el.dataset.date);
+    });
+  }
+}
+
+function fmtDateKey(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), dd=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${dd}`;
+}
+function fmtDateNice(ds){
+  if(!ds) return '';
+  const d=new Date(ds+'T00:00:00');
+  return d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+}
+function fmtDateNiceShort(ds){
+  if(!ds) return '';
+  const d=new Date(ds+'T00:00:00');
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+}
+function countRangeDays(start,end){
+  if(!start||!end) return 0;
+  const a=new Date(start+'T00:00:00'), b=new Date(end+'T00:00:00');
+  return Math.round((b-a)/86400000)+1;
+}
+
+function clearSchedSelection(){
+  CAL.singleDate=null; CAL.rangeStart=null; CAL.rangeEnd=null; CAL.hoverDate=null;
+  calRender();
+  updateSchedSummary();
+}
+
+function updateSchedSummary(){
+  const box=document.getElementById('sched-summary');
+  const ico=document.getElementById('sched-summary-ico');
+  const txt=document.getElementById('sched-summary-text');
+  if(!box) return;
+
+  if(CAL.mode==='recurring'){
+    box.style.display='none';
+    return;
+  }
+  if(CAL.mode==='single'){
+    if(CAL.singleDate){
+      box.style.display='flex';
+      ico.textContent='📅';
+      const today=fmtDateKey(new Date(BASE));
+      const label=fmtDateNice(CAL.singleDate);
+      txt.textContent = CAL.singleDate===today ? `Today · ${label}` : label;
+    } else {
+      box.style.display='flex';
+      ico.textContent='📅';
+      txt.textContent='Tap a date on the calendar';
+    }
+  } else if(CAL.mode==='range'){
+    box.style.display='flex';
+    ico.textContent='📆';
+    if(CAL.rangeStart&&CAL.rangeEnd){
+      const n=countRangeDays(CAL.rangeStart,CAL.rangeEnd);
+      txt.textContent=`${fmtDateNiceShort(CAL.rangeStart)} → ${fmtDateNiceShort(CAL.rangeEnd)} · ${n} day${n!==1?'s':''}`;
+    } else if(CAL.rangeStart){
+      txt.textContent=`${fmtDateNice(CAL.rangeStart)} → pick end date`;
+    } else {
+      txt.textContent='Tap start date on the calendar';
+    }
+  }
+}
+
 function openTaskModal(editId){
   S.editId=editId||null;
   const isEdit=!!editId;
@@ -5996,6 +6559,8 @@ function openTaskModal(editId){
   document.getElementById('f-pri').value=t?(t.pri||'med'):'high';
   document.getElementById('f-notes').value=t?(t.notes||''):'';
   document.querySelectorAll('.dp').forEach((el,i)=>el.classList.toggle('on',t?t.days.includes(i):i<5));
+  // init calendar picker
+  calInit(t);
   // Show delete button only when editing
   const delWrap=document.getElementById('mo-task-del-wrap');
   if(delWrap) delWrap.style.display=isEdit?'block':'none';
@@ -6014,19 +6579,25 @@ function saveTask(){
   if(!name){toast('Please enter a task name','#f43f5e');return;}
   const days=[];
   document.querySelectorAll('.dp.on').forEach(el=>days.push(parseInt(el.dataset.d)));
-  if(!days.length){toast('Select at least one day','#f43f5e');return;}
+  if(CAL.mode==='recurring'&&!days.length){toast('Select at least one day','#f43f5e');return;}
+  if(CAL.mode==='single'&&!CAL.singleDate){toast('Pick a date on the calendar','#f43f5e');return;}
+  if(CAL.mode==='range'&&(!CAL.rangeStart||!CAL.rangeEnd)){toast('Pick a start and end date','#f43f5e');return;}
   const rawCat=document.getElementById('f-cat').value.trim();
-  // Store category as-is (lowercased for consistency), display will capitalize first letter
   const cat=rawCat?rawCat.toLowerCase():'personal';
   const data={name,start:document.getElementById('f-start').value,end:document.getElementById('f-end').value,
     cat,pri:document.getElementById('f-pri').value,
-    notes:document.getElementById('f-notes').value.trim(),days};
+    notes:document.getElementById('f-notes').value.trim(),days,
+    schedMode:CAL.mode,
+    schedSingle:CAL.mode==='single'?CAL.singleDate:null,
+    schedRangeStart:CAL.mode==='range'?CAL.rangeStart:null,
+    schedRangeEnd:CAL.mode==='range'?CAL.rangeEnd:null,
+  };
   if(S.editId){
     const idx=S.tasks.findIndex(t=>t.id===S.editId);
     if(idx>-1)S.tasks[idx]={...S.tasks[idx],...data,deletedFrom:undefined};
     toast('Task updated ✓','#34d399');
   } else {
-    S.tasks.push({id:'u'+Date.now(),...data});
+    S.tasks.push({id:'u'+Date.now(),...data,createdFrom:fmtKey(new Date(BASE))});
     toast('Task added ✓','#34d399');
   }
   sortTasksByTime();
@@ -6057,7 +6628,7 @@ function confirmReset(){
 function doConfirmedReset(){
   S.checks={};S.timerLog=[];
   // Also restore any soft-deleted tasks so they reappear after a reset
-  S.tasks.forEach(t=>{ delete t.deletedFrom; });
+  S.tasks.forEach(t=>{ delete t.deletedFrom; delete t.createdFrom; });
   saveS();render();
   document.getElementById('mo-confirm-reset').classList.remove('open');
   toast('Data cleared','#f97316');
@@ -6229,7 +6800,7 @@ function restoreJSON(event){
 
     // ── Apply & save ─────────────────────────────────────────
     S=restored;
-    document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');
+    document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');setTimeout(syncDmTog,0);
     saveS();
     render();
     renderSettings();
