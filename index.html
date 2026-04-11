@@ -505,6 +505,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .htoday{box-shadow:0 0 0 2px var(--p1),0 0 0 4px rgba(91,110,245,.18)}
 /* cat breakdown */
 .cl{display:flex;flex-direction:column;gap:11px}
+/* Category list: show 5 items, scroll for more */
+.cl-scroll-wrap{
+  overflow-y:auto;
+  overflow-x:hidden;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border2) transparent;
+  padding-right:2px;
+}
+.cl-scroll-wrap::-webkit-scrollbar{width:4px}
+.cl-scroll-wrap::-webkit-scrollbar-track{background:transparent}
+.cl-scroll-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
 .cr{display:flex;align-items:center;gap:9px}
 .ce{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .ci{flex:1;min-width:0}
@@ -529,6 +540,146 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sbi:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
 .sbv{font-family:var(--fh);font-size:24px;font-weight:800}
 .sbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+/* ── AI HABIT INSIGHT ──────────────────────────────────────── */
+.hab-ai-wrap{margin-bottom:18px}
+.hab-ai-trigger{
+  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,rgba(124,58,237,.10),rgba(14,165,233,.07));
+  border:1px solid rgba(124,58,237,.28);
+  border-radius:var(--rr);padding:13px 16px;
+  cursor:pointer;transition:all .22s;
+  box-shadow:0 2px 12px rgba(124,58,237,.10);
+}
+.hab-ai-trigger:hover{
+  background:linear-gradient(135deg,rgba(124,58,237,.16),rgba(14,165,233,.11));
+  border-color:rgba(124,58,237,.45);
+  box-shadow:0 4px 20px rgba(124,58,237,.18);
+  transform:translateY(-1px);
+}
+.hab-ai-icon{
+  width:38px;height:38px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(135deg,#7c3aed,#0ea5e9);
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  box-shadow:0 3px 10px rgba(124,58,237,.35);
+}
+.hab-ai-info{flex:1;min-width:0}
+.hab-ai-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;
+  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:2px}
+.hab-ai-desc{font-size:11.5px;color:var(--text2);line-height:1.5}
+.hab-ai-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 11px;border-radius:8px;
+  font-size:10.5px;font-weight:700;
+  background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(14,165,233,.13));
+  border:1px solid rgba(124,58,237,.35);
+  color:#a78bfa;white-space:nowrap;flex-shrink:0;
+  transition:all .2s;
+}
+.hab-ai-badge.loading{color:var(--text3);border-color:var(--border2);background:var(--card2);animation:pulse-opacity 1.2s ease-in-out infinite}
+@keyframes pulse-opacity{0%,100%{opacity:.7}50%{opacity:1}}
+.hab-ai-panel{
+  margin-top:10px;
+  background:linear-gradient(135deg,rgba(124,58,237,.07),rgba(14,165,233,.04));
+  border:1px solid rgba(124,58,237,.22);
+  border-radius:var(--rr);overflow:hidden;
+  animation:fu .25s ease;
+}
+[data-theme="light"] .hab-ai-panel{
+  background:linear-gradient(135deg,rgba(124,58,237,.05),rgba(14,165,233,.03));
+  border-color:rgba(124,58,237,.18);
+}
+.hab-ai-panel-head{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px 11px;
+  border-bottom:1px solid rgba(124,58,237,.15);
+}
+.hab-ai-panel-title{
+  font-family:var(--fh);font-size:13px;font-weight:700;
+  background:linear-gradient(135deg,#a78bfa,#38bdf8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hab-ai-panel-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.hab-ai-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px}
+@media(max-width:700px){.hab-ai-cards{grid-template-columns:1fr}}
+.hab-ai-card{
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:12px;padding:13px 14px;
+  display:flex;flex-direction:column;gap:6px;
+  transition:transform .18s,border-color .18s,box-shadow .18s;
+}
+.hab-ai-card:hover{transform:translateY(-2px);border-color:var(--border2);box-shadow:0 6px 18px rgba(0,0,0,.14)}
+.hab-ai-card-ico{font-size:18px;margin-bottom:2px}
+.hab-ai-card-tag{
+  font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  padding:2px 8px;border-radius:20px;display:inline-block;width:fit-content;
+}
+.hab-ai-card-head{font-size:12px;font-weight:700;color:var(--text);line-height:1.35}
+.hab-ai-card-body{font-size:11px;color:var(--text2);line-height:1.6}
+.hab-ai-footer{
+  padding:10px 16px 13px;display:flex;align-items:center;gap:8px;
+  border-top:1px solid rgba(124,58,237,.12);
+}
+.hab-ai-footer-note{font-size:10px;color:var(--text3);line-height:1.5;flex:1}
+.hab-ai-regen{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 12px;border-radius:7px;font-size:10.5px;font-weight:600;
+  background:transparent;border:1px solid rgba(124,58,237,.3);
+  color:#a78bfa;cursor:pointer;font-family:var(--fb);
+  transition:all .18s;white-space:nowrap;
+}
+.hab-ai-regen:hover{background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.5)}
+.hab-ai-regen:disabled{opacity:.5;cursor:not-allowed}
+/* ── HABIT SCREEN ENHANCED ─────────────────────────────────── */
+/* hero strip */
+.hab-hero{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+.hab-kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:13px 14px;display:flex;flex-direction:column;gap:2px;transition:transform .18s,box-shadow .18s}
+.hab-kpi:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.hab-kpi-icon{font-size:16px;margin-bottom:4px;line-height:1}
+.hab-kpi-val{font-family:var(--fh);font-size:22px;font-weight:800;line-height:1;letter-spacing:-.5px}
+.hab-kpi-lbl{font-size:9.5px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;font-weight:600}
+.hab-kpi-sub{font-size:9px;color:var(--text3);margin-top:1px}
+/* two-col middle layout */
+.hab-mid{display:grid;grid-template-columns:1fr 300px;gap:12px;margin-bottom:16px;align-items:start}
+/* today panel */
+.hab-today{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px;height:100%}
+.hab-today-title{font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.hab-today-list{display:flex;flex-direction:column;gap:6px}
+.hab-today-row{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:9px;background:var(--bg3);border:1px solid var(--border)}
+.hab-today-row.done{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.2)}
+.hab-today-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.hab-today-name{font-size:11px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hab-today-time{font-size:9.5px;color:var(--text3);white-space:nowrap}
+.hab-today-chk{font-size:11px;flex-shrink:0}
+/* cat breakdown panel */
+.hab-cats{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px}
+.hab-cats-title{font-family:var(--fh);font-size:12px;font-weight:700;margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.hab-cat-row{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.hab-cat-row:last-child{margin-bottom:0}
+.hab-cat-top{display:flex;align-items:center;justify-content:space-between}
+.hab-cat-name{font-size:11px;font-weight:600;display:flex;align-items:center;gap:5px}
+.hab-cat-pct{font-family:var(--fh);font-size:12px;font-weight:800}
+.hab-cat-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.hab-cat-fill{height:100%;border-radius:2px;transition:width .7s ease}
+.hab-cat-meta{font-size:9px;color:var(--text3)}
+/* weekly overview enhanced */
+.hab-week-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;margin-bottom:16px}
+.hab-week-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hab-week-title{font-family:var(--fh);font-size:13px;font-weight:700}
+.hab-week-avg{font-family:var(--fh);font-size:18px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hab-week-avglbl{font-size:9px;color:var(--text3);text-align:right;margin-top:1px;letter-spacing:.3px}
+/* streak flame */
+.hab-streak-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:700;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);color:#f97316}
+/* responsive */
+@media(max-width:900px){
+  .hab-hero{grid-template-columns:repeat(2,1fr)}
+  .hab-mid{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .hab-hero{grid-template-columns:repeat(2,1fr)}
+  .hab-kpi-val{font-size:18px}
+}
 /* ── FOCUS TIMER ───────────────────────────────────────────── */
 /* Outer page container — vertically + horizontally centres everything */
 #timer-cx{
@@ -1024,43 +1175,115 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .mc:hover{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.3);color:var(--r1)}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dp-row{display:flex;gap:4px}
-.dp{width:32px;height:28px;border-radius:6px;border:1px solid var(--border2);background:var(--inp-bg);color:var(--text2);font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:var(--fb);user-select:none}
+.dp{width:32px;height:26px;border-radius:6px;border:1px solid var(--border2);background:var(--inp-bg);color:var(--text2);font-size:10px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:var(--fb);user-select:none}
 .dp.on{background:rgba(91,110,245,.2);border-color:var(--p1);color:var(--p1)}
 .mf{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
 
 /* ── SCHEDULE PICKER ───────────────────────────────────────── */
-.sched-mode-tabs{display:flex;gap:0;background:var(--bg3);border:1.5px solid var(--border2);border-radius:10px;padding:3px;margin-bottom:10px}
-.sched-mode-tab{flex:1;padding:5px 8px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text3);transition:all .18s;border:none;background:transparent;font-family:var(--fb);text-align:center;letter-spacing:-.1px}
+.sched-mode-tabs{display:flex;gap:0;background:var(--bg3);border:1.5px solid var(--border2);border-radius:10px;padding:2px;margin-bottom:7px}
+.sched-mode-tab{flex:1;padding:4px 6px;border-radius:7px;font-size:10.5px;font-weight:700;cursor:pointer;color:var(--text3);transition:all .18s;border:none;background:transparent;font-family:var(--fb);text-align:center;letter-spacing:-.1px}
 .sched-mode-tab:hover{color:var(--text)}
 .sched-mode-tab.on{background:linear-gradient(135deg,rgba(91,110,245,.18),rgba(124,58,237,.12));color:var(--p1);box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1.5px rgba(91,110,245,.3),inset 0 1px 0 rgba(255,255,255,.06)}
 
-/* calendar widget */
-.cal-wrap{background:var(--card2);border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:8px}
-.cal-header{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 6px}
-.cal-title{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--text);letter-spacing:-.2px}
-.cal-nav{width:22px;height:22px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
-.cal-nav:hover{background:rgba(91,110,245,.1);border-color:rgba(91,110,245,.3);color:var(--p1)}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:0 6px 6px}
-.cal-dow{font-size:8px;font-weight:800;color:var(--text3);text-align:center;padding:3px 0;letter-spacing:.3px;text-transform:uppercase}
-.cal-day{width:28px;height:28px;max-width:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;cursor:pointer;border-radius:50%;transition:all .15s;color:var(--text2);margin:1px auto;position:relative;user-select:none}
-.cal-day:hover:not(.cal-empty):not(.cal-disabled){background:rgba(91,110,245,.14);color:var(--p1)}
-.cal-day.cal-today{color:var(--p1);font-weight:800}
-.cal-day.cal-today::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--p1)}
-.cal-day.cal-selected{background:var(--grad);color:#fff!important;font-weight:800;box-shadow:0 2px 8px rgba(91,110,245,.4)}
+/* calendar widget — compact & polished */
+.cal-wrap{
+  background:var(--bg);
+  border:1px solid var(--border2);
+  border-radius:11px;
+  overflow:hidden;
+  margin-bottom:6px;
+  box-shadow:0 2px 10px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.cal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 9px 5px;
+  background:var(--card2);
+  border-bottom:1px solid var(--border);
+}
+.cal-title{
+  font-family:var(--fh);font-size:11.5px;font-weight:800;
+  color:var(--text);letter-spacing:-.3px;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cal-nav{
+  width:20px;height:20px;border-radius:5px;
+  border:1px solid var(--border2);background:transparent;
+  color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;padding:0;
+}
+.cal-nav:hover{background:rgba(91,110,245,.12);border-color:rgba(91,110,245,.35);color:var(--p1)}
+.cal-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  grid-auto-rows:26px;            /* ALL rows same height — DOW + every date row */
+  padding:3px 5px 4px;
+  gap:0;
+}
+.cal-dow{
+  font-size:8px;font-weight:800;color:var(--text3);
+  text-align:center;
+  height:26px;line-height:26px;padding:0;
+  letter-spacing:.4px;text-transform:uppercase;
+}
+/* Weekend DOW tint */
+.cal-dow:first-child,.cal-dow:last-child{color:rgba(91,110,245,.5)}
+.cal-day{
+  width:100%;height:26px;        /* matches grid-auto-rows — no drift */
+  display:flex;align-items:center;justify-content:center;
+  font-size:10.5px;font-weight:600;
+  cursor:pointer;border-radius:6px;
+  transition:background .13s,color .13s,transform .13s;
+  color:var(--text2);
+  position:relative;user-select:none;
+  overflow:hidden;
+}
+.cal-day.cal-empty{
+  height:26px;                    /* force empty cells to same height */
+  pointer-events:none;
+  cursor:default;
+}
+.cal-day:hover:not(.cal-empty):not(.cal-disabled){
+  background:rgba(91,110,245,.15);color:var(--p1);transform:scale(1.08);
+}
+.cal-day.cal-today{
+  color:var(--p1);font-weight:800;
+  background:rgba(91,110,245,.1);
+}
+.cal-day.cal-today::after{
+  content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  width:3px;height:3px;border-radius:50%;background:var(--p1);
+}
+.cal-day.cal-selected{
+  background:var(--grad);color:#fff!important;font-weight:800;
+  border-radius:6px;
+  box-shadow:0 2px 8px rgba(91,110,245,.45);
+  transform:scale(1.06);
+}
 .cal-day.cal-selected.cal-today::after{background:#fff}
-.cal-day.cal-in-range{background:rgba(91,110,245,.12);color:var(--p1);border-radius:0}
-.cal-day.cal-range-start{background:var(--grad);color:#fff!important;border-radius:50% 0 0 50%!important;box-shadow:0 2px 8px rgba(91,110,245,.4)}
-.cal-day.cal-range-end{background:var(--grad);color:#fff!important;border-radius:0 50% 50% 0!important;box-shadow:0 2px 8px rgba(91,110,245,.4)}
-.cal-day.cal-range-start.cal-range-end{border-radius:50%!important}
-.cal-day.cal-disabled{color:var(--border3);cursor:default;pointer-events:none}
-.cal-day.cal-empty{cursor:default}
-.cal-day.cal-other-month{color:var(--border3)}
+.cal-day.cal-in-range{
+  background:rgba(91,110,245,.11);color:var(--p1);
+  border-radius:0;
+}
+.cal-day.cal-range-start{
+  background:var(--grad);color:#fff!important;
+  border-radius:6px 0 0 6px!important;
+  box-shadow:0 2px 8px rgba(91,110,245,.4);
+}
+.cal-day.cal-range-end{
+  background:var(--grad);color:#fff!important;
+  border-radius:0 6px 6px 0!important;
+  box-shadow:0 2px 8px rgba(91,110,245,.4);
+}
+.cal-day.cal-range-start.cal-range-end{border-radius:6px!important}
+.cal-day.cal-disabled{color:var(--border3);cursor:default;pointer-events:none;opacity:.5}
+.cal-day.cal-other-month{color:var(--border3);opacity:.45}
 
 /* selected summary pill */
-.sched-summary{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:8px;background:rgba(91,110,245,.08);border:1px solid rgba(91,110,245,.2);margin-bottom:8px;min-height:34px}
-.sched-summary-ico{font-size:13px;flex-shrink:0}
-.sched-summary-text{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;flex:1}
-.sched-summary-clear{width:20px;height:20px;border-radius:5px;border:none;background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1;transition:all .15s;flex-shrink:0}
+.sched-summary{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:8px;background:rgba(91,110,245,.08);border:1px solid rgba(91,110,245,.2);margin-bottom:6px;min-height:30px}
+.sched-summary-ico{font-size:12px;flex-shrink:0}
+.sched-summary-text{font-size:10.5px;font-weight:600;color:var(--text);line-height:1.35;flex:1}
+.sched-summary-clear{width:18px;height:18px;border-radius:5px;border:none;background:transparent;color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;transition:all .15s;flex-shrink:0}
 .sched-summary-clear:hover{background:rgba(244,63,94,.12);color:var(--r1)}
 /* recurring days shown only in recurring mode */
 .sched-recurring-wrap{display:none}
@@ -3819,6 +4042,47 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     grid-template-columns:26px 1fr !important;
   }
 }
+/* ── PROFILE EDIT POPUP ──────────────────────────────────────── */
+#prof-edit-popup{
+  position:fixed;z-index:9999;
+  width:248px;
+  background:rgba(12,12,22,.95);
+  border:1px solid rgba(91,110,245,.32);
+  border-radius:15px;
+  box-shadow:0 12px 48px rgba(0,0,0,.6),0 0 0 1px rgba(91,110,245,.1),0 0 70px rgba(91,110,245,.07);
+  backdrop-filter:blur(28px) saturate(1.5);
+  -webkit-backdrop-filter:blur(28px) saturate(1.5);
+  padding:0;overflow:hidden;display:none;
+  animation:pepIn .17s cubic-bezier(.34,1.5,.64,1);
+  transform-origin:top left;
+}
+@keyframes pepIn{
+  from{opacity:0;transform:scale(.86) translateY(-6px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+#prof-edit-popup::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#5b6ef5,#7c3aed,#0ea5e9);
+}
+.pep-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 7px}
+.pep-title{display:flex;align-items:center;gap:6px;font-family:var(--fh);font-size:10.5px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:.1px}
+.pep-title-ico{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,rgba(91,110,245,.45),rgba(124,58,237,.35));border:1px solid rgba(91,110,245,.28);display:flex;align-items:center;justify-content:center}
+.pep-close{width:18px;height:18px;border-radius:5px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.05);color:rgba(255,255,255,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1}
+.pep-close:hover{background:rgba(244,63,94,.14);border-color:rgba(244,63,94,.28);color:#f43f5e}
+.pep-divider{height:1px;background:rgba(255,255,255,.05);margin:0}
+.pep-body{padding:10px 12px 11px;display:flex;flex-direction:column;gap:7px}
+.pep-field{display:flex;flex-direction:column;gap:3px}
+.pep-label{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);padding-left:1px}
+.pep-input{width:100%;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);border-radius:7px;outline:none;color:#fff;font-family:var(--fb);transition:border-color .15s,background .15s,box-shadow .15s}
+.pep-input:focus{border-color:rgba(91,110,245,.55);background:rgba(91,110,245,.07);box-shadow:0 0 0 3px rgba(91,110,245,.1)}
+.pep-input-name{font-family:var(--fh);font-size:13px;font-weight:800;letter-spacing:-.2px;padding:6px 9px}
+.pep-input-role{font-size:11.5px;font-weight:500;padding:5px 9px;color:rgba(255,255,255,.8)}
+.pep-actions{display:flex;gap:5px;margin-top:1px}
+.pep-save{flex:1;padding:6px 0;border-radius:7px;border:none;background:linear-gradient(135deg,#5b6ef5,#7c3aed);color:#fff;font-family:var(--fb);font-size:10.5px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .15s;box-shadow:0 2px 10px rgba(91,110,245,.3);letter-spacing:.1px}
+.pep-save:hover{opacity:.87;transform:translateY(-1px)}
+.pep-save:active{transform:none;opacity:1}
+.pep-cancel{padding:6px 11px;border-radius:7px;border:1px solid rgba(255,255,255,.09);background:transparent;color:rgba(255,255,255,.38);font-family:var(--fb);font-size:10.5px;font-weight:600;cursor:pointer;transition:all .15s}
+.pep-cancel:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.18)}
 </style>
 </head>
 <body>
@@ -3831,9 +4095,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
     <span class="nl">Dashboard</span>
   </div>
-  <div class="ni" id="n-schedule" onclick="showView('schedule')" title="Schedule & Calendar">
+  <div class="ni" id="n-schedule" onclick="showView('schedule')" title="Calendar">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-    <span class="nl">Schedule</span>
+    <span class="nl">Calendar</span>
   </div>
   <div class="ni" id="n-analytics" onclick="showView('analytics')" title="Analytics">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
@@ -3853,16 +4117,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <span class="nl">Notes</span>
   </div>
   <div class="sb-sep"></div>
-  <div class="ni" id="n-settings" onclick="showView('settings')" title="Settings" style="position:relative">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    <span class="nl">Settings</span>
-    <span class="red-dot" id="notif-dot-sb" style="display:none"></span>
-  </div>
+
 
   <div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;padding:0 12px">
-    <div class="sb-prof" id="sb-prof" onclick="showView('profile')">
+    <div class="sb-prof" id="sb-prof" onclick="showView('profile')" style="position:relative">
       <div id="sb-av-wrap"></div>
       <div><div class="sb-prof-name" id="sb-pname">User</div><div class="sb-prof-role" id="sb-prole">Life Optimizer</div></div>
+      <span class="red-dot" id="notif-dot-sb" style="display:none;position:absolute;top:6px;right:6px"></span>
     </div>
     <div class="sb-tog" id="sb-tog" onclick="toggleSb()" title="Expand sidebar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="15" height="15" id="sb-arrow" style="flex-shrink:0"><path id="sb-arrow-path" d="M9 18l6-6-6-6"/></svg>
@@ -3969,7 +4230,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="view" id="view-schedule">
   <div class="tb sch-tb">
     <div>
-      <h1 id="sched-tb-h1">Schedule</h1>
+      <h1 id="sched-tb-h1">Calendar</h1>
       <p class="tb-sub" id="sched-tb-sub">Calendar &amp; task blocks</p>
     </div>
     <div class="tb-r" id="sched-tb-r"></div>
@@ -3980,7 +4241,20 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- ANALYTICS -->
 <div class="view" id="view-analytics">
   <div class="tb"><div><h1>Analytics</h1><p class="tb-sub">Performance deep-dive</p></div>
-    <div class="tb-r"></div>
+    <div class="tb-r">
+      <button onclick="openWeeklySummary()" id="weekly-sum-btn-tb" style="
+        display:inline-flex;align-items:center;gap:6px;
+        padding:7px 14px;border-radius:10px;
+        background:linear-gradient(135deg,rgba(91,110,245,.16),rgba(124,58,237,.12));
+        border:1px solid rgba(91,110,245,.35);
+        color:var(--p1);font-family:var(--fb);font-size:11px;font-weight:700;
+        cursor:pointer;white-space:nowrap;flex-shrink:0;
+        box-shadow:0 2px 10px rgba(91,110,245,.15);
+        transition:all .2s;letter-spacing:.1px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        Weekly Summary
+      </button>
+    </div>
   </div>
   <div class="cx" id="ana-cx"></div>
 </div>
@@ -4007,8 +4281,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <!-- PROFILE -->
 <div class="view" id="view-profile">
-  <div class="tb"><div><h1>My Profile</h1><p class="tb-sub">Your personal hub</p></div>
-    <div class="tb-r"><button class="btn btn-pri" onclick="saveProfile()">Save Changes</button></div>
+  <div class="tb"><div><h1>My Profile</h1><p class="tb-sub">Your personal hub &amp; settings</p></div>
+    <div class="tb-r"></div>
   </div>
   <div class="cx" id="prof-cx"></div>
 </div>
@@ -4074,7 +4348,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
       <div class="bn" id="bn-schedule" onclick="showView('schedule')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-        <span class="bn-l">Schedule</span>
+        <span class="bn-l">Calendar</span>
       </div>
       <div class="bn" id="bn-analytics" onclick="showView('analytics')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
@@ -4097,10 +4371,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         <span class="bn-l">Notes</span>
       </div>
-      <div class="bn" id="bn-settings" onclick="showView('settings')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        <span class="bn-l">Settings</span>
-      </div>
+
     </div>
     <!-- Scroll hint: animated chevron pill -->
     <div class="bnav-scroll-hint" id="bnav-scroll-hint" aria-hidden="true">
@@ -4116,7 +4387,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="mo" id="mo-task" onclick="moClick(event,'mo-task')">
   <div class="modal">
     <!-- Header with gradient accent -->
-    <div style="padding:13px 16px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px">
+    <div style="padding:11px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px">
       <div style="display:flex;align-items:center;gap:9px">
         <div style="width:28px;height:28px;border-radius:8px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;box-shadow:0 3px 8px rgba(91,110,245,.28)">📋</div>
         <h2 id="mo-task-title" style="font-family:var(--fh);font-size:14px;font-weight:800;line-height:1">Add Task Block</h2>
@@ -4127,25 +4398,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </div>
 
     <!-- Body -->
-    <div style="padding:13px 16px">
+    <div style="padding:10px 14px">
 
       <!-- Task name -->
-      <div class="fg" style="margin-bottom:9px">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:block">Task Name *</label>
+      <div class="fg" style="margin-bottom:7px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;display:block">Task Name *</label>
         <input id="f-name" type="text" placeholder="e.g. Deep Work Session" style="font-size:12px;padding:7px 10px;border-radius:8px">
       </div>
 
       <!-- Time row -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Start Time
           </label>
           <input id="f-start" type="time" value="09:00" style="font-size:11px;padding:6px 9px;border-radius:8px">
         </div>
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             End Time
           </label>
@@ -4154,16 +4425,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
 
       <!-- Category + Priority row -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
             Category
           </label>
           <input id="f-cat" type="text" placeholder="Personal, Career…" style="font-size:11px;padding:6px 9px;border-radius:8px">
         </div>
         <div class="fg" style="margin:0">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
             Priority
           </label>
@@ -4176,14 +4447,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
 
       <!-- ── SCHEDULE SECTION ───────────────────────────────── -->
-      <div style="margin-bottom:9px">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;display:flex;align-items:center;gap:5px">
+      <div style="margin-bottom:7px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;display:flex;align-items:center;gap:5px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           Schedule
         </label>
 
         <!-- Mode tabs: Recurring / Single Date / Date Range -->
-        <div class="sched-mode-tabs">
+        <div class="sched-mode-tabs" style="margin-bottom:7px">
           <button class="sched-mode-tab on" id="smt-recurring" onclick="setSchedMode('recurring')">🔁 Recurring</button>
           <button class="sched-mode-tab" id="smt-single" onclick="setSchedMode('single')">📅 Single Date</button>
           <button class="sched-mode-tab" id="smt-range" onclick="setSchedMode('range')">📆 Date Range</button>
@@ -4200,15 +4471,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <div class="cal-wrap" id="cal-wrap">
           <div class="cal-header">
             <button class="cal-nav" id="cal-prev" onclick="calNav(-1)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="15 18 9 12 15 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
             <span class="cal-title" id="cal-title">April 2026</span>
             <button class="cal-nav" id="cal-next" onclick="calNav(1)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="11" height="11"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
           </div>
           <div class="cal-grid" id="cal-grid">
-            <!-- days of week headers -->
             <div class="cal-dow">Su</div><div class="cal-dow">Mo</div><div class="cal-dow">Tu</div>
             <div class="cal-dow">We</div><div class="cal-dow">Th</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div>
           </div>
@@ -4216,11 +4486,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
         <!-- Recurring active-days (only shown in recurring mode) -->
         <div class="sched-recurring-wrap show" id="sched-recurring-wrap">
-          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px;display:flex;align-items:center;gap:5px">
+          <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
             Repeat on
           </label>
-          <div class="dp-row" id="dp-row" style="gap:6px">
+          <div class="dp-row" id="dp-row" style="gap:5px">
             <div class="dp on" data-d="0">Mo</div><div class="dp on" data-d="1">Tu</div>
             <div class="dp on" data-d="2">We</div><div class="dp on" data-d="3">Th</div>
             <div class="dp on" data-d="4">Fr</div><div class="dp" data-d="5">Sa</div>
@@ -4231,16 +4501,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
       <!-- Notes -->
       <div class="fg" style="margin-bottom:0">
-        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;display:flex;align-items:center;gap:5px">
+        <label style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px;display:flex;align-items:center;gap:5px">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           Notes
         </label>
-        <textarea id="f-notes" placeholder="Any notes or reminders…" style="font-size:11px;padding:6px 9px;border-radius:8px;min-height:52px;resize:vertical"></textarea>
+        <textarea id="f-notes" placeholder="Any notes or reminders…" style="font-size:11px;padding:6px 9px;border-radius:8px;min-height:44px;resize:vertical"></textarea>
       </div>
     </div>
 
     <!-- Footer -->
-    <div style="padding:10px 16px 13px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
+    <div style="padding:9px 14px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
       <div id="mo-task-del-wrap" style="display:none">
         <button class="mo-del-btn" onclick="delTask(S.editId)" title="Remove this task">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
@@ -4364,7 +4634,10 @@ function loadS(){
 function defaultProfile(){
   return {name:'Your Name',role:'Life Optimizer',bio:'Building discipline one day at a time.',email:'',phone:'',location:'',avatar:'',goal:'',focus:'',social:{twitter:'',linkedin:'',github:''}};
 }
-function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}
+  // Invalidate color cache so new categories always get a unique color
+  Object.keys(_catColorCache).forEach(k=>delete _catColorCache[k]);
+}
 let S=loadS();
 document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');setTimeout(syncDmTog,0);
 
@@ -4385,15 +4658,33 @@ function getAllCats(){
   });
   return [...cats];
 }
-// Color palette for dynamic categories
-const CAT_PALETTE=['#5b6ef5','#10b981','#f97316','#ef4444','#0ea5e9','#eab308','#a855f7','#ec4899','#06b6d4','#84cc16'];
+// Color palette for dynamic categories — 16 distinct colors, no two alike
+const CAT_PALETTE=['#a855f7','#10b981','#f97316','#ef4444','#0ea5e9','#eab308','#5b6ef5','#ec4899','#06b6d4','#84cc16','#f43f5e','#14b8a6','#8b5cf6','#f59e0b','#3b82f6','#22c55e'];
 const _catColorMap={personal:'#a855f7',career:'#10b981',hustle:'#f97316',health:'#ef4444',learning:'#0ea5e9'};
 const _catEmoMap={personal:'🧘',career:'💼',hustle:'🚀',health:'🏃',learning:'🧠'};
+// Build a stable index-based color cache so every category gets a unique color
+const _catColorCache={};
+function _buildCatColorCache(){
+  // Fixed colors for legacy cats first
+  const legacy=['personal','career','hustle','health','learning'];
+  legacy.forEach((c,i)=>{_catColorCache[c]=_catColorMap[c];});
+  // All other cats get palette slots starting after legacy reserved slots
+  const allCats=getAllCats();
+  let idx=legacy.length;
+  allCats.forEach(c=>{
+    if(!_catColorCache[c]){
+      _catColorCache[c]=CAT_PALETTE[idx%CAT_PALETTE.length];
+      idx++;
+    }
+  });
+}
 function getCatColor(cat){
-  if(_catColorMap[cat])return _catColorMap[cat];
-  // Deterministic color from name
-  let h=0;for(let i=0;i<cat.length;i++)h=(h*31+cat.charCodeAt(i))%CAT_PALETTE.length;
-  return CAT_PALETTE[h];
+  if(!_catColorCache[cat]) _buildCatColorCache();
+  if(_catColorCache[cat]) return _catColorCache[cat];
+  // Fallback: index-based from palette
+  const allCats=getAllCats();
+  const i=allCats.indexOf(cat);
+  return CAT_PALETTE[i>=0?i%CAT_PALETTE.length:0];
 }
 // Distinct per-task colors — muted, dark-tinted, easy on the eyes
 const _TASK_PALETTE=['#3d52a0','#2d7a5e','#b05c1a','#a02840','#1a6fa0','#6b3fa0','#8a7a10','#a03070','#1a7878','#a03838','#4a3590','#2d7a2d'];
@@ -4507,7 +4798,7 @@ function render(){
     if(id==='view-timer')     renderTimer();
     if(id==='view-notes')     renderNotes();
     if(id==='view-profile')   renderProfile();
-    if(id==='view-settings')  renderSettings();
+    if(id==='view-settings')  renderProfile();
   }
   updateSbProfile();
   // greeting
@@ -4786,7 +5077,7 @@ function mobLeadSelect(value){
   saveS();
   updateMobLeadLabel();
   closeMobLeadPanel();
-  renderSettings();
+  renderProfile();
 }
 
 function updateMobLeadLabel(){
@@ -5200,12 +5491,11 @@ function renderAna(dates){
     </div>
   </div>
 
-  <!-- 2. Insight Card -->
-  <div class="ana-perf-insight" style="margin-bottom:14px">
-    <div class="ins-ico" style="width:32px;height:32px;border-radius:9px;background:rgba(91,110,245,.18);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:2px">💡</div>
-    <div class="ins-body">
-      <div class="ins-label" style="font-size:9px;font-weight:700;color:var(--p1);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Performance Insight</div>
-      <div class="ins-text" id="ana-insight-text" style="font-size:12px;color:var(--text);line-height:1.6">${insightText}</div>
+  <!-- Weekly Summary Modal -->
+  <div id="wsum-overlay" onclick="if(event.target===this)closeWeeklySummary()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:9000;align-items:flex-start;justify-content:center;padding:16px;padding-top:72px;overflow-y:auto">
+    <div id="wsum-modal" style="background:var(--card);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:560px;max-height:calc(100vh - 88px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);animation:mi .25s ease;display:flex;flex-direction:column">
+      <div id="wsum-sticky-header" style="flex-shrink:0;padding:16px 20px 14px;border-bottom:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);border-radius:20px 20px 0 0"></div>
+      <div id="wsum-content" style="overflow-y:auto;flex:1"></div>
     </div>
   </div>
 
@@ -5222,7 +5512,9 @@ function renderAna(dates){
         <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2);letter-spacing:.2px">Current Week</span>
       </div>
       <div class="ac-sub">Sorted by completion %</div>
-      <div class="cl" id="cl"></div>
+      <div class="cl-scroll-wrap">
+        <div class="cl" id="cl"></div>
+      </div>
     </div>
   </div>
 
@@ -5250,7 +5542,7 @@ function renderAna(dates){
     </div>
   </div>
   <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
-    <h3>Time Split</h3><div class="ac-sub">Scheduled hours by category</div>
+    <h3>Time Split</h3><div class="ac-sub">Hours scheduled per category — this week</div>
     <div class="chbox" style="height:200px"><canvas id="dc"></canvas></div>
   </div>
   </div>`;
@@ -5264,6 +5556,20 @@ function renderAna(dates){
       <div class="cnu"><span>${c.done}/${c.total} tasks</span><span>${c.pct}%</span></div>
     </div>
     <div class="cp" style="color:${c.col}">${c.pct}%</div></div>`).join('');
+
+  // Cap scroll wrapper at exactly 5 rows height
+  requestAnimationFrame(()=>{
+    const wrap=document.querySelector('.cl-scroll-wrap');
+    const rows=document.querySelectorAll('#cl .cr');
+    if(wrap && rows.length>5){
+      const wrapTop=wrap.getBoundingClientRect().top+wrap.scrollTop;
+      const fifthRow=rows[4];
+      const fifthBottom=fifthRow.getBoundingClientRect().bottom-wrap.getBoundingClientRect().top;
+      wrap.style.maxHeight=fifthBottom+'px';
+    } else if(wrap){
+      wrap.style.maxHeight='';
+    }
+  });
 
   if(_bc){try{_bc.destroy();}catch(e){}_bc=null;}
   if(_dc){try{_dc.destroy();}catch(e){}_dc=null;}
@@ -5334,22 +5640,351 @@ function renderAna(dates){
           borderWidth:1,borderRadius:5,borderSkipped:false}]},
       options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
         plugins:{legend:{display:false},
-          tooltip:{callbacks:{label:c=>`${c.raw}h invested this week`}}},
+          tooltip:{callbacks:{label:c=>{const total=c.chart.data.datasets[0].data.reduce((s,v)=>s+v,0);const pct=total>0?Math.round(c.raw/total*100):0;return`${c.raw}h · ${pct}% of total`;}}}},
         scales:{
           x:{ticks:{color:tc,font:{size:10},callback:v=>v+'h'},grid:{color:gc},border:{display:false}},
           y:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
 
-    // Doughnut by category
+    // Doughnut by category — this week only
     const dc=document.getElementById('dc');
     const cats=getAllCats();
+    const catHrs=cats.map(c=>({
+      label:getCatLabel(c),
+      col:getCatColor(c),
+      hrs:S.tasks.filter(t=>t.cat===c).reduce((s,t)=>
+        s+dates.reduce((ds,d,i)=>ds+(t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))?tdiff(t.start,t.end):0),0)
+      ,0)
+    })).filter(c=>c.hrs>0).sort((a,b)=>b.hrs-a.hrs);
     if(dc) _dc=new Chart(dc,{type:'doughnut',
-      data:{labels:cats.map(c=>getCatLabel(c)),datasets:[{
-        data:cats.map(c=>S.tasks.filter(t=>t.cat===c).reduce((s,t)=>s+tdiff(t.start,t.end),0)),
-        backgroundColor:cats.map(c=>getCatColor(c)),borderColor:'transparent',borderWidth:0,hoverOffset:5}]},
+      data:{labels:catHrs.map(c=>c.label),datasets:[{
+        data:catHrs.map(c=>parseFloat(c.hrs.toFixed(1))),
+        backgroundColor:catHrs.map(c=>c.col),borderColor:'transparent',borderWidth:0,hoverOffset:5}]},
       options:{responsive:true,maintainAspectRatio:false,cutout:'64%',
         plugins:{legend:{position:'bottom',labels:{color:tc,font:{size:10},padding:8,boxWidth:9,boxHeight:9}},
-        tooltip:{callbacks:{label:c=>`${c.label}: ${Number(c.raw).toFixed(1)}h`}}}}});
+        tooltip:{callbacks:{label:c=>{const total=c.chart.data.datasets[0].data.reduce((s,v)=>s+v,0);const pct=total>0?Math.round(c.raw/total*100):0;return`${c.label}: ${Number(c.raw).toFixed(1)}h · ${pct}%`;}}}}}});
   });
+}
+
+// ════════════════════════════════════════════════════════════
+// WEEKLY SUMMARY
+// ════════════════════════════════════════════════════════════
+function openWeeklySummary(){
+  const overlay=document.getElementById('wsum-overlay');
+  const content=document.getElementById('wsum-content');
+  const stickyHdr=document.getElementById('wsum-sticky-header');
+  if(!overlay||!content)return;
+  if(stickyHdr)stickyHdr.innerHTML='';
+  overlay.style.display='flex';
+  document.body.style.overflow='hidden';
+  content.innerHTML=buildWeeklySummaryHTML();
+}
+function closeWeeklySummary(){
+  const overlay=document.getElementById('wsum-overlay');
+  if(overlay)overlay.style.display='none';
+  document.body.style.overflow='';
+}
+
+function downloadWeeklySummary(){
+  const modal=document.getElementById('wsum-modal');
+  if(!modal)return;
+  const isDark=document.documentElement.getAttribute('data-theme')!=='light';
+  const bg=isDark?'#07070d':'#f0f0fa';
+  const inner=modal.innerHTML;
+  const html='<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>APEX Weekly Summary</title>\n<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">\n<style>\n*{box-sizing:border-box;margin:0;padding:0}\nbody{font-family:\'Plus Jakarta Sans\',sans-serif;background:'+bg+';display:flex;justify-content:center;padding:32px 16px;min-height:100vh}\n:root{--bg:#07070d;--bg2:#0e0e1a;--bg3:#141421;--card:#181825;--card2:#1e1e2e;--card3:#232336;--border:#252540;--border2:#303058;--border3:#404068;--text:#f0f0ff;--text2:#8888aa;--text3:#505070;--p1:#5b6ef5;--p2:#7c3aed;--p3:#0ea5e9;--g1:#10b981;--g2:#34d399;--fh:\'Syne\',sans-serif;--fb:\'Plus Jakarta Sans\',sans-serif;--grad:linear-gradient(135deg,#5b6ef5,#7c3aed,#0ea5e9)}\n.wrap{background:var(--card);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:560px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5)}\nbutton{display:none!important}\n</style>\n</head>\n<body>\n<div class="wrap">'+inner+'</div>\n</body>\n</html>';
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const now=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  a.download='APEX-Weekly-'+now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate())+'.html';
+  a.href=url;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+
+function buildWeeklySummaryHTML(){
+  // ── Time logic ──────────────────────────────────────────
+  const now=new Date();
+  const dow=now.getDay(); // 0=Sun … 6=Sat
+  const hrs=now.getHours();
+  const isSunday=dow===0;
+  const isSummaryTime=isSunday&&hrs>=22; // Sun 10 PM+
+
+  // ── Build CURRENT week dates (Mon–Sun, weekOff=0) ──────
+  function getWeekDates(weekOff){
+    const base=new Date(BASE);
+    const sow=new Date(base);
+    sow.setDate(base.getDate()-TODAY_DOW+weekOff*7);
+    const d=[];
+    for(let i=0;i<7;i++){const dd=new Date(sow);dd.setDate(sow.getDate()+i);d.push(dd);}
+    return d;
+  }
+  const currDates=getWeekDates(0);
+  const prevDates=getWeekDates(-1);
+
+  // ── Compute stats for a given week ────────────────────
+  function weekSummaryStats(dates){
+    const ws=weekStats(dates);
+    const avg=ws.total?Math.round(ws.done/ws.total*100):0;
+    const str=streakN(dates);
+    const dayRows=dates.map((d,i)=>{
+      const st=dayStats(dates,i);
+      return{day:DAYS7[i],date:fmtKey(d),...st};
+    });
+    const activeDays=dayRows.filter(d=>d.total>0);
+    const bestDay=activeDays.length?activeDays.reduce((a,b)=>a.pct>=b.pct?a:b):null;
+    const worstDay=activeDays.length>1?activeDays.reduce((a,b)=>a.pct<=b.pct?a:b):null;
+    // Per-habit
+    const habits=S.tasks.filter(t=>dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d)))).map(t=>{
+      const wkD=dates.filter((d,i)=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length;
+      const wkT=dates.filter((_,i)=>t.days.includes(i)).length;
+      const pct=wkT?Math.round(wkD/wkT*100):0;
+      return{name:t.name,cat:t.cat,pct,done:wkD,total:wkT,col:getCatColor(t.cat)};
+    }).sort((a,b)=>b.pct-a.pct);
+    // Cat breakdown
+    const allCats=getAllCats();
+    const cats=allCats.map(c=>{
+      const st=catStats(dates,c);
+      return{cat:c,label:getCatLabel(c),emoji:getCatEmoji(c),col:getCatColor(c),...st};
+    }).filter(c=>c.total>0).sort((a,b)=>b.pct-a.pct);
+    // Grade
+    const grade=avg>=90?'A+':avg>=80?'A':avg>=70?'B+':avg>=60?'B':avg>=50?'C':'D';
+    const gradeColor=avg>=80?'#10b981':avg>=60?'#eab308':'#f43f5e';
+    return{ws,avg,str,dayRows,activeDays,bestDay,worstDay,habits,cats,grade,gradeColor};
+  }
+
+  // ── Date label helper ──────────────────────────────────
+  function weekLabel(dates){
+    const s=dates[0],e=dates[6];
+    const mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return`${mo[s.getMonth()]} ${s.getDate()} – ${mo[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
+  }
+
+  // ── Next Sunday 10 PM countdown ────────────────────────
+  function nextSunday10PM(){
+    const n=new Date();
+    const d=n.getDay();
+    const daysUntil=d===0?(isSummaryTime?7:0):7-d;
+    const next=new Date(n);
+    next.setDate(n.getDate()+daysUntil);
+    next.setHours(22,0,0,0);
+    const diff=next-n;
+    const dh=Math.floor(diff/36e5);
+    const dm=Math.floor((diff%36e5)/6e4);
+    if(dh>=24){const dd=Math.floor(dh/24);return`${dd} day${dd!==1?'s':''} ${dh%24}h`;}
+    return`${dh}h ${dm}m`;
+  }
+
+  // ── Render summary block ───────────────────────────────
+  function summaryBlock(stats,dates,title,subtitle,isLive,prevStats){
+    const{ws,avg,bestDay,worstDay,habits,cats,grade,gradeColor,dayRows}=stats;
+    const gradeGlow=avg>=80?'rgba(16,185,129,.25)':avg>=60?'rgba(234,179,8,.2)':'rgba(244,63,94,.2)';
+
+    // Day bars
+    const dayBars=dayRows.map(d=>{
+      const pct=d.pct,fill=pct>=80?'#10b981':pct>=50?'#5b6ef5':'#f43f5e';
+      const opacity=d.total===0?.3:1;
+      return`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;opacity:${opacity}">
+        <div style="font-size:9px;font-weight:700;color:var(--text2)">${pct||0}%</div>
+        <div style="width:100%;height:52px;background:var(--bg3);border-radius:6px;overflow:hidden;display:flex;align-items:flex-end">
+          <div style="width:100%;height:${Math.max(d.total===0?0:4,pct/100*52)}px;background:${fill};border-radius:6px;transition:height .4s"></div>
+        </div>
+        <div style="font-size:9px;font-weight:600;color:var(--text3)">${d.day}</div>
+      </div>`;
+    }).join('');
+
+    // Habit rows — sorted high to low %, first 4 visible, rest collapsible
+    const HABIT_LIMIT=4;
+    const sortedHabits=[...habits].sort((a,b)=>b.pct-a.pct);
+    function habitRowHTML(h){
+      const bar=h.pct>=80?'#10b981':h.pct>=50?'#5b6ef5':'#f43f5e';
+      return '<div style="display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid var(--border)">'
+        +'<div style="width:8px;height:8px;border-radius:50%;background:'+h.col+';flex-shrink:0"></div>'
+        +'<div style="flex:1;font-size:11px;font-weight:500;color:var(--text);overflow:hidden;white-space:nowrap;text-overflow:ellipsis">'+h.name+'</div>'
+        +'<div style="width:80px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;flex-shrink:0">'
+        +'<div style="height:100%;width:'+h.pct+'%;background:'+bar+';border-radius:3px"></div></div>'
+        +'<div style="font-size:10.5px;font-weight:700;color:'+bar+';min-width:30px;text-align:right">'+h.pct+'%</div></div>';
+    }
+    let habitRows;
+    if(sortedHabits.length===0){
+      habitRows='<div style="font-size:11.5px;color:var(--text3);padding:10px 0;text-align:center">No habits tracked this week</div>';
+    } else {
+      const visible=sortedHabits.slice(0,HABIT_LIMIT).map(habitRowHTML).join('');
+      const extra=sortedHabits.slice(HABIT_LIMIT);
+      if(extra.length===0){
+        habitRows=visible;
+      } else {
+        const ec=extra.length;
+        habitRows=visible
+          +'<div id="wsum-habit-extra" style="display:none">'+extra.map(habitRowHTML).join('')+'</div>'
+          +'<button id="wsum-habit-toggle" '
+          +'onclick="var e=document.getElementById(\'wsum-habit-extra\'),b=document.getElementById(\'wsum-habit-toggle\'),o=e.style.display!==\'none\';e.style.display=o?\'none\':\'block\';b.textContent=o?\'Show more ('+ec+') \u25be\':\'Show less \u25b4\';" '
+          +'style="display:block;margin-top:8px;padding:7px 0;border:none;background:transparent;font-size:10.5px;font-weight:600;color:var(--text3);cursor:pointer;letter-spacing:.1px;text-align:left">'
+          +'Show more ('+ec+') \u25be</button>';
+      }
+    }
+
+    // Highlight insight
+    let highlight='';
+    if(!bestDay&&!worstDay){highlight='Add and complete tasks to see your performance breakdown.';}
+    else if(avg>=80){highlight=`Outstanding week at ${avg}% — ${bestDay?`strongest on ${bestDay.day} (${bestDay.pct}%)`:'elite consistency'}. This is what discipline looks like.`;}
+    else if(bestDay&&worstDay&&bestDay.pct!==worstDay.pct){highlight=`Peak on <strong>${bestDay.day}</strong> (${bestDay.pct}%), dip on <strong>${worstDay.day}</strong> (${worstDay.pct}%). Closing that gap is your focus for next week.`;}
+    else{highlight=`You completed ${ws.done} out of ${ws.total} tasks. Keep building — consistency competes.`;}
+
+    // ── Next week recommendations ──────────────────────────
+    const recs=[];
+    const strugglingHabits=sortedHabits.filter(h=>h.pct<50&&h.total>0);
+    if(strugglingHabits.length>0){
+      const names=strugglingHabits.slice(0,2).map(h=>'<strong>'+h.name+'</strong>').join(' and ');
+      const extra=strugglingHabits.length>2?' and '+( strugglingHabits.length-2)+' more habit'+(strugglingHabits.length-2>1?'s':'')+'':' ';
+      recs.push({icon:'🎯',color:'#f97316',bg:'rgba(249,115,22,.08)',border:'rgba(249,115,22,.2)',label:'Focus Habits',text:names+extra+(extra.trim()?'are':'is')+' under 50% — make '+(strugglingHabits.length>1?'these':'this')+' your priority next week.'});
+    }
+    if(worstDay&&worstDay.pct<60){
+      recs.push({icon:'📅',color:'#0ea5e9',bg:'rgba(14,165,233,.08)',border:'rgba(14,165,233,.2)',label:'Day to Recover',text:'<strong>'+worstDay.day+'</strong> was your lowest at '+worstDay.pct+'%. Plan tasks the night before to protect that slot next week.'});
+    }
+    if(avg>=60&&avg<80){
+      recs.push({icon:'🔥',color:'#eab308',bg:'rgba(234,179,8,.07)',border:'rgba(234,179,8,.2)',label:'Close the Gap',text:'You hit '+avg+'% — just '+(80-avg)+'% from an A. Locking in one consistent evening habit could push you over.'});
+    }
+    if(avg>=80){
+      recs.push({icon:'⚡',color:'#10b981',bg:'rgba(16,185,129,.08)',border:'rgba(16,185,129,.2)',label:'Level Up',text:'Solid week at '+avg+'%. Next challenge: maintain a full 7-day streak or add a new habit to the routine.'});
+    }
+    if(recs.length===0){
+      recs.push({icon:'🌱',color:'#8888aa',bg:'rgba(136,136,170,.07)',border:'rgba(136,136,170,.15)',label:'Get Started',text:'Complete habits this week to unlock personalised recommendations here.'});
+    }
+    const recItems=recs.map(function(r,i){
+      return '<div style="display:flex;gap:11px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:'+r.bg+';border:1px solid '+r.border+(i<recs.length-1?';margin-bottom:7px':'')+'">'
+        +'<div style="width:28px;height:28px;border-radius:8px;background:'+r.bg+';border:1px solid '+r.border+';display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px">'+r.icon+'</div>'
+        +'<div style="min-width:0">'
+        +'<div style="font-size:9px;font-weight:700;color:'+r.color+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">'+r.label+'</div>'
+        +'<div style="font-size:11px;color:var(--text2);line-height:1.6">'+r.text+'</div>'
+        +'</div></div>';
+    }).join('');
+
+    // Populate sticky header
+    const _sh=document.getElementById('wsum-sticky-header');
+    if(_sh){
+      _sh.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div style="display:flex;align-items:center;gap:9px;min-width:0">
+          <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,rgba(91,110,245,.2),rgba(124,58,237,.15));border:1px solid rgba(91,110,245,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📅</div>
+          <div style="min-width:0">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:1px">
+              <div style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--text);white-space:nowrap">${title}</div>
+              ${isLive?`<span style="font-size:9px;font-weight:700;background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3);padding:2px 7px;border-radius:20px;letter-spacing:.3px;flex-shrink:0">LIVE</span>`:''}
+            </div>
+            <div style="font-size:10px;color:var(--text3);white-space:nowrap">${subtitle}</div>
+          </div>
+        </div>
+        <button onclick="closeWeeklySummary()" style="width:28px;height:28px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s" onmouseover="this.style.background='var(--card2)'" onmouseout="this.style.background='transparent'">✕</button>
+      </div>`;
+    }
+    return`
+
+      <!-- Grade + Stats row -->
+      <div style="padding:12px 20px 14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+        <!-- Grade -->
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px">
+          <div style="font-family:var(--fh);font-size:32px;font-weight:800;color:${gradeColor};line-height:1;text-shadow:0 0 16px ${gradeGlow};flex-shrink:0">${grade}</div>
+          <div style="min-width:0">
+            <div style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Grade</div>
+            <div style="font-size:11px;font-weight:700;color:var(--text)">${avg}%</div>
+            <div style="font-size:9.5px;color:var(--text3)">${ws.done}/${ws.total} done</div>
+          </div>
+        </div>
+        <!-- Best Day -->
+        <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.18);border-radius:12px;padding:11px 13px">
+          <div style="font-size:9px;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Best Day</div>
+          ${bestDay
+            ?`<div style="font-size:13px;font-weight:800;color:var(--text);line-height:1.2">${bestDay.day}</div><div style="font-size:11px;font-weight:600;color:#34d399;margin-top:2px">${bestDay.pct}%</div>`
+            :`<div style="font-size:11px;color:var(--text3)">—</div>`}
+        </div>
+        <!-- Last Week -->
+        ${(function(){
+          if(!prevStats) return '<div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:11px 13px"><div style="font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Last Week</div><div style="font-size:11px;color:var(--text3)">—</div></div>';
+          const pg=prevStats.avg>=90?'A+':prevStats.avg>=80?'A':prevStats.avg>=70?'B+':prevStats.avg>=60?'B':prevStats.avg>=50?'C':'D';
+          const pgc=prevStats.avg>=80?'#10b981':prevStats.avg>=60?'#eab308':'#f43f5e';
+          const pgbg=prevStats.avg>=80?'rgba(16,185,129,.08)':prevStats.avg>=60?'rgba(234,179,8,.07)':'rgba(244,63,94,.06)';
+          const pgbr=prevStats.avg>=80?'rgba(16,185,129,.18)':prevStats.avg>=60?'rgba(234,179,8,.18)':'rgba(244,63,94,.16)';
+          const delta=avg-prevStats.avg;
+          const deltaStr=delta===0?'±0%':delta>0?'+'+delta+'%':delta+'%';
+          const deltaCol=delta>0?'#10b981':delta<0?'#f43f5e':'var(--text3)';
+          return '<div style="background:'+pgbg+';border:1px solid '+pgbr+';border-radius:12px;padding:11px 13px">'
+            +'<div style="font-size:9px;font-weight:700;color:'+pgc+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Last Week</div>'
+            +'<div style="display:flex;align-items:baseline;gap:5px">'
+            +'<div style="font-family:var(--fh);font-size:20px;font-weight:800;color:'+pgc+';line-height:1">'+pg+'</div>'
+            +'<div style="font-size:10px;font-weight:700;color:'+deltaCol+'">'+deltaStr+'</div>'
+            +'</div>'
+            +'<div style="font-size:9.5px;color:var(--text3);margin-top:2px">'+prevStats.avg+'% · '+prevStats.ws.done+'/'+prevStats.ws.total+'</div>'
+            +'</div>';
+        })()}
+      </div>
+
+      <!-- Day bars -->
+      <div style="padding:0 20px 14px">
+        <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Daily Completion</div>
+        <div style="display:flex;gap:6px;align-items:flex-end">${dayBars}</div>
+      </div>
+
+      <!-- Highlight insight -->
+      <div style="margin:0 20px 14px;padding:11px 14px;background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));border:1px solid rgba(91,110,245,.2);border-radius:11px;font-size:11.5px;color:var(--text2);line-height:1.65">
+        💡 ${highlight}
+      </div>
+
+      <!-- Habit breakdown -->
+      <div style="margin:0 20px 16px">
+        <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Habit Breakdown</div>
+        ${habitRows}
+      </div>
+
+      <!-- Next Week Recommendations -->
+      <div style="margin:0 20px 20px">
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px">
+          <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px">Next Week</div>
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+          <div style="font-size:9px;font-weight:600;color:var(--p1);background:rgba(91,110,245,.1);border:1px solid rgba(91,110,245,.2);border-radius:20px;padding:2px 8px;letter-spacing:.3px">RECOMMENDATIONS</div>
+        </div>
+        ${recItems}
+      </div>`;
+  }
+
+  // ── MAIN RENDER LOGIC ──────────────────────────────────
+  const currStats=weekSummaryStats(currDates);
+  const prevStats=weekSummaryStats(prevDates);
+
+  let html='';
+
+  if(isSummaryTime){
+    // Sunday 10PM+ — show current week LIVE summary
+    html+=summaryBlock(currStats,currDates,'Weekly Summary',weekLabel(currDates),true,prevStats);
+    // Footer with next countdown
+    html+=`<div style="padding:14px 20px 20px;border-top:1px solid var(--border)">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <div style="font-size:10px;color:var(--text3)">🗓 Next: <strong style="color:var(--text2)">Sunday 10 PM</strong> · ${nextSunday10PM()}</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button onclick="downloadWeeklySummary()" style="display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:9px;background:var(--card2);border:1px solid var(--border2);color:var(--text2);font-family:var(--fb);font-size:11px;font-weight:600;cursor:pointer;transition:all .18s" onmouseover="this.style.background='var(--card3)';this.style.borderColor='var(--border3)';this.style.color='var(--text)'" onmouseout="this.style.background='var(--card2)';this.style.borderColor='var(--border2)';this.style.color='var(--text2)'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
+          <button onclick="closeWeeklySummary()" style="padding:7px 16px;border-radius:9px;background:var(--grad);color:#fff;border:none;font-family:var(--fb);font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 2px 10px rgba(91,110,245,.3)">Done</button>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    // Before Sunday 10PM — show LAST week summary + teaser
+    html+=summaryBlock(prevStats,prevDates,'Last Week Summary',weekLabel(prevDates),false,null);
+    // Divider + next week teaser
+    html+=`<div style="margin:0 20px;border-top:1px solid var(--border);padding:14px 0">
+      <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:linear-gradient(135deg,rgba(91,110,245,.07),rgba(124,58,237,.04));border:1px solid rgba(91,110,245,.18);border-radius:12px">
+        <div style="width:32px;height:32px;border-radius:9px;background:rgba(91,110,245,.14);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">⏳</div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:1px">Next Weekly Summary</div>
+          <div style="font-size:10.5px;color:var(--text2)">Available <strong>Sunday at 10 PM</strong> — in <strong style="color:var(--p1)">${nextSunday10PM()}</strong></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:12px 20px 20px;display:flex;justify-content:flex-end;gap:8px">
+      <button onclick="downloadWeeklySummary()" style="display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:9px;background:var(--card2);border:1px solid var(--border2);color:var(--text2);font-family:var(--fb);font-size:11px;font-weight:600;cursor:pointer;transition:all .18s" onmouseover="this.style.background='var(--card3)';this.style.borderColor='var(--border3)';this.style.color='var(--text)'" onmouseout="this.style.background='var(--card2)';this.style.borderColor='var(--border2)';this.style.color='var(--text2)'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
+      <button onclick="closeWeeklySummary()" style="padding:7px 16px;border-radius:9px;background:var(--grad);color:#fff;border:none;font-family:var(--fb);font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 2px 10px rgba(91,110,245,.3)">Close</button>
+    </div>`;
+  }
+
+  return html;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -5361,57 +5996,79 @@ function renderAna(dates){
 // HABITS
 // ════════════════════════════════════════════════════════════
 function renderHabits(dates){
+  _habCoachOpen=false;
   const el=document.getElementById('hab-cx');
-  const str=streakN(dates),ws=weekStats(dates);
-  const best=Math.max(...dates.map((_,i)=>dayStats(dates,i).pct));
-  const avg=Math.round(dates.reduce((s,_,i)=>s+dayStats(dates,i).pct,0)/7);
-  const totalDone=totalTasksDoneAllTime();
+  const ws=weekStats(dates);
+  const str=streakN(dates);
+  const isCurrentWeek=S.weekOff===0;
+
+  // ── KPI data ──
+  const totalHabits=S.tasks.length;
+  const weekHrsCompleted=S.tasks.reduce((acc,t)=>{
+    const done=dates.filter((d,i)=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length;
+    return acc+done*tdiff(t.start,t.end);
+  },0);
+  const weekHrsStr=weekHrsCompleted===0?'0h':weekHrsCompleted%1===0?weekHrsCompleted+'h':weekHrsCompleted.toFixed(1)+'h';
+  const perfectDays=dates.filter((_,i)=>dayStats(dates,i).pct===100&&(S.weekOff!==0||i<=TODAY_DOW)).length;
+
+  // ── Best day ──
+  const dayPcts=dates.map((_,i)=>({day:DAYS7[i],pct:dayStats(dates,i).pct,i}));
+  const pastDays=isCurrentWeek?dayPcts.filter(d=>d.i<=TODAY_DOW):dayPcts;
+  const bestDay=pastDays.length?pastDays.reduce((b,d)=>d.pct>b.pct?d:b,pastDays[0]):null;
+
+  const isDarkTheme=document.documentElement.getAttribute('data-theme')==='dark';
+  const heroLabelColor=isDarkTheme?'rgba(255,255,255,.6)':'var(--text2)';
+  const heroPctColor=isDarkTheme?'#fff':'var(--text)';
+  const heroSubtleColor=isDarkTheme?'rgba(255,255,255,.5)':'var(--text3)';
+  const heroProgressBg=isDarkTheme?'rgba(255,255,255,.12)':'rgba(91,110,245,.12)';
+  const heroBorderColor=isDarkTheme?'rgba(255,255,255,.1)':'rgba(91,110,245,.15)';
+
   el.innerHTML=`
-  <div class="sband">
-    <div class="sbi" style="border-top:3px solid #f97316">
-      <div style="font-size:15px;margin-bottom:2px">🔥</div>
-      <div class="sbv" style="background:linear-gradient(135deg,#f97316,#f43f5e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${str}</div>
-      <div class="sbl">Streak (days)</div>
-    </div>
-    <div class="sbi" style="border-top:3px solid #10b981">
-      <div style="font-size:15px;margin-bottom:2px">⭐</div>
-      <div class="sbv" style="background:linear-gradient(135deg,#10b981,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${best}%</div>
-      <div class="sbl">Best Day</div>
-    </div>
-    <div class="sbi" style="border-top:3px solid #5b6ef5">
-      <div style="font-size:15px;margin-bottom:2px">📊</div>
-      <div class="sbv" style="background:linear-gradient(135deg,#5b6ef5,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${avg}%</div>
-      <div class="sbl">Week Avg</div>
-    </div>
-    <div class="sbi" style="border-top:3px solid #eab308">
-      <div style="font-size:15px;margin-bottom:2px">✅</div>
-      <div class="sbv" style="background:linear-gradient(135deg,#eab308,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:20px">${totalDone}</div>
-      <div class="sbl">All-time Checks</div>
+
+  <!-- ── WEEKLY PROGRESS BAR (from profile) ── -->
+  <div style="background:linear-gradient(135deg,rgba(91,110,245,.22) 0%,rgba(124,58,237,.18) 45%,rgba(14,165,233,.14) 100%);border:1px solid rgba(91,110,245,.32);border-radius:var(--rr);padding:18px 22px;margin-bottom:16px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--grad);border-radius:3px 0 0 3px;z-index:1"></div>
+    <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(91,110,245,.15) 0%,transparent 70%);pointer-events:none"></div>
+    <div style="position:relative;z-index:1">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
+        <span style="font-size:10px;font-weight:700;color:${heroLabelColor};letter-spacing:.4px;text-transform:uppercase">📊 Weekly Progress</span>
+        <span style="font-family:var(--fh);font-size:13px;font-weight:800;color:${heroPctColor}">${ws.pct}%</span>
+      </div>
+      <div style="height:6px;background:${heroProgressBg};border-radius:3px;overflow:hidden">
+        <div class="prof-progress-fill" style="height:100%;width:${ws.pct}%;border-radius:3px;transition:width .9s ease"></div>
+      </div>
+      <div style="font-size:10px;color:${heroSubtleColor};margin-top:5px">${ws.pct>=60?`You're ahead of 60% of your week goal 🎯`:ws.pct>=30?`Keep going — you're building momentum`:`Start checking off tasks to build your streak`}</div>
     </div>
   </div>
+
+  <!-- ── WEEKLY OVERVIEW ── -->
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:16px;margin-bottom:18px;overflow:hidden">
     <div style="font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:12px">This Week Overview</div>
     <div class="hr" style="overflow:visible;padding-right:1px">${dates.map((d,i)=>{
       const pct=dayStats(dates,i).pct,cls=pct===0?'h0':pct<25?'h1':pct<60?'h2':pct<100?'h3':'h4';
-      const tod=(i===TODAY_DOW&&S.weekOff===0)?' htoday':'';
+      const tod=(i===TODAY_DOW&&isCurrentWeek)?' htoday':'';
       return`<div class="hc"><div class="hl">${DAYS7[i]}</div><div class="hd ${cls}${tod}">${pct?pct+'%':'—'}</div></div>`;
     }).join('')}</div>
   </div>
+
+  <!-- ── HABIT COACH (kept exactly) ── -->
+  <div class="hab-ai-wrap" id="hab-ai-wrap">
+    <div class="hab-ai-trigger" onclick="toggleHabAI()">
+      <div class="hab-ai-icon">📊</div>
+      <div class="hab-ai-info">
+        <div class="hab-ai-label">Habit Coach</div>
+        <div class="hab-ai-desc">Personalized breakdown — where to improve, what's working, and your next goal</div>
+      </div>
+      <div class="hab-ai-badge" id="hab-ai-badge">✦ Analyze</div>
+    </div>
+    <div class="hab-ai-panel" id="hab-ai-panel" style="display:none"></div>
+  </div>
+
+  <!-- ── HABIT CARDS (kept exactly) ── -->
   <div class="hab-section-header">
     <div class="hab-section-left">
       <div class="hab-section-title">Habit Cards</div>
       <div class="hab-section-subtitle">Track your daily routines</div>
-    </div>
-    <div class="hab-section-meta">
-      <span class="hab-week-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="9" height="9"><polyline points="20 6 9 17 4 12"/></svg>
-        Current Week
-      </span>
-      <span class="hab-badge-sep"></span>
-      <span class="hab-sync-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="9" height="9"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        Synced
-      </span>
     </div>
   </div>
   <div class="hg">${S.tasks.filter(t=>dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d)))).map(t=>{
@@ -5419,21 +6076,175 @@ function renderHabits(dates){
     const wkD=dates.filter((d,i)=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length;
     const wkT=dates.filter((_,i)=>t.days.includes(i)).length;
     const pct=wkT?Math.round(wkD/wkT*100):0;
+    const durH=tdiff(t.start,t.end);
+    const hrsCompleted=wkD*durH;
+    const hrsStr=hrsCompleted===0?'0h':hrsCompleted%1===0?hrsCompleted+'h':hrsCompleted.toFixed(1)+'h';
     return`<div class="hcard" style="opacity:.95">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
         <div style="font-size:12px;font-weight:600;color:${col}">${t.name}</div>
         <div style="font-family:var(--fh);font-size:13px;font-weight:800;color:${col}">${pct}%</div>
       </div>
-      <div style="font-size:10px;color:var(--text2);margin-bottom:7px">${fmtT(t.start)} · ${tdiff(t.start,t.end).toFixed(1)}h · ${wkD}/${wkT} days</div>
+      <div style="font-size:10px;color:var(--text2);margin-bottom:7px">${hrsStr} completed</div>
       <div style="height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:8px"><div style="height:100%;width:${pct}%;background:${col};border-radius:2px;transition:width .6s"></div></div>
       <div class="hdots">${dates.map((d,i)=>{
         if(!t.days.includes(i))return`<div class="hdot" style="background:var(--border);cursor:default;opacity:.3"></div>`;
         const done=isDone(t.id,fmtKey(d));
-        // Read-only: no onclick, pointer-events none
         return`<div class="hdot ${done?'on':''}" style="${done?`background:${col};border-color:${col};cursor:default`:'border-color:var(--border2);cursor:default'};pointer-events:none" title="${DAYS7[i]}">${done?'✓':DAYS7S[i]}</div>`;
       }).join('')}</div>
     </div>`;
   }).join('')}</div>`;
+}
+
+
+// ════════════════════════════════════════════════════════════
+// HABIT COACH (logic-based, no AI required)
+// ════════════════════════════════════════════════════════════
+let _habCoachOpen=false;
+
+function toggleHabAI(){
+  const panel=document.getElementById('hab-ai-panel');
+  const badge=document.getElementById('hab-ai-badge');
+  if(!panel||!badge)return;
+  _habCoachOpen=!_habCoachOpen;
+  if(_habCoachOpen){
+    panel.style.display='block';
+    badge.textContent='▲ Close';
+    renderHabCoach(panel);
+  } else {
+    panel.style.display='none';
+    badge.textContent='✦ Analyze';
+  }
+}
+
+function renderHabCoach(panel){
+  // Build current week dates
+  const dates=[];
+  const base=new Date(BASE);
+  const sow=new Date(base);
+  sow.setDate(base.getDate()-TODAY_DOW+S.weekOff*7);
+  for(let i=0;i<7;i++){const d=new Date(sow);d.setDate(sow.getDate()+i);dates.push(d);}
+
+  const str=streakN(dates);
+  const ws=weekStats(dates);
+  const avg=ws.total?Math.round(ws.done/ws.total*100):0;
+  const totalDone=totalTasksDoneAllTime();
+
+  // Per-habit stats
+  const habitStats=S.tasks
+    .filter(t=>dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))))
+    .map(t=>{
+      const wkD=dates.filter((d,i)=>t.days.includes(i)&&isDone(t.id,fmtKey(d))).length;
+      const wkT=dates.filter((_,i)=>t.days.includes(i)).length;
+      const pct=wkT?Math.round(wkD/wkT*100):0;
+      return{name:t.name,cat:t.cat,pct,done:wkD,total:wkT,col:getCatColor(t.cat)};
+    });
+
+  // Per-day stats (only days up to today in current week, or all if past week)
+  const isCurrentWk=S.weekOff===0;
+  const dayData=dates.map((d,i)=>({day:DAYS7[i],i,...dayStats(dates,i)}));
+  const pastDays=isCurrentWk?dayData.filter(d=>d.i<=TODAY_DOW):dayData;
+
+  // ── CARD 1: Where to Improve ─────────────────────────────
+  let card1={icon:'⚠️',tag:'Focus Area',tagColor:'#f97316',tagBg:'rgba(249,115,22,.14)',heading:'',body:''};
+  if(!habitStats.length){
+    card1.icon='📋';card1.heading='No habits tracked yet';
+    card1.body='Add your first habit in the Schedule tab to start building your routine. Even one small habit per day compounds over time.';
+  } else {
+    const weakest=[...habitStats].sort((a,b)=>a.pct-b.pct)[0];
+    const worstDay=pastDays.length>1?[...pastDays].sort((a,b)=>a.pct-b.pct)[0]:null;
+    if(weakest.pct===0){
+      card1.icon='🚨';card1.heading=`"${weakest.name}" needs attention`;
+      card1.body=`You haven't checked off "${weakest.name}" even once this week (0/${weakest.total} days). Try pairing it with an existing habit — right after waking up or a meal — so it becomes automatic.`;
+    } else if(weakest.pct<50){
+      card1.icon='📉';card1.heading=`"${weakest.name}" is falling behind`;
+      card1.body=`"${weakest.name}" is at ${weakest.pct}% this week (${weakest.done}/${weakest.total} days). That's your weakest habit right now. Set a daily reminder at a fixed time to close this gap.`;
+    } else if(worstDay&&worstDay.pct<40&&worstDay.total>0){
+      card1.icon='📅';card1.heading=`${worstDay.day}s are your weak spot`;
+      card1.body=`${worstDay.day} is your lowest-scoring day at ${worstDay.pct}%. Review what's on your schedule that day and simplify — reduce habit targets on ${worstDay.day} if needed.`;
+    } else {
+      card1.icon='🎯';card1.heading='Push past 80%';
+      card1.body=`Your weakest habit is "${weakest.name}" at ${weakest.pct}%. You're close — just ${weakest.total-weakest.done} more check-in${weakest.total-weakest.done!==1?'s':''} would push it above ${Math.min(100,weakest.pct+Math.ceil((weakest.total-weakest.done)/weakest.total*100))}%. Don't stop now.`;
+    }
+  }
+
+  // ── CARD 2: What's Working ───────────────────────────────
+  let card2={icon:'✅',tag:'What\'s Working',tagColor:'#10b981',tagBg:'rgba(16,185,129,.13)',heading:'',body:''};
+  if(!habitStats.length||ws.done===0){
+    card2.icon='💡';card2.heading='Start building momentum';
+    card2.body=`Every great streak starts with one check-in. Complete any habit today and you'll have a 1-day streak. Momentum builds fast once you start.`;
+  } else {
+    const best=[...habitStats].sort((a,b)=>b.pct-a.pct)[0];
+    const perfect=habitStats.filter(h=>h.pct===100);
+    const bestDay=pastDays.length>0?[...pastDays].sort((a,b)=>b.pct-a.pct)[0]:null;
+    if(perfect.length>0){
+      card2.icon='🏆';card2.heading=`${perfect.length>1?'Multiple habits':'1 habit'} at 100%!`;
+      const names=perfect.map(h=>`"${h.name}"`).join(perfect.length>2?' and ':', ');
+      card2.body=`${names} ${perfect.length>1?'are':'is'} at 100% this week — that's elite consistency. This proves you can build discipline. Now use that same energy to lift your weaker habits.`;
+    } else if(best.pct>=75){
+      card2.icon='💪';card2.heading=`"${best.name}" is your anchor`;
+      card2.body=`"${best.name}" is your strongest habit at ${best.pct}% (${best.done}/${best.total} days). This is your anchor habit — it shows you have the discipline to be consistent. Build everything else around this win.`;
+    } else if(str>0){
+      card2.icon='🔥';card2.heading=`${str}-day streak is real momentum`;
+      card2.body=`A ${str}-day streak means you showed up ${str} days in a row at 50%+. That consistency compounds — keep the chain unbroken and it becomes part of your identity.`;
+    } else if(bestDay&&bestDay.pct>=70){
+      card2.icon='⭐';card2.heading=`${bestDay.day} is your power day`;
+      card2.body=`Your best day this week was ${bestDay.day} with ${bestDay.pct}% completion. That's when your energy and schedule align. Try to plan important habits and deep work on ${bestDay.day}.`;
+    } else {
+      card2.icon='📈';card2.heading=`${ws.done} check-ins and counting`;
+      card2.body=`You've completed ${ws.done} out of ${ws.total} habit slots this week. That's ${avg}% — every check-in is a vote for the person you're becoming. Keep showing up.`;
+    }
+  }
+
+  // ── CARD 3: Next Goal ────────────────────────────────────
+  let card3={icon:'🎯',tag:'Next Goal',tagColor:'#5b6ef5',tagBg:'rgba(91,110,245,.13)',heading:'',body:''};
+  const remainingToday=isCurrentWk?dayStats(dates,TODAY_DOW):null;
+  const daysLeft=isCurrentWk?6-TODAY_DOW:0;
+
+  if(!habitStats.length){
+    card3.icon='➕';card3.heading='Set up your first habit';
+    card3.body='Go to the Schedule tab and add 1–3 habits you want to build this week. Start small: even 15 minutes of a new routine daily will produce visible results in 30 days.';
+  } else if(avg===100){
+    card3.icon='🚀';card3.heading='Maintain perfection all week';
+    card3.body=`You're at 100% — the goal now is to hold it. Don't let a single day slip. Finishing the week perfect builds the mental template for what a great week looks like for you.`;
+  } else if(isCurrentWk&&remainingToday&&remainingToday.done<remainingToday.total){
+    const left=remainingToday.total-remainingToday.done;
+    card3.icon='⚡';card3.heading=`Finish today: ${left} habit${left!==1?'s':''} left`;
+    card3.body=`You still have ${left} habit${left!==1?'s':''} to complete today. Finishing today at 100% will ${str>0?`extend your ${str}-day streak to ${str+1}`:'start a fresh streak'}. Block the next hour and get it done.`;
+  } else if(avg<50){
+    const target=Math.min(ws.total,Math.ceil(ws.total*0.6));
+    card3.icon='📌';card3.heading='Target: 60% this week';
+    card3.body=`You're at ${avg}% — a realistic goal is reaching 60% by Sunday. That means completing ${target-ws.done} more check-ins this week. Pick 2–3 habits you can commit to daily and focus only on those.`;
+  } else if(avg<80){
+    const needed=Math.ceil(ws.total*0.8)-ws.done;
+    card3.icon='📈';card3.heading='Hit 80% before Sunday';
+    card3.body=`You're at ${avg}% and ${needed>0?`need ${needed} more check-in${needed!==1?'s':''} to hit 80%`:'close to 80%'}. ${daysLeft>0?`With ${daysLeft} day${daysLeft!==1?'s':''} left, that's very achievable.`:'Finish strong today.'} 80% is the threshold where real habit formation kicks in.`;
+  } else {
+    card3.icon='🏅';card3.heading='Go for 90%+ this week';
+    card3.body=`You're performing well at ${avg}%. The next milestone is 90%. ${habitStats.filter(h=>h.pct<80).length>0?`Focus on "${habitStats.filter(h=>h.pct<80).sort((a,b)=>a.pct-b.pct)[0].name}" which still has room to grow.`:'Keep the consistency up across all habits.'}`;
+  }
+
+  // ── RENDER ───────────────────────────────────────────────
+  const cards=[card1,card2,card3];
+  panel.innerHTML=`
+    <div class="hab-ai-panel-head">
+      <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(14,165,233,.14));display:flex;align-items:center;justify-content:center;font-size:15px">📊</div>
+      <div>
+        <div class="hab-ai-panel-title">Habit Coach</div>
+        <div class="hab-ai-panel-sub">Personalized breakdown based on your week · ${ws.done}/${ws.total} total · ${avg}% avg</div>
+      </div>
+    </div>
+    <div class="hab-ai-cards">
+      ${cards.map(c=>`
+        <div class="hab-ai-card">
+          <div class="hab-ai-card-ico">${c.icon}</div>
+          <div class="hab-ai-card-tag" style="background:${c.tagBg};color:${c.tagColor}">${c.tag}</div>
+          <div class="hab-ai-card-head">${c.heading}</div>
+          <div class="hab-ai-card-body">${c.body}</div>
+        </div>`).join('')}
+    </div>
+    <div class="hab-ai-footer">
+      <div class="hab-ai-footer-note">✦ Based on your actual habit data this week · Updates as you check off habits</div>
+    </div>`;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -5932,9 +6743,14 @@ function renderProfile(){
   const heroStatusBorder=isDarkTheme?'rgba(255,255,255,.2)':'rgba(91,110,245,.20)';
   const heroStatusColor=isDarkTheme?'rgba(255,255,255,.9)':'var(--text)';
 
+  // Settings vars
+  const isDark=S.sett.theme==='dark';
+  const notifOn=S.sett.notif;
+  const todayKey=fmtKey(new Date(BASE));
+
   document.getElementById('prof-cx').innerHTML=`
   <!-- Hero Card: brand-colored gradient background -->
-  <div style="background:linear-gradient(135deg,rgba(91,110,245,.22) 0%,rgba(124,58,237,.18) 45%,rgba(14,165,233,.14) 100%);border:1px solid rgba(91,110,245,.32);border-radius:var(--rr);padding:26px 28px 20px 32px;margin-bottom:14px;position:relative;overflow:hidden">
+  <div style="background:linear-gradient(135deg,rgba(91,110,245,.22) 0%,rgba(124,58,237,.18) 45%,rgba(14,165,233,.14) 100%);border:1px solid rgba(91,110,245,.32);border-radius:var(--rr);padding:26px 28px 26px 32px;margin-bottom:14px;position:relative;overflow:hidden">
     <!-- Glow layers -->
     <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--grad);border-radius:3px 0 0 3px;z-index:1"></div>
     <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(91,110,245,.15) 0%,transparent 70%);pointer-events:none"></div>
@@ -5958,8 +6774,20 @@ function renderProfile(){
           <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;flex-shrink:0;display:inline-block"></span>
           APEX · Active
         </div>
-        <div style="font-family:var(--fh);font-size:28px;font-weight:800;margin-bottom:3px;color:${heroNameColor};text-shadow:0 2px 14px rgba(0,0,0,.15);letter-spacing:-.5px;line-height:1.1">${p.name||'Your Name'}</div>
-        <div style="font-size:13px;color:${heroSubColor};margin-bottom:12px;font-weight:400">${p.role||'Life Optimizer'}</div>
+        <!-- Name + Role: display mode with pen icon, switches to edit mode -->
+        <div id="prof-display" style="margin-bottom:12px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+            <div id="prof-name-txt" style="font-family:var(--fh);font-size:26px;font-weight:800;color:${heroNameColor};text-shadow:0 2px 14px rgba(0,0,0,.15);letter-spacing:-.5px;line-height:1.2">${p.name||'Your Name'}</div>
+            <button onclick="openProfileEdit(this)" title="Edit name & role"
+              style="width:26px;height:26px;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;backdrop-filter:blur(4px)"
+              onmouseover="this.style.background='rgba(255,255,255,.22)';this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.4)'"
+              onmouseout="this.style.background='rgba(255,255,255,.1)';this.style.color='rgba(255,255,255,.7)';this.style.borderColor='rgba(255,255,255,.18)'">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="12" height="12"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+          </div>
+          <div id="prof-role-txt" style="font-size:13px;color:${heroSubColor};font-weight:400">${p.role||'Life Optimizer'}</div>
+        </div>
+        <!-- Edit mode popup trigger handled via JS -->
         <!-- Badges -->
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           ${(()=>{
@@ -5971,63 +6799,224 @@ function renderProfile(){
         </div>
       </div>
     </div>
-
-    <!-- Weekly progress bar -->
-    <div style="margin-top:22px;padding-top:18px;border-top:1px solid ${heroBorderColor};position:relative;z-index:1">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
-        <span style="font-size:10px;font-weight:700;color:${heroLabelColor};letter-spacing:.4px;text-transform:uppercase">📊 Weekly Progress</span>
-        <span style="font-family:var(--fh);font-size:13px;font-weight:800;color:${heroPctColor}">${ws.pct}%</span>
-      </div>
-      <div style="height:6px;background:${heroProgressBg};border-radius:3px;overflow:hidden">
-        <div class="prof-progress-fill" style="height:100%;width:${ws.pct}%;border-radius:3px;transition:width .9s ease"></div>
-      </div>
-      <div style="font-size:10px;color:${heroSubtleColor};margin-top:5px">${ws.pct>=60?`You're ahead of 60% of your week goal 🎯`:ws.pct>=30?`Keep going — you're building momentum`:`Start checking off tasks to build your streak`}</div>
-    </div>
   </div>
 
-  <!-- Stats row -->
-  <div class="prof-stats" style="margin-bottom:14px">
-    <div class="ps-item"><div class="ps-v">${str}</div><div class="ps-l">Day Streak</div></div>
-    <div class="ps-item"><div class="ps-v">${S.tasks.length}</div><div class="ps-l">Active Tasks</div></div>
-    <div class="ps-item"><div class="ps-v">${total}</div><div class="ps-l">All-time Done</div></div>
-    <div class="ps-item"><div class="ps-v">${hrs.toFixed(0)}h</div><div class="ps-l">Daily Load</div></div>
-  </div>
+  <!-- ── SETTINGS SECTION (embedded in profile) ── -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch">
 
-  <!-- Edit forms -->
-  <div class="prof-grid">
-    <div class="prof-sec">
-      <h3>Personal Information</h3>
-      <div class="pf-row">
-        <div class="fg"><label>Full Name</label><input id="pp-name" value="${p.name||''}" placeholder="Your name"></div>
-        <div class="fg"><label>Role / Title</label><input id="pp-role" value="${p.role||''}" placeholder="e.g. Entrepreneur"></div>
+    <!-- Left column: Dark Mode + Smart Notifications stacked, stretches to match Data Management height -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+    <div class="set-sec" style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:var(--rr);background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.06));border:1px solid rgba(91,110,245,.2)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="font-size:20px">🎨</span>
+        <div><div style="font-size:13px;font-weight:700">${isDark?'Dark Mode':'Light Mode'}</div><div style="font-size:11px;color:var(--text2)">Toggle dark / light theme for comfortable viewing</div></div>
       </div>
-      <div class="fg"><label>Bio</label><textarea id="pp-bio" placeholder="A short bio about yourself…">${p.bio||''}</textarea></div>
+      <div class="tog ${isDark?'on':''}" onclick="toggleTheme()"></div>
     </div>
-    <div class="prof-sec">
-      <h3>Goals &amp; Focus</h3>
-      <div class="fg"><label>Main Goal</label><input id="pp-goal" value="${p.goal||''}" placeholder="What are you working towards?"></div>
-      <div class="fg"><label>Current Focus</label><input id="pp-focus" value="${p.focus||''}" placeholder="This week's top priority"></div>
-      <div class="fg"><label>Daily Mantra</label><input id="pp-mantra" value="${p.mantra||''}" placeholder="Your daily affirmation"></div>
-      <div class="fg"><label>Motivation</label><textarea id="pp-motiv" placeholder="Why are you doing this?">${p.motivation||''}</textarea></div>
+
+    <div class="set-sec" style="flex:1">
+      <h3><span class="sh3-ico">🔔</span> Smart Notifications</h3>
+      <div class="set-row">
+        <div class="set-info"><div class="t">Task Reminders</div><div class="d">Get notified before your next scheduled task begins</div></div>
+        <div class="tog ${notifOn?'on':''}" onclick="toggleNotif()"></div>
+      </div>
+      <div class="set-row">
+        <div class="set-info"><div class="t">Reminder Lead Time</div><div class="d">Minutes before a task to notify you</div></div>
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+          <select class="ana-sel lead-sel-native" style="width:90px;flex-shrink:0" onchange="S.sett.leadMins=parseInt(this.value);saveS();updateMobLeadLabel()">
+            <option value="5" ${(S.sett.leadMins||10)===5?'selected':''}>5 min</option>
+            <option value="10" ${(S.sett.leadMins||10)===10?'selected':''}>10 min</option>
+            <option value="15" ${(S.sett.leadMins||10)===15?'selected':''}>15 min</option>
+            <option value="30" ${(S.sett.leadMins||10)===30?'selected':''}>30 min</option>
+          </select>
+          <div class="mob-lead-btn" id="mob-lead-btn" onclick="toggleMobLeadPanel()">
+            <span id="mob-lead-label">${S.sett.leadMins||10} min</span>
+            <svg class="mlb-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+      </div>
     </div>
+
+    </div><!-- end left column wrapper -->
+
+    <div class="set-sec">
+      <h3 style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+        <span style="display:flex;align-items:center;gap:8px"><span class="sh3-ico">💾</span> Data Management</span>
+        <div style="position:relative;display:inline-flex;align-items:center;flex-shrink:0" id="dm-info-wrap">
+          <button id="dm-info-btn" onclick="toggleDMInfo(event)" aria-label="Data management info" style="width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(91,110,245,.45);background:rgba(91,110,245,.1);color:var(--p1);font-size:10px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1;transition:all .2s;font-family:var(--fb)" onmouseover="this.style.background='rgba(91,110,245,.22)'" onmouseout="this.style.background='rgba(91,110,245,.1)'">i</button>
+          <div id="dm-info-popup" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:280px;padding:11px 13px;border-radius:11px;background:var(--card);border:1px solid rgba(91,110,245,.25);box-shadow:0 8px 32px rgba(0,0,0,.28);z-index:9999;font-size:11px;color:var(--text2);line-height:1.65">
+            💡 <strong style="color:var(--text);font-weight:700">Keep your data safe.</strong> Since APEX stores data locally in your browser, exporting a backup protects you if you switch devices, clear your cache, or use a different browser. Export regularly and restore anytime.
+          </div>
+        </div>
+      </h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+
+        <!-- Export JSON + Restore pair -->
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="padding:11px 14px;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div>
+                <div style="font-size:12px;font-weight:700">Export JSON Backup</div>
+                <div style="font-size:11px;color:var(--text2);margin-top:2px">Download your data as a JSON file.</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="flex-shrink:0;gap:6px;white-space:nowrap" onclick="expJSON()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export
+              </button>
+            </div>
+          </div>
+          <div style="padding:11px 14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <div>
+                <div style="font-size:12px;font-weight:700">Restore Backup</div>
+                <div style="font-size:11px;color:var(--text2);margin-top:2px">Upload a JSON file to restore your data.</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="flex-shrink:0;gap:6px;white-space:nowrap;border-color:rgba(91,110,245,.35);color:var(--p1)" onclick="document.getElementById('restore-file-input').click()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Restore
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CSV Export + Reset All Data — single premium row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <!-- Export CSV -->
+          <button onclick="openCSVModal()"
+            style="display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:10px;background:var(--card2);border:1px solid var(--border);cursor:pointer;transition:all .18s;text-align:left;width:100%"
+            onmouseover="this.style.borderColor='rgba(91,110,245,.35)';this.style.background='rgba(91,110,245,.06)'"
+            onmouseout="this.style.borderColor='var(--border)';this.style.background='var(--card2)'">
+            <div style="width:30px;height:30px;border-radius:8px;background:rgba(91,110,245,.12);border:1px solid rgba(91,110,245,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--p1)" stroke-width="2" width="14" height="14"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div>
+              <div style="font-size:11.5px;font-weight:700;color:var(--text)">Export CSV</div>
+              <div style="font-size:10px;color:var(--text3);margin-top:1px">Download report</div>
+            </div>
+          </button>
+          <!-- Reset All Data -->
+          <button onclick="confirmReset()"
+            style="display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:10px;background:rgba(244,63,94,.04);border:1px solid rgba(244,63,94,.18);cursor:pointer;transition:all .18s;text-align:left;width:100%"
+            onmouseover="this.style.borderColor='rgba(244,63,94,.4)';this.style.background='rgba(244,63,94,.09)'"
+            onmouseout="this.style.borderColor='rgba(244,63,94,.18)';this.style.background='rgba(244,63,94,.04)'">
+            <div style="width:30px;height:30px;border-radius:8px;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--r1)" stroke-width="2" width="14" height="14"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+            </div>
+            <div>
+              <div style="font-size:11.5px;font-weight:700;color:var(--r1)">Reset Data</div>
+              <div style="font-size:10px;color:var(--text3);margin-top:1px">Clear everything</div>
+            </div>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="set-sec" style="grid-column:span 2">
+      <h3><div style="width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:var(--grad);color:#fff;font-family:var(--fh);font-weight:800;font-size:11px">A</div> About APEX</h3>
+      <div style="max-width:780px">
+        <p style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:6px">Apex is a complete personal productivity system — schedule, habits, focus timer, and notes — built to help you stay consistent and take control of your day.</p>
+        <p style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:0">All data is stored locally in your browser. No account, no server — fully private.</p>
+        <div id="about-details" style="display:none;margin-top:14px">
+          <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px">⚡ What you can do with APEX</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 28px;margin-bottom:16px">
+            ${['Dashboard — Your day, clear and in control','Schedule Manager — Plan your day with clarity','Analytics & Charts — Turn data into insights','Habit Tracker — Build discipline, one day at a time','Focus Timer — Deep work, distraction-free','Quick Notes — Capture ideas instantly','Profile Page — Personalize your system','Dark / Light Mode — Work comfortably, anytime','CSV & JSON Export — Your data, always portable','Notifications — Timely reminders'].map(f=>`<div style="font-size:11px;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:6px"><span style="color:var(--p1);margin-top:1px">•</span>${f}</div>`).join('')}
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(91,110,245,.08),rgba(124,58,237,.05));border:1px solid rgba(91,110,245,.18);border-radius:10px;padding:14px 18px">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px">🚀 Why APEX?</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7">Productivity isn't about doing more — it's about doing what matters, consistently. <strong style="color:var(--p1)">APEX helps you show up, stay consistent, and become unstoppable.</strong></div>
+          </div>
+        </div>
+        <button onclick="const d=document.getElementById('about-details');const showing=d.style.display!=='none';d.style.display=showing?'none':'block';this.textContent=showing?'Learn more ↓':'Show less ↑'" style="margin-top:12px;background:transparent;border:none;color:var(--p1);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--fb);padding:0">Learn more ↓</button>
+      </div>
+
+      <!-- ── LEGAL FOOTER ── -->
+      <div style="margin-top:24px;border-radius:14px;overflow:hidden;border:1px solid var(--border2)">
+        <div style="height:3px;background:var(--grad)"></div>
+        <div style="padding:18px 20px 16px;background:var(--card2)">
+          <div style="font-size:11px;color:var(--text2);line-height:1.75;margin-bottom:14px;text-align:center">
+            © 2026 APEX. All rights reserved. All content, design, and features are proprietary to APEX.
+            Any unauthorized use, reproduction, distribution, or resale, in whole or in part, is strictly
+            prohibited and may result in legal action.
+          </div>
+          <div style="height:1px;background:var(--border);margin-bottom:14px"></div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap">
+            <button onclick="document.getElementById('terms-modal').classList.add('open')"
+              style="display:inline-flex;align-items:center;gap:5px;background:rgba(91,110,245,.08);border:1px solid rgba(91,110,245,.22);color:var(--p1);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--fb);padding:6px 13px;border-radius:20px;transition:all .2s;letter-spacing:.1px"
+              onmouseover="this.style.background='rgba(91,110,245,.18)';this.style.borderColor='rgba(91,110,245,.4)'"
+              onmouseout="this.style.background='rgba(91,110,245,.08)';this.style.borderColor='rgba(91,110,245,.22)'">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Terms of Use
+            </button>
+            <span style="color:var(--text3);font-size:13px;line-height:1">·</span>
+            <button onclick="document.getElementById('privacy-modal').classList.add('open')"
+              style="display:inline-flex;align-items:center;gap:5px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22);color:#34d399;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--fb);padding:6px 13px;border-radius:20px;transition:all .2s;letter-spacing:.1px"
+              onmouseover="this.style.background='rgba(16,185,129,.16)';this.style.borderColor='rgba(16,185,129,.4)'"
+              onmouseout="this.style.background='rgba(16,185,129,.07)';this.style.borderColor='rgba(16,185,129,.22)'">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Privacy Policy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>`;
 }
+function openProfileEdit(btn){
+  const p=S.profile;
+  const popup=document.getElementById('prof-edit-popup');
+  const nameInp=document.getElementById('pp-name');
+  const roleInp=document.getElementById('pp-role');
+  if(!popup||!nameInp||!roleInp)return;
+  nameInp.value=p.name||'';
+  roleInp.value=p.role||'';
+  // Position popup near the pen button
+  const rect=btn?btn.getBoundingClientRect():{top:120,left:200};
+  const vw=window.innerWidth,vh=window.innerHeight;
+  let top=rect.bottom+6,left=rect.left;
+  if(left+256>vw-12) left=vw-260;
+  if(top+220>vh-12) top=rect.top-220-6;
+  popup.style.top=top+'px';
+  popup.style.left=left+'px';
+  popup.style.display='block';
+  setTimeout(()=>nameInp.focus(),60);
+  // Close on outside click
+  setTimeout(()=>{
+    document._pepClose=function(e){
+      if(!popup.contains(e.target)&&e.target!==btn){
+        closeProfileEdit(false);
+      }
+    };
+    document.addEventListener('mousedown',document._pepClose);
+  },100);
+}
+function closeProfileEdit(save){
+  const popup=document.getElementById('prof-edit-popup');
+  if(!popup)return;
+  if(save){
+    const name=document.getElementById('pp-name')?.value.trim();
+    const role=document.getElementById('pp-role')?.value.trim();
+    if(name) S.profile.name=name;
+    if(role) S.profile.role=role;
+    saveS();updateSbProfile();
+    const nt=document.getElementById('prof-name-txt');
+    const rt=document.getElementById('prof-role-txt');
+    if(nt) nt.textContent=S.profile.name||'Your Name';
+    if(rt) rt.textContent=S.profile.role||'Life Optimizer';
+    toast('Profile saved ✓','#34d399');
+  }
+  popup.style.display='none';
+  if(document._pepClose){
+    document.removeEventListener('mousedown',document._pepClose);
+    document._pepClose=null;
+  }
+}
+function saveProfileInline(){closeProfileEdit(true);}
+function saveProfile(){closeProfileEdit(true);}
 function saveProfile(){
-  S.profile={
-    ...S.profile,
-    name:   document.getElementById('pp-name')?.value.trim()||S.profile.name,
-    role:   document.getElementById('pp-role')?.value.trim()||S.profile.role,
-    bio:    document.getElementById('pp-bio')?.value.trim()||'',
-    goal:   document.getElementById('pp-goal')?.value.trim()||'',
-    focus:  document.getElementById('pp-focus')?.value.trim()||'',
-    mantra: document.getElementById('pp-mantra')?.value.trim()||'',
-    motivation:document.getElementById('pp-motiv')?.value.trim()||'',
-  };
-  saveS();updateSbProfile();renderProfile();
-  toast('Profile saved successfully ✓','#34d399');
-  // Briefly animate the save button
-  const btn=document.querySelector('#view-profile .btn-pri');
-  if(btn){btn.textContent='Saved! ✓';btn.style.background='linear-gradient(135deg,#10b981,#34d399)';setTimeout(()=>{btn.textContent='Save Changes';btn.style.background='';},1800);}
+  closeProfileEdit(true);
 }
 function handleAvatar(e){
   const file=e.target.files[0];if(!file)return;
@@ -6068,9 +7057,11 @@ function renderSettings(){
     .slice(0,3);
 
   document.getElementById('set-cx').innerHTML=`
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch">
 
-    <div class="set-sec" style="grid-column:span 2;display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:var(--rr);background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.06));border:1px solid rgba(91,110,245,.2)">
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+    <div class="set-sec" style="display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-radius:var(--rr);background:linear-gradient(135deg,rgba(91,110,245,.1),rgba(124,58,237,.06));border:1px solid rgba(91,110,245,.2)">
       <div style="display:flex;align-items:center;gap:12px">
         <span style="font-size:20px">🎨</span>
         <div><div style="font-size:13px;font-weight:700">${isDark?'Dark Mode':'Light Mode'}</div><div style="font-size:11px;color:var(--text2)">Toggle dark / light theme for comfortable viewing</div></div>
@@ -6078,7 +7069,7 @@ function renderSettings(){
       <div class="tog ${isDark?'on':''}" onclick="toggleTheme()"></div>
     </div>
 
-    <div class="set-sec">
+    <div class="set-sec" style="flex:1">
       <h3><span class="sh3-ico">🔔</span> Smart Notifications</h3>
       <div class="set-row">
         <div class="set-info"><div class="t">Task Reminders</div><div class="d">Get notified before your next scheduled task begins</div></div>
@@ -6116,6 +7107,8 @@ function renderSettings(){
         }).join('')}
       </div>`:''}
     </div>
+
+    </div><!-- end left column wrapper -->
 
     <div class="set-sec">
       <h3 style="display:flex;align-items:center;justify-content:space-between;gap:8px">
@@ -6229,7 +7222,7 @@ function toggleNotif(){
       if(p==='granted')scheduleSmartReminders();
     });
   }
-  saveS();renderSettings();
+  saveS();renderProfile();
 }
 function scheduleSmartReminders(){
   if(!S.sett.notif||!('Notification' in window))return;
@@ -6254,7 +7247,7 @@ function scheduleSmartReminders(){
 function toggleTheme(){
   S.sett.theme=S.sett.theme==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme',S.sett.theme);
-  saveS();renderSettings();syncDmTog();
+  saveS();renderProfile();syncDmTog();
   const dates=getWeekDates(S.weekOff);
   if(document.getElementById('view-analytics').classList.contains('on')) renderAna(dates);
   if(document.getElementById('view-profile').classList.contains('on')) renderProfile();
@@ -6292,7 +7285,6 @@ function showView(id){
   else if(id==='timer')    renderTimer();
   else if(id==='notes')    renderNotes();
   else if(id==='profile')  renderProfile();
-  else if(id==='settings') renderSettings();
   else render();
 }
 let _sbOpen=false;
@@ -6648,6 +7640,7 @@ document.addEventListener('keydown',e=>{
     document.getElementById('mo-confirm-note').classList.remove('open');
     document.getElementById('mo-confirm-task').classList.remove('open');
     document.getElementById('mo-confirm-reset').classList.remove('open');
+    closeWeeklySummary();
   }
 });
 
@@ -6803,7 +7796,7 @@ function restoreJSON(event){
     document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');setTimeout(syncDmTog,0);
     saveS();
     render();
-    renderSettings();
+    renderProfile();
 
     const msg=versionMismatch
       ?`Backup restored ✓ (version mismatch — some defaults applied)`
@@ -7140,7 +8133,6 @@ function buildSchedViewTabs(){
     {id:'month', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><rect x="7" y="14" width="3" height="3" rx=".5"/><rect x="14" y="14" width="3" height="3" rx=".5"/></svg>', label:'Month'},
     {id:'week',  icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M3 15h18"/></svg>', label:'Week'},
     {id:'day',   icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><line x1="12" y1="14" x2="12" y2="20"/></svg>', label:'Day'},
-    {id:'tasks', icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></svg>', label:'Tasks'},
   ];
   return`<div class="sched-view-tabs">${tabs.map(t=>`<button class="sched-view-tab${schedState.tab===t.id?' active':''}" onclick="setSchedTab('${t.id}')">${t.icon}<span>${t.label}</span></button>`).join('')}</div>`;
 }
@@ -7150,7 +8142,7 @@ function renderSchedTopbar(){
   const tbr = document.getElementById('sched-tb-r');
   if(!tbr) return;
   tbr.innerHTML = `<button class="btn btn-pri btn-sm" onclick="openTaskModal()" style="white-space:nowrap;font-size:11px;gap:5px;flex-shrink:0">+ Add Task</button>`;
-  const subs={month:'Monthly overview',week:'7-day timeline',day:'Single day view',tasks:'All task blocks'};
+  const subs={month:'Monthly overview',week:'7-day timeline',day:'Single day view'};
   const el=document.getElementById('sched-tb-sub');
   if(el) el.textContent=subs[schedState.tab]||'';
 }
@@ -7171,8 +8163,8 @@ function renderSchedMerged(){
   renderSchedTopbar();
   const cx=document.getElementById('sched-cx');
   if(!cx) return;
-  if(schedState.tab==='tasks') renderSchedTasks(cx);
-  else if(schedState.tab==='day') renderSchedDay(cx);
+  if(schedState.tab==='tasks') schedState.tab='week';
+  if(schedState.tab==='day') renderSchedDay(cx);
   else if(schedState.tab==='month') renderSchedMonth(cx);
   else { schedState.tab='week'; renderSchedWeek(cx); }
 }
@@ -7387,8 +8379,7 @@ function renderSchedMonth(cx){
     const isPastDay=k<todayKey;
     const dow=d.getDay()===0?6:d.getDay()-1;
     const isWknd=dow>=5;
-    const todayDateKey=fmtKey(new Date(BASE));
-  const tasks=S.tasks.filter(t=>t.days.includes(dow)&&isTaskActiveOnDate(t,todayDateKey));
+    const tasks=S.tasks.filter(t=>t.days.includes(dow)&&isTaskActiveOnDate(t,k));
     const total=tasks.length;
     const doneCount=tasks.filter(t=>isDone(t.id,k)).length;
     const pct=total?Math.round(doneCount/total*100):0;
@@ -8273,6 +9264,38 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
         </div>
       </div>
 
+    </div>
+  </div>
+</div>
+
+<!-- ── PROFILE EDIT POPUP ──────────────────────────────────────── -->
+<div id="prof-edit-popup">
+  <div class="pep-head">
+    <div class="pep-title">
+      <div class="pep-title-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="10" height="10" style="color:#a5b4fc"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </div>
+      Edit Profile
+    </div>
+    <div class="pep-close" onclick="closeProfileEdit(false)" title="Cancel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="9" height="9"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+  <div class="pep-divider"></div>
+  <div class="pep-body">
+    <div class="pep-field">
+      <div class="pep-label">Name</div>
+      <input id="pp-name" class="pep-input pep-input-name" placeholder="Your Name"
+        onkeydown="if(event.key==='Enter')document.getElementById('pp-role').focus();if(event.key==='Escape')closeProfileEdit(false)">
+    </div>
+    <div class="pep-field">
+      <div class="pep-label">Role / Title</div>
+      <input id="pp-role" class="pep-input pep-input-role" placeholder="Life Optimizer"
+        onkeydown="if(event.key==='Enter')closeProfileEdit(true);if(event.key==='Escape')closeProfileEdit(false)">
+    </div>
+    <div class="pep-actions">
+      <button class="pep-save" onclick="closeProfileEdit(true)">Save Changes</button>
+      <button class="pep-cancel" onclick="closeProfileEdit(false)">Cancel</button>
     </div>
   </div>
 </div>
