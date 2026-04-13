@@ -195,6 +195,68 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   background:var(--card);color:var(--p1);
   box-shadow:0 1px 6px rgba(0,0,0,.18),0 0 0 1px rgba(91,110,245,.25);
 }
+/* ── ANA WEEK NAV (topbar, beside Weekly Summary) ──────────── */
+.ana-tb-cluster{
+  display:flex;align-items:center;gap:6px;
+}
+/* Date range navigator — matches screenshot exactly, tighter width */
+.ana-wk-nav{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--card2);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  height:34px;
+  padding:3px 4px;
+  box-shadow:0 1px 6px rgba(0,0,0,.18);
+}
+.ana-wk-btn{
+  width:26px;height:26px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--bg);
+  color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .13s,color .13s,border-color .13s;
+  flex-shrink:0;padding:0;
+}
+.ana-wk-btn:hover:not([disabled]){
+  background:var(--bg2);
+  border-color:var(--border2);
+  color:var(--text);
+}
+.ana-wk-btn[disabled]{opacity:.2;cursor:default;pointer-events:none;}
+.ana-wk-range{
+  font-size:11.5px;font-weight:600;
+  color:var(--text);
+  letter-spacing:-.25px;
+  padding:0 10px;
+  white-space:nowrap;
+  text-align:center;
+  line-height:1;
+}
+
+/* Weekly Summary — matches Add Task gradient exactly */
+.ana-wk-sum-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  height:30px;padding:0 12px;
+  border-radius:9px;
+  background:var(--grad);
+  border:none;
+  color:#fff;
+  font-family:var(--fb);font-size:11px;font-weight:700;
+  cursor:pointer;white-space:nowrap;flex-shrink:0;
+  box-shadow:0 2px 10px rgba(91,110,245,.32);
+  transition:opacity .18s,transform .18s,box-shadow .18s;
+  letter-spacing:-.1px;
+}
+.ana-wk-sum-btn:hover{
+  opacity:.88;
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px rgba(91,110,245,.42);
+}
+.ana-wk-sum-btn:active{transform:translateY(0);opacity:1;}
+.ana-wk-sum-btn svg{flex-shrink:0;opacity:.9}
+.ana-wk-sum-dot{display:none}
 /* ── BUTTONS ───────────────────────────────────────────────── */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:var(--rs);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border2);white-space:nowrap}
 .btn-ghost{background:transparent;color:var(--text2)}.btn-ghost:hover{background:var(--card2);color:var(--text)}
@@ -480,18 +542,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .dn-health  {background:rgba(239,68,68,.22);  border-color:#ef4444}.dn-health   svg{opacity:1;stroke:#f87171}
 .dn-learning{background:rgba(6,182,212,.22);  border-color:#06b6d4}.dn-learning  svg{opacity:1;stroke:#22d3ee}
 /* ── INSIGHTS ──────────────────────────────────────────────── */
-.ig{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.ic{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px;transition:all .2s}
-.ic:hover{border-color:var(--border2);transform:translateY(-1px)}
-.ic-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:8px}
-.ic-t{font-size:12px;font-weight:600;margin-bottom:3px}
-.ic-x{font-size:11px;color:var(--text2);line-height:1.55}
+.ig{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.ic{border-radius:var(--rr);padding:8px 11px;transition:all .2s;display:flex;flex-direction:column;gap:3px;border-left-width:3px;border-left-style:solid;border-top:1px solid;border-right:1px solid;border-bottom:1px solid}
+.ic:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.ic-head{display:flex;align-items:center;gap:7px}
+.ic-ico{width:18px;height:18px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.ic-t{font-size:11px;font-weight:700;line-height:1.2}
+.ic-x{font-size:10px;color:var(--text2);line-height:1.45;padding-left:25px}
 /* ── ANALYTICS ─────────────────────────────────────────────── */
 .ag{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:18px}
 .ac{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:17px;transition:background .3s}
 .ac h3{font-family:var(--fh);font-size:13px;font-weight:700;margin-bottom:3px}
 .ac-sub{font-size:10px;color:var(--text2);margin-bottom:13px}
-.cg2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px}
+.cg2{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px;align-items:stretch}
 .chbox{position:relative;width:100%}
 /* heatmap */
 .hr{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;padding-right:2px}
@@ -503,27 +566,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .h3{background:rgba(91,110,245,.52);border-color:#5b6ef5;color:#e0e4ff}
 .h4{background:linear-gradient(135deg,#5b6ef5,#7c3aed);border-color:#7c3aed;color:#fff}
 .htoday{box-shadow:0 0 0 2px var(--p1),0 0 0 4px rgba(91,110,245,.18)}
-/* cat breakdown */
-.cl{display:flex;flex-direction:column;gap:11px}
-/* Category list: show 5 items, scroll for more */
-.cl-scroll-wrap{
-  overflow-y:auto;
-  overflow-x:hidden;
-  scrollbar-width:thin;
-  scrollbar-color:var(--border2) transparent;
-  padding-right:2px;
-}
-.cl-scroll-wrap::-webkit-scrollbar{width:4px}
+/* ── CATEGORY BREAKDOWN ──────────────────────────────────────── */
+.cl{display:flex;flex-direction:column;gap:6px}
+.cl-scroll-wrap{overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--border2) transparent;padding-right:2px}
+.cl-scroll-wrap::-webkit-scrollbar{width:3px}
 .cl-scroll-wrap::-webkit-scrollbar-track{background:transparent}
 .cl-scroll-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-.cr{display:flex;align-items:center;gap:9px}
-.ce{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.cr{display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:9px;background:var(--card2);transition:background .15s,transform .15s;cursor:default}
+.cr:hover{background:var(--card3);transform:translateX(2px)}
+.ce{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .ci{flex:1;min-width:0}
-.cn{font-size:11px;font-weight:600;margin-bottom:3px}
-.cpb{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:2px}
-.cpf{height:100%;border-radius:2px;transition:width .7s ease}
-.cnu{display:flex;justify-content:space-between;font-size:9px;color:var(--text2)}
-.cp{font-family:var(--fh);font-size:12px;font-weight:800;min-width:32px;text-align:right}
+.cn{font-size:11px;font-weight:600;margin-bottom:0;line-height:1.2;color:var(--text)}
+.cpb{height:4px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:4px;margin-bottom:3px}
+.cpf{height:100%;border-radius:99px;transition:width .75s cubic-bezier(.4,0,.2,1)}
+.cr-sub{font-size:9px;color:var(--text3);font-weight:500;letter-spacing:.1px}
+.cp{font-family:var(--fh);font-size:12px;font-weight:800;min-width:32px;text-align:right;flex-shrink:0}
 /* ── SCHEDULE ──────────────────────────────────────────────── */
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .sc{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);padding:15px;transition:all .2s}
@@ -1226,8 +1283,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   height:26px;line-height:26px;padding:0;
   letter-spacing:.4px;text-transform:uppercase;
 }
-/* Weekend DOW tint */
-.cal-dow:first-child,.cal-dow:last-child{color:rgba(91,110,245,.5)}
+/* Weekend DOW tint — Sa=6th, Su=7th in Mon-Sun layout */
+.cal-dow:nth-child(6),.cal-dow:nth-child(7){color:rgba(91,110,245,.5)}
 .cal-day{
   width:100%;height:26px;        /* matches grid-auto-rows — no drift */
   display:flex;align-items:center;justify-content:center;
@@ -1529,7 +1586,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   0%,100%{opacity:.55;transform:translateY(-50%) translateX(0);}
   50%{opacity:1;transform:translateY(-50%) translateX(-3px);}
 }
-.confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:400;align-items:center;justify-content:center;padding:16px}
+.confirm-mo{display:none;position:fixed;inset:0;background:rgba(7,7,13,.65);backdrop-filter:blur(4px);z-index:10000;align-items:center;justify-content:center;padding:16px}
 .confirm-mo.open{display:flex}
 .confirm-box{background:var(--card);border:1px solid var(--border2);border-radius:var(--rl);padding:32px 28px;width:100%;max-width:360px;text-align:center;animation:mi .23s ease}
 .confirm-box .ci-ico{font-size:42px;margin-bottom:14px;display:block}
@@ -2133,7 +2190,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 [data-theme="light"] .sched-cal-wrap{background:var(--card);border-color:var(--border)}
 [data-theme="light"] .sched-dow-row{background:var(--bg3)}
 [data-theme="light"] .sched-cal-cell:hover:not(.other-mo){background:rgba(91,110,245,.04)}
-[data-theme="light"] .sched-cal-cell.sched-today{background:rgba(91,110,245,.05)}
+[data-theme="light"] .sched-cal-cell.sched-today{background:linear-gradient(145deg,rgba(91,110,245,.10),rgba(124,58,237,.06));box-shadow:inset 0 0 0 1.5px rgba(91,110,245,.3)}
 [data-theme="light"] .sched-cal-cell.sched-sel{background:rgba(14,165,233,.06);box-shadow:inset 0 0 0 1.5px rgba(14,165,233,.30)}
 [data-theme="light"] .cwk-wrap{background:var(--card);border-color:var(--border)}
 [data-theme="light"] .cwk-header{background:var(--bg3)}
@@ -3096,15 +3153,25 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sched-cal-cell:hover:not(.other-mo){background:rgba(91,110,245,.04)}
 .sched-cal-cell.other-mo{opacity:.18;pointer-events:none}
 /* today */
-.sched-cal-cell.sched-today{background:rgba(91,110,245,.05)}
+.sched-cal-cell.sched-today{
+  background:linear-gradient(145deg,rgba(91,110,245,.13),rgba(124,58,237,.08));
+  box-shadow:inset 0 0 0 1.5px rgba(91,110,245,.35);
+  z-index:1;
+}
 .sched-cal-cell.sched-today::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,#5b6ef5,#0ea5e9);
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#5b6ef5,#7c3aed,#0ea5e9);
+  border-radius:0;
 }
 /* selected */
 .sched-cal-cell.sched-sel{
   background:rgba(91,110,245,.07);
   box-shadow:inset 0 0 0 1.5px rgba(91,110,245,.28);
+}
+/* today + selected */
+.sched-cal-cell.sched-today.sched-sel{
+  background:linear-gradient(145deg,rgba(91,110,245,.16),rgba(124,58,237,.10));
+  box-shadow:inset 0 0 0 2px rgba(91,110,245,.5);
 }
 /* past */
 .sched-cal-cell.sched-past{opacity:.45;cursor:pointer}
@@ -3114,13 +3181,15 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sched-day-num{
   font-family:var(--fh);font-size:11px;font-weight:700;
   color:var(--text2);
-  width:20px;height:20px;
+  width:22px;height:22px;
   display:flex;align-items:center;justify-content:center;
-  border-radius:5px;flex-shrink:0;align-self:flex-start;
+  border-radius:50%;flex-shrink:0;align-self:flex-start;
 }
 .sched-cal-cell.sched-today .sched-day-num{
-  background:var(--p1);color:#fff;
-  -webkit-text-fill-color:#fff;
+  background:linear-gradient(135deg,#5b6ef5,#7c3aed);
+  color:#fff;-webkit-text-fill-color:#fff;
+  font-size:11px;font-weight:800;
+  box-shadow:0 2px 8px rgba(91,110,245,.45);
 }
 .sched-cal-cell.sched-past .sched-day-num{color:var(--text3)}
 .sched-cal-cell.wknd-cell .sched-day-num{color:rgba(91,110,245,.7)}
@@ -3199,6 +3268,42 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   transition:all .18s;flex-shrink:0;
 }
 .sched-ev-edit-btn:hover{background:rgba(91,110,245,.14);border-color:rgba(91,110,245,.28);color:var(--p1)}
+/* Status pill — replaces tick button in today popup */
+.ev-status-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 7px 2px 6px;border-radius:20px;
+  font-size:8.5px;font-weight:700;letter-spacing:.2px;
+  border:1px solid;flex-shrink:0;white-space:nowrap;
+  font-family:var(--fb);user-select:none;line-height:1.4;
+}
+.ev-status-dot{
+  width:5px;height:5px;border-radius:50%;flex-shrink:0;
+}
+.ev-status-badge.st-done{
+  background:rgba(16,185,129,.09);
+  border-color:rgba(16,185,129,.28);
+  color:#10b981;
+}
+.ev-status-badge.st-done .ev-status-dot{ background:#10b981; }
+.ev-status-badge.st-missed{
+  background:rgba(244,63,94,.07);
+  border-color:rgba(244,63,94,.25);
+  color:#f43f5e;
+}
+.ev-status-badge.st-missed .ev-status-dot{ background:#f43f5e; }
+.ev-status-badge.st-pending{
+  background:rgba(234,179,8,.08);
+  border-color:rgba(234,179,8,.28);
+  color:#d97706;
+}
+[data-theme="dark"] .ev-status-badge.st-pending{ color:#fbbf24; }
+.ev-status-badge.st-pending .ev-status-dot{ background:#f59e0b; }
+.ev-status-badge.st-upcoming{
+  background:rgba(91,110,245,.07);
+  border-color:rgba(91,110,245,.22);
+  color:var(--p1);
+}
+.ev-status-badge.st-upcoming .ev-status-dot{ background:var(--p1);opacity:.6; }
 .sched-empty-day{
   text-align:center;padding:24px 16px;color:var(--text3);
   font-size:11px;line-height:1.7;
@@ -3539,8 +3644,49 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   z-index:5;
 }
 .cwk-block.past-block{
-  opacity:.22;filter:grayscale(.5);
-  pointer-events:none;
+  opacity:.75;
+  filter:saturate(.65) brightness(.92);
+  pointer-events:auto;
+  cursor:pointer;
+}
+.cwk-block.past-block:hover{
+  opacity:.88;
+  filter:saturate(.75) brightness(.98);
+  transform:translateY(-1px) scale(1.012);
+  box-shadow:0 4px 14px rgba(0,0,0,.28);
+}
+.cwk-block.past-block .cwk-block-name{
+  color:rgba(255,255,255,.92);
+}
+.cwk-block.past-block .cwk-block-time{
+  color:rgba(255,255,255,.65);
+}
+/* Past done/missed badge */
+.cwk-past-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:7.5px;font-weight:800;letter-spacing:.28px;
+  padding:2px 6px 2px 4px;border-radius:20px;margin-top:3px;
+  width:fit-content;text-transform:uppercase;
+}
+.cwk-past-badge::before{
+  content:'';display:inline-block;
+  width:5px;height:5px;border-radius:50%;flex-shrink:0;
+}
+.cwk-past-badge.done{
+  background:rgba(16,185,129,.22);
+  color:#6ee7b7;
+  border:1px solid rgba(16,185,129,.35);
+}
+.cwk-past-badge.done::before{
+  background:#34d399;
+}
+.cwk-past-badge.missed{
+  background:rgba(244,63,94,.14);
+  color:rgba(255,160,160,.75);
+  border:1px solid rgba(244,63,94,.22);
+}
+.cwk-past-badge.missed::before{
+  background:rgba(244,63,94,.7);
 }
 .cwk-block-name{
   font-size:10.5px;font-weight:700;
@@ -3554,18 +3700,40 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   color:rgba(255,255,255,.85);
 }
 .cwk-block-status{
-  margin-top:2px;
+  margin-top:3px;
+  display:flex;align-items:center;
 }
+/* ── Status pill: Done (current/future) ── */
 .cwk-bs-done{
-  font-size:8px;font-weight:700;
-  background:rgba(255,255,255,.22);
-  border-radius:3px;padding:1px 5px;
-  color:#fff;letter-spacing:.2px;
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:7.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;
+  padding:2px 6px 2px 4px;border-radius:20px;
+  background:rgba(16,185,129,.25);
+  border:1px solid rgba(16,185,129,.45);
+  color:#6ee7b7;
+  box-shadow:0 0 6px rgba(16,185,129,.18);
 }
+.cwk-bs-done::before{
+  content:'';display:inline-block;
+  width:5px;height:5px;border-radius:50%;
+  background:#34d399;
+  box-shadow:0 0 4px rgba(52,211,153,.7);
+  flex-shrink:0;
+}
+/* ── Status pill: Pending (current/future) ── */
 .cwk-bs-pending{
-  font-size:8px;font-weight:600;
-  color:rgba(255,255,255,.65);
-  letter-spacing:.1px;
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:7.5px;font-weight:700;letter-spacing:.25px;text-transform:uppercase;
+  padding:2px 6px 2px 4px;border-radius:20px;
+  background:rgba(251,191,36,.14);
+  border:1px solid rgba(251,191,36,.32);
+  color:#fcd34d;
+}
+.cwk-bs-pending::before{
+  content:'';display:inline-block;
+  width:5px;height:5px;border-radius:50%;
+  background:#fbbf24;
+  flex-shrink:0;
 }
 
 /* ── Now indicator ──────────────────────────────────────── */
@@ -4095,13 +4263,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
     <span class="nl">Dashboard</span>
   </div>
-  <div class="ni" id="n-schedule" onclick="showView('schedule')" title="Calendar">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-    <span class="nl">Calendar</span>
-  </div>
   <div class="ni" id="n-analytics" onclick="showView('analytics')" title="Analytics">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
     <span class="nl">Analytics</span>
+  </div>
+  <div class="ni" id="n-schedule" onclick="showView('schedule')" title="Calendar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+    <span class="nl">Calendar</span>
   </div>
   <div class="ni" id="n-habits" onclick="showView('habits')" title="Habits">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -4171,7 +4339,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="cx">
     <div class="kpi-grid" id="kpi-grid"></div>
     <!-- Today's Focus + Smart Insights Row -->
-    <div class="focus-insights-row" id="focus-insights-row">
+    <div class="focus-insights-row" id="focus-insights-row" style="cursor:pointer" onclick="toggleInsightsPanel()">
       <!-- Today's Focus -->
       <div class="focus-block" id="focus-block">
         <div class="focus-block-ico">🎯</div>
@@ -4183,7 +4351,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <!-- Divider -->
       <div class="focus-divider"></div>
       <!-- Insights button -->
-      <button class="insights-btn" id="insights-btn" onclick="toggleInsightsPanel()">
+      <button class="insights-btn" id="insights-btn" onclick="event.stopPropagation();toggleInsightsPanel()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2a7 7 0 0 1 7 7c0 3.5-2.5 5.5-3 7H8c-.5-1.5-3-3.5-3-7a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="9.5" y1="18" x2="14.5" y2="18"/></svg>
         Insights
       </button>
@@ -4242,18 +4410,22 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="view" id="view-analytics">
   <div class="tb"><div><h1>Analytics</h1><p class="tb-sub">Performance deep-dive</p></div>
     <div class="tb-r">
-      <button onclick="openWeeklySummary()" id="weekly-sum-btn-tb" style="
-        display:inline-flex;align-items:center;gap:6px;
-        padding:7px 14px;border-radius:10px;
-        background:linear-gradient(135deg,rgba(91,110,245,.16),rgba(124,58,237,.12));
-        border:1px solid rgba(91,110,245,.35);
-        color:var(--p1);font-family:var(--fb);font-size:11px;font-weight:700;
-        cursor:pointer;white-space:nowrap;flex-shrink:0;
-        box-shadow:0 2px 10px rgba(91,110,245,.15);
-        transition:all .2s;letter-spacing:.1px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-        Weekly Summary
-      </button>
+      <div class="ana-tb-cluster">
+        <div class="ana-wk-nav" title="Browse weeks">
+          <button class="ana-wk-btn" id="ana-wk-prev" onclick="dcNavWeek(-1)" title="Previous week">
+            <svg width="8" height="8" viewBox="0 0 9 9" fill="none"><path d="M5.5 1.5L2.5 4.5L5.5 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="ana-wk-range" id="ana-wk-range" title="Current week range">—</span>
+          <button class="ana-wk-btn" id="ana-wk-next" onclick="dcNavWeek(1)" title="Next week" disabled>
+            <svg width="8" height="8" viewBox="0 0 9 9" fill="none"><path d="M3.5 1.5L6.5 4.5L3.5 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <button onclick="openWeeklySummary()" id="weekly-sum-btn-tb" class="ana-wk-sum-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" width="11" height="11"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01"/></svg>
+          Summary
+          <div class="ana-wk-sum-dot"></div>
+        </button>
+      </div>
     </div>
   </div>
   <div class="cx" id="ana-cx"></div>
@@ -4346,13 +4518,13 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
         <span class="bn-l">Home</span>
       </div>
-      <div class="bn" id="bn-schedule" onclick="showView('schedule')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-        <span class="bn-l">Calendar</span>
-      </div>
       <div class="bn" id="bn-analytics" onclick="showView('analytics')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-4"/></svg>
         <span class="bn-l">Analytics</span>
+      </div>
+      <div class="bn" id="bn-schedule" onclick="showView('schedule')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        <span class="bn-l">Calendar</span>
       </div>
       <div class="bn" id="bn-habits" onclick="showView('habits')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -4479,8 +4651,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
             </button>
           </div>
           <div class="cal-grid" id="cal-grid">
-            <div class="cal-dow">Su</div><div class="cal-dow">Mo</div><div class="cal-dow">Tu</div>
-            <div class="cal-dow">We</div><div class="cal-dow">Th</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div>
+            <div class="cal-dow">Mo</div><div class="cal-dow">Tu</div><div class="cal-dow">We</div>
+            <div class="cal-dow">Th</div><div class="cal-dow">Fr</div><div class="cal-dow">Sa</div><div class="cal-dow">Su</div>
           </div>
         </div>
 
@@ -4509,8 +4681,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       </div>
     </div>
 
-    <!-- Footer -->
-    <div style="padding:9px 14px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
+    <!-- Footer: edit mode -->
+    <div id="mo-task-footer-edit" style="padding:9px 14px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
       <div id="mo-task-del-wrap" style="display:none">
         <button class="mo-del-btn" onclick="delTask(S.editId)" title="Remove this task">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
@@ -4524,6 +4696,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           Save Task
         </button>
       </div>
+    </div>
+    <!-- Footer: view-only mode (past tasks) -->
+    <div id="mo-task-footer-view" style="display:none;padding:9px 14px 12px;border-top:1px solid var(--border);align-items:center;justify-content:space-between;gap:8px">
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Past task — view only
+      </div>
+      <button class="btn btn-ghost" onclick="closeMo('mo-task')" style="margin-left:auto">Close</button>
     </div>
   </div>
 </div>
@@ -4725,6 +4905,16 @@ function fmtKey(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'
 function isTaskActiveOnDate(task,dateKey){
   if(task.createdFrom && dateKey<task.createdFrom) return false;
   if(task.deletedFrom && dateKey>=task.deletedFrom) return false;
+  // Single-date: only active on that exact date
+  if(task.schedMode==='single'){
+    return task.schedSingle===dateKey;
+  }
+  // Date-range: only active within the range (inclusive)
+  if(task.schedMode==='range'){
+    if(!task.schedRangeStart||!task.schedRangeEnd) return false;
+    return dateKey>=task.schedRangeStart && dateKey<=task.schedRangeEnd;
+  }
+  // Recurring: default — active every week on the configured days
   return true;
 }
 function tdiff(s,e){
@@ -5146,7 +5336,7 @@ function renderTT(dates){
         <!-- RIGHT: status + actions -->
         <div class="tt-right">
           ${showStatus?statusBadgeHtml(status,todayDone):''}
-          <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="ta ed" onclick="openTaskModal('${t.id}','dashboard')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
           <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
         </div>
       </div>
@@ -5274,7 +5464,7 @@ function renderTodayTT(){
         </div>
         <div class="tt-right">
           ${showStatus ? statusBadgeHtml(status, done) : ''}
-          <button class="ta ed" onclick="openTaskModal('${t.id}')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="ta ed" onclick="openTaskModal('${t.id}','dashboard')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
           <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
         </div>
       </div>
@@ -5408,8 +5598,8 @@ function renderInsights(dates){
 
   const igEl=document.getElementById('ig');
   if(igEl) igEl.innerHTML=items.map(c=>
-    `<div class="ic"><div class="ic-ico" style="background:${c.bg}">${c.ico}</div>
-    <div class="ic-t" style="color:${c.c}">${c.t}</div><div class="ic-x">${c.x}</div></div>`).join('');
+    `<div class="ic" style="background:${c.bg};border-left-color:${c.c};border-top-color:${c.c}33;border-right-color:${c.c}33;border-bottom-color:${c.c}33"><div class="ic-head"><div class="ic-ico" style="background:${c.c}22">${c.ico}</div>
+    <div class="ic-t" style="color:${c.c}">${c.t}</div></div><div class="ic-x">${c.x}</div></div>`).join('');
 }
 
 // ════════════════════════════════════════════════════════════
@@ -5417,52 +5607,71 @@ function renderInsights(dates){
 // ════════════════════════════════════════════════════════════
 // ANALYTICS
 // ════════════════════════════════════════════════════════════
-let _bc=null,_dc=null,_lc=null,_wh=null;
+let _bc=null,_lc=null,_wh=null,_pc=null,_hc=null;
 let _anaOpts={range:4,habit:'all',view:'pct'};
+let _dcWeekOff=0;
+function dcNavWeek(delta){
+  _dcWeekOff=Math.min(0,_dcWeekOff+delta);
+  renderAna(getWeekDates(S.weekOff));
+}
 function renderAna(dates){
+  const anaDates=getWeekDates(_dcWeekOff);
   const el=document.getElementById('ana-cx');
   const allCats=getAllCats();
   const isDark=document.documentElement.getAttribute('data-theme')==='dark';
   const tc=isDark?'#8888aa':'#5a5a7a',gc=isDark?'#252540':'#dcdcf0';
+  const isCurrentWk=_dcWeekOff===0;
 
-  // Compute key metrics
-  const ws=weekStats(dates);
-  const daypcts=dates.map((_,i)=>({day:DAYS7[i],pct:dayStats(dates,i).pct,done:dayStats(dates,i).done,total:dayStats(dates,i).total,i}));
-  const completedDays=S.weekOff===0?daypcts.filter(d=>d.i<=TODAY_DOW):daypcts;
+  // Update topbar week range label + button states
+  const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmtS=d=>`${MONTHS[d.getMonth()]} ${d.getDate()}`;
+  const wkRangeLabel=`${fmtS(anaDates[0])} – ${fmtS(anaDates[6])}`;
+  const rangeEl=document.getElementById('ana-wk-range');
+  const prevBtn=document.getElementById('ana-wk-prev');
+  const nextBtn=document.getElementById('ana-wk-next');
+  if(rangeEl) rangeEl.textContent=wkRangeLabel;
+  if(prevBtn) prevBtn.removeAttribute('disabled');
+  if(nextBtn){if(isCurrentWk)nextBtn.setAttribute('disabled','');else nextBtn.removeAttribute('disabled');}
+
+  // Key metrics from anaDates
+  const ws=weekStats(anaDates);
+  const daypcts=anaDates.map((_,i)=>({day:DAYS7[i],pct:dayStats(anaDates,i).pct,done:dayStats(anaDates,i).done,total:dayStats(anaDates,i).total,i}));
+  const completedDays=isCurrentWk?daypcts.filter(d=>d.i<=TODAY_DOW):daypcts;
   const activeDays=completedDays.filter(d=>d.total>0);
-  const bestDay=activeDays.length?activeDays.reduce((a,b)=>a.pct>=b.pct?a:b):null;
-  const worstDay=activeDays.length>1?activeDays.reduce((a,b)=>a.pct<=b.pct?a:b):null;
-  const missedTasks=daypcts.reduce((s,d)=>s+(d.total-d.done),0);
-
-  // Consistency score
-  const validPcts=activeDays.map(d=>d.pct);
-  let consistencyScore=0;
-  if(validPcts.length>0){
-    const avg=validPcts.reduce((a,b)=>a+b,0)/validPcts.length;
-    const variance=validPcts.reduce((s,v)=>s+Math.pow(v-avg,2),0)/validPcts.length;
-    consistencyScore=Math.max(0,Math.round(avg-Math.sqrt(variance)*0.5));
-  }
+  // bestDay: only valid if at least one day has >0% completion; collect ALL tied top days
+  const _bestPct=activeDays.length?Math.max(...activeDays.map(d=>d.pct)):0;
+  const bestDays=_bestPct>0?activeDays.filter(d=>d.pct===_bestPct):[];
+  const bestDay=bestDays.length===1?bestDays[0]:null; // null if 0% or tied (use bestDays array)
+  const bestDayLabel=bestDays.length===0?null:bestDays.map(d=>d.day).join(' · ');
+  // worstDay: only if days differ in pct
+  const _worstPct=activeDays.length?Math.min(...activeDays.map(d=>d.pct)):0;
+  const worstDays=activeDays.filter(d=>d.pct===_worstPct);
+  const worstDay=activeDays.length>1&&_worstPct!==_bestPct?worstDays[0]:null;
+  const missedTasks=isCurrentWk?daypcts.filter(d=>d.i<TODAY_DOW).reduce((s,d)=>s+(d.total-d.done),0):daypcts.reduce((s,d)=>s+(d.total-d.done),0);
+  const pendingTasks=isCurrentWk?daypcts.filter(d=>d.i>=TODAY_DOW).reduce((s,d)=>s+(d.total-d.done),0):0;
 
   // Insight text
   let insightText='';
-  if(bestDay&&worstDay&&bestDay.pct!==worstDay.pct){
-    insightText=`You performed best on <strong>${bestDay.day}</strong> (${bestDay.pct}%). Your weakest day is <strong>${worstDay.day}</strong> (${worstDay.pct}%). Focus on improving your low days.`;
-  } else if(bestDay&&bestDay.pct===100){
-    insightText=`Perfect performance on <strong>${bestDay.day}</strong>! Try to replicate this pattern on other days.`;
-  } else {
+  if(bestDays.length>0&&worstDay&&bestDays[0].pct!==worstDay.pct){
+    insightText=`You performed best on <strong>${bestDayLabel}</strong> (${_bestPct}%). Your weakest day is <strong>${worstDay.day}</strong> (${worstDay.pct}%). Focus on improving your low days.`;
+  } else if(bestDays.length>0&&_bestPct===100){
+    insightText=`Perfect performance on <strong>${bestDayLabel}</strong>! Try to replicate this pattern on other days.`;
+  } else if(bestDays.length===0){
     insightText='Complete tasks this week to unlock personalized performance insights.';
+  } else {
+    insightText='Consistent performance across the week. Push for higher completion to stand out.';
   }
 
-  // Cat breakdown sorted by %
+  // Cat breakdown from anaDates
   const catDataSorted=allCats.map(c=>{
-    const st=catStats(dates,c);
+    const st=catStats(anaDates,c);
     return{cat:c,col:getCatColor(c),emoji:getCatEmoji(c),label:getCatLabel(c),...st};
   }).sort((a,b)=>b.pct-a.pct);
 
-  // Weekly task hours (completed only)
+  // Weekly task hours from anaDates
   const taskHoursData=S.tasks.map(t=>{
     let doneHrs=0;
-    dates.forEach((d,i)=>{if(t.days.includes(i)&&isDone(t.id,fmtKey(d)))doneHrs+=tdiff(t.start,t.end);});
+    anaDates.forEach((d,i)=>{if(t.days.includes(i)&&isDone(t.id,fmtKey(d)))doneHrs+=tdiff(t.start,t.end);});
     return{name:t.name,hrs:doneHrs,col:getCatColor(t.cat)};
   }).filter(t=>t.hrs>0).sort((a,b)=>b.hrs-a.hrs).slice(0,8);
 
@@ -5472,120 +5681,269 @@ function renderAna(dates){
     <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">✔ Completion Rate</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${ws.pct}%</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px">This Week</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${isCurrentWk?'This Week':'Selected Week'}</div>
     </div>
     <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">🔥 Best Day</div>
-      <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#34d399">${bestDay?bestDay.day:'—'}</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px">${bestDay?bestDay.pct+'% complete':'No data yet'}</div>
+      <div style="font-family:var(--fh);font-size:${bestDays.length>1?'14px':'26px'};font-weight:800;color:${bestDays.length?'#34d399':'var(--text3)'};line-height:1.2;word-break:break-word">${bestDayLabel||'—'}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${bestDays.length>1?_bestPct+'% each · tied':bestDays.length===1?_bestPct+'% complete':'No completions yet'}</div>
     </div>
     <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
       <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">⚠️ Missed Tasks</div>
       <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#f43f5e">${missedTasks}</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px">This Week</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${isCurrentWk?'Before Today':'That Week'}</div>
     </div>
     <div class="ac ana-kpi-card" style="padding:14px;text-align:center">
-      <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">🎯 Consistency</div>
-      <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#a78bfa">${consistencyScore}%</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:2px">Consistency Score</div>
+      <div style="font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">⏳ Pending Tasks</div>
+      <div style="font-family:var(--fh);font-size:26px;font-weight:800;color:#f97316">${pendingTasks}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px">${isCurrentWk?'Today & Upcoming':'—'}</div>
     </div>
   </div>
 
   <!-- Weekly Summary Modal -->
   <div id="wsum-overlay" onclick="if(event.target===this)closeWeeklySummary()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:9000;align-items:flex-start;justify-content:center;padding:16px;padding-top:72px;overflow-y:auto">
     <div id="wsum-modal" style="background:var(--card);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:560px;max-height:calc(100vh - 88px);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);animation:mi .25s ease;display:flex;flex-direction:column">
-      <div id="wsum-sticky-header" style="flex-shrink:0;padding:16px 20px 14px;border-bottom:1px solid var(--border);background:var(--card);backdrop-filter:blur(12px);border-radius:20px 20px 0 0"></div>
+      <div id="wsum-sticky-header" style="flex-shrink:0;padding:16px 20px 14px;border-bottom:1px solid var(--border2);background:var(--bg2);backdrop-filter:blur(20px);border-radius:20px 20px 0 0;box-shadow:0 4px 16px rgba(0,0,0,.25);position:relative;z-index:2"></div>
       <div id="wsum-content" style="overflow-y:auto;flex:1"></div>
     </div>
   </div>
 
-  <!-- 3. Daily Completion + Category Breakdown -->
+  <!-- INSIGHTS SECTION -->
+  <div style="margin-bottom:18px">
+    <div class="focus-insights-row" style="margin-bottom:0;cursor:pointer" onclick="(function(){const p=document.getElementById('ana-insights-panel');const btn=document.getElementById('ana-insights-btn');const open=p.style.display!=='none';p.style.display=open?'none':'block';btn.classList.toggle('active',!open);})()">
+      <div class="focus-block">
+        <div class="focus-block-ico">💡</div>
+        <div class="focus-block-body">
+          <div class="focus-block-label">Smart Insights</div>
+          <div class="focus-block-text">${isCurrentWk ? 'Based on this week' : 'Analysis for ' + wkRangeLabel}</div>
+        </div>
+      </div>
+      <div class="focus-divider"></div>
+      <button class="insights-btn" id="ana-insights-btn" onclick="event.stopPropagation();(function(btn){const p=document.getElementById('ana-insights-panel');const open=p.style.display!=='none';p.style.display=open?'none':'block';btn.classList.toggle('active',!open);})(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 2a7 7 0 0 1 7 7c0 3.5-2.5 5.5-3 7H8c-.5-1.5-3-3.5-3-7a7 7 0 0 1 7-7z"/><line x1="9" y1="21" x2="15" y2="21"/><line x1="9.5" y1="18" x2="14.5" y2="18"/></svg>
+        Insights
+      </button>
+    </div>
+    <div class="insights-panel" id="ana-insights-panel" style="display:none;margin-top:12px;margin-bottom:0">
+      <div class="ig" id="insights-grid">
+      ${(()=>{
+        const cards=[];
+        const topCat=catDataSorted.find(c=>c.total>0);
+        const lowCat=catDataSorted.filter(c=>c.total>0).slice(-1)[0];
+        const totalDone=ws.done;
+        const totalTasks=ws.total;
+        const pct=ws.pct;
+
+        // 1. Performance pulse
+        let perfIcon,perfColor,perfBg,perfBorder,perfTitle,perfBody;
+        if(totalTasks===0){
+          perfIcon='📋';perfColor='#8888aa';perfBg='rgba(136,136,170,.07)';perfBorder='rgba(136,136,170,.15)';
+          perfTitle='No Data Yet';perfBody='Add tasks to start tracking your weekly performance.';
+        } else if(pct===100){
+          perfIcon='🏆';perfColor='#34d399';perfBg='rgba(16,185,129,.08)';perfBorder='rgba(16,185,129,.2)';
+          perfTitle='Perfect Week!';perfBody=`All ${totalTasks} tasks completed. You're operating at 100% — elite execution.`;
+        } else if(pct>=80){
+          perfIcon='🔥';perfColor='#34d399';perfBg='rgba(16,185,129,.08)';perfBorder='rgba(16,185,129,.2)';
+          perfTitle='Strong Performance';perfBody=`${pct}% completion — ${totalTasks-totalDone} tasks left. You're on a solid streak.`;
+        } else if(pct>=50){
+          perfIcon='⚡';perfColor='#eab308';perfBg='rgba(234,179,8,.07)';perfBorder='rgba(234,179,8,.2)';
+          perfTitle='Room to Push';perfBody=`${pct}% done — ${totalTasks-totalDone} tasks remaining. A final push could make this a great week.`;
+        } else if(pct>0){
+          perfIcon='📉';perfColor='#f97316';perfBg='rgba(249,115,22,.07)';perfBorder='rgba(249,115,22,.18)';
+          perfTitle='Slow Start';perfBody=`Only ${pct}% complete so far. ${totalTasks-totalDone} tasks remain — time to accelerate.`;
+        } else {
+          perfIcon='🌱';perfColor='#8888aa';perfBg='rgba(136,136,170,.07)';perfBorder='rgba(136,136,170,.15)';
+          perfTitle='Just Getting Started';perfBody='No completions logged yet this week. Start with your first task.';
+        }
+        cards.push({icon:perfIcon,color:perfColor,bg:perfBg,border:perfBorder,title:perfTitle,body:perfBody});
+
+        // 2. Best day pattern
+        if(bestDays.length>1){
+          cards.push({
+            icon:'🎯',color:'#5b6ef5',bg:'rgba(91,110,245,.07)',border:'rgba(91,110,245,.18)',
+            title:'Tied Peak Days',
+            body:`<strong style="color:var(--text)">${bestDayLabel}</strong> all tied at ${_bestPct}%. Try to maintain this consistency across the week.`
+          });
+        } else if(bestDays.length===1){
+          cards.push({
+            icon:'🎯',color:'#5b6ef5',bg:'rgba(91,110,245,.07)',border:'rgba(91,110,245,.18)',
+            title:'Peak Day: '+bestDayLabel,
+            body:`Your highest output day is <strong style="color:var(--text)">${bestDayLabel}</strong> at ${_bestPct}%. Schedule your hardest tasks here.`
+          });
+        } else {
+          cards.push({
+            icon:'📅',color:'#5b6ef5',bg:'rgba(91,110,245,.07)',border:'rgba(91,110,245,.18)',
+            title:'No Peak Day Yet',body:'Complete tasks this week to discover your highest-performance day.'
+          });
+        }
+
+        // 3. Weak spot or missed tasks
+        if(worstDay&&worstDay.pct<60&&worstDay.day!==bestDay?.day){
+          cards.push({
+            icon:'⚠️',color:'#f43f5e',bg:'rgba(244,63,94,.07)',border:'rgba(244,63,94,.16)',
+            title:'Weak Spot: '+worstDay.day,
+            body:`<strong style="color:var(--text)">${worstDay.day}</strong> is your lowest day at ${worstDay.pct}%. Consider reducing load or removing distractions.`
+          });
+        } else if(missedTasks>0){
+          cards.push({
+            icon:'🚨',color:'#f43f5e',bg:'rgba(244,63,94,.07)',border:'rgba(244,63,94,.16)',
+            title:`${missedTasks} Task${missedTasks!==1?'s':''} Missed`,
+            body:`You missed ${missedTasks} task${missedTasks!==1?'s':''} earlier this week. Review and reschedule to stay on track.`
+          });
+        } else {
+          cards.push({
+            icon:'✅',color:'#34d399',bg:'rgba(16,185,129,.07)',border:'rgba(16,185,129,.18)',
+            title:'No Missed Tasks',body:'Great discipline — no tasks missed so far this week. Keep it up!'
+          });
+        }
+
+        // 4. Top category
+        if(topCat&&topCat.total>0){
+          const domPct=Math.round(topCat.done/Math.max(totalDone,1)*100);
+          cards.push({
+            icon:topCat.emoji,color:topCat.col,bg:topCat.col+'11',border:topCat.col+'2e',
+            title:'Top Focus: '+topCat.label,
+            body:`<strong style="color:var(--text)">${topCat.label}</strong> leads at ${topCat.pct}% completion${totalDone>0?' · '+domPct+'% of all completions':''}.`
+          });
+        } else {
+          cards.push({
+            icon:'🗂️',color:'#8888aa',bg:'rgba(136,136,170,.07)',border:'rgba(136,136,170,.15)',
+            title:'Category Focus',body:'Complete tasks across categories to see which area you dominate.'
+          });
+        }
+
+        return cards.map(c=>`
+          <div class="ic" style="background:${c.bg};border-left-color:${c.color};border-top-color:${c.border};border-right-color:${c.border};border-bottom-color:${c.border}">
+            <div class="ic-head">
+              <div class="ic-ico" style="background:${c.color}22">${c.icon}</div>
+              <div class="ic-t" style="color:${c.color}">${c.title}</div>
+            </div>
+            <div class="ic-x">${c.body}</div>
+          </div>`).join('');
+      })()}
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW A: Daily Completion + Category Breakdown -->
   <div class="cg2" style="margin-bottom:18px">
     <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
       <h3>Daily Completion</h3>
-      <div class="ac-sub">% of tasks completed each day this week</div>
+      <div class="ac-sub">${isCurrentWk?'% of tasks completed each day this week':'% of tasks completed each day · '+wkRangeLabel}</div>
       <div class="chbox" style="height:200px"><canvas id="bc"></canvas></div>
     </div>
-    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
-        <h3 style="margin-bottom:0">Category Breakdown</h3>
-        <span style="font-size:9px;font-weight:600;padding:2px 8px;border-radius:8px;background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2);letter-spacing:.2px">Current Week</span>
-      </div>
-      <div class="ac-sub">Sorted by completion %</div>
-      <div class="cl-scroll-wrap">
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1);display:flex;flex-direction:column">
+      <h3 style="margin-bottom:3px">Category Breakdown</h3>
+      <div class="ac-sub">${isCurrentWk?'Weekly completion %':'Completion % · '+wkRangeLabel}</div>
+      <div class="cl-scroll-wrap" id="cl-wrap">
         <div class="cl" id="cl"></div>
       </div>
     </div>
   </div>
 
-  <!-- 4. Weekly Completion Trend -->
-  <div class="ac" style="margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.1)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
-      <h3 style="margin-bottom:0">Weekly Completion Trend</h3>
-      <div class="ana-range-pills">
-        <button class="arp ${_anaOpts.range===4?'on':''}" onclick="_anaOpts.range=4;renderAna(getWeekDates(S.weekOff))">4W</button>
-        <button class="arp ${_anaOpts.range===8?'on':''}" onclick="_anaOpts.range=8;renderAna(getWeekDates(S.weekOff))">8W</button>
-        <button class="arp ${_anaOpts.range===12?'on':''}" onclick="_anaOpts.range=12;renderAna(getWeekDates(S.weekOff))">12W</button>
+  <!-- ROW B: Weekly Task Hours + Tasks Planned vs Completed -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
+      <h3>Weekly Task Hours</h3>
+      <div class="ac-sub">${isCurrentWk?'Time spent on each completed task this week':'Time spent on each completed task · '+wkRangeLabel}</div>
+      <div class="chbox" style="height:220px">
+        ${taskHoursData.length>0?'<canvas id="wh"></canvas>':'<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);font-size:11px;flex-direction:column;gap:8px"><div style="font-size:28px">⏱</div>No completed tasks for this week</div>'}
       </div>
     </div>
-    <div class="ac-sub">Track your performance week over week</div>
-    <div class="chbox" style="height:220px"><canvas id="lc"></canvas></div>
-  </div>
-
-  <!-- 5 & 6. Weekly Task Hours + Time Split - single row -->
-  <div style="display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:18px">
-    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
-    <h3>Weekly Task Hours</h3>
-    <div class="ac-sub">Total hours invested per task this week (completed tasks only)</div>
-    <div class="chbox" style="height:${taskHoursData.length>0?Math.max(180,taskHoursData.length*36)+'px':'160px'}">
-      ${taskHoursData.length>0?'<canvas id="wh"></canvas>':'<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);font-size:11px;flex-direction:column;gap:8px"><div style="font-size:28px">⏱</div>Complete tasks this week to see time investment</div>'}
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1);position:relative;overflow:hidden;display:flex;flex-direction:column;">
+      <!-- header row: title+subtitle left, chips right -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:4px;">
+        <div>
+          <h3 style="margin-bottom:2px;">Tasks Planned vs Completed</h3>
+          <div class="ac-sub" style="margin-bottom:0">${isCurrentWk?'Daily planned vs actually completed this week':'Planned vs completed · '+wkRangeLabel}</div>
+        </div>
+        <!-- stat chips -->
+        <div style="display:flex;align-items:center;gap:5px;flex-wrap:nowrap;flex-shrink:0;">
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px 4px 8px;border-radius:20px;border:1px solid rgba(91,110,245,.3);background:rgba(91,110,245,.1);white-space:nowrap;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#5b6ef5;box-shadow:0 0 5px rgba(91,110,245,.5);flex-shrink:0;display:inline-block;"></span>
+            <span style="font-family:var(--fh);font-size:13px;font-weight:800;letter-spacing:-.5px;color:#818cf8;" id="pvc-val-planned">–</span>
+            <span style="font-size:9.5px;font-weight:600;color:var(--text2);opacity:.85;">Planned</span>
+          </div>
+          <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px 4px 8px;border-radius:20px;border:1px solid rgba(16,185,129,.28);background:rgba(16,185,129,.1);white-space:nowrap;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 5px rgba(16,185,129,.5);flex-shrink:0;display:inline-block;"></span>
+            <span style="font-family:var(--fh);font-size:13px;font-weight:800;letter-spacing:-.5px;color:#34d399;" id="pvc-val-done">–</span>
+            <span style="font-size:9.5px;font-weight:600;color:var(--text2);opacity:.85;">Completed</span>
+          </div>
+        </div>
+      </div>
+      <!-- chart area with % done pill floating top-right above bars -->
+      <div style="position:relative;flex:1;">
+        <div id="pvc-rate-pill" style="position:absolute;top:0;right:0;z-index:10;display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);font-size:10px;font-weight:700;color:#fb923c;white-space:nowrap;letter-spacing:-.1px;">
+          <span style="font-size:9px">✦</span><span id="pvc-rate-text">–% done</span>
+        </div>
+        <div class="chbox" style="height:220px;padding-top:28px;"><canvas id="pc"></canvas></div>
+      </div>
     </div>
   </div>
-  <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
-    <h3>Time Split</h3><div class="ac-sub">Hours scheduled per category — this week</div>
-    <div class="chbox" style="height:200px"><canvas id="dc"></canvas></div>
-  </div>
+
+  <!-- ROW C: Weekly Completion Trend + Peak Performance Hour -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+        <h3 style="margin-bottom:0">Weekly Completion Trend</h3>
+        <div class="ana-range-pills">
+          <button class="arp ${_anaOpts.range===4?'on':''}" onclick="_anaOpts.range=4;renderAna(getWeekDates(S.weekOff))">4W</button>
+          <button class="arp ${_anaOpts.range===8?'on':''}" onclick="_anaOpts.range=8;renderAna(getWeekDates(S.weekOff))">8W</button>
+          <button class="arp ${_anaOpts.range===12?'on':''}" onclick="_anaOpts.range=12;renderAna(getWeekDates(S.weekOff))">12W</button>
+        </div>
+      </div>
+      <div class="ac-sub">Track your performance week over week</div>
+      <div class="chbox" style="height:220px"><canvas id="lc"></canvas></div>
+    </div>
+    <div class="ac" style="box-shadow:0 2px 12px rgba(0,0,0,.1)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;gap:8px;flex-wrap:wrap">
+        <h3 style="margin-bottom:0">Peak Performance Hour</h3>
+        <div style="display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:7px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.22);font-size:10px;font-weight:700;color:#34d399;white-space:nowrap">
+          <span style="font-size:12px">⚡</span><span id="peak-badge-label">All-time</span>
+        </div>
+      </div>
+      <div class="ac-sub">Completion % by task start hour — all-time historical data</div>
+      <div class="chbox" style="height:220px"><canvas id="hc"></canvas></div>
+    </div>
   </div>`;
 
-  // Cat list - sorted
+  // Cat list
   document.getElementById('cl').innerHTML=catDataSorted.map(c=>`
-    <div class="cr"><div class="ce" style="background:${c.col}18">${c.emoji}</div>
-    <div class="ci">
-      <div class="cn" style="color:${c.col}">${c.label} <span style="color:var(--text3);font-weight:400;font-size:9px">(${c.done}/${c.total})</span></div>
-      <div class="cpb"><div class="cpf" style="width:${c.pct}%;background:${c.col}"></div></div>
-      <div class="cnu"><span>${c.done}/${c.total} tasks</span><span>${c.pct}%</span></div>
-    </div>
-    <div class="cp" style="color:${c.col}">${c.pct}%</div></div>`).join('');
+    <div class="cr">
+      <div class="ce" style="background:${c.col}18">${c.emoji}</div>
+      <div class="ci">
+        <div class="cn">${c.label}</div>
+        <div class="cpb"><div class="cpf" style="width:${c.pct}%;background:${c.col}"></div></div>
+        <div class="cr-sub">${c.done}/${c.total} tasks</div>
+      </div>
+      <div class="cp" style="color:${c.col}">${c.pct}%</div>
+    </div>`).join('');
 
-  // Cap scroll wrapper at exactly 5 rows height
   requestAnimationFrame(()=>{
-    const wrap=document.querySelector('.cl-scroll-wrap');
+    const wrap=document.getElementById('cl-wrap');
     const rows=document.querySelectorAll('#cl .cr');
-    if(wrap && rows.length>5){
-      const wrapTop=wrap.getBoundingClientRect().top+wrap.scrollTop;
-      const fifthRow=rows[4];
-      const fifthBottom=fifthRow.getBoundingClientRect().bottom-wrap.getBoundingClientRect().top;
-      wrap.style.maxHeight=fifthBottom+'px';
-    } else if(wrap){
-      wrap.style.maxHeight='';
+    if(wrap&&rows.length>0){
+      const rowH=rows[0].getBoundingClientRect().height;
+      wrap.style.maxHeight=rowH*4+(6*3)+'px';
     }
   });
 
   if(_bc){try{_bc.destroy();}catch(e){}_bc=null;}
-  if(_dc){try{_dc.destroy();}catch(e){}_dc=null;}
   if(_lc){try{_lc.destroy();}catch(e){}_lc=null;}
   if(_wh){try{_wh.destroy();}catch(e){}_wh=null;}
+  if(_pc){try{_pc.destroy();}catch(e){}_pc=null;}
+  if(_hc){try{_hc.destroy();}catch(e){}_hc=null;}
 
   requestAnimationFrame(()=>{
-    // Daily completion - best/worst highlights
-    const pcts=dates.map((_,i)=>dayStats(dates,i).pct);
-    const maxP=Math.max(...pcts.filter((_,i)=>activeDays.find(d=>d.i===i)));
+    // Daily Completion bar — anaDates
+    const pcts=daypcts.map(d=>d.pct);
+    const maxP=activeDays.length?Math.max(...activeDays.map(d=>d.pct)):0;
     const minP=activeDays.length>1?Math.min(...activeDays.map(d=>d.pct)):null;
     const bc=document.getElementById('bc');
     if(bc) _bc=new Chart(bc,{type:'bar',data:{labels:DAYS7,datasets:[{data:pcts,
       backgroundColor:pcts.map((p,i)=>{
         const isActive=activeDays.find(d=>d.i===i);
-        if(i===TODAY_DOW&&S.weekOff===0) return '#818cf8';
+        if(i===TODAY_DOW&&isCurrentWk) return '#818cf8';
         if(isActive&&p===maxP&&p>0) return '#10b981';
         if(isActive&&p===minP&&activeDays.length>1&&p<maxP) return isDark?'rgba(244,63,94,.55)':'rgba(244,63,94,.45)';
         return p>0?'#5b6ef5':(isDark?'#252540':'#dcdcf0');
@@ -5593,14 +5951,11 @@ function renderAna(dates){
       borderRadius:7,borderSkipped:false}]},
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:false},
-          tooltip:{callbacks:{label:c=>{
-            const d=daypcts[c.dataIndex];
-            return `${c.raw}% — ${d.done}/${d.total} tasks`;
-          }}}},
+          tooltip:{callbacks:{label:c=>{const d=daypcts[c.dataIndex];return `${c.raw}% — ${d.done}/${d.total} tasks`;}}}},
         scales:{y:{min:0,max:100,ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:25},grid:{color:gc},border:{display:false}},
                 x:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
 
-    // Weekly trend line
+    // Weekly Completion Trend — always anchored to real history, ignores _dcWeekOff
     const n=_anaOpts.range;
     const labels=[];const trendData=[];
     for(let w=n-1;w>=0;w--){
@@ -5621,7 +5976,8 @@ function renderAna(dates){
           const g=ctx.chart.ctx.createLinearGradient(0,0,0,220);
           g.addColorStop(0,'rgba(91,110,245,.22)');g.addColorStop(1,'rgba(91,110,245,0)');return g;
         },
-        tension:.42,fill:true,pointBackgroundColor:trendData.map((_,i)=>i===n-1?'#7c3aed':'#5b6ef5'),
+        tension:.42,fill:true,
+        pointBackgroundColor:trendData.map((_,i)=>i===n-1?'#7c3aed':'#5b6ef5'),
         pointRadius:trendData.map((_,i)=>i===n-1?6:4),pointHoverRadius:8,borderWidth:2.5
       }]},
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
@@ -5629,7 +5985,7 @@ function renderAna(dates){
         scales:{y:{min:0,max:100,ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:25},grid:{color:gc},border:{display:false}},
                 x:{ticks:{color:tc,font:{size:10},maxRotation:30},grid:{display:false},border:{display:false}}}}});
 
-    // Weekly Task Hours horizontal bar
+    // Weekly Task Hours — anaDates
     const wh=document.getElementById('wh');
     if(wh&&taskHoursData.length>0) _wh=new Chart(wh,{type:'bar',
       data:{
@@ -5645,23 +6001,169 @@ function renderAna(dates){
           x:{ticks:{color:tc,font:{size:10},callback:v=>v+'h'},grid:{color:gc},border:{display:false}},
           y:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
 
-    // Doughnut by category — this week only
-    const dc=document.getElementById('dc');
-    const cats=getAllCats();
-    const catHrs=cats.map(c=>({
-      label:getCatLabel(c),
-      col:getCatColor(c),
-      hrs:S.tasks.filter(t=>t.cat===c).reduce((s,t)=>
-        s+dates.reduce((ds,d,i)=>ds+(t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))?tdiff(t.start,t.end):0),0)
-      ,0)
-    })).filter(c=>c.hrs>0).sort((a,b)=>b.hrs-a.hrs);
-    if(dc) _dc=new Chart(dc,{type:'doughnut',
-      data:{labels:catHrs.map(c=>c.label),datasets:[{
-        data:catHrs.map(c=>parseFloat(c.hrs.toFixed(1))),
-        backgroundColor:catHrs.map(c=>c.col),borderColor:'transparent',borderWidth:0,hoverOffset:5}]},
-      options:{responsive:true,maintainAspectRatio:false,cutout:'64%',
-        plugins:{legend:{position:'bottom',labels:{color:tc,font:{size:10},padding:8,boxWidth:9,boxHeight:9}},
-        tooltip:{callbacks:{label:c=>{const total=c.chart.data.datasets[0].data.reduce((s,v)=>s+v,0);const pct=total>0?Math.round(c.raw/total*100):0;return`${c.label}: ${Number(c.raw).toFixed(1)}h · ${pct}%`;}}}}}});
+    // Tasks Planned vs Completed — anaDates
+    const pcPlanned=daypcts.map(d=>d.total);
+    const pcDone=daypcts.map(d=>d.done);
+    const totalPlanned=pcPlanned.reduce((s,v)=>s+v,0);
+    const totalDone=pcDone.reduce((s,v)=>s+v,0);
+    const overallPct=totalPlanned>0?Math.round(totalDone/totalPlanned*100):0;
+    const pvp=document.getElementById('pvc-val-planned');if(pvp)pvp.textContent=totalPlanned;
+    const pvd=document.getElementById('pvc-val-done');if(pvd)pvd.textContent=totalDone;
+    const pvrt=document.getElementById('pvc-rate-text');if(pvrt)pvrt.textContent=overallPct+'% done';
+    const pvrp=document.getElementById('pvc-rate-pill');
+    if(pvrp){
+      if(overallPct>=80){pvrp.style.background='rgba(16,185,129,.12)';pvrp.style.borderColor='rgba(16,185,129,.3)';pvrp.style.color='#34d399';}
+      else if(overallPct>=50){pvrp.style.background='rgba(91,110,245,.12)';pvrp.style.borderColor='rgba(91,110,245,.3)';pvrp.style.color='#818cf8';}
+      else{pvrp.style.background='rgba(249,115,22,.12)';pvrp.style.borderColor='rgba(249,115,22,.3)';pvrp.style.color='#fb923c';}
+    }
+    const pc=document.getElementById('pc');
+    if(pc) _pc=new Chart(pc,{type:'bar',
+      data:{labels:DAYS7,datasets:[
+        {label:'Planned',data:pcPlanned,
+          backgroundColor:isDark?'rgba(91,110,245,.25)':'rgba(91,110,245,.18)',
+          borderColor:'rgba(91,110,245,.7)',borderWidth:1.5,borderRadius:6,borderSkipped:false},
+        {label:'Completed',data:pcDone,
+          backgroundColor:(ctx)=>{
+            const v=pcPlanned[ctx.dataIndex]||0;
+            const d=pcDone[ctx.dataIndex]||0;
+            if(v===0) return isDark?'rgba(136,136,170,.15)':'rgba(136,136,170,.1)';
+            return d===v?'rgba(16,185,129,.75)':d>0?'rgba(91,110,245,.75)':'rgba(244,63,94,.55)';
+          },
+          borderColor:(ctx)=>{
+            const v=pcPlanned[ctx.dataIndex]||0;
+            const d=pcDone[ctx.dataIndex]||0;
+            if(v===0) return isDark?'rgba(136,136,170,.25)':'rgba(136,136,170,.2)';
+            return d===v?'#10b981':d>0?'#5b6ef5':'#f43f5e';
+          },
+          borderWidth:1.5,borderRadius:6,borderSkipped:false}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},
+          tooltip:{callbacks:{label:c=>{
+            if(c.datasetIndex===0) return 'Planned: '+c.raw+' task'+(c.raw!==1?'s':'');
+            const planned=pcPlanned[c.dataIndex]||0;
+            const pct=planned?Math.round(c.raw/planned*100):0;
+            return 'Completed: '+c.raw+'/'+planned+' ('+pct+'%)';
+          }}}},
+        scales:{
+          y:{min:0,ticks:{color:tc,font:{size:10},stepSize:1,callback:v=>Number.isInteger(v)?v:''},grid:{color:gc},border:{display:false}},
+          x:{ticks:{color:tc,font:{size:10}},grid:{display:false},border:{display:false}}}}});
+
+    // Peak Performance Hour — all-time historical (scan all checks)
+    // Build hourly buckets [0..23]: for each completed task check, record the task's start hour
+    // planned = any task scheduled for that day (exists in t.days), done = isDone
+    const hourBuckets=Array.from({length:24},()=>({planned:0,done:0}));
+    // Scan all task×date combinations ever recorded
+    S.tasks.forEach(t=>{
+      const startHr=parseInt((t.start||'00:00').split(':')[0],10)||0;
+      // Scan checks for this task
+      Object.keys(S.checks).forEach(k=>{
+        if(!k.startsWith(t.id+':'))return;
+        // We count the completion
+        hourBuckets[startHr].done++;
+        hourBuckets[startHr].planned++;
+      });
+      // Also count planned-but-not-done: scan all active dates for the task
+      // We look at anaDates + past 12 weeks for a richer dataset
+      for(let w=0;w<12;w++){
+        const wd=getWeekDates(-w);
+        wd.forEach((d,i)=>{
+          if(!t.days.includes(i))return;
+          const dk=fmtKey(d);
+          if(!isTaskActiveOnDate(t,dk))return;
+          if(!isDone(t.id,dk)){hourBuckets[startHr].planned++;}
+          // done already counted via checks scan above — but we re-check to avoid double-counting:
+          // actually we should only count planned from the schedule scan
+        });
+      }
+    });
+    // Re-build cleanly: avoid double-counting done tasks
+    const hourBuckets2=Array.from({length:24},()=>({planned:0,done:0}));
+    for(let w=0;w<12;w++){
+      const wd=getWeekDates(-w);
+      wd.forEach((d,i)=>{
+        const dk=fmtKey(d);
+        S.tasks.forEach(t=>{
+          if(!t.days.includes(i))return;
+          if(!isTaskActiveOnDate(t,dk))return;
+          const hr=parseInt((t.start||'00:00').split(':')[0],10)||0;
+          hourBuckets2[hr].planned++;
+          if(isDone(t.id,dk))hourBuckets2[hr].done++;
+        });
+      });
+    }
+    // Only show hours that have at least 1 planned task
+    const activeHours=hourBuckets2.map((b,h)=>({h,pct:b.planned?Math.round(b.done/b.planned*100):null,planned:b.planned,done:b.done})).filter(b=>b.planned>0);
+    const hLabels=activeHours.map(b=>{const h=b.h;const ampm=h<12?'AM':'PM';const disp=h===0?12:h>12?h-12:h;return disp+ampm;});
+    const hData=activeHours.map(b=>b.pct);
+    const hMax=hData.length?Math.max(...hData):0;
+    const hColors=hData.map(p=>p===hMax&&hMax>0?'rgba(16,185,129,.82)':isDark?'rgba(91,110,245,.55)':'rgba(91,110,245,.45)');
+    const hBorders=hData.map(p=>p===hMax&&hMax>0?'#10b981':'#5b6ef5');
+    // Update peak badge
+    const peakBadgeLabel=document.getElementById('peak-badge-label');
+    if(peakBadgeLabel){
+      if(activeHours.length>0){
+        const peakH=activeHours.find(b=>b.pct===hMax);
+        if(peakH){
+          const ph=peakH.h;const ampm=ph<12?'AM':'PM';const disp=ph===0?12:ph>12?ph-12:ph;
+          peakBadgeLabel.textContent='Peak: '+disp+ampm+' ('+hMax+'%)';
+        } else {peakBadgeLabel.textContent='All-time';}
+      } else {peakBadgeLabel.textContent='No data yet';}
+    }
+    const hc=document.getElementById('hc');
+    if(hc){
+      if(activeHours.length>0){
+        // Build a full 24-hour label set for smooth curve (all hours, null for missing)
+        const fullLabels=[];
+        const fullData=[];
+        for(let h=0;h<24;h++){
+          const ampm=h<12?'AM':'PM';
+          const disp=h===0?12:h>12?h-12:h;
+          const showLabel=(h%3===0); // show every 3 hours like screenshot
+          fullLabels.push(showLabel?(disp+(h<12?'AM':'PM')):'');
+          const bucket=hourBuckets2[h];
+          fullData.push(bucket.planned>0?Math.round(bucket.done/bucket.planned*100):null);
+        }
+        const hMaxVal=fullData.reduce((m,v)=>v!=null&&v>m?v:m,0);
+        const peakColor='#e91e8c'; // hot pink like screenshot
+        _hc=new Chart(hc,{type:'line',
+          data:{labels:fullLabels,datasets:[{
+            data:fullData,
+            borderColor:peakColor,
+            borderWidth:2.5,
+            tension:0.45,
+            fill:false,
+            spanGaps:true,
+            pointRadius:fullData.map(v=>v===hMaxVal&&hMaxVal>0?6:0),
+            pointHoverRadius:fullData.map(v=>v===hMaxVal&&hMaxVal>0?8:4),
+            pointBackgroundColor:peakColor,
+            pointBorderColor:peakColor,
+            pointBorderWidth:2
+          }]},
+          options:{responsive:true,maintainAspectRatio:false,
+            plugins:{legend:{display:false},
+              tooltip:{
+                filter:function(item){return item.raw!==null;},
+                callbacks:{
+                  label:c=>{const h=c.dataIndex;const b=hourBuckets2[h];return c.raw+'% ('+(b.done||0)+'/'+(b.planned||0)+' tasks)';},
+                  title:function(tt){const h=tt[0].dataIndex;const ampm=h<12?'AM':'PM';const disp=h===0?12:h>12?h-12:h;return 'Tasks starting at '+disp+ampm;}
+                }
+              }
+            },
+            scales:{
+              y:{min:0,max:Math.max(10,hMaxVal+2),
+                ticks:{color:tc,font:{size:10},callback:v=>v+'%',stepSize:2},
+                grid:{color:gc},border:{display:false}},
+              x:{ticks:{color:tc,font:{size:10},maxRotation:0,autoSkip:false},
+                grid:{color:isDark?'rgba(255,255,255,.04)':'rgba(0,0,0,.05)',drawTicks:false},
+                border:{display:false}}}}});
+      } else {
+        hc.style.display='none';
+        hc.parentElement.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text3);font-size:11px;flex-direction:column;gap:8px"><div style="font-size:28px">⏰</div>Complete tasks over time to see your peak hours</div>';
+      }
+    }
+
+
   });
 }
 
@@ -5865,16 +6367,16 @@ function buildWeeklySummaryHTML(){
     if(_sh){
       _sh.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
         <div style="display:flex;align-items:center;gap:9px;min-width:0">
-          <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,rgba(91,110,245,.2),rgba(124,58,237,.15));border:1px solid rgba(91,110,245,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📅</div>
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#5b6ef5,#7c3aed);box-shadow:0 2px 10px rgba(91,110,245,.4);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">📅</div>
           <div style="min-width:0">
-            <div style="display:flex;align-items:center;gap:7px;margin-bottom:1px">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px">
               <div style="font-family:var(--fh);font-size:14px;font-weight:800;color:var(--text);white-space:nowrap">${title}</div>
-              ${isLive?`<span style="font-size:9px;font-weight:700;background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.3);padding:2px 7px;border-radius:20px;letter-spacing:.3px;flex-shrink:0">LIVE</span>`:''}
+              ${isLive?`<span style="font-size:9px;font-weight:700;background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.35);padding:2px 7px;border-radius:20px;letter-spacing:.3px;flex-shrink:0">LIVE</span>`:''}
             </div>
             <div style="font-size:10px;color:var(--text3);white-space:nowrap">${subtitle}</div>
           </div>
         </div>
-        <button onclick="closeWeeklySummary()" style="width:28px;height:28px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s" onmouseover="this.style.background='var(--card2)'" onmouseout="this.style.background='transparent'">✕</button>
+        <button onclick="closeWeeklySummary()" style="width:28px;height:28px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s" onmouseover="this.style.background='var(--card)';this.style.color='var(--text)'" onmouseout="this.style.background='var(--bg3)';this.style.color='var(--text2)'">✕</button>
       </div>`;
     }
     return`
@@ -7234,7 +7736,7 @@ function showView(id){
   document.getElementById('view-'+id).classList.add('on');
   const ni=document.getElementById('n-'+id);if(ni)ni.classList.add('on');
   const dates=getWeekDates(S.weekOff);
-  if(id==='analytics') renderAna(dates);
+  if(id==='analytics'){_dcWeekOff=0;renderAna(dates);}
   else if(id==='schedule') renderSchedMerged();
   else if(id==='habits')   renderHabits(dates);
   else if(id==='timer')    renderTimer();
@@ -7325,7 +7827,17 @@ function setSchedMode(mode, silent){
     recWrap.classList.remove('show');
     if(!silent) calRender();
   }
-  if(!silent) updateSchedSummary();
+  // Clear selections of the OTHER modes when switching, so they stay independent
+  if(!silent){
+    if(mode==='recurring'){
+      CAL.singleDate=null; CAL.rangeStart=null; CAL.rangeEnd=null; CAL.hoverDate=null;
+    } else if(mode==='single'){
+      CAL.rangeStart=null; CAL.rangeEnd=null; CAL.hoverDate=null;
+    } else if(mode==='range'){
+      CAL.singleDate=null; CAL.hoverDate=null;
+    }
+    updateSchedSummary();
+  }
 }
 
 function calNav(dir){
@@ -7348,7 +7860,7 @@ function calRender(){
 
   const today = new Date(BASE);
   const todayStr = fmtDateKey(today);
-  const firstDay = new Date(CAL.viewYear, CAL.viewMonth, 1).getDay(); // 0=Sun
+  const firstDay = (new Date(CAL.viewYear, CAL.viewMonth, 1).getDay() + 6) % 7; // 0=Mon
   const daysInMonth = new Date(CAL.viewYear, CAL.viewMonth+1, 0).getDate();
 
   // blank cells before month start
@@ -7494,10 +8006,11 @@ function updateSchedSummary(){
   }
 }
 
-function openTaskModal(editId){
+function openTaskModal(editId, source, viewOnly){
   S.editId=editId||null;
   const isEdit=!!editId;
-  document.getElementById('mo-task-title').textContent=isEdit?'Edit Task Block':'New Task Block';
+  const isViewOnly=!!viewOnly;
+  document.getElementById('mo-task-title').textContent=isViewOnly?'Task Details':isEdit?'Edit Task Block':'New Task Block';
   const t=editId?S.tasks.find(x=>x.id===editId):null;
   document.getElementById('f-name').value=t?t.name:'';
   document.getElementById('f-start').value=t?t.start:'09:00';
@@ -7508,11 +8021,23 @@ function openTaskModal(editId){
   document.querySelectorAll('.dp').forEach((el,i)=>el.classList.toggle('on',t?t.days.includes(i):i<5));
   // init calendar picker
   calInit(t);
-  // Show delete button only when editing
+  // Toggle footers based on viewOnly
+  const footerEdit=document.getElementById('mo-task-footer-edit');
+  const footerView=document.getElementById('mo-task-footer-view');
+  if(footerEdit) footerEdit.style.display=isViewOnly?'none':'flex';
+  if(footerView) footerView.style.display=isViewOnly?'flex':'none';
+  // Make inputs read-only in view-only mode
+  ['f-name','f-start','f-end','f-cat','f-pri','f-notes'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.disabled=isViewOnly;
+  });
+  document.querySelectorAll('.dp').forEach(el=>{ el.style.pointerEvents=isViewOnly?'none':''; });
+  document.querySelectorAll('.sched-mode-tab').forEach(el=>{ el.style.pointerEvents=isViewOnly?'none':''; });
+  // Show delete button only when editing (not view-only)
   const delWrap=document.getElementById('mo-task-del-wrap');
-  if(delWrap) delWrap.style.display=isEdit?'block':'none';
+  if(delWrap) delWrap.style.display=(!isViewOnly&&isEdit&&source!=='dashboard')?'block':'none';
   document.getElementById('mo-task').classList.add('open');
-  setTimeout(()=>document.getElementById('f-name').focus(),80);
+  if(!isViewOnly) setTimeout(()=>document.getElementById('f-name').focus(),80);
 }
 function sortTasksByTime(){
   S.tasks.sort((a,b)=>{
@@ -7524,11 +8049,20 @@ function sortTasksByTime(){
 function saveTask(){
   const name=document.getElementById('f-name').value.trim();
   if(!name){toast('Please enter a task name','#f43f5e');return;}
-  const days=[];
-  document.querySelectorAll('.dp.on').forEach(el=>days.push(parseInt(el.dataset.d)));
-  if(CAL.mode==='recurring'&&!days.length){toast('Select at least one day','#f43f5e');return;}
-  if(CAL.mode==='single'&&!CAL.singleDate){toast('Pick a date on the calendar','#f43f5e');return;}
-  if(CAL.mode==='range'&&(!CAL.rangeStart||!CAL.rangeEnd)){toast('Pick a start and end date','#f43f5e');return;}
+  if(CAL.mode==='recurring'){
+    const recDays=[];
+    document.querySelectorAll('.dp.on').forEach(el=>recDays.push(parseInt(el.dataset.d)));
+    if(!recDays.length){toast('Select at least one day','#f43f5e');return;}
+    var days=recDays;
+  } else if(CAL.mode==='single'){
+    if(!CAL.singleDate){toast('Pick a date on the calendar','#f43f5e');return;}
+    // For single-date, allow the task to appear on any day-of-week (date check gates visibility)
+    var days=[0,1,2,3,4,5,6];
+  } else {
+    if(!CAL.rangeStart||!CAL.rangeEnd){toast('Pick a start and end date','#f43f5e');return;}
+    // For date-range, allow any day-of-week (date check gates visibility)
+    var days=[0,1,2,3,4,5,6];
+  }
   const rawCat=document.getElementById('f-cat').value.trim();
   const cat=rawCat?rawCat.toLowerCase():'personal';
   const data={name,start:document.getElementById('f-start').value,end:document.getElementById('f-end').value,
@@ -7541,7 +8075,12 @@ function saveTask(){
   };
   if(S.editId){
     const idx=S.tasks.findIndex(t=>t.id===S.editId);
-    if(idx>-1)S.tasks[idx]={...S.tasks[idx],...data,deletedFrom:undefined};
+    if(idx>-1){
+      // For recurring tasks, update createdFrom to today so past dates don't show checkboxes
+      // For single/range, the date range itself gates visibility so createdFrom is irrelevant
+      const newCreatedFrom = CAL.mode==='recurring' ? fmtKey(new Date(BASE)) : (S.tasks[idx].createdFrom||fmtKey(new Date(BASE)));
+      S.tasks[idx]={...S.tasks[idx],...data,deletedFrom:undefined,createdFrom:newCreatedFrom};
+    }
     toast('Task updated ✓','#34d399');
   } else {
     S.tasks.push({id:'u'+Date.now(),...data,createdFrom:fmtKey(new Date(BASE))});
@@ -8171,7 +8710,7 @@ function openDayDrawer(k){
 
   const subLabel = isPast ? 'Past day — read only' : isToday ? 'Today' : 'Upcoming';
 
-  const ringR=20,ringC=2*Math.PI*ringR,ringFill=ringC*(selPct/100);
+  const ringR=22,ringC=2*Math.PI*ringR,ringFill=ringC*(selPct/100);
 
   const panelEvts=selTasks.length?selTasks.map(t=>{
     const c=getCatColor(t.cat),done=isDone(t.id,k);
@@ -8186,44 +8725,31 @@ function openDayDrawer(k){
     // Past tasks: dim the whole row
     const rowOpacity = isPast ? ' past-ev' : '';
 
-    // Action buttons column
-    let actions = '';
+    // Action buttons column — unified status badge for all date types
+    const editBtn = (canEdit)
+      ? `<button class="sched-ev-edit-btn" onclick="event.stopPropagation();openTaskModal('${t.id}')" title="Edit task">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>`
+      : '';
+
+    let badgeCls, badgeLabel;
     if(isPast){
-      // Read-only: show completed tick or missed badge — no editing
-      if(done){
-        actions = `<div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
-          <div style="width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" width="11" height="11"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <span style="font-size:9px;color:#34d399;font-weight:700;white-space:nowrap">Done</span>
-        </div>`;
-      } else {
-        actions = `<div style="display:flex;align-items:center;gap:5px;flex-shrink:0">
-          <div style="width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.25)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" width="10" height="10"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </div>
-          <span style="font-size:9px;color:#f87171;font-weight:700;white-space:nowrap">Missed</span>
-        </div>`;
-      }
+      badgeCls   = done ? 'st-done'    : 'st-missed';
+      badgeLabel = done ? 'Done'        : 'Missed';
     } else if(isToday){
-      // Edit + tick
-      actions = `<div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
-        <button class="sched-ev-edit-btn" onclick="event.stopPropagation();openTaskModal('${t.id}')" title="Edit">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <button class="sched-ev-done-btn ${doneClass}" onclick="event.stopPropagation();togDone('${t.id}','${k}')" title="${done?'Mark pending':'Mark done'}">
-          ${done?`<svg viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2.5" width="10" height="10"><polyline points="20 6 9 17 4 12"/></svg>`:''}
-        </button>
-      </div>`;
+      badgeCls   = done ? 'st-done'    : 'st-pending';
+      badgeLabel = done ? 'Done'        : 'Pending';
     } else {
-      // Upcoming: edit only, no tick
-      actions = `<div style="display:flex;gap:4px;align-items:center;flex-shrink:0">
-        <button class="sched-ev-edit-btn" onclick="event.stopPropagation();openTaskModal('${t.id}')" title="Edit">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <div style="font-size:9px;color:var(--text3);padding:2px 6px;border-radius:20px;background:var(--bg3);border:1px solid var(--border);white-space:nowrap">upcoming</div>
-      </div>`;
+      badgeCls   = 'st-upcoming';
+      badgeLabel = 'Upcoming';
     }
+
+    const actions = `<div style="display:flex;gap:5px;align-items:center;flex-shrink:0">
+      ${editBtn}
+      <span class="ev-status-badge ${badgeCls}">
+        <span class="ev-status-dot"></span>${badgeLabel}
+      </span>
+    </div>`;
 
     return`<div class="sched-ev-item${rowOpacity}" ${rowClick}>
       <div class="sched-ev-dot" style="background:${c}"></div>
@@ -8231,8 +8757,6 @@ function openDayDrawer(k){
         <div class="sched-ev-name" ${nameStyle}>${t.name}</div>
         <div class="sched-ev-meta">
           <span class="sched-ev-time">${fmtT(t.start)} – ${fmtT(t.end)}</span>
-          <span style="font-size:9px;padding:2px 7px;border-radius:20px;background:${c}22;color:${c};border:1px solid ${c}44;font-weight:700">${getCatLabel(t.cat)}</span>
-          <span style="font-size:9px;color:var(--text3)">${durStr}</span>
         </div>
       </div>
       ${actions}
@@ -8262,14 +8786,14 @@ function openDayDrawer(k){
       </div>
     </div>
     <div class="sched-ring-row">
-      <svg viewBox="0 0 50 50" width="54" height="54" style="flex-shrink:0">
-        <circle cx="25" cy="25" r="${ringR}" fill="none" stroke="var(--border2)" stroke-width="4"/>
-        <circle cx="25" cy="25" r="${ringR}" fill="none" stroke="url(#sg1m-dr)" stroke-width="4"
-          stroke-dasharray="${ringFill} ${ringC}" stroke-linecap="round" transform="rotate(-90 25 25)"/>
+      <svg viewBox="0 0 60 60" width="58" height="58" style="flex-shrink:0">
+        <circle cx="30" cy="30" r="${ringR}" fill="none" stroke="var(--border2)" stroke-width="4"/>
+        <circle cx="30" cy="30" r="${ringR}" fill="none" stroke="url(#sg1m-dr)" stroke-width="4"
+          stroke-dasharray="${ringFill} ${ringC}" stroke-linecap="round" transform="rotate(-90 30 30)"/>
         <defs><linearGradient id="sg1m-dr" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stop-color="#5b6ef5"/><stop offset="100%" stop-color="#7c3aed"/>
         </linearGradient></defs>
-        <text x="25" y="29" text-anchor="middle" font-family="'Syne',sans-serif" font-size="11" font-weight="800" fill="var(--text)">${selPct}%</text>
+        <text x="30" y="34" text-anchor="middle" font-family="'Syne',sans-serif" font-size="9" font-weight="800" fill="var(--text)">${selPct}%</text>
       </svg>
       <div class="sched-ring-info">
         <div class="sched-ring-tasks">${selDone}/${selTasks.length} tasks done</div>
@@ -8297,13 +8821,22 @@ function schedNavWeek(delta){
 function calMonthStats2(){
   const y=schedState.year,mo=schedState.month;
   const days=new Date(y,mo+1,0).getDate();
-  let total=0,done=0,busy=0,hrs=0;
+  const now=new Date(),todayKey=fmtKey(now);
+  let total=0,done=0,busy=0,hrs=0,perfectDays=0,activeDays=0;
   for(let dd=1;dd<=days;dd++){
     const d=new Date(y,mo,dd),k=fmtKey(d),tasks=tasksForDate(d);
-    if(tasks.length) busy++;
-    tasks.forEach(t=>{total++;hrs+=tdiff(t.start,t.end);if(isDone(t.id,k))done++;});
+    const isPastOrToday=k<=todayKey;
+    if(tasks.length){
+      busy++;
+      let dayDone=0,dayTotal=0;
+      tasks.forEach(t=>{total++;dayTotal++;hrs+=tdiff(t.start,t.end);if(isDone(t.id,k)){done++;dayDone++;}});
+      if(isPastOrToday&&dayTotal>0){
+        activeDays++;
+        if(dayDone===dayTotal) perfectDays++;
+      }
+    }
   }
-  return{total,done,pct:total?Math.round(done/total*100):0,busy,hrs:Math.round(hrs)};
+  return{total,done,pct:total?Math.round(done/total*100):0,busy,hrs:Math.round(hrs),activeDays,perfectDays};
 }
 
 function renderSchedMonth(cx){
@@ -8386,7 +8919,7 @@ function renderSchedMonth(cx){
     <div class="sched-stat-strip">
       <div class="sched-stat" style="--stat-accent:#5b6ef5"><div class="sched-stat-v" style="color:var(--p1)">${st.pct}%</div><div class="sched-stat-l">Completion</div></div>
       <div class="sched-stat" style="--stat-accent:#10b981"><div class="sched-stat-v" style="color:#10b981">${st.done}</div><div class="sched-stat-l">Done</div></div>
-      <div class="sched-stat" style="--stat-accent:#f97316"><div class="sched-stat-v" style="color:#f97316">${st.busy}</div><div class="sched-stat-l">Busy Days</div></div>
+      <div class="sched-stat" style="--stat-accent:#7c3aed"><div class="sched-stat-v" style="color:#a78bfa">${st.perfectDays}✦</div><div class="sched-stat-l">Perfect Days</div></div>
       <div class="sched-stat" style="--stat-accent:#0ea5e9"><div class="sched-stat-v" style="color:#0ea5e9">${st.hrs}h</div><div class="sched-stat-l">Scheduled</div></div>
     </div>
     <div class="sched-cal-wrap">
@@ -8453,13 +8986,21 @@ function renderSchedWeek(cx){
       const dur=tdiff(t.start,t.end);
       const durStr=dur>=1?`${dur%1===0?dur:dur.toFixed(1)}h`:`${Math.round(dur*60)}m`;
       const pastClass=isPast?' past-block':'';
-      const doneStyle=done?'opacity:.35;':'';
+      const doneStyle=(!isPast&&done)?'opacity:.45;':'';
+      const pastBadge=isPast?(done
+        ?`<span class="cwk-past-badge done">Done</span>`
+        :`<span class="cwk-past-badge missed">Missed</span>`):'';
+      const statusBadge=!isPast?(done
+        ?`<span class="cwk-bs-done">Done</span>`
+        :`<span class="cwk-bs-pending">Pending</span>`):'';
+      const blockBorderTop=!isPast?(done?'border-top:2px solid rgba(52,211,153,.7);':'border-top:2px solid rgba(251,191,36,.5);'):'';
       // Google Calendar-style: solid colored background, white text, rounded pill
-      return`<div class="cwk-block${pastClass}" style="top:${top+2}px;height:${Math.max(22,height-4)}px;background:${c};color:#fff;border-left-color:rgba(255,255,255,.4);${doneStyle}"
-        ${!isPast?`onclick="openTaskModal('${t.id}')"`:''} title="${t.name} · ${fmtT(t.start)} – ${fmtT(t.end)} · ${durStr}">
-        <div class="cwk-block-name">${t.name}</div>
+      return`<div class="cwk-block${pastClass}" style="top:${top+2}px;height:${Math.max(22,height-4)}px;background:${c};color:#fff;border-left-color:rgba(255,255,255,.4);${doneStyle}${blockBorderTop}"
+        onclick="openTaskModal('${t.id}',null,${isPast})" title="${t.name} · ${fmtT(t.start)} – ${fmtT(t.end)} · ${durStr}">
+        <div class="cwk-block-name"${!isPast&&done?' style="text-decoration:line-through;opacity:.7"':''}>${t.name}</div>
         ${height>=30?`<div class="cwk-block-time" style="color:rgba(255,255,255,.8)">${fmtT(t.start)} – ${fmtT(t.end)}</div>`:''}
-        ${height>=44?`<div class="cwk-block-status">${done?'<span class="cwk-bs-done">✓ Done</span>':'<span class="cwk-bs-pending">● Pending</span>'}</div>`:''}
+        ${isPast&&height>=28?`<div class="cwk-block-status">${pastBadge}</div>`:''}
+        ${!isPast&&height>=36?`<div class="cwk-block-status">${statusBadge}</div>`:''}
       </div>`;
     }).join('');
     // Today column gets a faint vertical accent
@@ -8682,12 +9223,20 @@ function renderSchedDay(cx){
     const dur=tdiff(t.start,t.end);
     const durStr=dur>=1?`${dur%1===0?dur:dur.toFixed(1)}h`:`${Math.round(dur*60)}m`;
     const pastClass=isPast?' past-block':'';
-    const doneStyle=done?'opacity:.35;':'';
-    return`<div class="cwk-block${pastClass}" style="top:${top+2}px;height:${Math.max(22,height-4)}px;background:${c};color:#fff;border-left-color:rgba(255,255,255,.4);${doneStyle}"
-      ${!isPast?`onclick="openTaskModal('${t.id}')"`:''} title="${t.name} · ${fmtT(t.start)} – ${fmtT(t.end)} · ${durStr}">
-      <div class="cwk-block-name">${t.name}</div>
+    const doneStyle=(!isPast&&done)?'opacity:.45;':'';
+    const pastBadge=isPast?(done
+      ?`<span class="cwk-past-badge done">Done</span>`
+      :`<span class="cwk-past-badge missed">Missed</span>`):'';
+    const statusBadge=!isPast?(done
+      ?`<span class="cwk-bs-done">Done</span>`
+      :`<span class="cwk-bs-pending">Pending</span>`):'';
+    const blockBorderTop=!isPast?(done?'border-top:2px solid rgba(52,211,153,.7);':'border-top:2px solid rgba(251,191,36,.5);'):'';
+    return`<div class="cwk-block${pastClass}" style="top:${top+2}px;height:${Math.max(22,height-4)}px;background:${c};color:#fff;border-left-color:rgba(255,255,255,.4);${doneStyle}${blockBorderTop}"
+      onclick="openTaskModal('${t.id}',null,${isPast})" title="${t.name} · ${fmtT(t.start)} – ${fmtT(t.end)} · ${durStr}">
+      <div class="cwk-block-name"${!isPast&&done?' style="text-decoration:line-through;opacity:.7"':''}>${t.name}</div>
       ${height>=30?`<div class="cwk-block-time" style="color:rgba(255,255,255,.8)">${fmtT(t.start)} – ${fmtT(t.end)}</div>`:''}
-      ${height>=44?`<div class="cwk-block-status">${done?'<span class="cwk-bs-done">✓ Done</span>':'<span class="cwk-bs-pending">● Pending</span>'}</div>`:''}
+      ${isPast&&height>=28?`<div class="cwk-block-status">${pastBadge}</div>`:''}
+      ${!isPast&&height>=36?`<div class="cwk-block-status">${statusBadge}</div>`:''}
     </div>`;
   }).join('');
 
