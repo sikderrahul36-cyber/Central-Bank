@@ -10127,6 +10127,493 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ═══════════════════════════════════════════════════════════════════
    END PROFILE TAB RESPONSIVE STYLES
    ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   APEX MOBILE & TABLET RESPONSIVENESS PATCH
+   Additive only — zero impact on desktop (>1100px).
+   Fixes: hover-only actions, touch targets, font minimums,
+          timetable scroll, topbar overflow, profile popup gap.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 1 — HOVER-ONLY ACTION BUTTONS (touch devices)
+   All table row actions and task card controls are opacity:0 on
+   desktop and revealed only on :hover. On touch screens hover
+   never fires so these are permanently invisible. This block makes
+   them always visible on any device that lacks a true hover pointer.
+   Scoped with !important to override existing hover-chain specificity.
+   ────────────────────────────────────────────────────────────────── */
+@media (hover:none) and (pointer:coarse) {
+
+  /* ── Weekly timetable: row action buttons always visible ── */
+  .ta {
+    opacity: 0.75 !important;
+    pointer-events: auto !important;
+  }
+  .ta-expand {
+    max-width: 60px !important;
+    opacity: 1 !important;
+  }
+  .ta-expand .ta {
+    opacity: 0.75 !important;
+    pointer-events: auto !important;
+  }
+
+  /* ── Tasks view (All-Tasks table): same treatment ── */
+  #view-tasks .ta {
+    opacity: 0.75 !important;
+    pointer-events: auto !important;
+  }
+  #view-tasks .ta-expand {
+    max-width: 60px !important;
+    opacity: 1 !important;
+  }
+  #view-tasks .tday-actions-col {
+    opacity: 1 !important;
+  }
+
+  /* ── Analytics view table actions ── */
+  #view-analytics .ta {
+    opacity: 0.75 !important;
+    pointer-events: auto !important;
+  }
+
+  /* ── Tap feedback on action buttons (instead of hover highlight) ── */
+  .ta:active {
+    background: rgba(91,110,245,.18) !important;
+    border-color: rgba(91,110,245,.35) !important;
+    color: var(--p1) !important;
+  }
+  .ta.dl:active {
+    background: rgba(244,63,94,.18) !important;
+    border-color: rgba(244,63,94,.35) !important;
+    color: var(--r1) !important;
+  }
+
+  /* ── 3-dot action menu dots: always visible on touch ── */
+  .ta-dots {
+    opacity: 0.75 !important;
+    pointer-events: auto !important;
+  }
+
+  /* ── Remove stuck hover transforms on cards ── */
+  .kc:hover,
+  .ac:hover,
+  .ic:hover {
+    transform: none !important;
+  }
+
+  /* ── Topbar buttons: generous tap zone ── */
+  .dm-tog-wrap {
+    min-height: 36px;
+    min-width: 36px;
+  }
+  .notif-bell-btn {
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+  .mc {
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 2 — TOUCH TARGET SIZES (mobile & tablet)
+   Apple HIG and Material both require 44×44px minimum tap targets.
+   We expand targets via min-width/height only on small screens.
+   Desktop pixel sizes are completely untouched.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+
+  /* Sidebar nav items: already 40px but give extra padding on touch */
+  .ni {
+    min-height: 40px;
+  }
+
+  /* Calendar nav arrows */
+  .cal-nav {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  /* Week navigator buttons everywhere */
+  .dash-wk-btn,
+  .ana-wk-btn {
+    min-width: 30px !important;
+    min-height: 30px !important;
+  }
+
+  /* Week pill prev/next buttons */
+  .wk-b {
+    min-width: 30px;
+    min-height: 30px;
+  }
+
+  /* Tab switchers: taller for easier tapping */
+  .tab {
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Modal close button */
+  .mc {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  /* Sidebar toggle button */
+  .sb-tog {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  /* Range pill filter buttons */
+  .arp {
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 700px) {
+
+  /* Table action buttons: expand tap area on mobile */
+  .ta {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  /* Checkbox in task cards */
+  .tday-chk {
+    min-width: 30px !important;
+    min-height: 30px !important;
+  }
+
+  /* Bottom nav items already 1/5.4 vw, ensure label is reachable */
+  .bn {
+    min-height: 56px;
+  }
+
+  /* Priority left bar tap area in timetable */
+  .tt-ic {
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+  }
+
+  /* Settings toggle switches */
+  .tog {
+    min-width: 44px !important;
+    min-height: 26px !important;
+  }
+
+  /* Dark mode toggle: full tap zone */
+  .dm-tog-wrap {
+    min-height: 34px;
+    padding: 6px 10px 6px 7px;
+  }
+
+  /* Modal footer buttons */
+  .mf .btn {
+    min-height: 38px;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 3 — MINIMUM FONT SIZES (mobile)
+   Base styles use 7–9px for labels/badges. Below ~10px these are
+   unreadable on retina phone screens. We raise the floor selectively
+   at ≤700px without touching any desktop sizing.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+
+  /* Priority badge in task rows: 8px → 10px */
+  .tday-pri {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+
+  /* Duration chip in task rows: 9px → 10px */
+  .tday-dur {
+    font-size: 10px !important;
+  }
+
+  /* Category chip in task rows */
+  .tday-cat {
+    font-size: 10px !important;
+  }
+
+  /* Timetable tag pills */
+  .tt-tag {
+    font-size: 10px !important;
+  }
+
+  /* Sidebar section labels */
+  .sbl {
+    font-size: 10px !important;
+  }
+
+  /* Insight card section labels */
+  .hl {
+    font-size: 10px !important;
+  }
+
+  /* Calendar day-of-week headers: 8px → 10px */
+  .cal-dow {
+    font-size: 10px !important;
+  }
+
+  /* Habit KPI sub-labels */
+  .hab-kpi-sub {
+    font-size: 10px !important;
+  }
+
+  /* Habit category meta */
+  .hab-cat-meta {
+    font-size: 10px !important;
+  }
+
+  /* Note card footer timestamps */
+  .note-card .nc-foot,
+  .nc-foot-time {
+    font-size: 10px !important;
+  }
+
+  /* Status badges in task rows */
+  .tday-status {
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 420px) {
+
+  /* Bottom nav labels: 8px is too small at 420px and below */
+  .bn .bn-l {
+    font-size: 9px !important;
+  }
+
+  /* Timetable column headers */
+  .tt th {
+    font-size: 9px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 4 — TIMETABLE HORIZONTAL SCROLL ON MOBILE
+   .tt-scroll-body has overflow-x:hidden which clips the 560–640px
+   table on phones. On mobile we switch the outer wrap to allow
+   horizontal scrolling so the table is always reachable.
+   Desktop (no tt-scroll class needed, overflow:auto already set).
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+
+  /* Non-week view: plain .tt-wrap already has overflow:auto, add touch */
+  .tt-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Week view: .tt-scroll-body needs horizontal scroll too */
+  .tt-scroll-body {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Ensure the table itself can breathe */
+  .tt {
+    min-width: 540px;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 5 — TOPBAR OVERFLOW ON MOBILE (≤700px)
+   Dashboard topbar is forced flex-wrap:nowrap. When the right-side
+   cluster (week label + dark-mode toggle + add button) is too wide
+   for the viewport, it clips or pushes other elements out.
+   Solution: allow the RIGHT cluster to wrap below the title row,
+   and ensure the title area stays on one line.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+
+  /* Allow topbar to wrap generally */
+  #view-dashboard .tb,
+  #view-tasks .tb {
+    flex-wrap: wrap !important;
+  }
+
+  /* Title area: takes full first row */
+  #view-dashboard .tb > div:first-child,
+  #view-tasks .tb > div:first-child {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  /* Right cluster: drops to second row, right-aligned */
+  #view-dashboard .tb-r,
+  #view-tasks .tb-r {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  /* Dark mode toggle label: hide text, keep icon only at narrowest */
+  .dm-tog-label {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+
+  /* At 420px hide the week date label in the topbar to save space */
+  .dash-wk-label {
+    display: none !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 6 — PROFILE EDIT POPUP: mid-range gap (360–700px)
+   The popup is hardcoded at 360px width. The ≤700px override sets
+   calc(100vw - 24px) but the popup is positioned absolute near the
+   sidebar on medium viewports. Ensure it stays centered between
+   360px and 700px.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) and (min-width: 361px) {
+  #prof-edit-popup {
+    width: calc(100vw - 24px) !important;
+    max-width: 420px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 7 — MODAL INPUTS: PREVENT iOS AUTO-ZOOM
+   iOS Safari zooms in on any <input> with font-size < 16px.
+   This overrides only on touch/coarse devices so desktop is unchanged.
+   ────────────────────────────────────────────────────────────────── */
+@media (hover:none) and (pointer:coarse) {
+
+  /* All modal text inputs and selects: 16px prevents iOS zoom */
+  .modal input[type="text"],
+  .modal input[type="number"],
+  .modal input[type="time"],
+  .modal input[type="date"],
+  .modal select,
+  .modal textarea,
+  .pep-input,
+  .f-inp,
+  .f-sel,
+  .f-ta {
+    font-size: 16px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 8 — TOPBAR WEEK DATE NAVIGATOR: tablet wrapping
+   On tablet portrait (≤900px) the analytics/habit topbar can still
+   overflow when week range text is long. Allow graceful shrink.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+
+  /* Allow the full topbar-right cluster to shrink cleanly */
+  .tb-r {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* Week range text: shrink before other elements */
+  .dash-wk-label,
+  .ana-wk-range {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 1;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 9 — GENERAL MODAL RESPONSIVENESS
+   Modals are max-width:420px with padding:16px on the overlay.
+   On very small screens (≤380px) they can still feel cramped.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 380px) {
+
+  .mo {
+    padding: 8px !important;
+  }
+
+  .modal {
+    padding: 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .mh h2 {
+    font-size: 14px !important;
+  }
+
+  .f2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 10 — LEGAL / SETTINGS MODALS ON MOBILE
+   The legal modals are wide-padded. Ensure they respect safe areas
+   and have comfortable internal padding on small phones.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+
+  .legal-mo {
+    padding: 10px !important;
+    align-items: flex-end !important;
+  }
+
+  .legal-modal {
+    border-radius: 20px 20px 14px 14px !important;
+    max-height: 88dvh !important;
+    width: 100% !important;
+  }
+
+  .legal-modal-body {
+    padding: 14px 14px max(14px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 11 — CONFIRM DIALOG ON MOBILE
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+
+  .confirm-mo {
+    padding: 12px !important;
+  }
+
+  .confirm-box {
+    padding: 22px 18px !important;
+    border-radius: 16px !important;
+    width: 100% !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   FIX 12 — FLOATING ADD BUTTON (twrap) SAFE AREA
+   Already moves on ≤700px but needs bottom safe-area on notch phones.
+   ────────────────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+
+  .twrap {
+    bottom: calc(80px + max(0px, env(safe-area-inset-bottom))) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   END APEX MOBILE & TABLET RESPONSIVENESS PATCH
+   ═══════════════════════════════════════════════════════════════════ */
 </style>
 </head>
 <body>
