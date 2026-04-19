@@ -503,45 +503,43 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ── TIMETABLE ─────────────────────────────────────────────── */
 .tt-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--rr);overflow:auto;margin-bottom:20px;transition:background .3s}
 
-/* ── Weekly scroll: sticky header + footer, scrollable body ── */
+/* ── Weekly scroll: SINGLE outer scroll container (Option B) ──
+ * The entire table — thead + tbody + tfoot — lives inside ONE
+ * scrollable div (.tt-scroll-body). The scrollbar is on that outer
+ * wrapper, so it is outside the table's coordinate space entirely.
+ * thead and tfoot use position:sticky inside that same scroller.
+ * Result: every column shares the exact same X positions — no shift.
+ * ──────────────────────────────────────────────────────────────── */
 .tt-wrap.tt-scroll{
   overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
-.tt-wrap.tt-scroll .tt{
-  display:flex;
-  flex-direction:column;
-  min-width:640px;
-  width:100%;
-  border-collapse:collapse;
-}
-.tt-wrap.tt-scroll .tt thead,
-.tt-wrap.tt-scroll .tt tfoot{
-  display:table;
-  width:100%;
-  table-layout:fixed;
-  flex-shrink:0;
-  box-sizing:border-box;
-}
-.tt-wrap.tt-scroll .tt tbody{
   display:block;
+  position:relative;
+}
+.tt-scroll-body{
   overflow-y:auto;
   overflow-x:hidden;
   scrollbar-width:thin;
   scrollbar-color:var(--border2) transparent;
 }
-.tt-wrap.tt-scroll .tt tbody::-webkit-scrollbar{width:4px}
-.tt-wrap.tt-scroll .tt tbody::-webkit-scrollbar-track{background:transparent}
-.tt-wrap.tt-scroll .tt tbody::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-.tt-wrap.tt-scroll .tt tbody tr{
-  display:table;
-  width:100%;
-  table-layout:fixed;
-  box-sizing:border-box;
+.tt-scroll-body::-webkit-scrollbar{width:4px}
+.tt-scroll-body::-webkit-scrollbar-track{background:transparent}
+.tt-scroll-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+/* thead sticks to top of the scroll container */
+.tt-wrap.tt-scroll .tt thead{
+  position:sticky;
+  top:0;
+  z-index:3;
 }
+/* tfoot sticks to bottom of the scroll container */
 .tt-wrap.tt-scroll .tt tfoot{
+  position:sticky;
+  bottom:0;
+  z-index:3;
   border-top:2px solid var(--border2);
+}
+/* tbody is native table-row-group — no display:block, no overflow, no shift */
+.tt-wrap.tt-scroll .tt tbody{
+  display:table-row-group;
 }
 .tt{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
 .tt th{padding:9px 7px;font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;text-align:center;border-bottom:1px solid var(--border2);border-right:1px solid var(--border);background:var(--card2);white-space:nowrap}
@@ -1631,7 +1629,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   color:var(--text);
 }
 .note-card .nc-body{
-  font-size:11.5px;
+  font-size:11px;
   line-height:1.7;
   color:var(--text2);
   display:-webkit-box;
@@ -2131,7 +2129,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   border-radius:10px;
   padding:9px 12px;
   color:var(--text);
-  font-size:12.5px;
+  font-size:11.5px;
   font-family:var(--fb);
   font-weight:500;
   transition:border-color .2s,box-shadow .2s,background .2s;
@@ -2148,6 +2146,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   resize:none;
   min-height:100px;
   line-height:1.6;
+  font-size:11.5px;
 }
 /* Color palette — contained, no overflow */
 .nm-palette-wrap{
@@ -2988,8 +2987,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tt tr.row-done td:first-child .tt-t{opacity:.55}
 
 /* ── NOTES FONT FIX ──────────────────────────────────────── */
-.note-card .nc-title{font-family:var(--fb)!important;font-size:13px;font-weight:700;line-height:1.35}
-.note-card .nc-body{font-family:var(--fb)!important;font-size:12px;line-height:1.65;letter-spacing:.01em}
+.note-card .nc-title{font-family:var(--fb)!important;font-size:13.5px;font-weight:700;line-height:1.35}
+.note-card .nc-body{font-family:var(--fb)!important;font-size:11px;line-height:1.65;letter-spacing:.01em}
 .note-card .nc-foot{font-family:var(--fb)!important}
 
 /* ── ANALYTICS KPI CARD ──────────────────────────────────── */
@@ -3085,6 +3084,1311 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   .notif-ph{padding:11px 14px 10px}
   .notif-ph-title{font-size:12px}
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD SCREEN — RESPONSIVE: TABLET + MOBILE (additive only)
+   All rules scoped to #view-dashboard and breakpoints only.
+   Desktop styles (>1100px) are completely untouched.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (≤1100px) — Dashboard ─────────────────────────────── */
+@media(max-width:1100px){
+
+  /* ── Topbar ── */
+  #view-dashboard .tb{
+    padding:12px 20px;
+    gap:10px;
+  }
+  #view-dashboard .tb h1{
+    font-size:20px;
+  }
+  #view-dashboard .tb-sub{
+    font-size:11px;
+  }
+  #view-dashboard .tb-r{
+    gap:8px;
+    flex-wrap:nowrap;
+    align-items:center;
+  }
+
+  /* ── KPI Grid: 2×2 on tablet ── */
+  #view-dashboard .kpi-grid{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  #view-dashboard .kc{
+    padding:14px;
+  }
+  #view-dashboard .kc-v{
+    font-size:22px;
+  }
+
+  /* ── Focus + Insights row ── */
+  #view-dashboard .focus-insights-row{
+    padding:13px 16px;
+    gap:12px;
+  }
+  #view-dashboard .focus-block-text{
+    white-space:normal;
+    font-size:11.5px;
+  }
+
+  /* ── Dashboard toolbar ── */
+  #view-dashboard .dash-toolbar{
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  #view-dashboard .dash-toolbar-left{
+    flex:1;
+    min-width:0;
+  }
+  #view-dashboard .dash-toolbar-title{
+    font-size:14px;
+  }
+  #view-dashboard .dash-toolbar-right{
+    flex-wrap:nowrap;
+    gap:7px;
+    flex-shrink:0;
+  }
+
+  /* ── Weekly table: allow horizontal scroll on tablet ── */
+  #view-dashboard .tt-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  #view-dashboard .tt{
+    min-width:600px;
+  }
+
+  /* ── Today list header ── */
+  #view-dashboard .today-list-hdr{
+    padding:10px 14px 10px;
+  }
+  #view-dashboard .today-hdr-date-badge{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+  }
+  #view-dashboard .today-hdr-date-num{
+    font-size:13px;
+  }
+  #view-dashboard .today-hdr-dayname{
+    font-size:12px;
+  }
+
+  /* ── Insights panel cards: 2 cols ── */
+  #view-dashboard #insights-panel .ig{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  /* ── Notification bell: tap target ── */
+  #view-dashboard .notif-bell-btn{
+    min-width:36px;
+    min-height:36px;
+  }
+
+  /* ── Touch: no hover transforms ── */
+  @media(hover:none){
+    #view-dashboard .kc:hover{
+      transform:none;
+      box-shadow:none;
+    }
+    #view-dashboard .focus-insights-row:hover{
+      box-shadow:0 4px 24px rgba(91,110,245,.10),0 1px 4px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.04);
+    }
+  }
+}
+
+/* ── TABLET PORTRAIT (≤900px) — Dashboard ─────────────────────── */
+@media(max-width:900px){
+
+  /* ── Topbar: slightly tighter ── */
+  #view-dashboard .tb{
+    padding:11px 16px;
+  }
+  #view-dashboard .tb h1{
+    font-size:19px;
+  }
+  #view-dashboard .tb-sub{
+    font-size:10.5px;
+  }
+
+  /* ── Dark mode toggle: compact on tablet portrait ── */
+  #view-dashboard .dm-tog-wrap{
+    padding:4px 8px 4px 6px;
+    gap:5px;
+  }
+  #view-dashboard .dm-tog-label{
+    font-size:10px;
+    min-width:24px;
+  }
+
+  /* ── KPI grid: compact padding ── */
+  #view-dashboard .kc{
+    padding:12px;
+  }
+  #view-dashboard .kc-v{
+    font-size:21px;
+  }
+  #view-dashboard .kc-l{
+    font-size:10.5px;
+  }
+  #view-dashboard .kc-header{
+    margin-bottom:9px;
+  }
+  #view-dashboard .kc-ico{
+    width:32px;
+    height:32px;
+    font-size:14px;
+  }
+
+  /* ── Focus row: wrap to 2 lines ── */
+  #view-dashboard .focus-insights-row{
+    gap:10px;
+    padding:12px 14px;
+  }
+  #view-dashboard .focus-block-ico{
+    width:30px;
+    height:30px;
+    font-size:14px;
+  }
+  #view-dashboard .focus-block-label{
+    font-size:8.5px;
+  }
+  #view-dashboard .focus-block-text{
+    font-size:11px;
+    line-height:1.5;
+  }
+  #view-dashboard .insights-btn{
+    padding:6px 14px;
+    font-size:10.5px;
+  }
+
+  /* ── Dash toolbar: tighter gap ── */
+  #view-dashboard .dash-toolbar{
+    gap:8px;
+    margin-bottom:11px;
+  }
+  #view-dashboard .dash-toolbar-title{
+    font-size:13.5px;
+  }
+  #view-dashboard .dash-toolbar-right{
+    gap:6px;
+  }
+  #view-dashboard .tab{
+    padding:5px 12px;
+    font-size:10.5px;
+  }
+  #view-dashboard .dash-add-btn{
+    padding:6px 11px;
+    font-size:10.5px;
+  }
+  #view-dashboard .dash-wk-btn{
+    width:24px;
+    height:24px;
+  }
+  #view-dashboard .dash-wk-label{
+    font-size:10.5px;
+    padding:3px 9px;
+  }
+
+  /* ── Today list header: compact ── */
+  #view-dashboard .today-list-hdr{
+    padding:9px 13px;
+    gap:10px;
+  }
+  #view-dashboard .today-hdr-date-badge{
+    width:32px;
+    height:32px;
+  }
+  #view-dashboard .today-hdr-date-num{
+    font-size:12px;
+  }
+  #view-dashboard .today-hdr-dayname{
+    font-size:11.5px;
+  }
+  #view-dashboard .today-hdr-subtitle{
+    font-size:9.5px;
+  }
+  #view-dashboard .today-hdr-count{
+    font-size:9.5px;
+    padding:2px 8px;
+  }
+  #view-dashboard .today-list-prog-bar{
+    width:60px;
+  }
+  #view-dashboard .today-list-prog-pct{
+    font-size:10px;
+    min-width:26px;
+  }
+
+  /* ── Task cards ── */
+  #view-dashboard .tday-name{
+    font-size:13px;
+  }
+  #view-dashboard .tday-time{
+    font-size:9.5px;
+  }
+  #view-dashboard .tday-dur{
+    font-size:9px;
+    padding:1px 5px;
+  }
+  #view-dashboard .tday-cat{
+    font-size:8.5px;
+    padding:2px 6px;
+  }
+  #view-dashboard .tday-pri{
+    font-size:7.5px;
+    padding:2px 5px;
+  }
+
+  /* ── Insights cards: 3→2 col on 900px ── */
+  #view-dashboard #insights-panel .ig{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+  #view-dashboard #insights-panel .ic{
+    padding:11px 13px 12px;
+  }
+
+  /* ── Weekly table: horizontal scroll if needed ── */
+  #view-dashboard .tt-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  #view-dashboard .tt{
+    min-width:560px;
+  }
+  #view-dashboard .tt th{
+    font-size:9px;
+    padding:8px 5px;
+    letter-spacing:.4px;
+  }
+  #view-dashboard .tt td{
+    padding:6px 3px;
+  }
+  #view-dashboard .tt-n{
+    font-size:11px;
+    max-width:110px;
+  }
+  #view-dashboard .tt-t{
+    font-size:9.5px;
+  }
+  #view-dashboard .pp{
+    font-size:10px;
+  }
+}
+
+/* ── MOBILE (≤700px) — Dashboard ──────────────────────────────── */
+@media(max-width:700px){
+
+  /* ── Content area ── */
+  #view-dashboard .cx{
+    padding:12px 12px 24px;
+  }
+
+  /* ── Topbar: clean mobile layout ── */
+  #view-dashboard .tb{
+    padding:10px 14px;
+    gap:8px;
+    flex-wrap:nowrap;
+    align-items:center;
+  }
+  #view-dashboard .tb > div:first-child{
+    flex:1;
+    min-width:0;
+  }
+  #view-dashboard .tb h1{
+    font-size:18px;
+    letter-spacing:-.4px;
+  }
+  #view-dashboard .tb-sub{
+    font-size:10px;
+    margin-top:1px;
+  }
+  #view-dashboard .tb-r{
+    flex-shrink:0;
+    gap:6px;
+    flex-wrap:nowrap;
+  }
+
+  /* ── Dark mode toggle: icon-only on mobile ── */
+  #view-dashboard .dm-tog-label{
+    display:none;
+  }
+  #view-dashboard .dm-tog-wrap > .tog{
+    display:none;
+  }
+  #view-dashboard .dm-tog-wrap{
+    padding:6px 7px;
+    gap:0;
+    border-radius:9px;
+  }
+  #view-dashboard .dm-tog-ico{
+    font-size:14px;
+  }
+
+  /* ── KPI Grid: 2×2 mobile ── */
+  #view-dashboard .kpi-grid{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:12px;
+  }
+  #view-dashboard .kc{
+    padding:11px 12px;
+  }
+  #view-dashboard .kc-v{
+    font-size:20px;
+    letter-spacing:-.4px;
+  }
+  #view-dashboard .kc-l{
+    font-size:10px;
+  }
+  #view-dashboard .kc-s{
+    font-size:9.5px;
+  }
+  #view-dashboard .kc-header{
+    margin-bottom:8px;
+  }
+  #view-dashboard .kc-ico{
+    width:30px;
+    height:30px;
+    font-size:13px;
+    border-radius:8px;
+  }
+  #view-dashboard .kc-bar{
+    margin-top:8px;
+  }
+
+  /* ── Focus + Insights row: stacked on mobile ── */
+  #view-dashboard .focus-insights-row{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+    padding:12px 13px;
+    margin-bottom:12px;
+  }
+  #view-dashboard .focus-block{
+    width:100%;
+    gap:9px;
+  }
+  #view-dashboard .focus-block-ico{
+    width:28px;
+    height:28px;
+    font-size:13px;
+    flex-shrink:0;
+  }
+  #view-dashboard .focus-block-label{
+    font-size:8px;
+    letter-spacing:.5px;
+  }
+  #view-dashboard .focus-block-text{
+    font-size:11px;
+    white-space:normal;
+    line-height:1.5;
+  }
+  #view-dashboard .focus-divider{
+    display:none;
+  }
+  #view-dashboard .insights-btn{
+    width:100%;
+    justify-content:center;
+    padding:9px 14px;
+    font-size:11px;
+  }
+
+  /* ── Insights panel: 1 col on mobile ── */
+  #view-dashboard .insights-panel{
+    margin-bottom:12px;
+  }
+  #view-dashboard #insights-panel .ig{
+    grid-template-columns:1fr !important;
+    gap:8px;
+  }
+  #view-dashboard #insights-panel .ic{
+    padding:11px 13px;
+    flex-direction:row;
+    gap:10px;
+  }
+  #view-dashboard #insights-panel .ic-head{
+    flex-direction:row;
+    align-items:center;
+    gap:8px;
+    margin-bottom:3px;
+  }
+  #view-dashboard #insights-panel .ic-ico{
+    width:24px;
+    height:24px;
+    font-size:12px;
+    flex-shrink:0;
+  }
+  #view-dashboard #insights-panel .ic-t{
+    font-size:11.5px;
+  }
+  #view-dashboard #insights-panel .ic-x{
+    font-size:10px;
+    padding-left:32px;
+    line-height:1.5;
+  }
+
+  /* ── Dashboard toolbar: nowrap with proper sizing ── */
+  #view-dashboard .dash-toolbar{
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:7px;
+    margin-bottom:10px;
+  }
+  #view-dashboard .dash-toolbar-left{
+    flex:1;
+    min-width:0;
+    overflow:hidden;
+  }
+  #view-dashboard .dash-toolbar-title{
+    font-size:13px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #view-dashboard .dash-toolbar-right{
+    flex-shrink:0;
+    gap:5px;
+    flex-wrap:nowrap;
+    align-items:center;
+  }
+
+  /* ── View tabs: compact ── */
+  #view-dashboard .tabs{
+    padding:2px;
+    border-radius:8px;
+    gap:0;
+  }
+  #view-dashboard .tab{
+    padding:4px 10px;
+    font-size:10px;
+    border-radius:6px;
+  }
+
+  /* ── Add Task button: compact but visible ── */
+  #view-dashboard .dash-add-btn{
+    padding:6px 10px;
+    font-size:10px;
+    gap:4px;
+    border-radius:8px;
+    min-height:32px;
+  }
+  #view-dashboard .dash-add-btn svg{
+    width:11px;
+    height:11px;
+  }
+
+  /* ── Week nav buttons: larger touch targets ── */
+  #view-dashboard .dash-wk-btn{
+    width:26px;
+    height:26px;
+    min-width:26px;
+    min-height:32px;
+    border-radius:7px;
+  }
+  #view-dashboard .dash-wk-label{
+    font-size:10px;
+    padding:3px 8px;
+  }
+
+  /* ── Today list: mobile-optimised ── */
+  #view-dashboard .today-list{
+    margin-bottom:16px;
+    border-radius:12px;
+  }
+  #view-dashboard .today-list-hdr{
+    padding:10px 13px;
+    gap:8px;
+    flex-wrap:nowrap;
+  }
+  #view-dashboard .today-hdr-date-block{
+    gap:8px;
+  }
+  #view-dashboard .today-hdr-date-badge{
+    width:34px;
+    height:34px;
+    border-radius:9px;
+    flex-shrink:0;
+  }
+  #view-dashboard .today-hdr-date-num{
+    font-size:14px;
+  }
+  #view-dashboard .today-hdr-date-mon{
+    font-size:7px;
+  }
+  #view-dashboard .today-hdr-dayname{
+    font-size:12px;
+    letter-spacing:-.1px;
+  }
+  #view-dashboard .today-hdr-subtitle{
+    font-size:9.5px;
+  }
+  #view-dashboard .today-hdr-right{
+    gap:7px;
+    flex-shrink:0;
+    align-items:center;
+  }
+  #view-dashboard .today-hdr-count{
+    font-size:9.5px;
+    padding:2px 8px;
+  }
+  #view-dashboard .today-list-prog-wrap{
+    gap:5px;
+  }
+  #view-dashboard .today-list-prog-bar{
+    width:52px;
+    height:4px;
+  }
+  #view-dashboard .today-list-prog-pct{
+    font-size:10px;
+    min-width:24px;
+  }
+
+  /* ── Task card items: full width, touch-friendly ── */
+  #view-dashboard .tday-card{
+    min-height:52px;
+  }
+  #view-dashboard .tday-chk-col{
+    padding:0 6px 0 12px;
+  }
+  #view-dashboard .tday-chk{
+    width:22px;
+    height:22px;
+    min-width:22px;
+    min-height:22px;
+  }
+  #view-dashboard .tday-body{
+    padding:9px 8px 9px 9px;
+    gap:3px;
+  }
+  #view-dashboard .tday-name{
+    font-size:13px;
+    letter-spacing:-.1px;
+  }
+  #view-dashboard .tday-time{
+    font-size:9.5px;
+  }
+  #view-dashboard .tday-dur{
+    font-size:8.5px;
+    padding:1.5px 5px;
+  }
+  #view-dashboard .tday-cat{
+    font-size:8.5px;
+    padding:2px 6px;
+  }
+  #view-dashboard .tday-pri{
+    font-size:7.5px;
+    padding:2px 4px;
+  }
+  #view-dashboard .tday-status{
+    font-size:7px;
+    padding:1.5px 5px;
+  }
+
+  /* ── Action buttons: always visible on touch (no hover) ── */
+  @media(hover:none){
+    #view-dashboard .tday-actions-col{
+      opacity:1;
+    }
+    #view-dashboard .tday-card:hover{
+      background:transparent;
+    }
+  }
+
+  /* ── Empty state ── */
+  #view-dashboard .today-empty{
+    padding:30px 20px;
+  }
+  #view-dashboard .today-empty-ico{
+    font-size:28px;
+  }
+  #view-dashboard .today-empty-title{
+    font-size:13px;
+  }
+  #view-dashboard .today-empty-sub{
+    font-size:11px;
+  }
+
+  /* ── Weekly table: horizontal scrollable card ── */
+  #view-dashboard .tt-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:12px;
+    margin-bottom:16px;
+  }
+  #view-dashboard .tt{
+    min-width:520px;
+    font-size:11px;
+  }
+  #view-dashboard .tt th{
+    padding:7px 4px;
+    font-size:9px;
+    letter-spacing:.3px;
+  }
+  #view-dashboard .tt th:first-child{
+    padding-left:12px;
+  }
+  #view-dashboard .tt-n{
+    font-size:11px;
+    max-width:100px;
+  }
+  #view-dashboard .tt-t{
+    font-size:9px;
+  }
+  #view-dashboard .pp{
+    font-size:10px;
+  }
+  #view-dashboard .tt-ic{
+    padding:7px 8px 7px 10px;
+    gap:7px;
+  }
+  #view-dashboard .tt td{
+    padding:5px 3px;
+  }
+  #view-dashboard .tt-dc{
+    padding:5px 2px;
+  }
+  #view-dashboard .chk{
+    width:22px;
+    height:22px;
+    border-radius:5px;
+  }
+  /* Row inner: smaller row height */
+  #view-dashboard .tt-row-inner{
+    padding:6px 5px 6px 10px;
+    min-height:44px;
+  }
+  #view-dashboard .tt-n-full{
+    font-size:11px;
+    line-height:1.3;
+  }
+
+  /* ── Notification panel: fixed + full-width on mobile ── */
+  #view-dashboard .notif-panel{
+    position:fixed;
+    top:62px;
+    left:10px;
+    right:10px;
+    width:auto;
+    max-height:70vh;
+    overflow-y:auto;
+    border-radius:14px;
+    z-index:501;
+  }
+
+  /* ── Touch targets for toolbar buttons ── */
+  #view-dashboard .dash-wk-btn,
+  #view-dashboard .notif-bell-btn,
+  #view-dashboard .dm-tog-wrap{
+    min-height:36px;
+  }
+}
+
+/* ── SMALL MOBILE (≤420px) — Dashboard ────────────────────────── */
+@media(max-width:420px){
+
+  /* ── Content: tightest padding ── */
+  #view-dashboard .cx{
+    padding:9px 10px 20px;
+  }
+
+  /* ── Topbar ── */
+  #view-dashboard .tb{
+    padding:9px 11px;
+  }
+  #view-dashboard .tb h1{
+    font-size:16px;
+  }
+  #view-dashboard .tb-sub{
+    font-size:9.5px;
+  }
+
+  /* ── KPI grid: ultra compact ── */
+  #view-dashboard .kpi-grid{
+    gap:6px;
+    margin-bottom:10px;
+  }
+  #view-dashboard .kc{
+    padding:9px 10px;
+  }
+  #view-dashboard .kc-v{
+    font-size:18px;
+    letter-spacing:-.4px;
+  }
+  #view-dashboard .kc-l{
+    font-size:9.5px;
+  }
+  #view-dashboard .kc-s{
+    font-size:9px;
+  }
+  #view-dashboard .kc-ico{
+    width:28px;
+    height:28px;
+    font-size:12px;
+  }
+  #view-dashboard .kc-header{
+    margin-bottom:6px;
+  }
+
+  /* ── Focus row ── */
+  #view-dashboard .focus-insights-row{
+    padding:10px 11px;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  #view-dashboard .focus-block-ico{
+    width:26px;
+    height:26px;
+    font-size:12px;
+  }
+  #view-dashboard .focus-block-text{
+    font-size:10.5px;
+  }
+  #view-dashboard .insights-btn{
+    font-size:10.5px;
+    padding:8px 12px;
+  }
+
+  /* ── Insights cards ── */
+  #view-dashboard #insights-panel .ig{
+    gap:6px;
+  }
+  #view-dashboard #insights-panel .ic{
+    padding:10px 11px;
+  }
+  #view-dashboard #insights-panel .ic-t{
+    font-size:11px;
+  }
+  #view-dashboard #insights-panel .ic-x{
+    font-size:9.5px;
+    padding-left:30px;
+  }
+
+  /* ── Toolbar ── */
+  #view-dashboard .dash-toolbar{
+    gap:5px;
+    margin-bottom:8px;
+  }
+  #view-dashboard .dash-toolbar-title{
+    font-size:11.5px;
+  }
+  #view-dashboard .tab{
+    padding:4px 8px;
+    font-size:9.5px;
+  }
+  #view-dashboard .dash-add-btn{
+    padding:5px 8px;
+    font-size:9.5px;
+    gap:3px;
+  }
+  #view-dashboard .dash-wk-btn{
+    width:22px;
+    height:22px;
+    min-width:22px;
+  }
+  #view-dashboard .dash-wk-label{
+    font-size:9.5px;
+    padding:3px 7px;
+  }
+
+  /* ── Today list ── */
+  #view-dashboard .today-list-hdr{
+    padding:9px 11px;
+  }
+  #view-dashboard .today-hdr-date-badge{
+    width:30px;
+    height:30px;
+    border-radius:8px;
+  }
+  #view-dashboard .today-hdr-date-num{
+    font-size:12px;
+  }
+  #view-dashboard .today-hdr-dayname{
+    font-size:11px;
+  }
+  #view-dashboard .today-hdr-subtitle{
+    font-size:9px;
+  }
+  #view-dashboard .today-hdr-count{
+    font-size:9px;
+    padding:2px 7px;
+  }
+  #view-dashboard .today-list-prog-bar{
+    width:44px;
+  }
+  #view-dashboard .today-list-prog-pct{
+    font-size:9.5px;
+    min-width:20px;
+  }
+
+  /* ── Task cards ── */
+  #view-dashboard .tday-body{
+    padding:8px 6px 8px 8px;
+    gap:3px;
+  }
+  #view-dashboard .tday-name{
+    font-size:12.5px;
+  }
+  #view-dashboard .tday-time{
+    font-size:9px;
+  }
+  /* Hide less-essential meta on very small screens */
+  #view-dashboard .tday-status{
+    display:none;
+  }
+
+  /* ── Weekly table: tighter ── */
+  #view-dashboard .tt{
+    min-width:480px;
+    font-size:10.5px;
+  }
+  #view-dashboard .tt th{
+    padding:6px 3px;
+    font-size:8.5px;
+  }
+  #view-dashboard .tt-n{
+    font-size:10.5px;
+    max-width:88px;
+  }
+  #view-dashboard .tt-t{
+    font-size:8.5px;
+  }
+  #view-dashboard .tt-row-inner{
+    padding:5px 4px 5px 8px;
+    min-height:40px;
+  }
+  #view-dashboard .tt-n-full{
+    font-size:10.5px;
+  }
+  #view-dashboard .pp{
+    font-size:9.5px;
+  }
+  #view-dashboard .chk{
+    width:20px;
+    height:20px;
+  }
+}
+
+/* ── TOUCH DEVICE ENHANCEMENTS — Dashboard ─────────────────────── */
+@media(hover:none) and (pointer:coarse){
+
+  /* KPI cards: tap feedback, no hover lift */
+  #view-dashboard .kc:hover{
+    transform:none !important;
+    box-shadow:none !important;
+  }
+  #view-dashboard .kc:active{
+    transform:scale(.98) !important;
+    transition:transform .1s ease !important;
+  }
+
+  /* Task card: no hover bg, visible on tap */
+  #view-dashboard .tday-card:hover{
+    background:transparent !important;
+  }
+  #view-dashboard .tday-card:active{
+    background:rgba(91,110,245,.03) !important;
+  }
+
+  /* Action col: always show on touch */
+  #view-dashboard .tday-actions-col{
+    opacity:1;
+  }
+
+  /* Checkbox: larger tap target */
+  #view-dashboard .tday-chk{
+    min-width:28px;
+    min-height:28px;
+  }
+
+  /* Weekly table action buttons: always visible on touch */
+  #view-dashboard .ta{
+    opacity:0.7;
+    pointer-events:auto;
+  }
+  #view-dashboard .ta-expand{
+    max-width:60px;
+    opacity:1;
+  }
+  #view-dashboard .ta-expand .ta{
+    opacity:0.7;
+  }
+
+  /* Insights btn: no shimmer animation impact on touch */
+  #view-dashboard .insights-btn:hover{
+    background:rgba(91,110,245,.14);
+    border-color:rgba(91,110,245,.5);
+    box-shadow:0 0 0 1px rgba(91,110,245,.18),0 2px 12px rgba(91,110,245,.15);
+  }
+
+  /* Dash add button: tap feedback */
+  #view-dashboard .dash-add-btn:active{
+    opacity:0.8;
+    transform:scale(.97);
+  }
+
+  /* Week nav buttons: min tap size */
+  #view-dashboard .dash-wk-btn{
+    min-width:32px;
+    min-height:32px;
+  }
+
+  /* Tab switches: tap feedback */
+  #view-dashboard .tab:active{
+    background:rgba(91,110,245,.12);
+    transform:scale(.96);
+  }
+
+  /* Notification bell: tap target */
+  #view-dashboard .notif-bell-btn{
+    min-width:40px;
+    min-height:40px;
+  }
+
+  /* Prevent text selection on tap */
+  #view-dashboard .tday-card,
+  #view-dashboard .kc,
+  #view-dashboard .focus-insights-row{
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+
+  /* Weekly table: swipe-scroll hint bar */
+  #view-dashboard .tt-wrap.tt-scroll{
+    scrollbar-width:none;
+  }
+  #view-dashboard .tt-wrap.tt-scroll::-webkit-scrollbar{
+    display:none;
+  }
+}
+
+/* ── END DASHBOARD RESPONSIVE STYLES ── */
+
+/* ═══════════════════════════════════════════════════════════════
+   FOCUS TIMER — RESPONSIVE: TABLET + MOBILE  (additive only)
+   All rules scoped to #view-timer / timer-* selectors + breakpoints.
+   Desktop styles (>900px) are intentionally untouched.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET PORTRAIT (≤900px) ────────────────────────────────── */
+@media(max-width:900px){
+
+  /* Page container — let content breathe */
+  #view-timer .cx{
+    padding:16px;
+  }
+
+  /* Timer card — centre nicely, cap width */
+  #view-timer .timer-wrap{
+    max-width:480px;
+    padding:26px 22px 24px;
+    margin:0 auto 18px;
+  }
+
+  /* Ring — slightly smaller for portrait tablet */
+  #view-timer .timer-ring{
+    width:178px;
+    height:178px;
+  }
+  #view-timer .timer-ring svg{
+    width:178px;
+    height:178px;
+  }
+
+  /* Mode pills — allow a bit more wrap room */
+  #view-timer .timer-modes{
+    gap:6px;
+    margin-bottom:18px;
+  }
+  #view-timer .tm-pill{
+    padding:5px 12px;
+    font-size:11px;
+  }
+
+  /* Task name */
+  #view-timer .timer-task-name{
+    font-size:12.5px;
+    margin-top:16px;
+    margin-bottom:15px;
+  }
+
+  /* Buttons row — comfortable tap targets */
+  #view-timer .timer-btns{
+    gap:9px;
+    margin-bottom:18px;
+  }
+  #view-timer .timer-btns .btn{
+    min-height:40px;
+    padding:9px 16px;
+  }
+
+  /* Task picker dropdown */
+  #view-timer .ttp-trigger{
+    padding:11px 13px;
+  }
+  #view-timer .ttp-trigger-text,
+  #view-timer .ttp-trigger-placeholder{
+    font-size:12px;
+  }
+
+  /* Focus log card */
+  #view-timer .timer-log{
+    max-width:480px;
+    margin:0 auto 18px;
+  }
+
+  /* Today summary row */
+  #view-timer #timer-summary-row{
+    margin-top:13px;
+    padding-top:13px;
+  }
+}
+
+/* ── MOBILE (≤700px) ─────────────────────────────────────────── */
+@media(max-width:700px){
+
+  /* Topbar — compact */
+  #view-timer .tb{
+    padding:10px 14px;
+  }
+  #view-timer .tb h1{
+    font-size:17px;
+  }
+  #view-timer .tb .tb-sub{
+    font-size:10px;
+  }
+
+  /* Content area */
+  #view-timer .cx{
+    padding:12px 12px 20px;
+  }
+
+  /* Timer card — full width, comfortable insets */
+  #view-timer .timer-wrap{
+    max-width:100%;
+    width:100%;
+    padding:20px 16px 22px;
+    margin:0 auto 14px;
+    border-radius:16px;
+  }
+
+  /* Mode pills — horizontally scrollable on very small screens */
+  #view-timer .timer-modes{
+    gap:5px;
+    margin-bottom:16px;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    justify-content:flex-start;
+    padding-bottom:2px;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  #view-timer .timer-modes::-webkit-scrollbar{display:none}
+  #view-timer .tm-pill{
+    padding:5px 12px;
+    font-size:10.5px;
+    flex-shrink:0;
+    /* Ensure adequate tap target */
+    min-height:34px;
+    display:flex;
+    align-items:center;
+  }
+
+  /* Ring — well-sized for mobile */
+  #view-timer .timer-ring{
+    width:168px;
+    height:168px;
+  }
+  #view-timer .timer-ring svg{
+    width:168px;
+    height:168px;
+  }
+
+  /* Timer digits */
+  #view-timer .timer-count{
+    font-size:26px;
+    letter-spacing:1px;
+  }
+  #view-timer .timer-label{
+    font-size:10px;
+  }
+
+  /* Task label */
+  #view-timer .timer-task-name{
+    font-size:12px;
+    margin-top:14px;
+    margin-bottom:14px;
+    padding:0 4px;
+  }
+
+  /* Control buttons — full width stack on very small / side by side on wider mobile */
+  #view-timer .timer-btns{
+    gap:8px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  #view-timer .timer-btns .btn{
+    min-height:42px;
+    padding:10px 18px;
+    font-size:12px;
+    /* Ensure tap target is comfortable */
+    min-width:80px;
+  }
+  /* Primary Start button — full width when alone */
+  #view-timer .timer-btns .btn-pri:only-child{
+    width:100%;
+    max-width:240px;
+  }
+
+  /* Custom time input */
+  #view-timer #custom-mins{
+    min-height:40px;
+    font-size:14px; /* prevent iOS zoom */
+    padding:8px 10px;
+  }
+
+  /* Task picker section */
+  #view-timer .timer-task-picker{
+    padding-top:14px;
+  }
+  #view-timer .timer-task-picker-label{
+    font-size:9.5px;
+    margin-bottom:9px;
+  }
+  #view-timer .ttp-trigger{
+    padding:12px 13px;
+    border-radius:12px;
+    min-height:46px; /* touch-friendly */
+  }
+  #view-timer .ttp-trigger-text,
+  #view-timer .ttp-trigger-placeholder{
+    font-size:12px;
+  }
+  #view-timer .ttp-trigger-dot{
+    width:9px;
+    height:9px;
+  }
+
+  /* Dropdown panel */
+  #view-timer .ttp-panel{
+    border-radius:0 0 14px 14px;
+    max-height:200px; /* keep it in viewport */
+  }
+  #view-timer .ttp-list{
+    max-height:180px;
+  }
+  #view-timer .ttp-item{
+    padding:11px 12px; /* generous tap area */
+    min-height:44px;
+  }
+  #view-timer .ttp-item-name{
+    font-size:12px;
+  }
+  #view-timer .ttp-clear{
+    padding:10px 12px 12px;
+    min-height:42px;
+    font-size:11px;
+  }
+
+  /* Today summary row */
+  #view-timer #timer-summary-row{
+    flex-wrap:wrap;
+    gap:4px 8px;
+    justify-content:center;
+    text-align:center;
+  }
+
+  /* Focus log card */
+  #view-timer .timer-log{
+    max-width:100%;
+    width:100%;
+    padding:14px;
+    border-radius:16px;
+    margin:0 auto 14px;
+  }
+  #view-timer .timer-log h3{
+    font-size:12px;
+    margin-bottom:10px;
+  }
+  #view-timer .tl-row{
+    padding:8px 0;
+    gap:9px;
+    font-size:11.5px;
+    min-height:40px; /* touch-friendly */
+  }
+  #view-timer .tl-dur{
+    font-size:10.5px;
+  }
+  #view-timer .tl-time{
+    font-size:9.5px;
+  }
+}
+
+/* ── SMALL MOBILE (≤420px) ───────────────────────────────────── */
+@media(max-width:420px){
+
+  #view-timer .cx{
+    padding:10px 10px 18px;
+  }
+
+  #view-timer .timer-wrap{
+    padding:18px 13px 20px;
+    border-radius:14px;
+  }
+
+  /* Smaller ring on tiny screens */
+  #view-timer .timer-ring{
+    width:152px;
+    height:152px;
+  }
+  #view-timer .timer-ring svg{
+    width:152px;
+    height:152px;
+  }
+
+  #view-timer .timer-count{
+    font-size:24px;
+  }
+
+  /* Pills row — scrollable */
+  #view-timer .timer-modes{
+    gap:4px;
+  }
+  #view-timer .tm-pill{
+    padding:5px 10px;
+    font-size:10px;
+  }
+
+  #view-timer .timer-task-name{
+    font-size:11.5px;
+    margin-top:12px;
+    margin-bottom:12px;
+  }
+
+  #view-timer .timer-btns .btn{
+    padding:9px 14px;
+    font-size:11.5px;
+  }
+
+  /* Focus log compact */
+  #view-timer .timer-log{
+    padding:12px;
+  }
+  #view-timer .tl-name{
+    font-size:11px;
+  }
+  #view-timer .tl-row{
+    gap:7px;
+  }
+}
+
+/* ── END FOCUS TIMER RESPONSIVE ─────────────────────────────── */
 
 /* ════════════════════════════════════════════════
    LIGHT MODE COMPREHENSIVE OVERRIDES — v26
@@ -5711,6 +7015,873 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     grid-template-columns:26px 1fr !important;
   }
 }
+/* ══════════════════════════════════════════════════════════════════
+   CALENDAR TAB — ADDITIVE RESPONSIVE STYLES  (Tablet + Mobile)
+   Scope: #view-schedule and its children only.
+   Desktop (>1100px) is completely untouched.
+   All rules are additive and scoped to ≤1100px and below.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ──────────────────────────────────────────────────────────────
+   TABLET LARGE  ≤1100px
+   Cal layout: stack grid → 1-col, stat strip wraps, side panel static
+   ────────────────────────────────────────────────────────────── */
+@media(max-width:1100px){
+  /* ── Calendar topbar ── */
+  #view-schedule .sch-tb{
+    padding:12px 20px !important;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  #view-schedule .sch-tb > div:first-child{
+    flex:1;min-width:0;
+  }
+  #view-schedule #sched-tb-h1{
+    font-size:19px !important;
+  }
+
+  /* ── View-mode tab strip: allow wrapping ── */
+  #view-schedule .sched-view-tabs{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  #view-schedule .sched-view-tabs::-webkit-scrollbar{display:none}
+
+  /* ── Monthly stat strip: 3-col on tablet ── */
+  #view-schedule .sched-stat-strip{
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:8px;
+  }
+
+  /* ── Month grade card: slightly reduced padding ── */
+  #view-schedule .mo-grade-card{
+    min-height:58px;
+  }
+  #view-schedule .mgc-left{
+    padding:10px 12px 10px 16px;
+    min-width:70px;
+  }
+  #view-schedule .mgc-score-num{
+    font-size:22px !important;
+  }
+  #view-schedule .mgc-stat-val{
+    font-size:18px !important;
+  }
+
+  /* ── Calendar layout: panel goes below ── */
+  #view-schedule .cal-layout{
+    grid-template-columns:1fr !important;
+  }
+  #view-schedule .cal-panel{
+    position:static !important;
+  }
+  #view-schedule .cal-stats{
+    grid-template-columns:repeat(4,1fr) !important;
+  }
+
+  /* ── sched-day-panel: static on tablet ── */
+  #view-schedule .sched-day-panel{
+    position:static !important;
+  }
+
+  /* ── gcal: side panel collapses gracefully on tablet ── */
+  #view-schedule .gcal-layout{
+    grid-template-columns:200px 1fr !important;
+    gap:12px;
+  }
+  #view-schedule .gcal-left{
+    position:static;
+  }
+  #view-schedule .mcal-wrap{
+    min-width:0;
+  }
+
+  /* ── Week grid: narrower time col ── */
+  #view-schedule .cwk-header{
+    grid-template-columns:46px repeat(7,1fr) !important;
+  }
+  #view-schedule .cwk-body{
+    grid-template-columns:46px repeat(7,1fr) !important;
+    max-height:500px !important;
+  }
+  #view-schedule .cwk-time-slot{
+    font-size:9px;
+    padding:4px 6px 0 0;
+  }
+
+  /* ── Today view: hero padding ── */
+  #view-schedule .sched-today-hero{
+    padding:16px 18px;
+    gap:14px;
+  }
+  #view-schedule .sched-today-hero-day{
+    font-size:22px !important;
+  }
+
+  /* ── Task kanban: 2 cols on tablet ── */
+  #view-schedule .smtask-kanban{
+    grid-template-columns:1fr 1fr !important;
+  }
+  #view-schedule .smtask-kanban > :last-child{
+    grid-column:1/-1;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TABLET PORTRAIT  ≤900px
+   ────────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  /* ── Topbar: tighter padding ── */
+  #view-schedule .sch-tb{
+    padding:10px 16px !important;
+    align-items:center !important;
+  }
+  #view-schedule #sched-tb-h1{
+    font-size:17px !important;
+  }
+  #view-schedule #sched-tb-h1 + .tb-sub{
+    font-size:10px;
+  }
+
+  /* ── Stat strip: 2+1 on narrow tablet ── */
+  #view-schedule .sched-stat-strip{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:7px;
+  }
+
+  /* ── Cal stats: 2x2 ── */
+  #view-schedule .cal-stats{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+
+  /* ── Month grade card: wrap on small tablet ── */
+  #view-schedule .mo-grade-card{
+    flex-wrap:wrap;
+    min-height:auto;
+  }
+  #view-schedule .mgc-left{
+    width:auto;
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    width:100%;
+  }
+  #view-schedule .mgc-grade-group{
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+  }
+  #view-schedule .mgc-stats{
+    width:100%;
+    flex-wrap:wrap;
+  }
+  #view-schedule .mgc-stat{
+    flex:1;
+    min-width:calc(25% - 12px);
+  }
+
+  /* ── gcal layout: stack ── */
+  #view-schedule .gcal-layout{
+    grid-template-columns:1fr !important;
+    gap:10px;
+  }
+  #view-schedule .gcal-left{
+    position:static;
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  #view-schedule .gcal-today-btn{
+    width:auto;
+    padding:9px 20px;
+  }
+  #view-schedule .mcal-wrap{
+    flex:1;
+    min-width:200px;
+    max-width:260px;
+  }
+  #view-schedule .gcal-stats{
+    flex:1;
+    min-width:180px;
+    grid-template-columns:repeat(4,1fr);
+  }
+  #view-schedule .gcal-panel-card{
+    width:100%;
+  }
+  #view-schedule .gcal-panel-toggle{
+    display:none !important;
+  }
+
+  /* ── Week grid: compress ── */
+  #view-schedule .cwk-header{
+    grid-template-columns:38px repeat(7,1fr) !important;
+  }
+  #view-schedule .cwk-body{
+    grid-template-columns:38px repeat(7,1fr) !important;
+    max-height:440px !important;
+  }
+  #view-schedule .cwk-time-slot{
+    height:52px !important;
+    font-size:8px !important;
+    padding:3px 5px 0 0 !important;
+  }
+  #view-schedule .cwk-slot{
+    height:52px !important;
+  }
+  #view-schedule .cwk-day-hdr{
+    padding:8px 3px 10px !important;
+    gap:4px !important;
+  }
+  #view-schedule .wh-dow{
+    font-size:9px !important;
+  }
+  #view-schedule .wh-num{
+    font-size:14px !important;
+    width:28px !important;
+    height:28px !important;
+  }
+
+  /* ── Today view: compact hero ── */
+  #view-schedule .sched-today-hero{
+    padding:14px 16px;
+    gap:12px;
+    border-radius:12px;
+    margin-bottom:12px;
+  }
+  #view-schedule .sched-today-hero-day{
+    font-size:20px !important;
+  }
+  #view-schedule .sched-today-hero-full{
+    font-size:11px;
+  }
+
+  /* ── Task kanban: keep 2-col ── */
+  #view-schedule .smtask-kanban{
+    grid-template-columns:1fr 1fr !important;
+  }
+
+  /* ── Month sched cal: cells slightly taller ── */
+  #view-schedule .sched-cal-cell{
+    min-height:62px;
+    padding:5px 5px 4px;
+  }
+  #view-schedule .sched-dow{
+    font-size:9px;
+    padding:8px 2px;
+    letter-spacing:.5px;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TABLET SMALL  ≤768px
+   ────────────────────────────────────────────────────────────── */
+@media(max-width:768px){
+  /* ── Sched view tabs: compact ── */
+  #view-schedule .sched-view-tab{
+    padding:6px 10px !important;
+    font-size:10px !important;
+    gap:4px !important;
+  }
+  #view-schedule .sched-view-tab svg{
+    width:13px !important;
+    height:13px !important;
+  }
+
+  /* ── Month nav: stack on narrow ── */
+  #view-schedule .sched-month-nav{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  #view-schedule .sched-nav-title{
+    font-size:14px !important;
+  }
+
+  /* ── Stat strip: 2-col ── */
+  #view-schedule .sched-stat-strip{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:6px;
+  }
+  #view-schedule .sched-stat-v{
+    font-size:16px !important;
+  }
+
+  /* ── Grade card: more compact ── */
+  #view-schedule .mgc-score-num{
+    font-size:20px !important;
+  }
+  #view-schedule .mgc-grade-letter{
+    font-size:36px !important;
+  }
+  #view-schedule .mgc-stat-val{
+    font-size:16px !important;
+  }
+  #view-schedule .mgc-stat-lbl{
+    font-size:8px !important;
+  }
+  #view-schedule .mgc-divider{
+    margin:8px 0 8px 8px;
+  }
+
+  /* ── Week grid: allow horizontal scroll ── */
+  #view-schedule .cwk-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  #view-schedule .cwk-header{
+    min-width:520px !important;
+    grid-template-columns:34px repeat(7,1fr) !important;
+  }
+  #view-schedule .cwk-body{
+    min-width:520px !important;
+    grid-template-columns:34px repeat(7,1fr) !important;
+    max-height:400px !important;
+  }
+
+  /* ── sched-cal: smaller cells ── */
+  #view-schedule .sched-cal-cell{
+    min-height:56px;
+    padding:5px 4px 4px;
+  }
+  #view-schedule .sched-cal-wrap{
+    padding:7px;
+  }
+  #view-schedule .sched-cal-body{
+    gap:3px;
+  }
+  #view-schedule .sched-dow-row{
+    gap:3px;
+    margin-bottom:3px;
+  }
+  #view-schedule .sched-day-num{
+    font-size:11px !important;
+  }
+  #view-schedule .sched-cell-count{
+    font-size:9.5px !important;
+  }
+
+  /* ── sched-day-panel: static ── */
+  #view-schedule .sched-day-panel{
+    position:static !important;
+  }
+
+  /* ── today timeline: compact ── */
+  #view-schedule .sched-tl-time{
+    width:46px;
+    padding:12px 4px 12px 8px;
+  }
+  #view-schedule .sched-tl-time-txt{
+    font-size:9px !important;
+  }
+  #view-schedule .sched-tl-name{
+    font-size:12px !important;
+  }
+  #view-schedule .sched-tl-body{
+    padding:10px 12px;
+    gap:10px;
+  }
+
+  /* ── Task kanban: single col on this breakpoint ── */
+  #view-schedule .smtask-kanban{
+    grid-template-columns:1fr !important;
+  }
+  #view-schedule .smtask-kanban > :last-child{
+    grid-column:auto !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   MOBILE  ≤700px
+   (augments existing generic @700px rules, scoped to Calendar)
+   ────────────────────────────────────────────────────────────── */
+@media(max-width:700px){
+  /* ── Topbar ── */
+  #view-schedule .sch-tb{
+    padding:10px 14px 8px !important;
+    align-items:center !important;
+    flex-wrap:nowrap !important;
+    gap:10px !important;
+  }
+  #view-schedule .sch-tb > div:first-child{
+    flex:1;min-width:0;overflow:hidden;
+  }
+  #view-schedule #sched-tb-h1{
+    font-size:16px !important;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  #view-schedule .sch-tb .tb-sub{
+    font-size:10px !important;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    max-width:180px;
+  }
+  #view-schedule .sch-tb .tb-r{
+    flex-shrink:0;
+  }
+  #view-schedule #sched-tb-r .btn{
+    padding:7px 12px !important;
+    font-size:11px !important;
+    white-space:nowrap;flex-shrink:0;
+  }
+
+  /* ── View tabs: full-width row ── */
+  #view-schedule .sched-view-tabs{
+    width:100%;
+    margin-bottom:12px;
+  }
+  #view-schedule .sched-view-tab{
+    flex:1;
+    justify-content:center;
+    padding:7px 4px !important;
+    font-size:10px !important;
+    gap:3px !important;
+  }
+
+  /* ── Stat strip: 2-col ── */
+  #view-schedule .sched-stat-strip{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:6px;
+    margin-bottom:10px;
+  }
+  #view-schedule .sched-stat-v{
+    font-size:15px !important;
+  }
+  #view-schedule .sched-stat-l{
+    font-size:8px !important;
+  }
+
+  /* ── Grade/Month banner card: stack ── */
+  #view-schedule .mo-grade-card{
+    flex-direction:column !important;
+    min-height:auto !important;
+    border-radius:12px;
+  }
+  #view-schedule .mgc-left{
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+    padding:12px 14px !important;
+    width:100%;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    min-width:0;
+  }
+  #view-schedule .mgc-grade-group{
+    flex-direction:row;
+    align-items:center;
+    gap:8px;
+  }
+  #view-schedule .mgc-grade-letter{
+    font-size:36px !important;
+  }
+  #view-schedule .mgc-score-panel{
+    padding:0;
+    border-right:none;
+  }
+  #view-schedule .mgc-score-num{
+    font-size:20px !important;
+  }
+  #view-schedule .mgc-stats{
+    width:100%;
+    flex-wrap:wrap;
+    padding:6px 0;
+  }
+  #view-schedule .mgc-stat{
+    flex:1;
+    min-width:calc(25% - 8px);
+    padding:8px 6px !important;
+    gap:3px;
+  }
+  #view-schedule .mgc-stat:last-child{
+    padding-right:10px !important;
+  }
+  #view-schedule .mgc-stat-val{
+    font-size:15px !important;
+  }
+  #view-schedule .mgc-stat-lbl{
+    font-size:7.5px !important;
+  }
+  #view-schedule .mgc-stat-sub{
+    display:none;
+  }
+  #view-schedule .mgc-divider{
+    display:none;
+  }
+  #view-schedule .mgc-pills{
+    padding:6px 10px;
+    justify-content:flex-start;
+    flex-wrap:wrap;
+    gap:4px;
+  }
+
+  /* ── Month nav ── */
+  #view-schedule .sched-month-nav{
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:10px;
+  }
+  #view-schedule .sched-nav-title{
+    font-size:13px !important;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    flex:1;min-width:0;
+  }
+  #view-schedule .sched-nav-btn{
+    width:28px !important;
+    height:28px !important;
+  }
+  #view-schedule .sched-today-pill{
+    padding:0 10px;
+    height:28px;
+    font-size:10px !important;
+  }
+
+  /* ── Monthly sched calendar: compact cells ── */
+  #view-schedule .sched-cal-wrap{
+    padding:5px;
+    border-radius:10px;
+  }
+  #view-schedule .sched-cal-body{
+    gap:2px !important;
+  }
+  #view-schedule .sched-dow-row{
+    gap:2px !important;
+    margin-bottom:2px;
+  }
+  #view-schedule .sched-dow{
+    font-size:8px !important;
+    padding:6px 1px !important;
+    letter-spacing:.3px !important;
+  }
+  #view-schedule .sched-cal-cell{
+    min-height:48px !important;
+    padding:4px 3px 3px !important;
+    border-radius:7px !important;
+  }
+  #view-schedule .sched-day-num{
+    font-size:10px !important;
+  }
+  #view-schedule .sched-cell-count{
+    font-size:8.5px !important;
+  }
+  #view-schedule .sched-cell-bar{
+    height:2px;
+    margin-top:4px;
+  }
+
+  /* ── Day side panel: static on mobile ── */
+  #view-schedule .sched-day-panel{
+    position:static !important;
+    border-radius:10px !important;
+    padding:14px !important;
+    margin-top:12px;
+  }
+  #view-schedule .sched-day-panel-date-main{
+    font-size:12px !important;
+  }
+  #view-schedule .sched-ring-row{
+    padding:8px 10px !important;
+    margin-bottom:10px !important;
+    border-radius:9px !important;
+  }
+  #view-schedule .sched-panel-sec-lbl{
+    font-size:8.5px !important;
+    margin-bottom:7px;
+  }
+  #view-schedule .sched-ev-item{
+    padding:8px 10px !important;
+    border-radius:8px !important;
+    gap:7px !important;
+  }
+  #view-schedule .sched-ev-name{
+    font-size:11px !important;
+  }
+  #view-schedule .sched-ev-time{
+    font-size:9px !important;
+  }
+
+  /* ── Today view: hero + timeline ── */
+  #view-schedule .sched-today-hero{
+    padding:14px 14px !important;
+    gap:10px !important;
+    border-radius:12px !important;
+    margin-bottom:10px;
+  }
+  #view-schedule .sched-today-hero-day{
+    font-size:18px !important;
+    letter-spacing:-.3px;
+  }
+  #view-schedule .sched-today-hero-full{
+    font-size:11px;
+  }
+  #view-schedule .sched-today-timeline{
+    border-radius:12px !important;
+    margin-bottom:12px;
+  }
+  #view-schedule .sched-today-tl-hdr{
+    padding:10px 14px 9px !important;
+  }
+  #view-schedule .sched-today-tl-title{
+    font-size:12px !important;
+  }
+  #view-schedule .sched-today-tl-count{
+    font-size:10px;
+  }
+  #view-schedule .sched-tl-time{
+    width:46px !important;
+    padding:12px 4px 12px 10px !important;
+  }
+  #view-schedule .sched-tl-time-txt{
+    font-size:9px !important;
+  }
+  #view-schedule .sched-tl-body{
+    padding:10px 12px !important;
+    gap:9px !important;
+  }
+  #view-schedule .sched-tl-name{
+    font-size:12px !important;
+    margin-bottom:3px;
+  }
+  #view-schedule .sched-tl-dur{
+    font-size:9.5px;
+  }
+  #view-schedule .sched-tl-cat{
+    font-size:8.5px;
+    padding:2px 6px;
+  }
+  #view-schedule .sched-tl-check{
+    width:24px !important;
+    height:24px !important;
+  }
+  #view-schedule .sched-tl-edit{
+    width:22px !important;
+    height:22px !important;
+  }
+  /* Accent bar: thinner on mobile */
+  #view-schedule .sched-tl-accent{
+    width:2.5px;
+    height:34px;
+  }
+
+  /* ── Task kanban: single col ── */
+  #view-schedule .smtask-kanban{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+  #view-schedule .smtask-kanban > :last-child{
+    grid-column:auto !important;
+  }
+  #view-schedule .smtask-col-hdr{
+    padding:9px 12px !important;
+    border-radius:10px !important;
+    font-size:12px !important;
+  }
+  #view-schedule .smtask-count{
+    font-size:9px !important;
+  }
+  #view-schedule .smtask-card{
+    padding:10px 10px 8px !important;
+    border-radius:9px !important;
+  }
+  #view-schedule .smtask-name{
+    font-size:11.5px !important;
+  }
+  #view-schedule .smtask-time{
+    font-size:10px !important;
+  }
+  #view-schedule .smtask-cat{
+    font-size:8.5px;
+  }
+
+  /* ── Cal-view (legacy month/week) layout ── */
+  #view-schedule .cal-layout{
+    grid-template-columns:1fr !important;
+  }
+  #view-schedule .cal-panel{
+    position:static !important;
+  }
+  #view-schedule .cal-stats{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:8px;
+    margin-bottom:12px;
+  }
+  #view-schedule .cal-stat{
+    padding:10px 8px !important;
+  }
+  #view-schedule .cal-stat-v{
+    font-size:15px !important;
+  }
+  #view-schedule .cal-stat-l{
+    font-size:9px !important;
+  }
+
+  /* ── Week strip ── */
+  #view-schedule .cal-week-pill{
+    min-width:38px;
+    padding:5px 7px;
+  }
+  #view-schedule .cal-week-num{
+    font-size:12px !important;
+  }
+  #view-schedule .cal-week-day{
+    font-size:8px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   MOBILE SMALL  ≤420px
+   ────────────────────────────────────────────────────────────── */
+@media(max-width:420px){
+  /* ── Grade card: minimise ── */
+  #view-schedule .mgc-grade-letter{
+    font-size:30px !important;
+  }
+  #view-schedule .mgc-score-num{
+    font-size:18px !important;
+  }
+  #view-schedule .mgc-stat-val{
+    font-size:13px !important;
+  }
+  #view-schedule .mgc-stat{
+    min-width:0;
+    flex:1;
+  }
+  #view-schedule .mgc-pill{
+    font-size:7px !important;
+    padding:2px 6px !important;
+  }
+
+  /* ── Sched cal cells: very compact ── */
+  #view-schedule .sched-cal-cell{
+    min-height:40px !important;
+    padding:3px 2px 2px !important;
+    border-radius:6px !important;
+  }
+  #view-schedule .sched-dow{
+    font-size:7px !important;
+    padding:5px 1px !important;
+    letter-spacing:.1px !important;
+  }
+  #view-schedule .sched-day-num{
+    font-size:9px !important;
+  }
+  #view-schedule .sched-cell-count{
+    display:none;
+  }
+  #view-schedule .sched-cell-bar{
+    margin-top:2px;
+  }
+  #view-schedule .sched-cal-wrap{
+    padding:4px;
+  }
+  #view-schedule .sched-cal-body{
+    gap:2px !important;
+  }
+  #view-schedule .sched-dow-row{
+    gap:2px !important;
+  }
+
+  /* ── Today hero: minimal ── */
+  #view-schedule .sched-today-hero{
+    padding:12px !important;
+    gap:8px !important;
+  }
+  #view-schedule .sched-today-hero-day{
+    font-size:16px !important;
+  }
+  #view-schedule .sched-today-tl-hdr{
+    padding:9px 12px 8px !important;
+  }
+  #view-schedule .sched-tl-time{
+    width:40px !important;
+    padding:10px 3px 10px 8px !important;
+  }
+  #view-schedule .sched-tl-body{
+    padding:9px 10px !important;
+    gap:7px !important;
+  }
+  #view-schedule .sched-tl-name{
+    font-size:11.5px !important;
+  }
+
+  /* ── Stat strip: 1x4 on very small ── */
+  #view-schedule .sched-stat-strip{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:5px;
+  }
+  #view-schedule .sched-stat-v{
+    font-size:14px !important;
+  }
+
+  /* ── View tab text: show abbreviations ── */
+  #view-schedule .sched-view-tab{
+    padding:6px 3px !important;
+    font-size:9px !important;
+  }
+
+  /* ── Task cards ── */
+  #view-schedule .smtask-card{
+    padding:9px 9px 7px !important;
+  }
+  #view-schedule .smtask-name{
+    font-size:11px !important;
+  }
+
+  /* ── Cal stats 2-col forced ── */
+  #view-schedule .cal-stats{
+    grid-template-columns:1fr 1fr !important;
+    gap:6px;
+  }
+  #view-schedule .cal-stat-v{
+    font-size:14px !important;
+  }
+
+  /* ── Week strip: tighter ── */
+  #view-schedule .cal-week-pill{
+    min-width:32px;
+    padding:4px 5px;
+  }
+  #view-schedule .cal-week-num{
+    font-size:11px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TOUCH / TAP TARGETS  — Calendar-scoped
+   Ensure all interactive elements meet 44px tap minimum
+   ────────────────────────────────────────────────────────────── */
+@media(max-width:1100px){
+  #view-schedule .sched-nav-btn,
+  #view-schedule .sched-today-pill,
+  #view-schedule .cal-nav-btn,
+  #view-schedule .cal-today-btn{
+    min-height:40px;
+  }
+  #view-schedule .sched-view-tab{
+    min-height:36px;
+  }
+  #view-schedule .sched-ev-done-btn,
+  #view-schedule .sched-ev-edit-btn{
+    min-width:36px;
+    min-height:36px;
+  }
+  #view-schedule .sched-tl-check,
+  #view-schedule .sched-tl-edit{
+    min-width:36px;
+    min-height:36px;
+  }
+  #view-schedule .sched-cal-cell{
+    cursor:pointer;
+    -webkit-tap-highlight-color:rgba(91,110,245,.08);
+  }
+  #view-schedule .smtask-card{
+    -webkit-tap-highlight-color:transparent;
+  }
+}
+
+/* ── END CALENDAR TAB RESPONSIVE STYLES ── */
+
 /* ── PROFILE EDIT POPUP ──────────────────────────────────────── */
 #prof-edit-popup{
   position:fixed;z-index:9999;
@@ -5752,6 +7923,2210 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .pep-save:active{transform:none;opacity:1}
 .pep-cancel{padding:10px 16px;border-radius:9px;border:1px solid rgba(255,255,255,.09);background:transparent;color:rgba(255,255,255,.38);font-family:var(--fb);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
 .pep-cancel:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.18)}
+
+/* ══════════════════════════════════════════════════════════════════
+   ANALYTICS SCREEN — ADDITIVE RESPONSIVE STYLES
+   Target: #view-analytics and its children only.
+   Desktop (>1100px) is completely untouched.
+   All rules below are scoped to @media(max-width:1100px) and below.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (≤1100px) — Analytics ─────────────────────────────── */
+@media(max-width:1100px){
+  /* Analytics topbar cluster: allow wrapping */
+  #view-analytics .tb{
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  #view-analytics .ana-tb-cluster{
+    flex-wrap:wrap;
+    gap:6px;
+  }
+
+  /* KPI row: 2×2 grid */
+  #view-analytics .ana-kpi-row,
+  #ana-cx > div[style*="grid-template-columns:repeat(4"]{
+    grid-template-columns:1fr 1fr !important;
+    gap:10px !important;
+  }
+
+  /* Insights row: allow text to wrap */
+  #view-analytics .focus-block-text{
+    white-space:normal;
+  }
+
+  /* Insight cards: 2 columns */
+  #view-analytics #insights-grid.ig{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  /* ROW A — Daily Completion + Category: stack vertically */
+  #ana-cx > .cg2,
+  #ana-cx div.cg2{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Category Breakdown donut: center on tablet */
+  #ana-cx #cat-donut{
+    width:180px !important;
+    height:180px !important;
+  }
+
+  /* ROW B & C — 2 chart grids: stack to single column */
+  #ana-cx > div[style*="grid-template-columns:1fr 1fr"],
+  #ana-cx .ana-chart-row{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Weekly Completion Trend header: allow wrap for range pills */
+  #ana-cx .ac > div[style*="align-items:center;justify-content:space-between"]{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  /* Range pills: always visible and properly sized */
+  .ana-range-pills{
+    flex-shrink:0;
+  }
+}
+
+/* ── TABLET PORTRAIT (≤900px) — Analytics ─────────────────────── */
+@media(max-width:900px){
+  /* Topbar: split into two clean rows */
+  #view-analytics .tb{
+    flex-direction:row;
+    align-items:center;
+    flex-wrap:wrap;
+    padding:12px 16px;
+    gap:10px;
+  }
+  #view-analytics .tb > div:first-child{
+    flex:1;
+    min-width:0;
+  }
+  #view-analytics .tb-r{
+    flex-shrink:0;
+  }
+
+  /* Week nav: keep tight */
+  .ana-wk-nav{
+    height:32px;
+  }
+  .ana-wk-range{
+    font-size:10.5px;
+    padding:0 8px;
+  }
+
+  /* Weekly summary button: show only icon + dot on small tablet */
+  .ana-wk-sum-btn{
+    padding:0 10px;
+    height:28px;
+    font-size:10px;
+  }
+
+  /* KPI cards: compact padding */
+  #view-analytics .ac.ana-kpi-card{
+    padding:12px !important;
+  }
+  #view-analytics .ac.ana-kpi-card > div:first-child{
+    font-size:8.5px;
+    letter-spacing:.5px;
+  }
+  #view-analytics .ac.ana-kpi-card > div:nth-child(2){
+    font-size:22px;
+  }
+
+  /* Chart cards: reduce padding */
+  #ana-cx .ac{
+    padding:13px;
+  }
+  #ana-cx .ac h3{
+    font-size:12px;
+  }
+  #ana-cx .ac-sub{
+    font-size:9.5px;
+  }
+
+  /* Charts: reduce heights slightly */
+  #ana-cx .chbox[style*="height:200px"]{
+    height:180px !important;
+  }
+  #ana-cx .chbox[style*="height:220px"]{
+    height:180px !important;
+  }
+  #ana-cx .chbox[style*="height:206px"]{
+    height:180px !important;
+  }
+
+  /* Insight cards panel: reduce to 2 cols */
+  #view-analytics #insights-grid.ig{
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+  }
+
+  /* Smart insights row: stack on narrow tablet */
+  #view-analytics .focus-insights-row{
+    flex-wrap:wrap;
+    gap:10px;
+    padding:12px 14px;
+  }
+  #view-analytics .focus-divider{
+    display:none;
+  }
+  #view-analytics .insights-btn{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* Category donut: smaller on tablet portrait */
+  #ana-cx #cat-donut{
+    width:160px !important;
+    height:160px !important;
+  }
+}
+
+/* ── MOBILE (≤700px) — Analytics ──────────────────────────────── */
+@media(max-width:700px){
+
+  /* ── Analytics Topbar ─────────────────────────────────────── */
+  #view-analytics .tb{
+    flex-direction:column;
+    align-items:stretch;
+    padding:10px 12px 8px;
+    gap:8px;
+  }
+  /* Title row */
+  #view-analytics .tb > div:first-child{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  #view-analytics .tb h1{
+    font-size:17px;
+  }
+  /* Controls row: full width, all controls visible */
+  #view-analytics .tb-r{
+    width:100%;
+  }
+  #view-analytics .ana-tb-cluster{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:6px;
+  }
+
+  /* Week nav: compact on mobile */
+  #view-analytics .ana-wk-nav{
+    height:30px;
+    padding:2px 3px;
+    flex:1;
+    min-width:0;
+    max-width:220px;
+    justify-content:space-between;
+  }
+  #view-analytics .ana-wk-range{
+    font-size:10px;
+    padding:0 6px;
+    flex:1;
+    text-align:center;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  #view-analytics .ana-wk-btn{
+    width:24px;
+    height:24px;
+    flex-shrink:0;
+  }
+
+  /* Weekly Summary button: compact on mobile */
+  #view-analytics .ana-wk-sum-btn{
+    height:30px;
+    padding:0 10px;
+    font-size:10px;
+    flex-shrink:0;
+    gap:4px;
+    white-space:nowrap;
+  }
+
+  /* ── KPI Row ──────────────────────────────────────────────── */
+  /* Already handled by existing styles — reinforce here */
+  #view-analytics .ana-kpi-row,
+  #ana-cx > div[style*="grid-template-columns:repeat(4"]{
+    grid-template-columns:1fr 1fr !important;
+    gap:8px !important;
+    margin-bottom:14px !important;
+  }
+  #view-analytics .ac.ana-kpi-card{
+    padding:10px !important;
+    min-height:0;
+  }
+  #view-analytics .ac.ana-kpi-card > div:first-child{
+    font-size:8px;
+    letter-spacing:.4px;
+    margin-bottom:4px;
+  }
+  #view-analytics .ac.ana-kpi-card > div:nth-child(2){
+    font-size:20px;
+    letter-spacing:-.5px;
+  }
+  #view-analytics .ac.ana-kpi-card > div:nth-child(3){
+    font-size:9px;
+    margin-top:1px;
+  }
+
+  /* ── Smart Insights Trigger Row ───────────────────────────── */
+  #view-analytics .focus-insights-row{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+    padding:11px 12px;
+    margin-bottom:12px;
+  }
+  #view-analytics .focus-block{
+    gap:9px;
+  }
+  #view-analytics .focus-block-ico{
+    width:30px;
+    height:30px;
+    font-size:13px;
+    flex-shrink:0;
+  }
+  #view-analytics .focus-block-label{
+    font-size:8.5px;
+  }
+  #view-analytics .focus-block-text{
+    font-size:11px;
+    white-space:normal;
+    line-height:1.4;
+  }
+  #view-analytics .focus-divider{
+    display:none;
+  }
+  #view-analytics .insights-btn{
+    width:100%;
+    justify-content:center;
+    padding:8px 16px;
+  }
+
+  /* ── Insight Cards Panel ───────────────────────────────────── */
+  #view-analytics #insights-grid.ig{
+    grid-template-columns:1fr !important;
+    gap:8px;
+  }
+  #view-analytics .ic{
+    padding:10px 12px;
+  }
+  #view-analytics .ic-t{
+    font-size:11px;
+  }
+  #view-analytics .ic-x{
+    font-size:10px;
+    padding-left:0;
+    margin-top:4px;
+  }
+  #view-analytics .ic-head{
+    gap:6px;
+  }
+  #view-analytics .ic-ico{
+    width:20px;
+    height:20px;
+    font-size:11px;
+  }
+
+  /* ── ROW A: Daily Completion + Category Breakdown ─────────── */
+  #ana-cx > .cg2,
+  #ana-cx div.cg2{
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+    margin-bottom:12px !important;
+  }
+
+  /* Chart cards: mobile padding */
+  #ana-cx .ac{
+    padding:12px;
+  }
+  #ana-cx .ac h3{
+    font-size:12px;
+    margin-bottom:2px;
+  }
+  #ana-cx .ac-sub{
+    font-size:9px;
+    margin-bottom:10px;
+  }
+
+  /* Chart heights: optimized for mobile */
+  #ana-cx .chbox[style*="height:200px"],
+  #ana-cx .chbox[style*="height:220px"],
+  #ana-cx .chbox[style*="height:206px"]{
+    height:160px !important;
+  }
+
+  /* Category Breakdown: stack donut and legend vertically */
+  #ana-cx .ac > div[style*="align-items:center;justify-content:space-between;gap:18px"],
+  #ana-cx .ana-donut-row{
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:14px !important;
+  }
+  /* Hide the empty spacer divs in vertical layout */
+  #ana-cx .ac > div[style*="align-items:center;justify-content:space-between;gap:18px"] > div[style*="flex:1"]:first-child,
+  #ana-cx .ana-donut-row > div[style*="flex:1"]:first-child{
+    display:none !important;
+  }
+  #ana-cx .ac > div[style*="align-items:center;justify-content:space-between;gap:18px"] > div[style*="justify-content:flex-end"],
+  #ana-cx .ana-legend-wrap{
+    justify-content:center !important;
+  }
+  /* Donut canvas: shrink for mobile */
+  #ana-cx #cat-donut{
+    width:160px !important;
+    height:160px !important;
+    margin-top:0 !important;
+  }
+  /* Donut wrapper: shrink too */
+  #ana-cx div[style*="width:210px;height:210px;flex-shrink:0"],
+  #ana-cx .ana-donut-sizer{
+    width:160px !important;
+    height:160px !important;
+    margin-top:0 !important;
+  }
+  /* Legend: horizontal wrap on mobile */
+  #ana-cx #cat-legend{
+    flex-direction:row !important;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px 14px !important;
+    min-width:0 !important;
+    max-width:100%;
+  }
+
+  /* ── ROW B: Weekly Task Hours + Tasks Planned vs Completed ── */
+  #ana-cx > div[style*="grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px"],
+  #ana-cx .ana-chart-row{
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+    margin-bottom:12px !important;
+  }
+
+  /* Rate pill inside planned vs completed card: reposition */
+  #ana-cx #pvc-rate-pill{
+    top:10px !important;
+    right:10px !important;
+    font-size:9px !important;
+    padding:2px 7px !important;
+  }
+
+  /* ── ROW C: Weekly Completion Trend + Peak Performance Hour ─ */
+  /* These use same grid selector as ROW B — already handled above */
+
+  /* Trend header: range pills on same row but smaller */
+  #ana-cx .ac > div[style*="align-items:center;justify-content:space-between;margin-bottom:2px"]{
+    flex-wrap:wrap;
+    gap:6px;
+  }
+
+  /* Range pills: compact */
+  .ana-range-pills{
+    background:var(--bg3);
+    border-color:var(--border2);
+    padding:2px;
+  }
+  .arp{
+    padding:4px 10px;
+    font-size:10px;
+  }
+
+  /* Mobile range button for Weekly Completion Trend */
+  .mob-ana-range-btn{
+    display:inline-flex;
+  }
+
+  /* ── Peak Performance Hour card ─────────────────────────────── */
+  /* Peak badge: smaller */
+  #ana-cx .ac > div[style*="align-items:center;justify-content:space-between;margin-bottom:3px"] > div{
+    font-size:9px !important;
+    padding:2px 7px !important;
+  }
+
+  /* ── Weekly Summary Modal ───────────────────────────────────── */
+  #wsum-overlay{
+    padding:8px !important;
+    padding-top:60px !important;
+    align-items:flex-start !important;
+  }
+  #wsum-modal{
+    max-height:calc(100vh - 68px) !important;
+    border-radius:16px !important;
+  }
+  #wsum-sticky-header{
+    padding:12px 14px 10px !important;
+  }
+
+  /* ── Analytics content area ─────────────────────────────────── */
+  #ana-cx{
+    padding:0;
+    width:100%;
+    box-sizing:border-box;
+  }
+  .cx#ana-cx{
+    padding:10px 12px;
+  }
+
+  /* Total hours badge inside Task Hours card */
+  #ana-cx #wh-total-badge{
+    font-size:9px !important;
+    padding:2px 7px !important;
+  }
+}
+
+/* ── SMALL MOBILE (≤420px) — Analytics ─────────────────────────── */
+@media(max-width:420px){
+  /* Topbar: super compact */
+  #view-analytics .tb{
+    padding:8px 10px 6px;
+  }
+  #view-analytics .tb h1{
+    font-size:15px;
+  }
+  #view-analytics .ana-wk-range{
+    font-size:9px;
+    padding:0 4px;
+  }
+  #view-analytics .ana-wk-sum-btn{
+    height:26px;
+    padding:0 8px;
+    font-size:9.5px;
+  }
+
+  /* KPI cards: ultra compact */
+  #view-analytics .ac.ana-kpi-card{
+    padding:8px !important;
+  }
+  #view-analytics .ac.ana-kpi-card > div:nth-child(2){
+    font-size:18px;
+  }
+
+  /* Chart heights: very compact */
+  #ana-cx .chbox[style*="height:200px"],
+  #ana-cx .chbox[style*="height:220px"],
+  #ana-cx .chbox[style*="height:206px"]{
+    height:140px !important;
+  }
+
+  /* Category donut: smaller */
+  #ana-cx #cat-donut{
+    width:130px !important;
+    height:130px !important;
+  }
+
+  /* Insight cards: tighter */
+  #view-analytics .ic{
+    padding:9px 10px;
+  }
+  #view-analytics .ic-x{
+    font-size:9.5px;
+    line-height:1.5;
+  }
+
+  /* Range pills: ultra compact */
+  .arp{
+    padding:3px 8px;
+    font-size:9.5px;
+  }
+
+  /* Content padding */
+  .cx#ana-cx{
+    padding:8px 10px;
+  }
+
+  /* Focus row: tighter */
+  #view-analytics .focus-insights-row{
+    padding:9px 10px;
+  }
+  #view-analytics .focus-block-ico{
+    width:26px;
+    height:26px;
+    font-size:12px;
+  }
+  #view-analytics .insights-btn{
+    font-size:10px;
+    padding:7px 12px;
+  }
+
+  /* Grid gaps: tighter */
+  #view-analytics .ana-kpi-row,
+  #ana-cx > div[style*="grid-template-columns:repeat(4"]{
+    gap:6px !important;
+  }
+  #ana-cx .ac{
+    padding:10px;
+  }
+  #ana-cx .ac h3{
+    font-size:11.5px;
+  }
+}
+
+/* ── TOUCH INTERACTION ENHANCEMENTS (analytics) ─────────────────── */
+@media(max-width:1100px){
+  /* Better tap targets for week nav buttons */
+  #view-analytics .ana-wk-btn{
+    min-width:28px;
+    min-height:28px;
+  }
+  /* Tap target for range pills */
+  .arp{
+    min-height:28px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  /* Tap target for weekly summary button */
+  #view-analytics .ana-wk-sum-btn{
+    min-height:30px;
+  }
+  /* Insight cards: no hover transform on touch — prevent stuck states */
+  @media(hover:none){
+    #view-analytics .ic:hover{
+      transform:none;
+      box-shadow:none;
+    }
+    #ana-cx .ac:hover{
+      transform:none;
+    }
+  }
+}
+
+/* ── CHART RESPONSIVE (canvas inside flex/grid) ──────────────────── */
+@media(max-width:700px){
+  /* Ensure canvas elements respect their containers */
+  #ana-cx canvas{
+    max-width:100%;
+  }
+  /* Weekly Task Hours: truncate long labels */
+  #ana-cx .chbox{
+    overflow:hidden;
+  }
+}
+
+/* ── QUICK NOTES FONT — MOBILE & TABLET ─────────────────────────
+   Additive only. Desktop sizes already reduced above.
+   These rules apply further reductions for smaller screens.
+   ─────────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .note-card .nc-body{font-size:10.5px!important}
+  .nm-input{font-size:11px}
+  .nm-textarea{font-size:11px}
+}
+@media(max-width:700px){
+  .note-card .nc-body{font-size:10px!important;line-height:1.6}
+  .note-card .nc-foot{font-size:9.5px}
+  .nc-foot-time{font-size:9.5px}
+  .nm-input{font-size:11px}
+  .nm-textarea{font-size:11px}
+  .nm-label{font-size:10px}
+  .nm-title-block h2{font-size:14px}
+}
+@media(max-width:420px){
+  .note-card .nc-body{font-size:9.5px!important;line-height:1.55}
+  .nm-input{font-size:10.5px}
+  .nm-textarea{font-size:10.5px}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NOTES SCREEN — RESPONSIVE: TABLET & MOBILE
+   All rules are additive and scoped to breakpoints only.
+   Desktop styles (>1100px) remain completely untouched.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (≤1100px): 2-column notes grid ──────────────────── */
+@media(max-width:1100px){
+  /* Notes topbar: tighter spacing */
+  #view-notes .tb{
+    padding:12px 20px;
+    gap:10px;
+  }
+  #view-notes .tb h1{
+    font-size:18px;
+  }
+  /* Notes content area */
+  #view-notes .cx{
+    padding:16px 18px;
+  }
+  /* 2-column grid on tablet */
+  #view-notes .notes-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+  /* Note card: slightly tighter padding */
+  #view-notes .nc-inner{
+    padding:14px 14px 12px;
+  }
+  /* Note card title */
+  #view-notes .note-card .nc-title{
+    font-size:13px;
+  }
+  /* Empty state: slightly less padding */
+  #view-notes #notes-cx > div[style*="text-align:center"]{
+    padding:40px 24px !important;
+  }
+  /* Note modal: comfortable width */
+  #mo-note .modal{
+    max-width:420px;
+    margin:0 auto;
+  }
+  /* Ensure pin/delete buttons are easier to tap on tablet */
+  #view-notes .note-pin-btn{
+    width:28px;
+    height:28px;
+  }
+  #view-notes .note-del{
+    width:30px;
+    height:30px;
+  }
+}
+
+/* ── TABLET PORTRAIT (≤900px): tighter layout ───────────────── */
+@media(max-width:900px){
+  /* Notes topbar */
+  #view-notes .tb{
+    padding:11px 16px;
+    flex-wrap:nowrap;
+    gap:8px;
+  }
+  #view-notes .tb h1{
+    font-size:17px;
+  }
+  #view-notes .tb-sub{
+    font-size:10.5px;
+  }
+  /* "+ New Note" button: keep accessible */
+  #view-notes .btn-pri{
+    font-size:11.5px;
+    padding:7px 14px;
+    white-space:nowrap;
+  }
+  /* Content padding */
+  #view-notes .cx{
+    padding:14px 14px;
+  }
+  /* Notes grid: 2 columns, tighter gap */
+  #view-notes .notes-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-bottom:16px;
+  }
+  /* Note card */
+  #view-notes .note-card{
+    border-radius:16px;
+  }
+  #view-notes .nc-inner{
+    padding:13px 13px 11px;
+    gap:0;
+  }
+  #view-notes .note-card .nc-title{
+    font-size:12.5px;
+  }
+  #view-notes .note-card .nc-body{
+    font-size:10.5px !important;
+    line-height:1.65;
+    -webkit-line-clamp:3;
+  }
+  /* Note footer */
+  #view-notes .note-card .nc-foot{
+    font-size:9.5px;
+  }
+  #view-notes .nc-foot-time{
+    font-size:9.5px;
+  }
+  /* nc-divider: slightly thinner margin */
+  #view-notes .nc-divider{
+    margin:9px 0 8px;
+  }
+  /* Pinned tag: keep compact */
+  #view-notes .nc-pinned-tag{
+    font-size:8.5px;
+    padding:2px 6px;
+  }
+  /* nc-tags: slightly smaller */
+  #view-notes .nc-tag{
+    font-size:8.5px;
+    padding:2px 6px;
+  }
+  #view-notes .nc-tags{
+    margin-top:7px;
+    gap:3px;
+  }
+  /* Touch: always show action buttons (no hover needed) */
+  @media(hover:none){
+    #view-notes .note-del{
+      opacity:1 !important;
+      transform:scale(1) translateY(0) !important;
+    }
+    #view-notes .note-pin-btn{
+      opacity:1 !important;
+      transform:scale(1) !important;
+    }
+    #view-notes .note-card:hover{
+      transform:none;
+    }
+  }
+  /* Tap target: larger delete and pin buttons on touch */
+  #view-notes .note-del{
+    width:32px;
+    height:32px;
+    bottom:8px;
+    right:8px;
+    border-radius:9px;
+  }
+  #view-notes .note-pin-btn{
+    width:28px;
+    height:28px;
+    border-radius:9px;
+  }
+  /* Note modal on tablet portrait */
+  #mo-note .modal{
+    max-width:96vw;
+    margin:0 auto;
+  }
+  /* Modal body padding */
+  .nm-body{
+    padding:14px 16px 10px;
+  }
+  /* Modal footer */
+  .nm-footer{
+    padding:10px 16px 12px;
+  }
+  /* Modal hero */
+  .nm-hero{
+    padding:15px 16px 13px;
+  }
+  .nm-title-block h2{
+    font-size:15px;
+  }
+  /* Color palette: larger swatches for touch */
+  .nm-swatch{
+    width:28px;
+    height:28px;
+  }
+  /* Save/Cancel buttons: full-width on small tablet */
+  .nm-btn-save,.nm-btn-cancel{
+    min-height:36px;
+    font-size:11.5px;
+  }
+}
+
+/* ── MOBILE (≤700px): single-column, touch-first ────────────── */
+@media(max-width:700px){
+  /* Notes topbar: compact, no overflow */
+  #view-notes .tb{
+    padding:10px 14px;
+    gap:8px;
+    flex-wrap:nowrap;
+    align-items:center;
+  }
+  #view-notes .tb > div:first-child{
+    flex:1;
+    min-width:0;
+  }
+  #view-notes .tb h1{
+    font-size:16px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #view-notes .tb-sub{
+    font-size:10px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #view-notes .tb-r{
+    flex-shrink:0;
+  }
+  /* "+ New Note" button: compact on mobile */
+  #view-notes .btn-pri{
+    font-size:11px;
+    padding:7px 12px;
+    border-radius:10px;
+    white-space:nowrap;
+  }
+  /* Content area: tight mobile padding */
+  #view-notes .cx{
+    padding:12px 12px;
+  }
+  /* Single-column grid on mobile */
+  #view-notes .notes-grid{
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  /* Note card: mobile-optimized */
+  #view-notes .note-card{
+    border-radius:14px;
+    /* Remove 3D hover lift on mobile */
+  }
+  #view-notes .nc-inner{
+    padding:13px 13px 11px;
+  }
+  /* Note card title */
+  #view-notes .note-card .nc-title{
+    font-size:13px;
+    letter-spacing:-.1px;
+  }
+  /* Note body: show 3 lines on mobile for more context */
+  #view-notes .note-card .nc-body{
+    font-size:10px !important;
+    line-height:1.6;
+    -webkit-line-clamp:3;
+  }
+  /* Note footer */
+  #view-notes .note-card .nc-foot{
+    font-size:9.5px;
+    gap:4px;
+  }
+  #view-notes .nc-foot-time{
+    font-size:9.5px;
+    gap:3px;
+  }
+  /* nc-divider */
+  #view-notes .nc-divider{
+    margin:9px 0 8px;
+  }
+  /* Pinned tag */
+  #view-notes .nc-pinned-tag{
+    font-size:8px;
+    padding:2px 6px;
+  }
+  /* Tags */
+  #view-notes .nc-tag{
+    font-size:8.5px;
+    padding:2px 6px;
+  }
+  #view-notes .nc-tags{
+    margin-top:7px;
+    gap:3px;
+  }
+  /* Touch: always show delete and pin — no hover needed on mobile */
+  #view-notes .note-del{
+    opacity:1 !important;
+    transform:scale(1) translateY(0) !important;
+    width:34px;
+    height:34px;
+    bottom:8px;
+    right:8px;
+    border-radius:9px;
+    /* Larger tap target */
+    background:rgba(244,63,94,.06);
+    border-color:rgba(244,63,94,.15);
+  }
+  #view-notes .note-del svg{
+    width:11px;
+    height:11px;
+  }
+  #view-notes .note-pin-btn{
+    opacity:1 !important;
+    transform:scale(1) !important;
+    width:30px;
+    height:30px;
+    border-radius:9px;
+  }
+  /* Disable lift transform on touch devices */
+  #view-notes .note-card:hover{
+    transform:none;
+    box-shadow:0 1px 3px rgba(0,0,0,.2),0 4px 16px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  /* Empty state: mobile sizing */
+  #view-notes #notes-cx > div[style*="text-align:center"]{
+    padding:48px 20px !important;
+    font-size:13px;
+  }
+  /* ── NOTE MODAL: bottom-sheet style on mobile ──────────────── */
+  #mo-note{
+    align-items:flex-end;
+    padding:0;
+  }
+  #mo-note .modal{
+    max-width:100%;
+    width:100%;
+    margin:0;
+    border-radius:22px 22px 0 0;
+    max-height:92dvh;
+    overflow-y:auto;
+    /* Smooth scroll inside modal */
+    -webkit-overflow-scrolling:touch;
+  }
+  #mo-note .modal .nm-shell{
+    border-radius:22px 22px 0 0;
+  }
+  /* Pull handle indicator */
+  #mo-note .nm-shell::before{
+    content:'';
+    display:block;
+    width:36px;
+    height:4px;
+    border-radius:2px;
+    background:var(--border2);
+    margin:10px auto 0;
+  }
+  /* Remove glow strip border-radius conflict */
+  #mo-note .nm-glow{
+    border-radius:22px 22px 0 0;
+  }
+  /* Modal hero: compact on mobile */
+  .nm-hero{
+    padding:13px 16px 12px;
+    border-radius:0 !important;
+  }
+  .nm-icon{
+    width:26px;
+    height:26px;
+  }
+  .nm-icon svg{
+    width:12px;
+    height:12px;
+  }
+  .nm-title-block h2{
+    font-size:14px;
+  }
+  .nm-subtitle{
+    font-size:9.5px;
+  }
+  .nm-close{
+    width:30px;
+    height:30px;
+    /* Larger tap target */
+    min-width:30px;
+    min-height:30px;
+  }
+  /* Modal body: mobile spacing */
+  .nm-body{
+    padding:14px 16px 8px;
+    gap:12px;
+  }
+  .nm-field{
+    margin-bottom:12px;
+  }
+  .nm-label{
+    font-size:9.5px;
+    gap:4px;
+    margin-bottom:5px;
+  }
+  /* Inputs: touch-friendly min-height */
+  .nm-input{
+    font-size:14px; /* Prevents iOS zoom on focus */
+    padding:9px 12px;
+    min-height:40px;
+    border-radius:10px;
+  }
+  /* Textarea: good height on mobile */
+  .nm-textarea{
+    font-size:14px; /* Prevents iOS zoom */
+    min-height:100px;
+    max-height:160px;
+    resize:none;
+    padding:9px 12px;
+    border-radius:10px;
+  }
+  /* Color palette: larger swatches, more spaced */
+  .nm-palette-wrap{
+    padding:10px 12px;
+    border-radius:10px;
+  }
+  .nm-palette{
+    gap:8px;
+  }
+  .nm-swatch{
+    width:30px;
+    height:30px;
+    border-radius:9px;
+    /* Larger tap target */
+    min-width:30px;
+    min-height:30px;
+  }
+  /* Tag input */
+  #fn-tags{
+    font-size:14px; /* Prevents iOS zoom */
+  }
+  /* Tag preview hints */
+  .nm-tag-preview{
+    font-size:9px;
+    padding:2px 7px;
+  }
+  /* Char count */
+  .nm-char-count{
+    font-size:9.5px;
+  }
+  /* Modal footer: stack buttons on very small */
+  .nm-footer{
+    padding:10px 16px max(14px, env(safe-area-inset-bottom));
+    gap:8px;
+    flex-wrap:nowrap;
+  }
+  .nm-footer-right{
+    gap:8px;
+  }
+  .nm-btn-cancel,.nm-btn-save{
+    min-height:40px;
+    font-size:12px;
+    border-radius:10px;
+    padding:0 16px;
+  }
+  .nm-btn-save{
+    flex:1;
+  }
+  /* Delete confirm modal: mobile friendly */
+  .confirm-box{
+    width:calc(100vw - 40px);
+    max-width:320px;
+    padding:20px 18px;
+    border-radius:16px;
+  }
+  /* Toast: above bottom nav */
+  .twrap{
+    bottom:76px;
+  }
+}
+
+/* ── SMALL MOBILE (≤420px): ultra-compact ───────────────────── */
+@media(max-width:420px){
+  /* Notes topbar */
+  #view-notes .tb{
+    padding:9px 12px;
+  }
+  #view-notes .tb h1{
+    font-size:15px;
+  }
+  #view-notes .tb-sub{
+    font-size:9.5px;
+  }
+  /* "+ New Note" button: icon-only or very compact */
+  #view-notes .btn-pri{
+    font-size:10.5px;
+    padding:6px 11px;
+  }
+  /* Content area */
+  #view-notes .cx{
+    padding:10px 10px;
+  }
+  /* Notes grid */
+  #view-notes .notes-grid{
+    gap:9px;
+  }
+  /* Note card: compact */
+  #view-notes .note-card{
+    border-radius:12px;
+  }
+  #view-notes .nc-inner{
+    padding:12px 12px 10px;
+  }
+  #view-notes .note-card .nc-title{
+    font-size:12.5px;
+  }
+  #view-notes .note-card .nc-body{
+    font-size:9.5px !important;
+    line-height:1.55;
+    -webkit-line-clamp:2;
+  }
+  /* Delete: always visible, smaller */
+  #view-notes .note-del{
+    width:30px;
+    height:30px;
+    bottom:7px;
+    right:7px;
+  }
+  /* Modal: full sheet, ultra-compact */
+  #mo-note .modal{
+    max-height:95dvh;
+  }
+  .nm-hero{
+    padding:12px 14px 11px;
+  }
+  .nm-title-block h2{
+    font-size:13.5px;
+  }
+  .nm-body{
+    padding:12px 14px 6px;
+  }
+  .nm-field{
+    margin-bottom:10px;
+  }
+  .nm-footer{
+    padding:9px 14px max(12px, env(safe-area-inset-bottom));
+  }
+  .nm-btn-cancel,.nm-btn-save{
+    min-height:38px;
+    font-size:11.5px;
+  }
+}
+
+/* ── TOUCH DEVICE ENHANCEMENTS (Notes-specific) ─────────────── */
+@media(hover:none) and (pointer:coarse){
+  /* Always-visible actions on touch (override hover-only states) */
+  #view-notes .note-del{
+    opacity:1 !important;
+    transform:scale(1) translateY(0) !important;
+  }
+  #view-notes .note-pin-btn{
+    opacity:1 !important;
+    transform:scale(1) !important;
+  }
+  /* Remove card lift on touch to prevent stuck states */
+  #view-notes .note-card:hover{
+    transform:none !important;
+    box-shadow:0 1px 3px rgba(0,0,0,.2),0 4px 16px rgba(0,0,0,.14),inset 0 1px 0 rgba(255,255,255,.05) !important;
+    border-color:rgba(255,255,255,.06) !important;
+  }
+  /* Pinned card: preserve pinned border on touch */
+  #view-notes .note-card.pinned:hover{
+    border-color:rgba(91,110,245,.4) !important;
+    box-shadow:0 0 0 1px rgba(91,110,245,.25),0 8px 32px rgba(91,110,245,.12),inset 0 1px 0 rgba(255,255,255,.06) !important;
+  }
+  /* Tap feedback: subtle scale */
+  #view-notes .note-card:active{
+    transform:scale(.98) !important;
+    transition:transform .1s ease !important;
+  }
+  /* Note modal inputs: prevent iOS zoom (font-size >= 16px) */
+  .nm-input,.nm-textarea{
+    font-size:16px;
+  }
+  /* Buttons: minimum 44px tap target */
+  .nm-btn-save,.nm-btn-cancel{
+    min-height:44px;
+  }
+  .nm-close{
+    min-width:36px;
+    min-height:36px;
+  }
+  #view-notes .btn-pri{
+    min-height:36px;
+  }
+}
+
+/* ── LANDSCAPE MOBILE (≤700px height in landscape) ──────────── */
+@media(max-width:700px) and (orientation:landscape){
+  /* Bottom sheet modal: smaller max-height in landscape */
+  #mo-note .modal{
+    max-height:96dvh;
+    border-radius:14px 14px 0 0;
+  }
+  /* Compact the modal header in landscape */
+  .nm-hero{
+    padding:10px 16px 9px;
+  }
+  /* Textarea shorter in landscape to keep footer visible */
+  .nm-textarea{
+    min-height:70px;
+    max-height:100px;
+  }
+  /* Note grid: 2 columns in landscape mobile */
+  #view-notes .notes-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HABIT TRACKER SCREEN — FULLY ADDITIVE RESPONSIVE STYLES
+   Scoped to #view-habits and habit-specific selectors only.
+   Desktop (>1100px) is completely untouched.
+   All changes are additive — zero impact on existing desktop code.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── TABLET LARGE (≤1100px) — Habits ──────────────────────────── */
+@media(max-width:1100px){
+
+  /* Topbar: allow wrapping so week nav stays accessible */
+  #view-habits .tb{
+    flex-wrap:wrap;
+    gap:10px;
+    padding:13px 20px;
+  }
+  #view-habits .tb > div:first-child{
+    flex:1;
+    min-width:0;
+  }
+  #view-habits .tb-r{
+    flex-shrink:0;
+  }
+
+  /* Hero section: slightly reduced padding */
+  #view-habits .hab-hero-section{
+    padding:20px 20px 20px;
+    border-radius:18px;
+  }
+
+  /* Hero meta: scale down big percentage text slightly */
+  #view-habits .hab-hero-pct{
+    font-size:42px;
+  }
+  #view-habits .hab-hero-label-title{
+    font-size:34px;
+  }
+
+  /* Day rings: keep 7-col grid but allow rings to shrink */
+  #view-habits .hab-hero-days{
+    gap:8px;
+  }
+  #view-habits .hab-hero-day-wrap{
+    padding:7px 3px 9px;
+  }
+  #view-habits .hab-hero-day-ring{
+    width:42px;
+    height:42px;
+  }
+
+  /* Habit cards: 2 columns on large tablet */
+  #view-habits .hg{
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+
+  /* Habit Coach (AI) cards: 3-col → 2-col at this size (already handled at 700px, add 2-col here) */
+  #view-habits .hab-ai-cards{
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+  }
+}
+
+/* ── TABLET PORTRAIT (≤900px) — Habits ────────────────────────── */
+@media(max-width:900px){
+
+  /* Topbar: compact, stay single-row */
+  #view-habits .tb{
+    flex-wrap:wrap;
+    padding:12px 16px;
+    gap:10px;
+  }
+  #view-habits .tb h1{
+    font-size:17px;
+  }
+  #view-habits .tb .tb-sub{
+    font-size:10px;
+  }
+
+  /* Week nav in topbar: compact */
+  #view-habits .ana-wk-nav{
+    height:32px;
+  }
+  #view-habits .ana-wk-range{
+    font-size:10.5px;
+    padding:0 8px;
+  }
+
+  /* Content padding */
+  #view-habits .cx{
+    padding:14px 16px;
+  }
+
+  /* Hero section */
+  #view-habits .hab-hero-section{
+    padding:18px 18px 18px;
+    border-radius:16px;
+    margin-bottom:14px;
+  }
+
+  /* Hero big % number */
+  #view-habits .hab-hero-pct{
+    font-size:38px;
+    letter-spacing:-1.5px;
+  }
+  #view-habits .hab-hero-label-title{
+    font-size:28px;
+    letter-spacing:-.5px;
+  }
+  #view-habits .hab-hero-label-dot{
+    font-size:9px;
+  }
+  #view-habits .hab-hero-done{
+    font-size:10px;
+  }
+
+  /* Day rings row: 7 columns, slightly smaller rings */
+  #view-habits .hab-hero-days{
+    gap:7px;
+  }
+  #view-habits .hab-hero-day-wrap{
+    padding:7px 3px 9px;
+    border-radius:12px;
+  }
+  #view-habits .hab-hero-day-ring{
+    width:40px;
+    height:40px;
+  }
+  #view-habits .hab-hero-day-label{
+    font-size:8px;
+    letter-spacing:.4px;
+  }
+  #view-habits .hab-hero-day-ring-val{
+    font-size:8.5px;
+  }
+
+  /* Daily section */
+  #view-habits .hab-daily-section{
+    margin-bottom:14px;
+  }
+
+  /* Habit Coach trigger */
+  #view-habits .hab-ai-trigger{
+    padding:12px 14px;
+    gap:10px;
+  }
+  #view-habits .hab-ai-icon{
+    width:34px;
+    height:34px;
+    font-size:15px;
+  }
+  #view-habits .hab-ai-label{
+    font-size:9.5px;
+  }
+  #view-habits .hab-ai-desc{
+    font-size:11px;
+  }
+  #view-habits .hab-ai-badge{
+    font-size:10px;
+    padding:4px 10px;
+  }
+
+  /* Habit Coach panel cards: 2-col on tablet portrait */
+  #view-habits .hab-ai-cards{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    padding:12px;
+  }
+
+  /* Habit cards grid: 2-col on tablet portrait */
+  #view-habits .hg{
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;
+    margin-bottom:18px;
+  }
+
+  /* Section header */
+  #view-habits .hab-section-header{
+    margin-bottom:10px;
+  }
+}
+
+/* ── MOBILE (≤700px) — Habits ──────────────────────────────────── */
+@media(max-width:700px){
+
+  /* ── Topbar ───────────────────────────────────────────────── */
+  #view-habits .tb{
+    flex-direction:row;
+    flex-wrap:nowrap;
+    align-items:center;
+    padding:10px 14px;
+    gap:8px;
+  }
+  #view-habits .tb > div:first-child{
+    flex:1;
+    min-width:0;
+  }
+  #view-habits .tb h1{
+    font-size:17px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #view-habits .tb .tb-sub{
+    font-size:10px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #view-habits .tb-r{
+    flex-shrink:0;
+  }
+
+  /* Week nav: compact on mobile */
+  #view-habits .ana-wk-nav{
+    height:30px;
+    padding:2px 3px;
+    min-width:0;
+    gap:2px;
+  }
+  #view-habits .ana-wk-range{
+    font-size:10px;
+    padding:0 5px;
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  #view-habits .ana-wk-btn{
+    width:24px;
+    height:24px;
+    flex-shrink:0;
+  }
+
+  /* ── Content area ─────────────────────────────────────────── */
+  #view-habits .cx{
+    padding:12px 12px 20px;
+  }
+
+  /* ── Weekly Progress Hero ─────────────────────────────────── */
+  #view-habits .hab-hero-section{
+    padding:16px 14px 16px;
+    border-radius:14px;
+    margin-bottom:12px;
+  }
+
+  /* Hero meta row: keep side-by-side but scale down */
+  #view-habits .hab-hero-meta{
+    gap:8px;
+    margin-bottom:0;
+  }
+
+  /* Left: title + dot label */
+  #view-habits .hab-hero-label-dot{
+    font-size:8.5px;
+    letter-spacing:.8px;
+    gap:4px;
+  }
+  #view-habits .hab-hero-label-title{
+    font-size:22px;
+    letter-spacing:-.4px;
+    line-height:1.1;
+  }
+
+  /* Right: big % */
+  #view-habits .hab-hero-pct{
+    font-size:34px;
+    letter-spacing:-1.5px;
+  }
+  #view-habits .hab-hero-pct-suffix{
+    font-size:9.5px;
+    letter-spacing:.8px;
+  }
+  #view-habits .hab-hero-done{
+    font-size:9.5px;
+    margin-top:2px;
+  }
+
+  /* Divider */
+  #view-habits .hab-hero-divider{
+    margin:11px 0 10px;
+  }
+
+  /* Momentum label + bar */
+  #view-habits .hab-hero-momentum-lbl{
+    font-size:8.5px;
+    letter-spacing:.7px;
+    margin-bottom:6px;
+  }
+  #view-habits .hab-hero-track{
+    height:7px;
+  }
+
+  /* ── Daily Activity Section ───────────────────────────────── */
+  #view-habits .hab-daily-section{
+    margin-bottom:12px;
+  }
+
+  /* Day rings row: 7-col grid, more compact rings */
+  #view-habits .hab-hero-days{
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+  }
+  #view-habits .hab-hero-day-wrap{
+    padding:6px 2px 8px;
+    border-radius:10px;
+  }
+  #view-habits .hab-hero-day-label{
+    font-size:7.5px;
+    letter-spacing:.3px;
+  }
+  #view-habits .hab-hero-day-ring{
+    width:34px;
+    height:34px;
+  }
+  #view-habits .hab-hero-day-ring-val{
+    font-size:8px;
+  }
+
+  /* TODAY card: keep standout but scaled */
+  #view-habits .hab-hero-day-wrap.is-today{
+    border-width:1.5px;
+  }
+
+  /* ── Habit Coach (AI) Banner ──────────────────────────────── */
+  #view-habits .hab-ai-wrap{
+    margin-bottom:14px;
+  }
+  #view-habits .hab-ai-trigger{
+    padding:11px 13px;
+    gap:10px;
+    border-radius:13px;
+  }
+  #view-habits .hab-ai-icon{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    font-size:14px;
+    flex-shrink:0;
+  }
+  #view-habits .hab-ai-info{
+    flex:1;
+    min-width:0;
+  }
+  #view-habits .hab-ai-label{
+    font-size:9px;
+    letter-spacing:.5px;
+    margin-bottom:1px;
+  }
+  #view-habits .hab-ai-desc{
+    font-size:10.5px;
+    line-height:1.4;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  #view-habits .hab-ai-badge{
+    font-size:9.5px;
+    padding:4px 9px;
+    border-radius:7px;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+
+  /* Habit Coach panel: 1 column on mobile */
+  #view-habits .hab-ai-cards{
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:11px;
+  }
+  #view-habits .hab-ai-card{
+    padding:11px 13px;
+    border-radius:11px;
+    gap:5px;
+  }
+  #view-habits .hab-ai-card-ico{
+    font-size:16px;
+  }
+  #view-habits .hab-ai-card-tag{
+    font-size:9px;
+    padding:2px 7px;
+  }
+  #view-habits .hab-ai-card-head{
+    font-size:11.5px;
+    line-height:1.3;
+  }
+  #view-habits .hab-ai-card-body{
+    font-size:10.5px;
+    line-height:1.55;
+  }
+  #view-habits .hab-ai-footer{
+    padding:9px 13px 11px;
+    gap:7px;
+  }
+  #view-habits .hab-ai-footer-note{
+    font-size:9.5px;
+    line-height:1.45;
+  }
+  #view-habits .hab-ai-regen{
+    font-size:9.5px;
+    padding:4px 10px;
+    white-space:nowrap;
+    flex-shrink:0;
+  }
+
+  /* ── Habit Cards Grid ─────────────────────────────────────── */
+  /* Single column (already set globally at 700px via .hg{grid-template-columns:1fr})
+     Reinforce and fine-tune for the habits view specifically */
+  #view-habits .hg{
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  #view-habits .hcard{
+    padding:12px 14px 10px;
+    border-radius:14px;
+  }
+
+  /* Habit card dots row: larger touch targets */
+  #view-habits .hdots{
+    gap:4px;
+    margin-top:8px;
+  }
+  #view-habits .hdot{
+    height:24px;
+    border-radius:7px;
+    font-size:9px;
+    min-width:0;
+  }
+
+  /* Section header */
+  #view-habits .hab-section-header{
+    margin-bottom:9px;
+  }
+  #view-habits .hab-section-title{
+    font-size:13px;
+  }
+  #view-habits .hab-section-subtitle{
+    font-size:10px;
+  }
+}
+
+/* ── SMALL MOBILE (≤420px) — Habits ──────────────────────────── */
+@media(max-width:420px){
+
+  /* Topbar: ultra-compact */
+  #view-habits .tb{
+    padding:9px 11px;
+  }
+  #view-habits .tb h1{
+    font-size:15px;
+  }
+  #view-habits .tb .tb-sub{
+    font-size:9.5px;
+  }
+
+  /* Week nav */
+  #view-habits .ana-wk-range{
+    font-size:9.5px;
+    padding:0 4px;
+  }
+  #view-habits .ana-wk-btn{
+    width:22px;
+    height:22px;
+  }
+
+  /* Content: tightest padding */
+  #view-habits .cx{
+    padding:9px 10px 18px;
+  }
+
+  /* Hero section */
+  #view-habits .hab-hero-section{
+    padding:14px 12px 14px;
+    border-radius:12px;
+    margin-bottom:10px;
+  }
+
+  /* Hero text: ultra-compact */
+  #view-habits .hab-hero-label-title{
+    font-size:18px;
+    letter-spacing:-.3px;
+  }
+  #view-habits .hab-hero-label-dot{
+    font-size:8px;
+    letter-spacing:.5px;
+  }
+  #view-habits .hab-hero-pct{
+    font-size:28px;
+    letter-spacing:-1px;
+  }
+  #view-habits .hab-hero-pct-suffix{
+    font-size:8.5px;
+  }
+  #view-habits .hab-hero-done{
+    font-size:9px;
+  }
+
+  /* Day rings: very tight on tiny screens */
+  #view-habits .hab-hero-days{
+    gap:3px;
+  }
+  #view-habits .hab-hero-day-wrap{
+    padding:5px 1px 7px;
+    border-radius:8px;
+  }
+  #view-habits .hab-hero-day-label{
+    font-size:6.5px;
+    letter-spacing:.1px;
+  }
+  #view-habits .hab-hero-day-ring{
+    width:28px;
+    height:28px;
+  }
+  #view-habits .hab-hero-day-ring-val{
+    font-size:7px;
+  }
+  /* On very small screens, hide the % value inside rings to avoid crowding */
+  #view-habits .hab-hero-day-ring-val{
+    display:none;
+  }
+
+  /* Habit Coach */
+  #view-habits .hab-ai-trigger{
+    padding:10px 11px;
+    gap:9px;
+  }
+  #view-habits .hab-ai-icon{
+    width:30px;
+    height:30px;
+    font-size:13px;
+  }
+  #view-habits .hab-ai-desc{
+    font-size:10px;
+  }
+  #view-habits .hab-ai-badge{
+    font-size:9px;
+    padding:3px 8px;
+  }
+
+  /* Habit cards */
+  #view-habits .hcard{
+    padding:11px 12px 9px;
+    border-radius:12px;
+  }
+  #view-habits .hdot{
+    height:22px;
+    border-radius:6px;
+  }
+}
+
+/* ── TOUCH DEVICE ENHANCEMENTS — Habits ───────────────────────── */
+@media(hover:none) and (pointer:coarse){
+
+  /* Remove hover lift on habit cards (prevents stuck states) */
+  #view-habits .hcard:hover{
+    transform:none !important;
+    border-color:rgba(120,100,255,.22) !important;
+    box-shadow:0 4px 24px rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.04) inset !important;
+  }
+
+  /* Tap feedback on habit card */
+  #view-habits .hcard:active{
+    transform:scale(.98) !important;
+    transition:transform .1s ease !important;
+  }
+
+  /* Day rings: no hover lift */
+  #view-habits .hab-hero-day-wrap:hover{
+    transform:none !important;
+    box-shadow:none !important;
+  }
+
+  /* Habit Coach trigger: no hover transform */
+  #view-habits .hab-ai-trigger:hover{
+    transform:none !important;
+  }
+
+  /* Habit dots: always visible and larger tap area */
+  #view-habits .hdot{
+    min-height:28px;
+  }
+
+  /* Bottom nav padding already handled globally by .main{padding-bottom:80px} */
+}
+
+/* ── LANDSCAPE MOBILE — Habits ────────────────────────────────── */
+@media(max-width:700px) and (orientation:landscape){
+
+  /* Hero: more compact vertically in landscape */
+  #view-habits .hab-hero-section{
+    padding:12px 14px 12px;
+    margin-bottom:10px;
+  }
+
+  /* Day rings row: keep 7-col but slimmer */
+  #view-habits .hab-hero-day-wrap{
+    padding:5px 2px 7px;
+  }
+  #view-habits .hab-hero-day-ring{
+    width:32px;
+    height:32px;
+  }
+
+  /* Habit cards: 2-col in landscape mobile */
+  #view-habits .hg{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+
+  /* Habit Coach: 2-col panel in landscape */
+  #view-habits .hab-ai-cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+/* ── WEEK NAV TOPBAR: Habits-specific compact adjustments ─────── */
+/* Prevent overflow when week label is long on mid-size screens */
+@media(max-width:800px){
+  #view-habits .tb-r .ana-wk-nav{
+    flex-shrink:1;
+    min-width:0;
+  }
+  #view-habits .tb-r .ana-wk-range{
+    min-width:0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    flex:1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   END HABIT TRACKER RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   PROFILE TAB — RESPONSIVE STYLES (ADDITIVE · MOBILE & TABLET ONLY)
+   All rules scoped to max-width breakpoints.
+   Desktop (>1100px) is completely untouched.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── TABLET (≤1100px) ─────────────────────────────────────────────
+   Profile hero: keep horizontal layout but tighten padding.
+   Settings grid: collapse to single column.
+   ──────────────────────────────────────────────────────────────── */
+@media(max-width:1100px){
+  /* Hero card: slightly reduce padding */
+  #prof-cx > div:first-child{
+    padding:20px 20px 20px 24px !important;
+  }
+
+  /* Hero avatar ring: slightly smaller */
+  #prof-cx > div:first-child [style*="width:80px;height:80px"]{
+    width:72px !important;
+    height:72px !important;
+  }
+
+  /* Settings outer grid → single column */
+  #prof-cx > div[style*="grid-template-columns:1fr 1fr"]:not([style*="gap:8px"]){
+    grid-template-columns:1fr !important;
+  }
+
+  /* "About APEX" feature list: single column */
+  #prof-cx [style*="grid-template-columns:1fr 1fr;gap:5px 28px"]{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Data management inner grid: stays 2-col but fits nicely */
+  #prof-cx [style*="grid-template-columns:1fr 1fr;gap:8px"]{
+    grid-template-columns:1fr 1fr !important;
+  }
+
+  /* About APEX span 2 — full width already in single col, reset */
+  .set-sec[style*="grid-column:span 2"]{
+    grid-column: span 1 !important;
+  }
+
+  /* Profile stats: 2×2 */
+  .prof-stats{
+    grid-template-columns: repeat(2,1fr) !important;
+  }
+
+  /* Profile info grid: single column */
+  .prof-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Profile form rows: side-by-side on tablet */
+  .pf-row{
+    grid-template-columns:1fr 1fr !important;
+  }
+}
+
+/* ── TABLET PORTRAIT (≤900px) ────────────────────────────────────
+   Further tighten hero, reduce font sizes slightly.
+   ──────────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  /* Hero: reduce gap between avatar and identity */
+  #prof-cx > div:first-child [style*="gap:22px"]{
+    gap:16px !important;
+  }
+
+  /* Name size: slightly reduce */
+  #prof-cx #prof-name-txt,
+  #prof-cx [style*="font-size:26px;font-weight:800;color"]{
+    font-size:22px !important;
+  }
+
+  /* Profile stats: 2×2 */
+  .prof-stats{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+
+  /* Profile grid: full column */
+  .prof-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Data management inner 2-col stays, but items shrink */
+  #prof-cx [style*="grid-template-columns:1fr 1fr;gap:8px"] button,
+  #prof-cx [style*="grid-template-columns:1fr 1fr;gap:8px"] > div{
+    font-size:11px;
+  }
+
+  /* Backup status pill: hide label text, show icon only */
+  #dm-backup-label{
+    display:none;
+  }
+  #dm-backup-status{
+    padding:4px 8px !important;
+  }
+
+  /* Reduce hero left padding */
+  #prof-cx > div:first-child{
+    padding:18px 18px 18px 20px !important;
+  }
+}
+
+/* ── MOBILE (≤700px) ──────────────────────────────────────────────
+   Full-column stacking, touch-friendly tap targets,
+   hero layout shift to vertical alignment.
+   ──────────────────────────────────────────────────────────────── */
+@media(max-width:700px){
+  /* ── Hero Card ── */
+  #prof-cx > div:first-child{
+    padding:18px 16px 18px 16px !important;
+    border-radius:12px !important;
+  }
+
+  /* Hero inner row: stack avatar above identity */
+  #prof-cx > div:first-child > div[style*="display:flex;align-items:center;gap:22px"]{
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    gap:14px !important;
+  }
+
+  /* Avatar wrapper: no longer needs flex-shrink/min-width constraints */
+  #prof-cx > div:first-child > div > div[style*="position:relative;flex-shrink:0"]{
+    align-self:flex-start;
+  }
+
+  /* Identity block: full width */
+  #prof-cx > div:first-child > div > div[style*="flex:1;min-width:160px"]{
+    min-width:0 !important;
+    width:100%;
+  }
+
+  /* Name: smaller for mobile */
+  #prof-cx #prof-name-txt{
+    font-size:22px !important;
+    letter-spacing:-.3px !important;
+  }
+
+  /* Role text */
+  #prof-cx #prof-role-txt{
+    font-size:12px !important;
+  }
+
+  /* Badges: wrap naturally */
+  #prof-cx > div:first-child [style*="display:flex;gap:6px;flex-wrap:wrap"]{
+    gap:5px !important;
+  }
+
+  /* Edit pen button: make touch-friendly */
+  #prof-cx button[onclick*="openProfileEdit"]{
+    width:34px !important;
+    height:34px !important;
+    border-radius:10px !important;
+  }
+
+  /* ── Profile Stats grid: 2×2 ── */
+  .prof-stats{
+    grid-template-columns:repeat(2,1fr) !important;
+    gap:8px !important;
+  }
+
+  /* ── Profile stat items: compact ── */
+  .ps-item{
+    padding:10px 8px !important;
+  }
+  .ps-v{
+    font-size:18px !important;
+  }
+  .ps-l{
+    font-size:9px !important;
+  }
+
+  /* ── Settings outer grid: single column ── */
+  #prof-cx > div[style*="grid-template-columns:1fr 1fr"]:not([style*="gap:8px"]){
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  /* Left column wrapper: no explicit height needed */
+  #prof-cx > div[style*="grid-template-columns:1fr 1fr"] > div[style*="flex-direction:column"]{
+    flex-direction:column !important;
+  }
+
+  /* Dark mode toggle card: adjust padding */
+  #prof-cx .set-sec[style*="padding:11px 16px"]{
+    padding:12px 14px !important;
+  }
+
+  /* Dark mode toggle: make label font smaller */
+  #prof-cx .set-sec[style*="padding:11px 16px"] > div > div > div:first-child{
+    font-size:12px !important;
+  }
+  #prof-cx .set-sec[style*="padding:11px 16px"] > div > div > div:last-child{
+    font-size:10px !important;
+  }
+
+  /* Data Management inner grid: single column on mobile */
+  #prof-cx [style*="grid-template-columns:1fr 1fr;gap:8px"]{
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+  }
+
+  /* Data management header: stack on small screens */
+  #prof-cx .set-sec > h3[style*="justify-content:space-between"]{
+    flex-wrap:wrap !important;
+    gap:8px !important;
+  }
+
+  /* Backup status pill: restore label but smaller */
+  #dm-backup-label{
+    display:inline !important;
+    font-size:9px !important;
+  }
+  #dm-backup-status{
+    padding:3px 8px !important;
+  }
+
+  /* About APEX: feature list → single column */
+  #prof-cx [style*="grid-template-columns:1fr 1fr;gap:5px 28px"]{
+    grid-template-columns:1fr !important;
+  }
+
+  /* About APEX span 2 → full width */
+  .set-sec[style*="grid-column:span 2"]{
+    grid-column:span 1 !important;
+  }
+
+  /* Profile grid: single column */
+  .prof-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  /* Profile form row: single column on mobile */
+  .pf-row{
+    grid-template-columns:1fr !important;
+  }
+
+  /* set-sec cards: full padding on mobile */
+  .set-sec{
+    padding:13px !important;
+  }
+
+  /* Legal footer links: center */
+  #prof-cx [style*="display:flex;align-items:center;justify-content:center;gap:0"]{
+    gap:0 !important;
+    flex-wrap:wrap !important;
+    justify-content:center !important;
+  }
+
+  /* ── Profile Edit Popup: full-width centered on mobile ── */
+  #prof-edit-popup{
+    width:calc(100vw - 24px) !important;
+    max-width:400px !important;
+    left:50% !important;
+    transform:translateX(-50%) !important;
+    top:auto !important;
+    bottom:16px !important;
+    border-radius:20px !important;
+  }
+
+  /* Touch-friendly toggle targets */
+  .tog{
+    width:46px !important;
+    height:26px !important;
+    min-width:46px;
+  }
+  .tog::after{
+    width:20px !important;
+    height:20px !important;
+  }
+  .tog.on::after{
+    transform:translateX(20px) !important;
+  }
+
+  /* Smart Notifications: allow wrapping on small screens */
+  #prof-cx .set-row{
+    flex-wrap:wrap !important;
+    gap:10px !important;
+  }
+  #prof-cx .set-row > div:last-child{
+    align-self:flex-start;
+  }
+
+  /* Notification lead time selector: show native only */
+  .lead-sel-native{
+    display:block !important;
+  }
+  .mob-lead-btn{
+    display:none !important;
+  }
+
+  /* ── Topbar for Profile view ── */
+  #view-profile .tb-sub{
+    font-size:10px !important;
+  }
+}
+
+/* ── SMALL MOBILE (≤420px) ────────────────────────────────────────
+   Edge-case compactness.
+   ──────────────────────────────────────────────────────────────── */
+@media(max-width:420px){
+  /* Hero card: minimal padding */
+  #prof-cx > div:first-child{
+    padding:14px 12px 14px 12px !important;
+  }
+
+  /* Name: tighten more */
+  #prof-cx #prof-name-txt{
+    font-size:19px !important;
+  }
+
+  /* Avatar: small */
+  #prof-cx > div:first-child [style*="width:80px;height:80px"]{
+    width:64px !important;
+    height:64px !important;
+  }
+
+  /* set-sec: tight padding */
+  .set-sec{
+    padding:11px !important;
+  }
+
+  /* Stats: tiny */
+  .ps-v{
+    font-size:16px !important;
+  }
+  .ps-l{
+    font-size:8.5px !important;
+  }
+
+  /* Badges on hero: smaller font */
+  #prof-cx > div:first-child span[style*="border-radius:6px"]{
+    font-size:9px !important;
+    padding:2px 8px !important;
+  }
+
+  /* Data management buttons: compact */
+  #prof-cx [style*="grid-template-columns:1fr;gap:8px"] [style*="border-radius:10px"]{
+    padding:10px 12px !important;
+  }
+
+  /* Profile edit popup: full width */
+  #prof-edit-popup{
+    width:calc(100vw - 16px) !important;
+  }
+
+  /* Legal footer: smaller text */
+  #prof-cx [style*="font-size:10px;color:var(--text3);line-height:1.6"]{
+    font-size:9.5px !important;
+  }
+
+  /* DM info popup: narrower */
+  #dm-info-popup{
+    width:220px !important;
+    font-size:10px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   END PROFILE TAB RESPONSIVE STYLES
+   ═══════════════════════════════════════════════════════════════════ */
 </style>
 </head>
 <body>
@@ -6197,7 +10572,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <!-- Footer: edit mode -->
     <div id="mo-task-footer-edit" style="padding:9px 14px 12px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px">
       <div id="mo-task-del-wrap" style="display:none">
-        <button class="mo-del-btn" onclick="delTask(S.editId)" title="Remove this task">
+        <button class="mo-del-btn" id="mo-del-btn-trigger" onclick="delTask(this.dataset.taskId)" title="Remove this task">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
           Remove
         </button>
@@ -6347,6 +10722,26 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 </div>
 
+<!-- ── TASK EDIT SCOPE MODAL ──────────────────────────────── -->
+<div class="confirm-mo" id="mo-edit-scope" style="z-index:20000">
+  <div class="confirm-box" style="max-width:340px">
+    <div class="ci-ico">✏️</div>
+    <p style="font-size:13px;font-weight:700;margin-bottom:4px">Apply changes to…</p>
+    <p class="warn-txt" id="edit-scope-desc" style="margin-bottom:14px">Choose when the updated task should take effect.</p>
+    <div class="cf-btns" style="flex-direction:column;gap:8px">
+      <button class="btn btn-pri" style="width:100%;justify-content:center;gap:8px" onclick="commitTaskEdit('today')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Today onward
+      </button>
+      <button class="btn" style="width:100%;justify-content:center;gap:8px;background:var(--card2);border-color:var(--border2);color:var(--text)" onclick="commitTaskEdit('next')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg>
+        Next occurrence
+      </button>
+      <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="document.getElementById('mo-edit-scope').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- Reset Check Data Confirm Modal -->
 <div class="confirm-mo" id="mo-confirm-reset">
   <div class="confirm-box">
@@ -6408,7 +10803,48 @@ function saveS(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}
   Object.keys(_catColorCache).forEach(k=>delete _catColorCache[k]);
 }
 let S=loadS();
+
+// ── ONE-TIME HARD PURGE ──────────────────────────────────────────
+// Permanently removes any task named "Morning Walking" or "Walking"
+// (and any other task flagged is_deleted) from localStorage right now.
+// This runs synchronously before the first render — no ghost tasks possible.
+(function hardPurgeOnLoad(){
+  const today=fmtKey(new Date());
+  const PURGE_NAMES=['morning walking','walking'];
+  const before=S.tasks.length;
+  S.tasks=S.tasks.filter(t=>{
+    if(PURGE_NAMES.includes((t.name||'').trim().toLowerCase())) return false;
+    // New soft-delete (is_deleted=false, deletedFrom set) → always keep
+    if(t.deletedFrom && t.is_deleted===false) return true;
+    // Legacy hard-delete flag → remove
+    if(t.is_deleted===true) return false;
+    return true;
+  });
+  if(S.tasks.length!==before){
+    try{localStorage.setItem('apex_v6_2026',JSON.stringify(S));}catch(e){}
+  }
+})();
+// ────────────────────────────────────────────────────────────────
+
 document.documentElement.setAttribute('data-theme',S.sett.theme||'dark');setTimeout(syncDmTog,0);
+// Run repair synchronously BEFORE first render so ghost tasks never appear
+function repairDeletedTasks(){
+  const before=S.tasks.length;
+  S.tasks=S.tasks.filter(t=>{
+    // New soft-delete: deletedFrom set, is_deleted=false → always keep (row needed for history display)
+    if(t.deletedFrom && t.is_deleted===false) return true;
+    // Legacy hard-delete flag: keep only if has past check history for analytics
+    if(t.is_deleted===true){
+      return Object.keys(S.checks).some(k=>k.startsWith(t.id+'__')&&S.checks[k]);
+    }
+    return true;
+  });
+  if(S.tasks.length!==before){ saveS(); }
+}
+repairDeletedTasks(); // run synchronously before first render
+
+// Also run migration asynchronously (safe, schema-only)
+setTimeout(()=>{ if(typeof migrateTasksToVersioned==='function') migrateTasksToVersioned(); },0);
 
 // ════════════════════════════════════════════════════════════
 // CONSTANTS & HELPERS
@@ -7001,8 +11437,17 @@ function renderTT(dates){
   const weekStart=fmtKey(dates[0]);
   const weekEnd=fmtKey(dates[6]);
   const allTasks=S.catFilt==='all'?S.tasks:S.tasks.filter(t=>t.cat===S.catFilt);
-  // Include task if active on ANY day of this week
-  const tasks=allTasks.filter(t=>dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d))));
+  const todayKeyForFilter=fmtKey(new Date());
+  // Row visibility:
+  // • Past weeks (weekOff < 0): always show — full history.
+  // • Current week (weekOff === 0): always show — row must stay visible even after deletion
+  //   so past cells (Mon→yesterday) remain as checkboxes. Today's cell becomes a dash
+  //   because isTaskActiveOnDate returns false when dateKey >= deletedFrom.
+  // • Future weeks (weekOff > 0): hide tasks that have been soft-deleted.
+  const tasks=allTasks.filter(t=>{
+    if(S.weekOff>0 && t.deletedFrom && t.deletedFrom<=todayKeyForFilter) return false;
+    return dates.some((d,i)=>t.days.includes(i)&&isTaskActiveOnDate(t,fmtKey(d)));
+  });
   const isCurrentWeek=S.weekOff===0;
   const todayKey=fmtKey(dates[TODAY_DOW]);
   let th='<thead><tr><th class="tt-task-th">Task</th>';
@@ -7027,6 +11472,8 @@ function renderTT(dates){
     const priBarClass = t.pri==='high'?'pri-high':t.pri==='low'?'pri-low':'pri-med';
     // BUG FIX 3: showStatus only when task is genuinely active today
     const showStatus=!!status&&taskActiveToday;
+    const isPastWeek=S.weekOff<0;
+    const isFutureWeek=S.weekOff>0;
     tb+=`<tr class="${rowDone?'row-done':''}"><td class="tt-task-cell">
       <div class="tt-row-inner">
         <!-- LEFT: name + meta -->
@@ -7042,10 +11489,12 @@ function renderTT(dates){
             </div>
           </div>
         </div>
-        <!-- RIGHT: actions -->
+        <!-- RIGHT: actions — hidden on past weeks, visible on current + future weeks -->
         <div class="tt-right">
+          ${!isPastWeek?`
           <button class="ta ed" onclick="openTaskModal('${t.id}','dashboard')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
           <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          `:''}
         </div>
       </div>
     </td>`;
@@ -7054,21 +11503,25 @@ function renderTT(dates){
       const isTodayCol=i===TODAY_DOW&&isCurrentWeek;
       const isPast=isCurrentWeek&&i<TODAY_DOW;
       const isFuture=isCurrentWeek&&i>TODAY_DOW;
-      // BUG FIX 4: on non-current weeks all days are interactable; on current week only today
-      const canInteract=!isCurrentWeek||isTodayCol;
+      // Only today's column on the current week is interactive — all other cells are read-only
+      const canInteract=isTodayCol;
       const colClass=isTodayCol?'today-col':isPast?'past-col':isFuture?'future-col':'';
       if(!t.days.includes(i)||!isTaskActiveOnDate(t,dk)){
         tb+=`<td class="${colClass}"><div class="tt-x"><div class="tt-dash"></div></div></td>`;
       } else {
         const done=isDone(t.id,dk);
-        // Dimmed: done on a past/future col of current week (read-only visual indicator)
-        const dimmed=done&&!isTodayCol&&isCurrentWeek;
+        // Dimmed: checked on any non-today cell — read-only visual indicator
+        const dimmed=done&&!isTodayCol;
         const disabled=!canInteract;
+        // Title explains why the cell is non-interactive
+        const disabledTitle=isPastWeek||isPast?'Past day — cannot be changed'
+                           :isFutureWeek||isFuture?'Future day — cannot be changed'
+                           :'';
         tb+=`<td class="tt-dc ${colClass}">
           <button class="chk ${disabled?'disabled':''} ${done?`dn-${t.cat||'personal'}`:''}"
             style="${done?`background:${col}33;border-color:${col}`:'border-color:var(--border3)'}${disabled?';opacity:.35;cursor:not-allowed':''}${dimmed?';opacity:.4':''}"
             onclick="${canInteract?`togDone('${t.id}','${dk}')`:''}"
-            title="${disabled?(isPast?'Past day':'Future day'):''}">
+            title="${disabledTitle}">
             <svg viewBox="0 0 12 10" fill="none" stroke="${done?col:'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done?1:0}"><polyline points="1,5 4.5,9 11,1"/></svg>
           </button>
         </td>`;
@@ -7094,30 +11547,19 @@ function renderTT(dates){
   for(let ci=0;ci<7;ci++) cg += '<col style="width:'+dayColPct+'%">';
   cg += '</colgroup>';
   const el = document.getElementById('tt-wrap');
-  el.innerHTML=`<table class="tt">${cg}${th}${tb}${tf}</table>`;
-  // Conditional scroll: only when tasks exceed 10
+  // Always render table inside .tt-scroll-body so the scroll container
+  // wraps the entire table — thead, tbody, tfoot share the same coordinate
+  // space and the scrollbar sits outside, causing zero column shift.
+  el.innerHTML=`<div class="tt-scroll-body"><table class="tt">${cg}${th}${tb}${tf}</table></div>`;
   if(tasks.length > 10){
     el.classList.add('tt-scroll');
     requestAnimationFrame(()=>{
-      const tbody = el.querySelector('tbody');
-      const firstRow = tbody && tbody.querySelector('tr');
-      if(!firstRow) return;
-
-      // Set max-height to exactly 10 rows
+      const scrollBody = el.querySelector('.tt-scroll-body');
+      const firstRow = scrollBody && scrollBody.querySelector('tbody tr');
+      if(!firstRow || !scrollBody) return;
+      // Cap height to 10 rows; scrollbar appears on .tt-scroll-body, not tbody
       const rowH = firstRow.getBoundingClientRect().height;
-      tbody.style.maxHeight = (rowH * 10) + 'px';
-
-      // Sync column widths: read exact widths from first tbody row,
-      // then force them onto thead and tfoot cells to compensate for scrollbar offset
-      const bodyCells = firstRow.querySelectorAll('td');
-      const theadCells = el.querySelectorAll('thead th');
-      const tfootCells = el.querySelectorAll('tfoot td');
-
-      bodyCells.forEach((td, i) => {
-        const w = td.getBoundingClientRect().width + 'px';
-        if(theadCells[i]) theadCells[i].style.width = w;
-        if(tfootCells[i]) tfootCells[i].style.width = w;
-      });
+      scrollBody.style.maxHeight = (rowH * 10) + 'px';
     });
   } else {
     el.classList.remove('tt-scroll');
@@ -7155,7 +11597,12 @@ function renderTodayTT(){
   const todayDate = dates[TODAY_DOW];
   const dk = fmtKey(todayDate);
   const isCurrentWeek = S.weekOff === 0;
-  const tasks = S.tasks.filter(t => t.days.includes(TODAY_DOW) && isTaskActiveOnDate(t, dk));
+  const todayForFilter=fmtKey(new Date());
+  const tasks = S.tasks.filter(t => {
+    if(t.is_deleted) return false;
+    if(t.deletedFrom && t.deletedFrom<=todayForFilter) return false;
+    return t.days.includes(TODAY_DOW) && isTaskActiveOnDate(t, dk);
+  });
   const el = document.getElementById('tt-wrap');
 
   // ── Empty state ──────────────────────────────────────────────
@@ -7210,15 +11657,18 @@ function renderTodayTT(){
           </div>
         </div>
         <div class="tt-right">
+          ${isCurrentWeek || S.weekOff>0 ? `
           <button class="ta ed" onclick="openTaskModal('${t.id}','dashboard')" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
           <button class="ta dl" onclick="delTask('${t.id}')" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+          ` : ''}
         </div>
       </div>
     </td>
     <td class="tt-dc">
-      <button class="chk ${done?`dn-${t.cat||'personal'}`:''}"
-        style="${done?`background:${col}33;border-color:${col}`:'border-color:var(--border3)'}"
-        onclick="togDone('${t.id}','${dk}')">
+      <button class="chk ${done?`dn-${t.cat||'personal'}`:''} ${!isCurrentWeek?'disabled':''}"
+        style="${done?`background:${col}33;border-color:${col}`:'border-color:var(--border3)'}${!isCurrentWeek?';opacity:.35;cursor:not-allowed':''}"
+        onclick="${isCurrentWeek?`togDone('${t.id}','${dk}')`:''}"
+        title="${!isCurrentWeek?'Only today\'s tasks can be checked':''}">
         <svg viewBox="0 0 12 10" fill="none" stroke="${done?col:'currentColor'}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="opacity:${done?1:0}"><polyline points="1,5 4.5,9 11,1"/></svg>
       </button>
     </td></tr>`;
@@ -8020,6 +12470,30 @@ function renderAna(dates){
 
 
   });
+  // Apply semantic class names for responsive overrides
+  applyAnaResponsiveClasses();
+}
+
+// ════════════════════════════════════════════════════════════
+// ANALYTICS RESPONSIVE HELPER
+// Adds semantic class names to inline-styled grid containers
+// so CSS @media rules can override them without touching JS.
+// ════════════════════════════════════════════════════════════
+function applyAnaResponsiveClasses(){
+  const cx=document.getElementById('ana-cx');
+  if(!cx) return;
+  cx.querySelectorAll('div[style*="grid-template-columns:1fr 1fr"]').forEach(el=>{
+    el.classList.add('ana-chart-row');
+  });
+  const donutWrap=document.getElementById('cat-donut');
+  if(donutWrap){
+    const sizer=donutWrap.parentElement;
+    if(sizer) sizer.classList.add('ana-donut-sizer');
+    const row=sizer&&sizer.parentElement;
+    if(row) row.classList.add('ana-donut-row');
+  }
+  const legWrap=document.getElementById('cat-legend');
+  if(legWrap&&legWrap.parentElement) legWrap.parentElement.classList.add('ana-legend-wrap');
 }
 
 // ════════════════════════════════════════════════════════════
@@ -9407,14 +13881,29 @@ function openProfileEdit(btn){
   if(!popup||!nameInp||!roleInp)return;
   nameInp.value=p.name||'';
   roleInp.value=p.role||'';
-  // Position popup near the pen button
+  // Position popup near the pen button — centered on mobile
   const rect=btn?btn.getBoundingClientRect():{top:120,left:200};
   const vw=window.innerWidth,vh=window.innerHeight;
-  let top=rect.bottom+6,left=rect.left;
-  if(left+256>vw-12) left=vw-260;
-  if(top+220>vh-12) top=rect.top-220-6;
-  popup.style.top=top+'px';
-  popup.style.left=left+'px';
+  if(vw<=700){
+    popup.style.left='50%';
+    popup.style.transform='translateX(-50%)';
+    popup.style.top='auto';
+    popup.style.bottom='16px';
+    popup.style.width='calc(100vw - 24px)';
+    popup.style.maxWidth='400px';
+    popup.style.borderRadius='20px';
+  } else {
+    popup.style.transform='';
+    popup.style.bottom='';
+    popup.style.width='';
+    popup.style.maxWidth='';
+    popup.style.borderRadius='';
+    let top=rect.bottom+6,left=rect.left;
+    if(left+256>vw-12) left=vw-260;
+    if(top+220>vh-12) top=rect.top-220-6;
+    popup.style.top=top+'px';
+    popup.style.left=left+'px';
+  }
   popup.style.display='block';
   setTimeout(()=>nameInp.focus(),60);
   // Close on outside click
@@ -10008,7 +14497,11 @@ function openTaskModal(editId, source, viewOnly){
   document.querySelectorAll('.sched-mode-tab').forEach(el=>{ el.style.pointerEvents=isViewOnly?'none':''; });
   // Show delete button only when editing (not view-only)
   const delWrap=document.getElementById('mo-task-del-wrap');
-  if(delWrap) delWrap.style.display=(!isViewOnly&&isEdit&&source!=='dashboard')?'block':'none';
+  if(delWrap) delWrap.style.display=(!isViewOnly&&isEdit)?'block':'none';
+  // Always stamp the exact task id onto the button so delTask() gets the right id
+  // even if S.editId gets cleared or overwritten before the user clicks Remove
+  const delBtn=document.getElementById('mo-del-btn-trigger');
+  if(delBtn) delBtn.dataset.taskId=editId||'';
   document.getElementById('mo-task').classList.add('open');
   if(!isViewOnly) setTimeout(()=>document.getElementById('f-name').focus(),80);
 }
@@ -10019,6 +14512,119 @@ function sortTasksByTime(){
     return toMins(a.start)-toMins(b.start);
   });
 }
+// ════════════════════════════════════════════════════════════
+// VERSIONED TASK EDIT — CORE LOGIC (v229)
+// ════════════════════════════════════════════════════════════
+
+// Migrate legacy tasks to versioned schema (run once on load)
+function migrateTasksToVersioned(){
+  const today=fmtKey(new Date());
+  let changed=false;
+  S.tasks.forEach(t=>{
+    if(!t.task_group_id){
+      t.task_group_id=t.id; // existing id becomes the group anchor
+      t.version_id=t.id+'_v1';
+      t.start_date=t.createdFrom||today;
+      t.end_date=null; // active
+      t.is_active=true;
+      t.is_deleted=!!t.deletedFrom;
+      t.updated_at=today;
+      changed=true;
+    }
+  });
+  if(changed) saveS();
+}
+
+// Helpers
+function toMins(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
+
+function _buildEditPayload(){
+  const name=document.getElementById('f-name').value.trim();
+  const start=document.getElementById('f-start').value;
+  const end=document.getElementById('f-end').value;
+  const rawCat=document.getElementById('f-cat').value.trim();
+  const cat=rawCat?rawCat.toLowerCase():'';
+  let days;
+  if(CAL.mode==='recurring'){
+    const recDays=[];
+    document.querySelectorAll('.dp.on').forEach(el=>recDays.push(parseInt(el.dataset.d)));
+    days=recDays;
+  } else {
+    days=[0,1,2,3,4,5,6];
+  }
+  return {
+    name,start,end,cat,
+    pri:document.getElementById('f-pri').value,
+    notes:document.getElementById('f-notes').value.trim(),
+    days,
+    schedMode:CAL.mode,
+    schedSingle:CAL.mode==='single'?CAL.singleDate:null,
+    schedRangeStart:CAL.mode==='range'?CAL.rangeStart:null,
+    schedRangeEnd:CAL.mode==='range'?CAL.rangeEnd:null,
+  };
+}
+
+// Pending edit state (set before showing scope modal)
+let _pendingEdit=null;
+
+function _isVersionField(field){ return ['name','start','end','schedMode'].includes(field); }
+
+function _hasVersionChange(current, newData){
+  return current.name!==newData.name ||
+         current.start!==newData.start ||
+         current.end!==newData.end ||
+         (current.schedMode||'recurring')!==newData.schedMode;
+}
+
+function _isTaskCompletedToday(task){
+  const todayKey=fmtKey(new Date());
+  return !!S.checks[task.id+'_'+todayKey];
+}
+
+function _isTaskStartedToday(task){
+  const now=new Date();
+  const[sh,sm]=task.start.split(':').map(Number);
+  return toMins(now.getHours()+':'+now.getMinutes())>=sh*60+sm;
+}
+
+function _nextOccurrenceDate(task){
+  // Returns the next date (after today) when this task would run
+  const today=new Date();
+  for(let i=1;i<=8;i++){
+    const d=new Date(today.getTime()+i*864e5);
+    const dow=d.getDay()===0?6:d.getDay()-1; // Mon=0
+    if(task.schedMode==='single'){
+      if(fmtKey(d)===task.schedSingle) return fmtKey(d);
+    } else if(task.schedMode==='range'){
+      const dk=fmtKey(d);
+      if(dk>=task.schedRangeStart&&dk<=task.schedRangeEnd) return fmtKey(d);
+    } else {
+      if(task.days.includes(dow)) return fmtKey(d);
+    }
+  }
+  // fallback: tomorrow
+  const tom=new Date(today.getTime()+864e5);
+  return fmtKey(tom);
+}
+
+function _dateSub1(dateKey){
+  const d=new Date(dateKey+'T00:00:00');
+  d.setDate(d.getDate()-1);
+  return fmtKey(d);
+}
+
+function _duplicateVersionExists(task_group_id, newData, effective_date){
+  return S.tasks.some(t=>
+    t.task_group_id===task_group_id &&
+    t.name===newData.name &&
+    t.start===newData.start &&
+    t.end===newData.end &&
+    (t.schedMode||'recurring')===newData.schedMode &&
+    t.start_date===effective_date &&
+    !t.is_deleted
+  );
+}
+
 function saveTask(){
   const name=document.getElementById('f-name').value.trim();
   if(!name){toast('Please enter a task name','#f43f5e');return;}
@@ -10026,59 +14632,224 @@ function saveTask(){
     const recDays=[];
     document.querySelectorAll('.dp.on').forEach(el=>recDays.push(parseInt(el.dataset.d)));
     if(!recDays.length){toast('Select at least one day','#f43f5e');return;}
-    var days=recDays;
   } else if(CAL.mode==='single'){
     if(!CAL.singleDate){toast('Pick a date on the calendar','#f43f5e');return;}
-    // For single-date, allow the task to appear on any day-of-week (date check gates visibility)
-    var days=[0,1,2,3,4,5,6];
   } else {
     if(!CAL.rangeStart||!CAL.rangeEnd){toast('Pick a start and end date','#f43f5e');return;}
-    // For date-range, allow any day-of-week (date check gates visibility)
-    var days=[0,1,2,3,4,5,6];
   }
-  const rawCat=document.getElementById('f-cat').value.trim();
-  const cat=rawCat?rawCat.toLowerCase():'';
-  const data={name,start:document.getElementById('f-start').value,end:document.getElementById('f-end').value,
-    cat,pri:document.getElementById('f-pri').value,
-    notes:document.getElementById('f-notes').value.trim(),days,
-    schedMode:CAL.mode,
-    schedSingle:CAL.mode==='single'?CAL.singleDate:null,
-    schedRangeStart:CAL.mode==='range'?CAL.rangeStart:null,
-    schedRangeEnd:CAL.mode==='range'?CAL.rangeEnd:null,
-  };
-  if(S.editId){
-    const idx=S.tasks.findIndex(t=>t.id===S.editId);
-    if(idx>-1){
-      // For recurring tasks, update createdFrom to today so past dates don't show checkboxes
-      // For single/range, the date range itself gates visibility so createdFrom is irrelevant
-      const newCreatedFrom = CAL.mode==='recurring' ? fmtKey(new Date(BASE)) : (S.tasks[idx].createdFrom||fmtKey(new Date(BASE)));
-      S.tasks[idx]={...S.tasks[idx],...data,deletedFrom:undefined,createdFrom:newCreatedFrom};
-    }
-    toast('Task updated ✓','#34d399');
-  } else {
-    S.tasks.push({id:'u'+Date.now(),...data,createdFrom:fmtKey(new Date(BASE))});
+
+  if(!S.editId){
+    // ── NEW TASK ── simple path, no versioning needed
+    const data=_buildEditPayload();
+    const today=fmtKey(new Date());
+    const newId='u'+Date.now();
+    S.tasks.push({
+      id:newId,
+      task_group_id:newId,
+      version_id:newId+'_v1',
+      start_date:today,
+      end_date:null,
+      is_active:true,
+      is_deleted:false,
+      updated_at:today,
+      createdFrom:today,
+      ...data,
+    });
     toast('Task added ✓','#34d399');
+    sortTasksByTime();
+    closeMo('mo-task');saveS();render();
+    return;
   }
+
+  // ── EDIT EXISTING TASK ──
+  const current=S.tasks.find(t=>t.id===S.editId);
+  if(!current){toast('Task not found','#f43f5e');return;}
+
+  const newData=_buildEditPayload();
+
+  // Step 2: Detect change type
+  if(!_hasVersionChange(current, newData)){
+    // In-place update (no version fields changed)
+    const idx=S.tasks.findIndex(t=>t.id===S.editId);
+    S.tasks[idx]={...S.tasks[idx],...newData,updated_at:fmtKey(new Date())};
+    toast('Task updated ✓','#34d399');
+    sortTasksByTime();
+    closeMo('mo-task');saveS();render();
+    return;
+  }
+
+  // Step 3: Determine if we must force "next occurrence"
+  const completedToday=_isTaskCompletedToday(current);
+  const startedToday=_isTaskStartedToday(current);
+  const mustForceNext=completedToday||startedToday;
+
+  // Store pending state
+  _pendingEdit={current, newData, mustForceNext};
+
+  // Show scope chooser
+  const desc=document.getElementById('edit-scope-desc');
+  if(mustForceNext){
+    desc.textContent='This task has already started or been completed today. Changes will apply from the next occurrence.';
+  } else {
+    desc.textContent='Choose when the updated task should take effect.';
+  }
+
+  // Disable "Today onward" button if forced
+  const todayBtn=document.querySelector('#mo-edit-scope .btn-pri');
+  if(todayBtn){
+    todayBtn.disabled=mustForceNext;
+    todayBtn.style.opacity=mustForceNext?'0.35':'1';
+    todayBtn.style.pointerEvents=mustForceNext?'none':'';
+  }
+
+  document.getElementById('mo-edit-scope').classList.add('open');
+}
+
+function commitTaskEdit(scope){
+  document.getElementById('mo-edit-scope').classList.remove('open');
+  if(!_pendingEdit)return;
+
+  const{current, newData, mustForceNext}=_pendingEdit;
+  _pendingEdit=null;
+
+  const today=fmtKey(new Date());
+
+  // Determine effective_date
+  let effective_date;
+  if(scope==='today'&&!mustForceNext){
+    effective_date=today;
+  } else {
+    effective_date=_nextOccurrenceDate(current);
+  }
+
+  // Step 4a: Block past edits
+  if(effective_date<today){
+    toast('Cannot apply changes to a past date','#f43f5e');return;
+  }
+
+  // Step 4b: Duplicate check
+  if(_duplicateVersionExists(current.task_group_id, newData, effective_date)){
+    toast('No change — identical version already exists','#eab308');
+    closeMo('mo-task');return;
+  }
+
+  // Step 4c: Concurrency / stale check (updated_at)
+  const freshCurrent=S.tasks.find(t=>t.id===current.id);
+  if(freshCurrent&&freshCurrent.updated_at!==current.updated_at){
+    toast('Task was modified elsewhere — please re-open and try again','#f97316');return;
+  }
+
+  // Step 5: Close old version
+  const idx=S.tasks.findIndex(t=>t.id===current.id);
+  if(idx>-1){
+    S.tasks[idx].end_date=_dateSub1(effective_date);
+    S.tasks[idx].is_active=false;
+    S.tasks[idx].updated_at=today;
+    // Keep deletedFrom aligned so isTaskActiveOnDate respects version end
+    S.tasks[idx].deletedFrom=effective_date;
+  }
+
+  // Step 6: Create new version
+  const newId='u'+Date.now();
+  S.tasks.push({
+    id:newId,
+    task_group_id:current.task_group_id,
+    version_id:newId+'_v1',
+    start_date:effective_date,
+    end_date:null,
+    is_active:true,
+    is_deleted:false,
+    updated_at:today,
+    createdFrom:effective_date,
+    ...newData,
+  });
+
+  toast('Task updated ✓','#34d399');
   sortTasksByTime();
   closeMo('mo-task');saveS();render();
 }
 let _taskToDelete=null;
+let _taskDelCtx=null;
+
 function delTask(id){
   _taskToDelete=id;
+  const task=S.tasks.find(t=>t.id===id);
+  const today=fmtKey(new Date());
+
+  // hasPast: any checked entry on a date strictly before today
+  const hasPast=task
+    ?Object.keys(S.checks).some(k=>k.startsWith(id+'__')&&S.checks[k]&&k.slice(id.length+2)<today)
+    :false;
+  const todayDone=task?isDone(id,today):false;
+  _taskDelCtx={hasPast,todayDone};
+
+  // Dynamic modal copy per case
+  const moP=document.querySelector('#mo-confirm-task .confirm-box p:first-of-type');
+  const moW=document.querySelector('#mo-confirm-task .warn-txt');
+  if(!hasPast&&!todayDone){
+    if(moP) moP.textContent='Permanently delete this task?';
+    if(moW) moW.textContent='This task has no recorded history. It will be completely removed.';
+  } else if(todayDone){
+    if(moP) moP.textContent='End this task after today?';
+    if(moW) moW.textContent="Today's completion is kept. The task will not appear from next week onward.";
+  } else {
+    // hasPast, not done today
+    if(moP) moP.textContent='Remove this task from today onward?';
+    if(moW) moW.textContent="Past history is preserved. Today's checkbox will be removed. The task row remains visible in the current week.";
+  }
+
   document.getElementById('mo-confirm-task').classList.add('open');
 }
 function confirmDelTask(){
   if(!_taskToDelete)return;
   const id=_taskToDelete;
-  const task=S.tasks.find(t=>t.id===id);
-  if(task){
-    // Soft-delete: record the date from which this task is removed.
-    // Past check history is preserved; the task is hidden from today onward.
-    task.deletedFrom=fmtKey(new Date(BASE));
-  }
+  const ctx=_taskDelCtx||{hasPast:false,todayDone:false};
   _taskToDelete=null;
+  _taskDelCtx=null;
   document.getElementById('mo-confirm-task').classList.remove('open');
   closeMo('mo-task');
+
+  const idx=S.tasks.findIndex(t=>t.id===id);
+  if(idx===-1){saveS();render();toast('Task removed','#f97316');return;}
+
+  const task=S.tasks[idx];
+  const today=fmtKey(new Date());
+  const tom=(()=>{const d=new Date(today+'T00:00:00');d.setDate(d.getDate()+1);return fmtKey(d);})();
+
+  // ── CASE 1b: No past, today NOT done → full hard delete ───────
+  if(!ctx.hasPast&&!ctx.todayDone){
+    Object.keys(S.checks).forEach(k=>{if(k.startsWith(id+'__'))delete S.checks[k];});
+    S.tasks.splice(idx,1);
+    saveS();render();toast('Task deleted','#f97316');
+    return;
+  }
+
+  // ── CASE 1a / 2a: today IS done → keep today, cut from tomorrow
+  // deletedFrom = tomorrow so today's cell remains a checkbox (checked)
+  // and the row vanishes from next week onward.
+  if(ctx.todayDone){
+    Object.keys(S.checks).forEach(k=>{
+      if(k.startsWith(id+'__')&&k.slice(id.length+2)>today)delete S.checks[k];
+    });
+    task.deletedFrom=tom;   // today < tomorrow → today's cell still active
+    task.is_active=false;
+    task.is_deleted=false;
+    task.updated_at=today;
+    saveS();render();toast('Task ended after today','#f97316');
+    return;
+  }
+
+  // ── CASE 2b: Has past, today NOT done → cut from today ────────
+  // deletedFrom = today so today's cell becomes a dash (dateKey>=deletedFrom → false)
+  // Past cells (Mon–yesterday) still satisfy dateKey < today → remain as checkboxes.
+  // Row stays in current week table because past cells are still active.
+  Object.keys(S.checks).forEach(k=>{
+    if(k.startsWith(id+'__')&&k.slice(id.length+2)>=today)delete S.checks[k];
+  });
+  task.deletedFrom=today;   // ← today, NOT tomorrow: today's cell → dash
+  task.is_active=false;
+  task.is_deleted=false;
+  task.updated_at=today;
   saveS();render();toast('Task removed from today onward','#f97316');
 }
 function confirmReset(){
@@ -10087,7 +14858,7 @@ function confirmReset(){
 function doConfirmedReset(){
   S.checks={};S.timerLog=[];
   // Also restore any soft-deleted tasks so they reappear after a reset
-  S.tasks.forEach(t=>{ delete t.deletedFrom; delete t.createdFrom; });
+  S.tasks.forEach(t=>{ delete t.deletedFrom; delete t.createdFrom; t.is_deleted=false; t.is_active=true; t.end_date=null; });
   saveS();render();
   document.getElementById('mo-confirm-reset').classList.remove('open');
   toast('Data cleared','#f97316');
@@ -10107,6 +14878,7 @@ document.addEventListener('keydown',e=>{
     document.getElementById('mo-confirm-note').classList.remove('open');
     document.getElementById('mo-confirm-task').classList.remove('open');
     document.getElementById('mo-confirm-reset').classList.remove('open');
+    document.getElementById('mo-edit-scope').classList.remove('open');
     closeWeeklySummary();
   }
 });
@@ -11865,6 +16637,15 @@ if(S.sett.notif&&'Notification' in window&&Notification.permission==='granted'){
   window.addEventListener('resize',updateHint,{passive:true});
   // Run after first layout paint so scrollWidth is correct
   requestAnimationFrame(()=>setTimeout(updateHint,120));
+
+  // ── Analytics responsive: re-apply classes on resize ──────────
+  let _anaResizeTimer=null;
+  window.addEventListener('resize',function(){
+    clearTimeout(_anaResizeTimer);
+    _anaResizeTimer=setTimeout(function(){
+      applyAnaResponsiveClasses();
+    },150);
+  },{passive:true});
 })();
 </script>
 
